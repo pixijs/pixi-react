@@ -1,0 +1,34 @@
+{
+  "name": "react-pixi-fiber",
+  "version": "0.0.1",
+  "description": "Write PixiJS applications using React declarative style.",
+  "main": "index.js",
+  "author": "Patrick Brouwer",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "eslint": "eslint ."
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.42",
+    "@babel/core": "^7.0.0-beta.42",
+    "babel-eslint": "^8.2.2",
+    "eslint": "^4.18.2",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.7.0",
+    "prettier": "^1.11.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
+  "peerDependencies": {
+    "pixi.js": "^4.7.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
+  "dependencies": {
+    "fbjs": "^0.8.16",
+    "performance-now": "^2.1.0",
+    "react-reconciler": "^0.7.0"
+  }
+}

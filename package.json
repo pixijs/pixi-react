@@ -7,19 +7,30 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "eslint": "eslint ."
+    "eslint": "eslint .",
+    "build": "rimraf ./lib && babel src -d lib"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.42",
     "@babel/core": "^7.0.0-beta.42",
+    "@babel/preset-env": "^7.0.0-beta.42",
+    "@babel/preset-react": "^7.0.0-beta.42",
+    "@babel/preset-stage-0": "^7.0.0-beta.42",
+    "@types/pixi.js": "^4.7.2",
     "babel-eslint": "^8.2.2",
+    "babel-jest": "^23.0.0-alpha.0",
     "eslint": "^4.18.2",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.7.0",
+    "jest": "^22.4.2",
+    "lodash-es": "^4.17.7",
+    "pixi.js": "^4.7.1",
     "prettier": "^1.11.1",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "react-test-renderer": "^16.2.0",
+    "rimraf": "^2.6.2"
   },
   "peerDependencies": {
     "pixi.js": "^4.7.1",

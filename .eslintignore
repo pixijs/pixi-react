@@ -1,2 +1,6 @@
 # Third party
 **/node_modules
+
+# Build products
+lib/
+coverage/

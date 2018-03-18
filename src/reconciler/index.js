@@ -58,7 +58,7 @@ const PixiFiber = Reconciler({
     return false
   },
 
-  now: () => now(),
+  now,
 
   useSyncScheduling: true,
 

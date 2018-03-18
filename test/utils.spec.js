@@ -1,6 +1,7 @@
 import React from 'react'
 import * as PIXI from 'pixi.js'
 import { createElement, TYPES } from '../src/utils/createElement'
+import getTextureFromProps from '../src/utils/getTextureFromProps'
 
 import { emptyTexture } from './__fixtures__/textures'
 import { desyrel } from './__fixtures__/bitmapfonts'
@@ -66,5 +67,38 @@ describe('createElement', () => {
   test('create Stage', () => {
     const element = createElement(TYPES.Stage)
     expect(element).toBeDefined()
+  })
+})
+
+describe('getTextureFromProps', function() {
+  let spy
+
+  beforeAll(() => {
+    spy = jest.spyOn(PIXI.Texture, 'fromImage').mockReturnValue(emptyTexture)
+  })
+
+  afterAll(() => {
+    spy.mockRestore()
+  })
+
+  test('invariant image', () => {
+    expect(() => getTextureFromProps('Test', { image: 123 })).toThrow('Test image needs to be a string, got `number`')
+  })
+
+  test('invariant texture', () => {
+    expect(() => getTextureFromProps('Test', { texture: 'texture' })).toThrow(
+      'Test texture needs to be type of `PIXI.Texture`'
+    )
+  })
+
+  test('get texture from image', () => {
+    const texture = getTextureFromProps('Test', { image: './image.png' })
+    expect(texture).toBeInstanceOf(PIXI.Texture)
+    expect(spy).toBeCalledWith('./image.png')
+  })
+
+  test('get texture from texture', () => {
+    const texture = getTextureFromProps('Test', { texture: emptyTexture })
+    expect(texture).toBe(emptyTexture)
   })
 })

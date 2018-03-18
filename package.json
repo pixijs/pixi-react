@@ -8,7 +8,8 @@
   "private": true,
   "scripts": {
     "eslint": "eslint .",
-    "build": "rimraf ./lib && babel src -d lib"
+    "build": "rimraf ./lib && babel src -d lib",
+    "test": "jest"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.42",
@@ -16,15 +17,19 @@
     "@babel/preset-env": "^7.0.0-beta.42",
     "@babel/preset-react": "^7.0.0-beta.42",
     "@babel/preset-stage-0": "^7.0.0-beta.42",
+    "@types/jest": "^22.2.0",
     "@types/pixi.js": "^4.7.2",
+    "babel-core": "^7.0.0-0",
     "babel-eslint": "^8.2.2",
     "babel-jest": "^23.0.0-alpha.0",
+    "canvas-prebuilt": "^1.6.5-prerelease.1",
     "eslint": "^4.18.2",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.7.0",
+    "idx": "^2.2.0",
     "jest": "^22.4.2",
-    "lodash-es": "^4.17.7",
+    "lodash": "^4.17.5",
     "pixi.js": "^4.7.1",
     "prettier": "^1.11.1",
     "react": "^16.2.0",
@@ -41,5 +46,14 @@
     "fbjs": "^0.8.16",
     "performance-now": "^2.1.0",
     "react-reconciler": "^0.7.0"
+  },
+  "jest": {
+    "collectCoverage": false,
+    "setupFiles": [
+      "./test/bootstrap.js"
+    ],
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    }
   }
 }

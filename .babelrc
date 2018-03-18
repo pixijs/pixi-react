@@ -14,7 +14,9 @@
   "env": {
     "test": {
       "presets": [
-        "env"
+        "@babel/preset-env",
+        "@babel/preset-stage-0",
+        "@babel/preset-react"
       ]
     }
   }

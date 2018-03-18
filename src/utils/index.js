@@ -1,7 +1,4 @@
-import createElement from './createElement'
+import { createElement } from './createElement'
 import getTextureFromProps from './getTextureFromProps'
 
-export {
-  createElement,
-  getTextureFromProps
-}
+export { createElement, getTextureFromProps }

@@ -8,6 +8,8 @@ import {
   Stage,
   Text,
   TilingSprite,
+  Mesh,
+  Rope,
 } from '../components'
 
 export const TYPES = {
@@ -34,11 +36,13 @@ export function createElement(type, props, root) {
     ParticleContainer,
     Sprite,
     Stage,
+    Mesh,
+    Rope,
     Text,
     TilingSprite,
     default: undefined,
   }
 
   const ins = ELEMENTS[type]
-  return ins && typeof ins === 'function' ? ins(root, props) : ELEMENTS.default
+  return ins && typeof ins === 'function' ? ins(root, props || {}) : ELEMENTS.default
 }

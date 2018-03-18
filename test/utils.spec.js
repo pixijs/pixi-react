@@ -2,12 +2,22 @@ import React from 'react'
 import * as PIXI from 'pixi.js'
 import { createElement, TYPES } from '../src/utils/createElement'
 import getTextureFromProps from '../src/utils/getTextureFromProps'
+import { PROPS_DISPLAY_OBJECT, PROPS_RESERVED } from '../src/utils/defaults'
 
 import { emptyTexture } from './__fixtures__/textures'
 import { desyrel } from './__fixtures__/bitmapfonts'
 import parseBitmapFont from './__utils__/parseBitmapFont'
 
 parseBitmapFont(desyrel)
+
+describe('defaults', function() {
+  test('reserved props', () => {
+    expect(PROPS_RESERVED).toMatchSnapshot()
+  })
+  test('display object props', () => {
+    expect(PROPS_DISPLAY_OBJECT).toMatchSnapshot()
+  })
+})
 
 describe('createElement', () => {
   test('types', () => {

@@ -7,6 +7,8 @@ import Sprite from './Sprite'
 import Stage from './Stage'
 import Text from './Text'
 import TilingSprite from './TilingSprite'
+import Mesh from './Mesh'
+import Rope from './Rope'
 
 export {
   BitmapText,
@@ -17,5 +19,7 @@ export {
   Sprite,
   Stage,
   Text,
-  TilingSprite
+  TilingSprite,
+  Mesh,
+  Rope,
 }

@@ -7,10 +7,10 @@ import invariant from 'fbjs/lib/invariant'
  *
  * @param {string} elementType
  * @param {PIXI.Texture} texture
- * @param {string} image
+ * @param {string|undefined} image
  * @returns {PIXI.Texture}
  */
-const getTextureFromProps = (elementType, { texture, image }) => {
+const getTextureFromProps = (elementType, { texture = undefined, image = undefined }) => {
   if (image) {
     invariant(typeof image === 'string', elementType + ' image needs to be a string, got `%s`', typeof image)
     return PIXI.Texture.fromImage(image)

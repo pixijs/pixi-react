@@ -29,3 +29,13 @@ export function parsePoint(value) {
 
   return arr.filter(p => !isNil(p) && !isNaN(p)).map(Number)
 }
+
+/**
+ * Determine value is type of Point or ObservablePoint
+ *
+ * @param {*} value
+ * @returns {boolean}
+ */
+export function isPointType(value) {
+  return value instanceof PIXI.Point || value instanceof PIXI.ObservablePoint
+}

@@ -32,7 +32,7 @@ const ELEMENTS = Object.keys(TYPES).reduce(
  * @param {Object} root Root instance
  * @returns {PIXI.*|undefined}
  */
-export function createElement(type, props, root) {
+export function createElement(type, props = {}, root = null) {
   const ins = ELEMENTS[type]
   return ins && typeof ins === 'function' ? ins(root, props || {}) : ELEMENTS.default
 }

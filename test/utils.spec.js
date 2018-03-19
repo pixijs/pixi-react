@@ -7,9 +7,11 @@ import { emptyTexture } from './__fixtures__/textures'
 import { desyrel } from './__fixtures__/bitmapfonts'
 import parseBitmapFont from './__utils__/parseBitmapFont'
 
+const noop = () => {}
+
 parseBitmapFont(desyrel)
 
-describe('props', function() {
+describe('props', () => {
   test('reserved props', () => {
     expect(props.PROPS_RESERVED).toMatchSnapshot()
   })
@@ -83,7 +85,7 @@ describe('createElement', () => {
   })
 })
 
-describe('getTextureFromProps', function() {
+describe('getTextureFromProps', () => {
   let spy
 
   beforeAll(() => {
@@ -116,8 +118,8 @@ describe('getTextureFromProps', function() {
   })
 })
 
-describe('pixi', function() {
-  describe('parsePoint', function() {
+describe('pixi', () => {
+  describe('parsePoint', () => {
     test('parse undefined', () => {
       expect(pixi.parsePoint(undefined)).toEqual([])
     })
@@ -153,6 +155,36 @@ describe('pixi', function() {
 
     test('parse object with y only', () => {
       expect(pixi.parsePoint({ y: 200 })).toEqual([0, 200])
+    })
+  })
+
+  describe('isPointType', () => {
+    describe('true', () => {
+      test('point', () => {
+        expect(pixi.isPointType(new PIXI.Point(100, 200))).toBeTruthy()
+      })
+
+      test('observablepoint', () => {
+        expect(pixi.isPointType(new PIXI.ObservablePoint(noop, this, 100, 200))).toBeTruthy()
+      })
+    })
+
+    describe('false', () => {
+      test('string', () => {
+        expect(pixi.isPointType(undefined)).toBeFalsy()
+      })
+
+      test('number', () => {
+        expect(pixi.isPointType(123)).toBeFalsy()
+      })
+
+      test('array', () => {
+        expect(pixi.isPointType([100, 200])).toBeFalsy()
+      })
+
+      test('object', () => {
+        expect(pixi.isPointType({ x: 100, y: 200 })).toBeFalsy()
+      })
     })
   })
 })

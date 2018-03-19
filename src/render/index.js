@@ -2,8 +2,6 @@ import invariant from 'fbjs/lib/invariant'
 import { Container } from 'pixi.js'
 import PixiFiber, { PACKAGE_NAME, VERSION } from '../reconciler'
 
-const noop = () => {}
-
 // cache root containers
 export const roots = new Map()
 
@@ -15,7 +13,7 @@ export const roots = new Map()
  * @param {Container} container (i.e. the Stage)
  * @param {Function} callback
  */
-export function render(element, container, callback) {
+export function render(element, container, callback = undefined) {
   invariant(container instanceof Container, 'Invalid argument `container`, expected instance of `PIXI.Container`.')
 
   let root = roots.get(container)
@@ -26,7 +24,7 @@ export function render(element, container, callback) {
   }
 
   // schedules a top level update
-  PixiFiber.updateContainer(element, node, null, callback)
+  PixiFiber.updateContainer(element, root, null, callback)
 
   // inject into react devtools
   injectDevtools()
@@ -44,7 +42,7 @@ export function render(element, container, callback) {
  * @param {boolean} createContainer
  * @param {Function} callback
  */
-export function renderFromComponent(element, container, parentComponent, createContainer = false, callback = noop) {
+export function renderFromComponent(element, container, parentComponent, createContainer = false, callback = undefined) {
   invariant(container instanceof Container, 'Invalid argument `container`, expected instance of `PIXI.Container`.')
 
   let mountNode = container

@@ -1,17 +1,3 @@
-import {
-  BitmapText,
-  Container,
-  Graphics,
-  NineSlicePlane,
-  ParticleContainer,
-  Sprite,
-  Stage,
-  Text,
-  TilingSprite,
-  Mesh,
-  Rope,
-} from '../components'
-
 export const TYPES = {
   BitmapText: 'BitmapText',
   Container: 'Container',
@@ -27,22 +13,12 @@ export const TYPES = {
   Rope: 'Rope',
 }
 
-export function createElement(type, props, root) {
-  const ELEMENTS = {
-    BitmapText,
-    Container,
-    Graphics,
-    NineSlicePlane,
-    ParticleContainer,
-    Sprite,
-    Stage,
-    Mesh,
-    Rope,
-    Text,
-    TilingSprite,
-    default: undefined,
-  }
+const ELEMENTS = Object.keys(TYPES).reduce(
+  (elements, type) => ({ ...elements, [type]: require('../components')[type] }),
+  {}
+)
 
+export function createElement(type, props, root) {
   const ins = ELEMENTS[type]
   return ins && typeof ins === 'function' ? ins(root, props || {}) : ELEMENTS.default
 }

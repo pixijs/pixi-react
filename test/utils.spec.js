@@ -78,6 +78,10 @@ describe('createElement', () => {
     const element = createElement(TYPES.Stage)
     expect(element).toBeDefined()
   })
+
+  test('get undefined', () => {
+    expect(createElement('INVALID')).toBeUndefined()
+  })
 })
 
 describe('getTextureFromProps', function() {

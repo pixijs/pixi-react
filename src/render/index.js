@@ -2,17 +2,20 @@ import invariant from 'fbjs/lib/invariant'
 import { Container } from 'pixi.js'
 import PixiFiber, { PACKAGE_NAME, VERSION } from '../reconciler'
 
+const noop = () => {}
+
 // cache root containers
 export const roots = new Map()
 
 /**
- * Renderer
+ * Custom Renderer
+ * Use this without React-DOM
  *
- * @param {any} element
+ * @param {*} element
  * @param {Container} container (i.e. the Stage)
- * @returns {Promise<void>}
+ * @param {Function} callback
  */
-export async function render(element, container, callback) {
+export function render(element, container, callback) {
   invariant(container instanceof Container, 'Invalid argument `container`, expected instance of `PIXI.Container`.')
 
   let root = roots.get(container)
@@ -26,15 +29,43 @@ export async function render(element, container, callback) {
   PixiFiber.updateContainer(element, node, null, callback)
 
   // inject into react devtools
+  injectDevtools()
+
+  // return the root instance
+  return PixiFiber.getPublicRootInstance(node)
+}
+
+/**
+ * Render from Component
+ *
+ * @param {*} element
+ * @param {*} container
+ * @param {*} parentComponent
+ * @param {boolean} createContainer
+ * @param {Function} callback
+ */
+export function renderFromComponent(element, container, parentComponent, createContainer = false, callback = noop) {
+  invariant(container instanceof Container, 'Invalid argument `container`, expected instance of `PIXI.Container`.')
+
+  let mountNode = container
+
+  if (createContainer) {
+    mountNode = PixiFiber.createContainer(container)
+    injectDevtools()
+  }
+
+  PixiFiber.updateContainer(element, container, parentComponent, callback)
+  return mountNode
+}
+
+/**
+ * Inject into React Devtools
+ */
+export function injectDevtools() {
   PixiFiber.injectIntoDevTools({
     bundleType: process.env.NODE_ENV === 'development' ? 1 : 0,
     version: VERSION,
     rendererPackageName: PACKAGE_NAME,
     findHostInstanceByFiber: PixiFiber.findHostInstance,
   })
-
-  // parse input and returns output here ?
-
-  // return the root instance
-  return PixiFiber.getPublicRootInstance(node)
 }

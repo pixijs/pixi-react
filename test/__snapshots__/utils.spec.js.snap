@@ -50,3 +50,71 @@ Object {
   "worldVisible": true,
 }
 `;
+
+exports[`pro display object props 1`] = `
+Object {
+  "alpha": 1,
+  "buttonMode": false,
+  "cacheAsBitmap": false,
+  "cursor": "auto",
+  "filterArea": null,
+  "filters": null,
+  "hitArea": null,
+  "interactive": false,
+  "mask": null,
+  "pivot": 0,
+  "position": 0,
+  "renderable": true,
+  "rotation": 0,
+  "scale": 1,
+  "skew": 0,
+  "transform": null,
+  "visible": true,
+  "x": 0,
+  "y": 0,
+}
+`;
+
+exports[`pro reserved props 1`] = `
+Object {
+  "children": true,
+  "parent": true,
+  "worldAlpha": true,
+  "worldTransform": true,
+  "worldVisible": true,
+}
+`;
+
+exports[`props display object props 1`] = `
+Object {
+  "alpha": 1,
+  "buttonMode": false,
+  "cacheAsBitmap": false,
+  "cursor": "auto",
+  "filterArea": null,
+  "filters": null,
+  "hitArea": null,
+  "interactive": false,
+  "mask": null,
+  "pivot": 0,
+  "position": 0,
+  "renderable": true,
+  "rotation": 0,
+  "scale": 1,
+  "skew": 0,
+  "transform": null,
+  "visible": true,
+  "x": 0,
+  "y": 0,
+}
+`;
+
+exports[`props reserved props 1`] = `
+Object {
+  "children": true,
+  "parent": true,
+  "worldAlpha": true,
+  "worldTransform": true,
+  "worldVisible": true,
+}
+`;

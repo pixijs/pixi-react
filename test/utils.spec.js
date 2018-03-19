@@ -1,8 +1,7 @@
 import React from 'react'
 import * as PIXI from 'pixi.js'
 import { createElement, TYPES } from '../src/utils/createElement'
-import getTextureFromProps from '../src/utils/getTextureFromProps'
-import { PROPS_DISPLAY_OBJECT, PROPS_RESERVED } from '../src/utils/props'
+import { getTextureFromProps, props, pixi } from '../src/utils'
 
 import { emptyTexture } from './__fixtures__/textures'
 import { desyrel } from './__fixtures__/bitmapfonts'
@@ -10,12 +9,12 @@ import parseBitmapFont from './__utils__/parseBitmapFont'
 
 parseBitmapFont(desyrel)
 
-describe('defaults', function() {
+describe('props', function() {
   test('reserved props', () => {
-    expect(PROPS_RESERVED).toMatchSnapshot()
+    expect(props.PROPS_RESERVED).toMatchSnapshot()
   })
   test('display object props', () => {
-    expect(PROPS_DISPLAY_OBJECT).toMatchSnapshot()
+    expect(props.PROPS_DISPLAY_OBJECT).toMatchSnapshot()
   })
 })
 
@@ -114,5 +113,46 @@ describe('getTextureFromProps', function() {
   test('get texture from texture', () => {
     const texture = getTextureFromProps('Test', { texture: emptyTexture })
     expect(texture).toBe(emptyTexture)
+  })
+})
+
+describe('pixi', function() {
+  describe('parsePoint', function() {
+    test('parse undefined', () => {
+      expect(pixi.parsePoint(undefined)).toEqual([])
+    })
+
+    test('parse null', () => {
+      expect(pixi.parsePoint(null)).toEqual([])
+    })
+
+    test('parse string', () => {
+      expect(pixi.parsePoint('1,3')).toEqual([1, 3])
+    })
+
+    test('parse invalid string', () => {
+      expect(pixi.parsePoint('not, valid')).toEqual([])
+    })
+
+    test('parse number', () => {
+      expect(pixi.parsePoint(100)).toEqual([100])
+    })
+
+    test('parse shallow array', () => {
+      expect(pixi.parsePoint([100, 200])).toEqual([100, 200])
+      expect(pixi.parsePoint([100, 200])).not.toBe([100, 200])
+    })
+
+    test('parse object with x y', () => {
+      expect(pixi.parsePoint({ x: 100, y: 200 })).toEqual([100, 200])
+    })
+
+    test('parse object with x only', () => {
+      expect(pixi.parsePoint({ x: 100 })).toEqual([100, 0])
+    })
+
+    test('parse object with y only', () => {
+      expect(pixi.parsePoint({ y: 200 })).toEqual([0, 200])
+    })
   })
 })

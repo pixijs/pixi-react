@@ -18,6 +18,25 @@ const App = () => (
 )
 ```
 
+## Scripts
+
+```bash
+# compile npm lib
+yarn build
+
+# lint code
+yarn eslint
+
+# fix linting issues
+yarn eslint --fix
+
+# test
+yarn test
+
+# watch tests
+yarn test --watch
+```
+
 ## Resources
 
 - [github.com/acdlite/react-fiber-architecture](https://github.com/acdlite/react-fiber-architecture)

@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js'
 import invariant from 'fbjs/lib/invariant'
-import { getTextureFromProps } from '../utils'
+import { getTextureFromProps } from '../utils/props'
 
 const Rope = (root, props) => {
   const texture = getTextureFromProps('Rope', props)

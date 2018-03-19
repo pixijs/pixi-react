@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js'
-import { getTextureFromProps } from '../utils'
+import { getTextureFromProps } from '../utils/props'
 
 const NineSlicePlane = (root, props) => {
   const { leftWidth = 10, topHeight = 10, rightWidth = 10, bottomHeight = 10 } = props

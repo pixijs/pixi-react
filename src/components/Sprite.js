@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js'
-import { getTextureFromProps } from '../utils'
+import { getTextureFromProps } from '../utils/props'
 
 const Sprite = (root, props) => {
   const texture = getTextureFromProps('Sprite', props)

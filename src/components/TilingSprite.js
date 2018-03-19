@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js'
-import { getTextureFromProps } from '../utils'
+import { getTextureFromProps } from '../utils/props'
 import omit from 'lodash/omit'
 
 const TilingSprite = (root, props) => {

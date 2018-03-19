@@ -10,7 +10,7 @@ import pkg from '../../package.json'
  *
  * @type {Object}
  */
-const PixiFiber = Reconciler({
+export const PixiFiber = Reconciler({
   appendInitialChild(parent, child) {
     if (parent.appendChild) {
       parent.appendChild(child)
@@ -109,8 +109,6 @@ const PixiFiber = Reconciler({
     },
   },
 })
-
-export default PixiFiber
 
 export const VERSION = pkg.version
 

@@ -1,6 +1,6 @@
 import invariant from 'fbjs/lib/invariant'
 import { Container } from 'pixi.js'
-import PixiFiber, { PACKAGE_NAME, VERSION } from '../reconciler'
+import { PixiFiber, PACKAGE_NAME, VERSION } from '../reconciler'
 
 // cache root containers
 export const roots = new Map()
@@ -24,13 +24,13 @@ export function render(element, container, callback = undefined) {
   }
 
   // schedules a top level update
-  PixiFiber.updateContainer(element, root, null, callback)
+  PixiFiber.updateContainer(element, root, undefined, callback)
 
   // inject into react devtools
   injectDevtools()
 
   // return the root instance
-  return PixiFiber.getPublicRootInstance(node)
+  return PixiFiber.getPublicRootInstance(root)
 }
 
 /**
@@ -42,7 +42,13 @@ export function render(element, container, callback = undefined) {
  * @param {boolean} createContainer
  * @param {Function} callback
  */
-export function renderFromComponent(element, container, parentComponent, createContainer = false, callback = undefined) {
+export function renderFromComponent(
+  element,
+  container,
+  parentComponent,
+  createContainer = false,
+  callback = undefined
+) {
   invariant(container instanceof Container, 'Invalid argument `container`, expected instance of `PIXI.Container`.')
 
   let mountNode = container
@@ -61,9 +67,9 @@ export function renderFromComponent(element, container, parentComponent, createC
  */
 export function injectDevtools() {
   PixiFiber.injectIntoDevTools({
-    bundleType: process.env.NODE_ENV === 'development' ? 1 : 0,
+    bundleType: process.env.NODE_ENV !== 'production' ? 1 : 0,
     version: VERSION,
     rendererPackageName: PACKAGE_NAME,
-    findHostInstanceByFiber: PixiFiber.findHostInstance,
+    findFiberByHostInstance: PixiFiber.findFiberByHostInstance,
   })
 }

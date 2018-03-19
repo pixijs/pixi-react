@@ -2,7 +2,7 @@ import React from 'react'
 import * as PIXI from 'pixi.js'
 import { createElement, TYPES } from '../src/utils/createElement'
 import getTextureFromProps from '../src/utils/getTextureFromProps'
-import { PROPS_DISPLAY_OBJECT, PROPS_RESERVED } from '../src/utils/defaults'
+import { PROPS_DISPLAY_OBJECT, PROPS_RESERVED } from '../src/utils/props'
 
 import { emptyTexture } from './__fixtures__/textures'
 import { desyrel } from './__fixtures__/bitmapfonts'

@@ -4,9 +4,7 @@
       "targets": {
         "node": "current",
         "browsers": ["last 2 versions"]
-      },
-      "modules": false,
-      "useBuiltIns": "usage"
+      }
     }],
     "@babel/preset-stage-0",
     "@babel/preset-react"

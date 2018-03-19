@@ -1,6 +1,15 @@
 import * as PIXI from 'pixi.js'
 import invariant from 'fbjs/lib/invariant'
 
+/**
+ * Helper util for fetching the texture from props
+ * Can be either texture or image
+ *
+ * @param {string} elementType
+ * @param {PIXI.Texture} texture
+ * @param {string} image
+ * @returns {PIXI.Texture}
+ */
 const getTextureFromProps = (elementType, { texture, image }) => {
   if (image) {
     invariant(typeof image === 'string', elementType + ' image needs to be a string, got `%s`', typeof image)

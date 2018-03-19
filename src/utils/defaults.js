@@ -1,5 +1,6 @@
 /**
  * Reserved props
+ *
  * @type {Object}
  */
 export const PROPS_RESERVED = {
@@ -12,6 +13,7 @@ export const PROPS_RESERVED = {
 
 /**
  * Default display object props
+ *
  * @type {Object}
  */
 export const PROPS_DISPLAY_OBJECT = {

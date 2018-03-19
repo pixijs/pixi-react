@@ -5,6 +5,11 @@ import now from 'performance-now'
 
 import pkg from '../../package.json'
 
+/**
+ * The React Reconciler handling PIXI elements
+ *
+ * @type {Object}
+ */
 const PixiFiber = Reconciler({
   appendInitialChild(parent, child) {
     if (parent.appendChild) {

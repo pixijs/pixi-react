@@ -75,11 +75,6 @@ describe('createElement', () => {
     expect(element).toBeInstanceOf(PIXI.mesh.Rope)
   })
 
-  test('create Stage', () => {
-    const element = createElement(TYPES.Stage)
-    expect(element).toBeDefined()
-  })
-
   test('get undefined', () => {
     expect(createElement('INVALID')).toBeUndefined()
   })

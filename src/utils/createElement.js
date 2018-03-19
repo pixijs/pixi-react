@@ -10,7 +10,6 @@ export const TYPES = {
   NineSlicePlane: 'NineSlicePlane',
   ParticleContainer: 'ParticleContainer',
   Sprite: 'Sprite',
-  Stage: 'Stage',
   Text: 'Text',
   TilingSprite: 'TilingSprite',
   Shape: 'Shape',

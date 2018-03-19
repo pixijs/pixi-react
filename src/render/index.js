@@ -12,7 +12,7 @@ export const roots = new Map()
  * @param {Container} container (i.e. the Stage)
  * @returns {Promise<void>}
  */
-async function render(element, container, callback) {
+export async function render(element, container, callback) {
   invariant(container instanceof Container, 'Invalid argument `container`, expected instance of `PIXI.Container`.')
 
   let root = roots.get(container)

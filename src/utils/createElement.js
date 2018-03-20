@@ -45,7 +45,6 @@ export function createElement(type, props = {}, root = null) {
   }
 
   if (!instance) {
-    console.log('not found')
     // not found, is there any injected custom component?
   }
 

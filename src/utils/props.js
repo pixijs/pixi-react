@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js'
 import invariant from 'fbjs/lib/invariant'
 import { eventHandlers, setValue } from './pixi'
 import { isFunction, not, hasKey } from '../helpers'
+import isNil from 'lodash/isNil'
 
 /**
  * Reserved props
@@ -58,7 +59,7 @@ export const getTextureFromProps = (elementType, { texture = undefined, image = 
     return PIXI.Texture.fromImage(image)
   }
 
-  invariant(texture instanceof PIXI.Texture, elementType + ' texture needs to be type of `PIXI.Texture`')
+  invariant(texture instanceof PIXI.Texture, elementType + ' texture needs to be typeof `PIXI.Texture`')
   return texture
 }
 
@@ -70,6 +71,12 @@ export const getTextureFromProps = (elementType, { texture = undefined, image = 
  * @param {Object} newProps
  */
 export function applyDefaultProps(instance, oldProps, newProps) {
+  invariant(
+    PIXI.DisplayObject.prototype.isPrototypeOf(instance),
+    'instance needs to be typeof `PIXI.DisplayObject`, ' + 'got `%s`',
+    typeof instance
+  )
+
   // update event handlers
   eventHandlers.forEach(function(evt) {
     isFunction(oldProps[evt], instance.removeListener) && instance.removeListener(evt, oldProps[evt])
@@ -80,10 +87,10 @@ export function applyDefaultProps(instance, oldProps, newProps) {
   props.forEach(prop => {
     const value = newProps[prop]
 
-    if (typeof value !== 'undefined') {
+    if (!isNil(value)) {
       // set value if defined
       setValue(instance, prop, value)
-    } else if (typeof instance[prop] !== 'undefined' && typeof PROPS_DISPLAY_OBJECT[prop] !== 'undefined') {
+    } else if (!isNil(instance[prop]) && !isNil(PROPS_DISPLAY_OBJECT[prop])) {
       // is a default value, use that
       console.warn(`setting default value: ${prop}, from: ${instance[prop]} to: ${value} for`, instance)
       setValue(instance, prop, PROPS_DISPLAY_OBJECT[prop])

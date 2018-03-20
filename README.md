@@ -8,6 +8,8 @@
 
 A custom React 16 (Fiber) renderer. Write [PIXI](http://www.pixijs.com/) applications using React declarative style.
 
+![](https://user-images.githubusercontent.com/232559/37669267-b46a8f8e-2c66-11e8-96e7-cae2ae6bdd7d.png)
+
 ## Usage 
 
 ```jsx

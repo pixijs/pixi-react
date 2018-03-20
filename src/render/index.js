@@ -1,5 +1,5 @@
 import invariant from 'fbjs/lib/invariant'
-import { Container } from 'pixi.js'
+import * as PIXI from 'pixi.js'
 import { PixiFiber, PACKAGE_NAME, VERSION } from '../reconciler'
 
 // cache root containers
@@ -10,11 +10,14 @@ export const roots = new Map()
  * Use this without React-DOM
  *
  * @param {*} element
- * @param {Container} container (i.e. the Stage)
+ * @param {PIXI.Container} container (i.e. the Stage)
  * @param {Function} callback
  */
 export function render(element, container, callback = undefined) {
-  invariant(container instanceof Container, 'Invalid argument `container`, expected instance of `PIXI.Container`.')
+  invariant(
+    PIXI.Container.prototype.isPrototypeOf(container),
+    'Invalid argument `container`, expected instance of `PIXI.Container`.'
+  )
 
   let root = roots.get(container)
   if (!root) {
@@ -49,7 +52,7 @@ export function renderFromComponent(
   createContainer = false,
   callback = undefined
 ) {
-  invariant(container instanceof Container, 'Invalid argument `container`, expected instance of `PIXI.Container`.')
+  invariant(container instanceof PIXI.Container, 'Invalid argument `container`, expected instance of `PIXI.Container`.')
 
   let mountNode = container
 

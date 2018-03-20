@@ -18,6 +18,19 @@ const App = () => (
 )
 ```
 
+## Custom Components
+
+Lifecycles type:
+
+```ts
+{
+  didMount: (parent: PIXI.DisplayObject):void => {},
+  willUnmount: (parent: PIXI.DisplayObject):void => {},
+  applyProps: (oldProps: Object, newProps: Object):void => {}
+}
+
+```
+
 ## Scripts
 
 ```bash

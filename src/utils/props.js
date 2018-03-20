@@ -1,8 +1,8 @@
-import * as PIXI from 'pixi.js'
+import isNil from 'lodash/isNil'
 import invariant from 'fbjs/lib/invariant'
+import * as PIXI from 'pixi.js'
 import { eventHandlers, setValue } from './pixi'
 import { isFunction, not, hasKey } from '../helpers'
-import isNil from 'lodash/isNil'
 
 /**
  * Reserved props

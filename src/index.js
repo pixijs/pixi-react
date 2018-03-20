@@ -1,4 +1,4 @@
-import { TYPES } from './utils/createElement'
+import { TYPES } from './utils/element'
 import { render } from './render'
 import Stage from './stage'
 

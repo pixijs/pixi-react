@@ -1,12 +1,10 @@
 import React from 'react'
 import * as PIXI from 'pixi.js'
-import { createElement, TYPES } from '../src/utils/createElement'
+import { createElement, TYPES } from '../src/utils/element'
 
 import { emptyTexture } from './__fixtures__/textures'
 import { desyrel } from './__fixtures__/bitmapfonts'
 import parseBitmapFont from './__utils__/parseBitmapFont'
-
-const noop = () => {}
 
 parseBitmapFont(desyrel)
 

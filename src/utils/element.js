@@ -35,6 +35,7 @@ const ELEMENTS = Object.keys(TYPES).reduce(
  * @returns {PIXI.*|undefined}
  */
 export function createElement(type, props = {}, root = null) {
+  console.log(type)
   const fn = ELEMENTS[type]
 
   let instance

@@ -1,14 +1,15 @@
 import Reconciler from 'react-reconciler'
 import emptyObject from 'fbjs/lib/emptyObject'
 import invariant from 'fbjs/lib/invariant'
-import { createElement } from '../utils/createElement'
 import now from 'performance-now'
+import idx from 'idx'
+import { createElement } from '../utils/element'
+import { applyDefaultProps } from '../utils/props'
 
 import pkg from '../../package.json'
 
-const UPDATE_SIGNAL = {}
-
-const appendChild = (parent, child) => {
+export const appendChild = (parent, child) => {
+  console.log('appendChild')
   if (parent.addChild) {
     parent.addChild(child)
 
@@ -18,13 +19,47 @@ const appendChild = (parent, child) => {
   }
 }
 
-const removeChild = (parent, child) => {
+export const removeChild = (parent, child) => {
+  console.log(`removeChild`)
   if (typeof child.willUnmount === 'function') {
     child.willUnmount(parent)
   }
 
   parent.removeChild(child)
   child.destroy()
+}
+
+export const insertBefore = (parent, child, beforeChild) => {
+  console.log(`inserBefore`)
+  invariant(child !== beforeChild, 'ReactPixiFiber cannot insert node before itself')
+
+  const childExists = parent.children.indexOf(child) !== -1
+  const index = parent.getChildIndex(beforeChild)
+
+  childExists ? parent.setChildIndex(child, index) : parent.addChildAt(child, index)
+}
+
+export const shouldDeprioritizeSubtree = (type, props) => {
+  console.log(`shouldDeprioritizeSubtree`)
+  const isAlphaVisible = typeof props.alpha === 'undefined' || props.alpha > 0
+  const isRenderable = typeof props.renderable === 'undefined' || props.renderable === true
+  const isVisible = typeof props.visible === 'undefined' || props.visible === true
+
+  return !(isAlphaVisible && isRenderable && isVisible)
+}
+
+export const prepareUpdate = (pixiElement, type, oldProps, newProps, rootContainerInstance, hostContext) => {
+  console.log(`prepareUpdate`)
+  return {} // signal
+}
+
+export const commitUpdate = (instance, updatePayload, type, oldProps, newProps) => {
+  console.log(`commitUpdate`)
+  let applyProps = idx(instance, _ => _.applyProps)
+  if (typeof applyProps !== 'function') {
+    applyProps = (a, b) => applyDefaultProps(instance, a, b)
+  }
+  applyProps(oldProps, newProps)
 }
 
 /**
@@ -61,21 +96,13 @@ export const PixiFiber = Reconciler({
     return false
   },
 
-  prepareUpdate(pixiElement, type, oldProps, newProps, rootContainerInstance, hostContext) {
-    return UPDATE_SIGNAL
-  },
+  prepareUpdate: prepareUpdate,
 
   shouldSetTextContent(type, props) {
     return false
   },
 
-  shouldDeprioritizeSubtree(type, props) {
-    const isAlphaVisible = typeof props.alpha === 'undefined' || props.alpha > 0
-    const isRenderable = typeof props.renderable === 'undefined' || props.renderable === true
-    const isVisible = typeof props.visible === 'undefined' || props.visible === true
-
-    return !(isAlphaVisible && isRenderable && isVisible)
-  },
+  shouldDeprioritizeSubtree: shouldDeprioritizeSubtree,
 
   createTextInstance(text, rootContainerInstance, internalInstanceHandler) {
     invariant(false, 'ReactPixiFiber does not support text instances. Use `<Text /> component` instead.')
@@ -98,25 +125,18 @@ export const PixiFiber = Reconciler({
 
     removeChildFromContainer: removeChild,
 
-    inserBefore(parent, child, beforeChild) {
-      invariant(child !== beforeChild, 'ReactPixiFiber cannot insert node before itself')
+    insertBefore: insertBefore,
 
-      const childExists = parent.children.indexOf(child) !== -1
-      const index = parent.getChildIndex(beforeChild)
+    insertInContainerBefore: insertBefore,
 
-      childExists ? parent.setChildIndex(child, index) : parent.addChildAt(child, index)
-    },
-
-    commitUpdate(instance, updatePayload, type, oldProps, newProps) {
-      // todo implement updates
-    },
+    commitUpdate: commitUpdate,
 
     commitMount(instance, updatePayload, type, oldProps, newProps) {
       // noop
     },
 
     commitTextUpdate(textInstance, oldText, newText) {
-      textInstance.children = newText
+      // noop
     },
   },
 })

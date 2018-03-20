@@ -1,7 +1,7 @@
 # React Fiber renderer for PIXI
 
-![](https://img.shields.io/badge/tested_with-jest-green.svg) 
-![](https://img.shields.io/github/license/mashape/apistatus.svg)
+![](https://img.shields.io/badge/tested_with-jest-green.svg)
+![](https://img.shields.io/badge/license-MIT-green.svg) 
 ![](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)
 
 A custom React 16 (Fiber) renderer. Write [PIXI](http://www.pixijs.com/) applications using React declarative style.

@@ -33,5 +33,12 @@ const ELEMENTS = Object.keys(TYPES).reduce(
  */
 export function createElement(type, props = {}, root = null) {
   const ins = ELEMENTS[type]
-  return ins && typeof ins === 'function' ? ins(root, props || {}) : ELEMENTS.default
+
+  if (typeof ins === 'function') {
+    return ins(root, props)
+  }
+
+  // custom component?
+
+  return undefined
 }

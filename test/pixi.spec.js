@@ -1,81 +1,116 @@
 import * as PIXI from 'pixi.js'
-import { pixi } from '../src/utils'
+import { parsePoint, isPointType, eventHandlers, setValue } from '../src/utils/pixi'
 
 const noop = () => {}
 
 describe('pixi', () => {
   describe('parsePoint', () => {
     test('parse undefined', () => {
-      expect(pixi.parsePoint(undefined)).toEqual([])
+      expect(parsePoint(undefined)).toEqual([])
     })
 
     test('parse null', () => {
-      expect(pixi.parsePoint(null)).toEqual([])
+      expect(parsePoint(null)).toEqual([])
     })
 
     test('parse string', () => {
-      expect(pixi.parsePoint('1,3')).toEqual([1, 3])
+      expect(parsePoint('1,3')).toEqual([1, 3])
     })
 
     test('parse invalid string', () => {
-      expect(pixi.parsePoint('not, valid')).toEqual([])
+      expect(parsePoint('not, valid')).toEqual([])
     })
 
     test('parse number', () => {
-      expect(pixi.parsePoint(100)).toEqual([100])
+      expect(parsePoint(100)).toEqual([100])
     })
 
     test('parse shallow array', () => {
-      expect(pixi.parsePoint([100, 200])).toEqual([100, 200])
-      expect(pixi.parsePoint([100, 200])).not.toBe([100, 200])
+      expect(parsePoint([100, 200])).toEqual([100, 200])
+      expect(parsePoint([100, 200])).not.toBe([100, 200])
     })
 
     test('parse object with x y', () => {
-      expect(pixi.parsePoint({ x: 100, y: 200 })).toEqual([100, 200])
+      expect(parsePoint({ x: 100, y: 200 })).toEqual([100, 200])
     })
 
     test('parse object with x only', () => {
-      expect(pixi.parsePoint({ x: 100 })).toEqual([100, 0])
+      expect(parsePoint({ x: 100 })).toEqual([100, 0])
     })
 
     test('parse object with y only', () => {
-      expect(pixi.parsePoint({ y: 200 })).toEqual([0, 200])
+      expect(parsePoint({ y: 200 })).toEqual([0, 200])
     })
   })
 
   describe('isPointType', () => {
     describe('true', () => {
       test('point', () => {
-        expect(pixi.isPointType(new PIXI.Point(100, 200))).toBeTruthy()
+        expect(isPointType(new PIXI.Point(100, 200))).toBeTruthy()
       })
 
       test('observablepoint', () => {
-        expect(pixi.isPointType(new PIXI.ObservablePoint(noop, this, 100, 200))).toBeTruthy()
+        expect(isPointType(new PIXI.ObservablePoint(noop, this, 100, 200))).toBeTruthy()
       })
     })
 
     describe('false', () => {
       test('string', () => {
-        expect(pixi.isPointType(undefined)).toBeFalsy()
+        expect(isPointType(undefined)).toBeFalsy()
       })
 
       test('number', () => {
-        expect(pixi.isPointType(123)).toBeFalsy()
+        expect(isPointType(123)).toBeFalsy()
       })
 
       test('array', () => {
-        expect(pixi.isPointType([100, 200])).toBeFalsy()
+        expect(isPointType([100, 200])).toBeFalsy()
       })
 
       test('object', () => {
-        expect(pixi.isPointType({ x: 100, y: 200 })).toBeFalsy()
+        expect(isPointType({ x: 100, y: 200 })).toBeFalsy()
       })
     })
   })
 
   describe('eventHandlers', () => {
     test('available event handlers', () => {
-      expect(pixi.eventHandlers).toMatchSnapshot()
+      expect(eventHandlers).toMatchSnapshot()
+    })
+  })
+
+  describe('setValue', () => {
+    let instance
+
+    beforeEach(() => {
+      instance = new PIXI.DisplayObject()
+    })
+
+    test('copy point data', () => {
+      setValue(instance, 'pivot', new PIXI.Point(100, 200))
+      expect(instance.pivot.x).toEqual(100)
+      expect(instance.pivot.y).toEqual(200)
+    })
+
+    test('parse point', () => {
+      setValue(instance, 'pivot', [200, 200])
+      expect(instance.pivot.x).toEqual(200)
+      expect(instance.pivot.y).toEqual(200)
+
+      setValue(instance, 'pivot', '50, 50')
+      expect(instance.pivot.x).toEqual(50)
+      expect(instance.pivot.y).toEqual(50)
+    })
+
+    test('failed parse point', () => {
+      expect(() => setValue(instance, 'pivot', 'invalid')).toThrow()
+      expect(instance.pivot.x).toEqual(0)
+      expect(instance.pivot.y).toEqual(0)
+    })
+
+    test('set value', () => {
+      setValue(instance, 'alpha', 0.5)
+      expect(instance.alpha).toEqual(0.5)
     })
   })
 })

@@ -2,6 +2,6 @@ import * as index from '../src'
 
 describe('index', () => {
   test('export modules', () => {
-    expect(Object.keys(index)).toMatchSnapshot()
+    expect(index).toMatchSnapshot()
   })
 })

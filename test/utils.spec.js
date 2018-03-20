@@ -183,4 +183,10 @@ describe('pixi', () => {
       })
     })
   })
+
+  describe('eventHandlers', () => {
+    test('available event hanlders', () => {
+      expect(pixi.eventHandlers).toMatchSnapshot()
+    })
+  })
 })

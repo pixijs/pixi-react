@@ -39,3 +39,39 @@ export function parsePoint(value) {
 export function isPointType(value) {
   return value instanceof PIXI.Point || value instanceof PIXI.ObservablePoint
 }
+
+/**
+ * Event handlers
+ *
+ * @type {string[]}
+ */
+export const eventHandlers = [
+  'click',
+  'mousedown',
+  'mousemove',
+  'mouseout',
+  'mouseover',
+  'mouseup',
+  'mouseupoutside',
+  'tap',
+  'touchstart',
+  'touchmove',
+  'touchend',
+  'touchendoutside',
+  'pointercancel',
+  'pointerout',
+  'pointerover',
+  'pointertap',
+  'pointerdown',
+  'pointerup',
+  'pointerupoutside',
+  'pointermove',
+  'rightclick',
+  'rightdown',
+  'rightup',
+  'rightupoutside',
+  'touchcancel',
+  'touchendoutside',
+  'touchmove',
+  'touchstart',
+]

@@ -1,19 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`index export modules 1`] = `
-Array [
-  "render",
-  "Stage",
-  "BitmapText",
-  "Container",
-  "Graphics",
-  "NineSlicePlane",
-  "ParticleContainer",
-  "Sprite",
-  "Text",
-  "TilingSprite",
-  "Shape",
-  "Mesh",
-  "Rope",
-]
+Object {
+  "BitmapText": "BitmapText",
+  "Container": "Container",
+  "Graphics": "Graphics",
+  "Mesh": "Mesh",
+  "NineSlicePlane": "NineSlicePlane",
+  "ParticleContainer": "ParticleContainer",
+  "Rope": "Rope",
+  "Shape": "Shape",
+  "Sprite": "Sprite",
+  "Stage": [Function],
+  "Text": "Text",
+  "TilingSprite": "TilingSprite",
+  "render": [Function],
+}
 `;

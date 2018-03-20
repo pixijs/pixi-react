@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js'
+import invariant from 'fbjs/lib/invariant'
 import idx from 'idx'
 import isNil from 'lodash/isNil'
 
@@ -75,3 +76,35 @@ export const eventHandlers = [
   'touchmove',
   'touchstart',
 ]
+
+/**
+ * Set value on a PIXI.DisplayObject
+ *
+ * @param {PIXI.DisplayObject} instance
+ * @param {string} prop
+ * @param {*} value
+ */
+export function setValue(instance, prop, value) {
+  if (isPointType(instance[prop]) && isPointType(value)) {
+    // copy value
+    instance[prop].copy(value)
+  } else if (isPointType(instance[prop])) {
+    // parse value if a non-Point type is being assigned to a Point type
+    const coordinates = parsePoint(value)
+
+    invariant(
+      typeof coordinates !== 'undefined' && coordinates.length > 0 && coordinates.length < 3,
+      'The property `%s` is a `PIXI.Point` or `PIXI.ObservablePoint` and must be set to a comma-separated string of ' +
+        'either 1 or 2 coordinates, a 1 or 2 element array containing coordinates, or a PIXI Point/ObservablePoint. ' +
+        'If only one coordinate is given then X and Y will be set to the provided value. Received: `%s` of type `%s`.',
+      prop,
+      JSON.stringify(value),
+      typeof value
+    )
+
+    instance[prop].set(coordinates.shift(), coordinates.shift())
+  } else {
+    // just hard assign value
+    instance[prop] = value
+  }
+}

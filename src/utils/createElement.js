@@ -1,3 +1,6 @@
+import { applyDefaultProps } from './props'
+import idx from 'idx'
+
 /**
  * Available tag types
  *
@@ -32,13 +35,28 @@ const ELEMENTS = Object.keys(TYPES).reduce(
  * @returns {PIXI.*|undefined}
  */
 export function createElement(type, props = {}, root = null) {
-  const ins = ELEMENTS[type]
+  const fn = ELEMENTS[type]
 
-  if (typeof ins === 'function') {
-    return ins(root, props)
+  let instance
+  let applyProps
+
+  if (typeof fn === 'function') {
+    instance = fn(root, props)
   }
 
-  // custom component?
+  if (!instance) {
+    console.log('not found')
+    // not found, is there any injected custom component?
+  }
 
-  return undefined
+  // apply initial props!
+  if (instance) {
+    applyProps = idx(instance, _ => _.applyProps)
+    if (typeof applyProps !== 'function') {
+      applyProps = (a, b) => applyDefaultProps(instance, a, b)
+    }
+    applyProps({}, props)
+  }
+
+  return instance
 }

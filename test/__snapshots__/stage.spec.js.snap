@@ -1,3 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`stage prop types 1`] = `
+Object {
+  "height": [Function],
+  "onMount": [Function],
+  "options": [Function],
+  "raf": [Function],
+  "renderOnComponentChange": [Function],
+  "width": [Function],
+}
+`;
+
+exports[`stage prop types 2`] = `
+Object {
+  "height": 600,
+  "onMount": [Function],
+  "raf": true,
+  "renderOnComponentChange": true,
+  "width": 800,
+}
+`;
+
 exports[`stage renders a canvas element 1`] = `<canvas />`;

@@ -5,6 +5,7 @@ import invariant from 'fbjs/lib/invariant'
 import { PROPS_DISPLAY_OBJECT } from '../utils/props'
 import { runningInBrowser } from '../helpers'
 import { PixiFiber } from '../reconciler'
+import { injectDevtools } from '../render'
 
 const noop = () => {}
 
@@ -34,6 +35,12 @@ const propTypes = {
 
   // will return renderer
   onMount: PropTypes.func,
+
+  // run ticker at start?
+  raf: PropTypes.bool,
+
+  // render component on component lifecycle changes?
+  renderOnComponentChange: PropTypes.bool,
 
   // PIXI options, see http://pixijs.download/dev/docs/PIXI.Application.html
   options: PropTypes.shape({
@@ -72,6 +79,8 @@ const defaultProps = {
   width: 800,
   height: 600,
   onMount: noop,
+  raf: true,
+  renderOnComponentChange: true,
 }
 
 function getCanvasProps(props) {
@@ -90,18 +99,25 @@ class Stage extends React.Component {
   }
 
   componentDidMount() {
-    const { onMount, children, width, height, options } = this.props
+    const { onMount, children, width, height, options, raf } = this.props
 
     this.app = new PIXI.Application(width, height, {
       ...options,
       view: this._canvas,
     })
 
+    if (!raf) {
+      this.app.ticker.stop()
+      this.app.ticker.autoStart = false
+    }
+
     this.mountNode = PixiFiber.createContainer(this.app.stage)
     PixiFiber.updateContainer(children, this.mountNode, this)
-    // this.mountNode = renderFromComponent(children, this.app.stage, this, true)
+
+    injectDevtools()
 
     onMount(this.app.renderer)
+    this.renderStage()
   }
 
   componentDidUpdate(prevProps, prevState, prevContext) {
@@ -114,11 +130,22 @@ class Stage extends React.Component {
 
     // handle resolution ?
 
-    // renderFromComponent(children, this.mountNode, this)
+    // flush fiber
+    PixiFiber.updateContainer(children, this.mountNode, this)
+    this.renderStage()
+  }
+
+  renderStage() {
+    const { renderOnComponentChange, raf } = this.props
+
+    if (!raf && renderOnComponentChange) {
+      this.app.renderer.render(this.app.stage)
+    }
   }
 
   componentWillUnmount() {
-    // renderFromComponent(null, this.mountNode, this)
+    PixiFiber.updateContainer(null, this.mountNode, this)
+    this.renderStage()
   }
 
   render() {

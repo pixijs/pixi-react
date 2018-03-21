@@ -13,7 +13,7 @@ jest.mock('../src/helpers', () => ({
 
 jest.mock('../src/reconciler')
 
-describe.only('stage', () => {
+describe('stage', () => {
   beforeEach(() => {
     jest.resetAllMocks()
     mockToSpy('../src/reconciler')

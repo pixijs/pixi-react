@@ -9,7 +9,7 @@
   "scripts": {
     "eslint": "eslint .",
     "build": "rimraf ./lib && babel src -d lib",
-    "test": "jest"
+    "test": "jest --silent"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.42",

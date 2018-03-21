@@ -17,3 +17,5 @@ export const hasKey = collection => {
 }
 
 export const not = boolFn => (...args) => !boolFn(...args)
+
+export const runningInBrowser = () => Boolean(window)

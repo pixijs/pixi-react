@@ -71,7 +71,6 @@ export default {
   },
 
   shouldDeprioritizeSubtree(type, props) {
-    console.log(`shouldDeprioritizeSubtree`)
     const isAlphaVisible = typeof props.alpha === 'undefined' || props.alpha > 0
     const isRenderable = typeof props.renderable === 'undefined' || props.renderable === true
     const isVisible = typeof props.visible === 'undefined' || props.visible === true

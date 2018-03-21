@@ -37,35 +37,6 @@ export function render(element, container, callback = undefined) {
 }
 
 /**
- * Render from Component
- *
- * @param {*} element
- * @param {*} container
- * @param {*} parentComponent
- * @param {boolean} createContainer
- * @param {Function} callback
- */
-export function renderFromComponent(
-  element,
-  container,
-  parentComponent,
-  createContainer = false,
-  callback = undefined
-) {
-  invariant(container instanceof PIXI.Container, 'Invalid argument `container`, expected instance of `PIXI.Container`.')
-
-  let mountNode = container
-
-  if (createContainer) {
-    mountNode = PixiFiber.createContainer(container)
-    injectDevtools()
-  }
-
-  PixiFiber.updateContainer(element, container, parentComponent, callback)
-  return mountNode
-}
-
-/**
  * Inject into React Devtools
  */
 export function injectDevtools() {

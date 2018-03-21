@@ -180,28 +180,13 @@ describe('stage', () => {
     test('ticker running on mount', async () => {
       const el = renderer.create(<Stage />)
       const app = el.getInstance().app
-
-      const tick = jest.fn()
-      app.ticker.add(tick)
-
-      await new Promise(resolve => setTimeout(resolve, 200))
-
       expect(app.ticker.started).toBeTruthy()
-      expect(tick.mock.calls.length).toBeGreaterThan(1)
-      app.ticker.remove(tick)
     })
 
     test('ticker not running on mount with prop raf to false', async () => {
       const el = renderer.create(<Stage raf={false} />)
       const app = el.getInstance().app
-
-      const tick = jest.fn()
-      app.ticker.add(tick)
-
-      await new Promise(resolve => setTimeout(resolve, 200))
-      expect(tick.mock.calls.length).toEqual(0)
       expect(app.ticker.started).toBeFalsy()
-      app.ticker.remove(tick)
     })
 
     test('render stage on component update with raf to false', () => {

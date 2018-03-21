@@ -1,7 +1,10 @@
 import React from 'react'
+import * as PIXI from 'pixi.js'
 import PropTypes from 'prop-types'
 import invariant from 'fbjs/lib/invariant'
 import { PROPS_DISPLAY_OBJECT } from '../utils/props'
+import { runningInBrowser } from '../helpers'
+import { PixiFiber } from '../reconciler'
 import { renderFromComponent } from '../render'
 
 const noop = () => {}
@@ -30,10 +33,7 @@ const propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
 
-  // use builtin ticker? default=true
-  useTicker: PropTypes.bool,
-
-  // will return canvas and renderer instance
+  // will return renderer
   onMount: PropTypes.func,
 
   // PIXI options, see http://pixijs.download/dev/docs/PIXI.Application.html
@@ -72,7 +72,6 @@ const propTypes = {
 const defaultProps = {
   width: 800,
   height: 600,
-  useTicker: true,
   onMount: noop,
 }
 
@@ -88,18 +87,22 @@ class Stage extends React.Component {
   _canvas = null
 
   componentWillMount() {
-    invariant(!!window, `Cannot mount Stage, window object is not defined`)
+    invariant(runningInBrowser(), `Cannot mount Stage, window object is not defined`)
   }
 
   componentDidMount() {
-    const { children, width, height, options } = this.props
+    const { onMount, children, width, height, options } = this.props
 
     this.app = new PIXI.Application(width, height, {
       ...options,
       view: this._canvas,
     })
 
-    this.mountNode = renderFromComponent(children, this.app.stage, this, true)
+    this.mountNode = PixiFiber.createContainer(this.app.stage)
+    PixiFiber.updateContainer(children, this.mountNode, this)
+    // this.mountNode = renderFromComponent(children, this.app.stage, this, true)
+
+    onMount(this.app.renderer)
   }
 
   componentDidUpdate(prevProps, prevState, prevContext) {
@@ -107,22 +110,23 @@ class Stage extends React.Component {
 
     // handle resize
     if (prevProps.height !== height || prevProps.width !== width) {
-      this.app.resize(width, height)
+      this.app.renderer.resize(width, height)
     }
 
     // handle resolution ?
 
-    renderFromComponent(children, this.mountNode, this)
+    // renderFromComponent(children, this.mountNode, this)
   }
 
   componentWillUnmount() {
-    renderFromComponent(null, this.mountNode, this)
+    // renderFromComponent(null, this.mountNode, this)
   }
 
   render() {
     const { options } = this.props
 
-    if (!options && options.view) {
+    if (options && options.view) {
+      invariant(options.view instanceof HTMLCanvasElement, 'options.view needs to be a `HTMLCanvasElement`')
       return null
     }
 

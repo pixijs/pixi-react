@@ -3,6 +3,7 @@ import * as PIXI from 'pixi.js'
 import { render, roots } from '../src/render'
 import hostconfig from '../src/reconciler/hostconfig'
 import { Container, Text } from '../src'
+import { getCall, mockToSpy } from './__utils__/mock'
 
 jest.mock('../src/reconciler/hostconfig')
 
@@ -12,16 +13,7 @@ describe('reconciler', () => {
 
   beforeEach(() => {
     jest.resetAllMocks()
-
-    // create spies of mock functions
-    Object.keys(hostconfig).forEach(methodName => {
-      const method = hostconfig[methodName]
-      if (typeof method === 'function') {
-        method.mockImplementation((...args) => {
-          return require.requireActual('../src/reconciler/hostconfig').default[methodName](...args)
-        })
-      }
-    })
+    mockToSpy('../src/reconciler/hostconfig')
   })
 
   afterEach(() => roots.clear())
@@ -34,17 +26,20 @@ describe('reconciler', () => {
         </Container>
       )
 
-      expect(hostconfig.createInstance).toHaveBeenCalledTimes(2)
+      const m = getCall(hostconfig.createInstance)
 
-      expect(hostconfig.createInstance.mock.calls[0][0]).toEqual('Text')
-      expect(hostconfig.createInstance.mock.calls[0][1]).toEqual({ text: 'foo' })
-      expect(hostconfig.createInstance.mock.calls[0][2]).toBeInstanceOf(PIXI.Container)
+      expect(m.fn).toHaveBeenCalledTimes(2)
+      expect(m.all.map(([ins]) => ins)).toEqual(['Text', 'Container'])
 
-      expect(hostconfig.createInstance.mock.calls[1][0]).toEqual('Container')
-      expect(hostconfig.createInstance.mock.calls[1][1]).toHaveProperty('x', 0)
-      expect(hostconfig.createInstance.mock.calls[1][1]).toHaveProperty('y', 0)
-      expect(hostconfig.createInstance.mock.calls[1][1]).toHaveProperty('children')
-      expect(hostconfig.createInstance.mock.calls[1][1].children.type).toEqual('Text')
+      const text = m(0)
+      expect(text.args[1]).toEqual({ text: 'foo' })
+      expect(text.args[2]).toBeInstanceOf(PIXI.Container)
+
+      const container = m(1).args[1]
+      expect(container).toHaveProperty('x', 0)
+      expect(container).toHaveProperty('y', 0)
+      expect(container).toHaveProperty('children')
+      expect(container.children.type).toEqual('Text')
     })
 
     test('append children', () => {
@@ -54,9 +49,10 @@ describe('reconciler', () => {
         </Container>
       )
 
-      expect(hostconfig.appendInitialChild).toHaveBeenCalledTimes(2)
-      expect(hostconfig.appendInitialChild.mock.calls[0][1]).toBeInstanceOf(PIXI.Text)
-      expect(hostconfig.appendInitialChild.mock.calls[0][0]).toBeInstanceOf(PIXI.Container)
+      const m = getCall(hostconfig.appendInitialChild)
+      expect(m.fn).toHaveBeenCalledTimes(2)
+      expect(m(0).args[0]).toBeInstanceOf(PIXI.Container)
+      expect(m(0).args[1]).toBeInstanceOf(PIXI.Text)
     })
 
     test('PIXI elements', () => {
@@ -66,14 +62,60 @@ describe('reconciler', () => {
         </Container>
       )
 
-      const container = hostconfig.appendInitialChild.mock.calls[0][0]
+      const m = getCall(hostconfig.appendInitialChild)(0)
+
+      const container = m.args[0]
       expect(container.x).toEqual(10)
       expect(container.y).toEqual(100)
       expect(container.pivot.x).toEqual(0.5)
       expect(container.pivot.y).toEqual(0.5)
 
-      const text = hostconfig.appendInitialChild.mock.calls[0][1]
+      const text = m.args[1]
       expect(text.text).toEqual('foobar')
     })
+  })
+
+  describe('rerender', () => {
+    test('remove children', () => {
+      renderInContainer(
+        <Container>
+          <Text text="one" />
+          <Text text="two" />
+          <Text text="three" />
+        </Container>
+      )
+
+      renderInContainer(
+        <Container>
+          <Text text="one" />
+        </Container>
+      )
+
+      const m = getCall(hostconfig.mutation.removeChild)
+      expect(m.fn).toHaveBeenCalledTimes(2)
+      expect(m.all.map(([_, ins]) => ins.text)).toEqual(['two', 'three'])
+    })
+  })
+
+  test('insert before', () => {
+    renderInContainer(
+      <Container>
+        <Text key={1} text="one" />
+        <Text key={3} text="three" />
+      </Container>
+    )
+
+    renderInContainer(
+      <Container>
+        <Text key={1} text="one" />
+        <Text key={2} text="two" />
+        <Text key={3} text="three" />
+      </Container>
+    )
+
+    const m = getCall(hostconfig.mutation.insertBefore)(0)
+    expect(m.args[0]).toBeInstanceOf(PIXI.Container) // parent
+    expect(m.args[1].text).toEqual('two') // child
+    expect(m.args[2].text).toEqual('three') // beforeChild
   })
 })

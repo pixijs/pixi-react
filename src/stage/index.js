@@ -5,7 +5,6 @@ import invariant from 'fbjs/lib/invariant'
 import { PROPS_DISPLAY_OBJECT } from '../utils/props'
 import { runningInBrowser } from '../helpers'
 import { PixiFiber } from '../reconciler'
-import { renderFromComponent } from '../render'
 
 const noop = () => {}
 

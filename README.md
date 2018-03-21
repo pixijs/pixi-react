@@ -1,7 +1,7 @@
 # React Fiber renderer for PIXI
 
 ![](https://img.shields.io/badge/tested_with-jest-green.svg)
-[![CircleCI](https://circleci.com/gh/inlet/react-pixi-fiber.svg?style=svg&circle-token=d485cdd81a76e041173d51205e62ac1e5dce3f9b)](https://circleci.com/gh/inlet/react-pixi-fiber)
+[![CircleCI](https://circleci.com/gh/inlet/react-pixi-fiber.svg?style=shield&circle-token=d485cdd81a76e041173d51205e62ac1e5dce3f9b)](https://circleci.com/gh/inlet/react-pixi-fiber)
 ![](https://img.shields.io/badge/license-MIT-green.svg) 
 ![](https://img.shields.io/badge/code_style-prettier-blue.svg)
 ![](https://img.shields.io/badge/react-fiber-ff69b4.svg)

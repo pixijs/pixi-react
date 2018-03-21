@@ -1,7 +1,7 @@
 import React from 'react'
 import * as PIXI from 'pixi.js'
 import renderer from 'react-test-renderer'
-import { PixiFiber } from '../src/reconciler'
+import { PixiFiber, PACKAGE_NAME, VERSION } from '../src/reconciler'
 import { runningInBrowser } from '../src/helpers'
 import { Stage, Container, Text } from '../src'
 import { mockToSpy } from './__utils__/mock'
@@ -18,6 +18,11 @@ describe('stage', () => {
     jest.resetAllMocks()
     mockToSpy('../src/reconciler')
     runningInBrowser.mockImplementation(() => true)
+  })
+
+  test('prop types', () => {
+    expect(Stage.propTypes).toMatchSnapshot()
+    expect(Stage.defaultProps).toMatchSnapshot()
   })
 
   test('prevent mount when window is not found', () => {
@@ -39,7 +44,7 @@ describe('stage', () => {
     expect(tree).toBeNull()
   })
 
-  test('invariant options.view', () => {
+  test('validate options.view', () => {
     const options = { view: 123 }
     expect(() => renderer.create(<Stage options={options} />).toJSON()).toThrow(
       'options.view needs to be a `HTMLCanvasElement`'
@@ -123,8 +128,6 @@ describe('stage', () => {
   })
 
   test('call PixiFiber.updateContainer on componentDidMount', () => {
-    PixiFiber.updateContainer.mockClear()
-
     const el = renderer.create(
       <Stage>
         <Text text="Hello World!" />
@@ -135,5 +138,90 @@ describe('stage', () => {
 
     expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1)
     expect(PixiFiber.updateContainer).toHaveBeenCalledWith(<Text text="Hello World!" />, instance.mountNode, instance)
+  })
+
+  test('call PixiFiber.injectIntoDevtools on componentDidMount', () => {
+    renderer.create(<Stage />)
+
+    expect(PixiFiber.injectIntoDevTools).toHaveBeenCalledTimes(1)
+    expect(PixiFiber.injectIntoDevTools).toHaveBeenCalledWith(
+      expect.objectContaining({
+        findFiberByHostInstance: PixiFiber.findFiberByHostInstance,
+        bundleType: 1,
+        version: VERSION,
+        rendererPackageName: PACKAGE_NAME,
+      })
+    )
+  })
+
+  test('call PixiFiber.updateContainer on componentDidUpdate', () => {
+    const el = renderer.create(<Stage />)
+    const instance = el.getInstance()
+
+    PixiFiber.updateContainer.mockClear()
+    el.update(<Stage />)
+
+    expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1)
+    expect(PixiFiber.updateContainer).toHaveBeenCalledWith(undefined, instance.mountNode, instance)
+  })
+
+  test('call PixiFiber.updateContainer on componentWillUnmount', () => {
+    const el = renderer.create(<Stage />)
+    const instance = el.getInstance()
+
+    PixiFiber.updateContainer.mockClear()
+    el.unmount()
+
+    expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1)
+    expect(PixiFiber.updateContainer).toHaveBeenCalledWith(null, instance.mountNode, instance)
+  })
+
+  describe('pixi application', () => {
+    test('ticker running on mount', async () => {
+      const el = renderer.create(<Stage />)
+      const app = el.getInstance().app
+
+      const tick = jest.fn()
+      app.ticker.add(tick)
+
+      await new Promise(resolve => setTimeout(resolve, 200))
+
+      expect(app.ticker.started).toBeTruthy()
+      expect(tick.mock.calls.length).toBeGreaterThan(1)
+      app.ticker.remove(tick)
+    })
+
+    test('ticker not running on mount with prop raf to false', async () => {
+      const el = renderer.create(<Stage raf={false} />)
+      const app = el.getInstance().app
+
+      const tick = jest.fn()
+      app.ticker.add(tick)
+
+      await new Promise(resolve => setTimeout(resolve, 200))
+      expect(tick.mock.calls.length).toEqual(0)
+      expect(app.ticker.started).toBeFalsy()
+      app.ticker.remove(tick)
+    })
+
+    test('render stage on component update with raf to false', () => {
+      const el = renderer.create(<Stage raf={false} />)
+      const app = el.getInstance().app
+
+      jest.spyOn(app.renderer, 'render')
+      el.update(<Stage raf={false} />)
+
+      expect(app.renderer.render).toHaveBeenCalledTimes(1)
+    })
+
+    test('not render stage on component update with renderOnComponentChange to false', () => {
+      const el = renderer.create(<Stage raf={false} renderOnComponentChange={false} />)
+      const app = el.getInstance().app
+
+      jest.spyOn(app.renderer, 'render')
+      el.update(<Stage raf={false} renderOnComponentChange={false} />)
+
+      expect(app.renderer.render).not.toHaveBeenCalled()
+    })
   })
 })

@@ -29,7 +29,6 @@ export const mockToSpy = path => {
   return traverse(original, mocked)
 }
 
-
 export const getCall = ins => {
   const r = index => {
     if (Array.isArray(ins.mock.calls[index])) {

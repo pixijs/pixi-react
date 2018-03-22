@@ -25,7 +25,7 @@ function removeChild(parent, child) {
 }
 
 function insertBefore(parent, child, beforeChild) {
-  invariant(child !== beforeChild, 'ReactPixiFiber cannot insert node before itself')
+  invariant(child !== beforeChild, 'PixiFiber cannot insert node before itself')
 
   const childExists = parent.children.indexOf(child) !== -1
   const index = parent.getChildIndex(beforeChild)
@@ -79,7 +79,7 @@ export default {
   },
 
   createTextInstance(text, rootContainerInstance, internalInstanceHandler) {
-    invariant(false, 'ReactPixiFiber does not support text instances. Use `<Text /> component` instead.')
+    invariant(false, 'PixiFiber does not support text instances. Use `<Text /> component` instead.')
   },
 
   resetTextContent(pixiElement) {

@@ -4,3 +4,5 @@
 # Build products
 lib/
 coverage/
+
+rollup.config.js

@@ -42,6 +42,8 @@ const propTypes = {
   // render component on component lifecycle changes?
   renderOnComponentChange: PropTypes.bool,
 
+  children: PropTypes.node,
+
   // PIXI options, see http://pixijs.download/dev/docs/PIXI.Application.html
   options: PropTypes.shape({
     antialias: PropTypes.bool,
@@ -83,7 +85,7 @@ const defaultProps = {
   renderOnComponentChange: true,
 }
 
-function getCanvasProps(props) {
+export function getCanvasProps(props) {
   const reserved = [...Object.keys(propTypes), ...Object.keys(PROPS_DISPLAY_OBJECT)]
 
   return Object.keys(props)

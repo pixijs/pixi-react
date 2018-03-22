@@ -1,15 +1,20 @@
 {
-  "name": "react-pixi-fiber",
+  "name": "@inlet/react-pixi",
   "version": "0.0.1",
   "description": "Write PixiJS applications using React declarative style.",
-  "main": "index.js",
+  "main": "dist/react-pixi.production.umd.js",
+  "module": "dist/react-pixi.production.es5.js",
   "author": "Patrick Brouwer",
   "license": "MIT",
   "private": true,
   "scripts": {
     "eslint": "eslint .",
-    "build": "rimraf ./lib && babel src -d lib",
-    "test": "jest --silent"
+    "build:watch": "NODE_ENV=development rollup -c --watch",
+    "build:dev": "NODE_ENV=development rollup -c",
+    "build:prod": "rollup -c",
+    "build": "rimraf ./dist && npm run build:dev && npm run build:prod",
+    "test": "jest --silent",
+    "test:watch": "jest --silent --watch"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.42",
@@ -38,7 +43,16 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-test-renderer": "^16.2.0",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "rollup": "^0.57.1",
+    "rollup-plugin-babel": "^4.0.0-beta.2",
+    "rollup-plugin-commonjs": "^9.1.0",
+    "rollup-plugin-json": "^2.3.0",
+    "rollup-plugin-node-globals": "^1.2.0",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-uglify": "^3.0.0"
   },
   "peerDependencies": {
     "pixi.js": "^4.7.1",

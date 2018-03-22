@@ -4,6 +4,7 @@ import renderer from 'react-test-renderer'
 import { PixiFiber, PACKAGE_NAME, VERSION } from '../src/reconciler'
 import { runningInBrowser } from '../src/helpers'
 import { Stage, Container, Text } from '../src'
+import { getCanvasProps } from '../src/stage'
 import { mockToSpy } from './__utils__/mock'
 
 jest.mock('../src/helpers', () => ({
@@ -18,6 +19,18 @@ describe('stage', () => {
     jest.resetAllMocks()
     mockToSpy('../src/reconciler')
     runningInBrowser.mockImplementation(() => true)
+  })
+
+  test('filter out reserved props from getCanvasProps', () => {
+    const props = {
+      children: [],
+      options: { foo: 'bar', bar: 'foo' },
+      raf: true,
+      onMount: () => {},
+      width: 100,
+      height: 400,
+    }
+    expect(getCanvasProps(props)).toEqual({})
   })
 
   test('prop types', () => {
@@ -146,7 +159,7 @@ describe('stage', () => {
     expect(PixiFiber.injectIntoDevTools).toHaveBeenCalledTimes(1)
     expect(PixiFiber.injectIntoDevTools).toHaveBeenCalledWith(
       expect.objectContaining({
-        findFiberByHostInstance: PixiFiber.findFiberByHostInstance,
+        findHostInstanceByFiber: PixiFiber.findHostInstance,
         bundleType: 1,
         version: VERSION,
         rendererPackageName: PACKAGE_NAME,

@@ -1,4 +1,5 @@
 import { applyDefaultProps } from './props'
+import * as components from '../components'
 import idx from 'idx'
 
 /**
@@ -21,7 +22,7 @@ export const TYPES = {
 }
 
 const ELEMENTS = Object.keys(TYPES).reduce(
-  (elements, type) => ({ ...elements, [type]: require('../components')[type] }),
+  (elements, type) => ({ ...elements, [type]: components[type] }),
   {}
 )
 

@@ -83,7 +83,10 @@ export function applyDefaultProps(instance, oldProps, newProps) {
     isFunction(newProps[evt], instance.on) && instance.on(evt, newProps[evt])
   })
 
-  let props = Object.keys(newProps || {}).filter(not(hasKey(PROPS_RESERVED)))
+  let props = Object.keys(newProps || {})
+    .filter(not(hasKey(PROPS_RESERVED)))
+    .filter(not(hasKey(eventHandlers)))
+
   props.forEach(prop => {
     const value = newProps[prop]
 

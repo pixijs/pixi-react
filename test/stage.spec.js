@@ -159,7 +159,7 @@ describe('stage', () => {
     expect(PixiFiber.injectIntoDevTools).toHaveBeenCalledTimes(1)
     expect(PixiFiber.injectIntoDevTools).toHaveBeenCalledWith(
       expect.objectContaining({
-        findFiberByHostInstance: PixiFiber.findFiberByHostInstance,
+        findHostInstanceByFiber: PixiFiber.findHostInstance,
         bundleType: 1,
         version: VERSION,
         rendererPackageName: PACKAGE_NAME,

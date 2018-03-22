@@ -7,17 +7,18 @@ import replace from 'rollup-plugin-replace'
 import globals from 'rollup-plugin-node-globals'
 import uglify from 'rollup-plugin-uglify'
 import camelCase from 'lodash/camelCase'
+import upperFirst from 'lodash/upperFirst'
 
 const nodeEnv = process.env.NODE_ENV || 'production'
 const production = nodeEnv === 'production'
-const libraryName = 'react-pixi-fiber'
+const libraryName = 'react-pixi'
 const outputFile = format => `dist/${libraryName}.${nodeEnv}.${format}.js`
 
 export default {
   input: 'src/index.js',
   output: [
     {
-      file: outputFile('umd'), name: camelCase(libraryName),
+      file: outputFile('umd'), name: upperFirst(camelCase(libraryName)),
       format: 'umd',
       globals: { 'pixi.js': 'PIXI', 'react': 'React' },
       sourcemap: !production
@@ -29,16 +30,20 @@ export default {
   ],
   plugins: [
     json(),
-    resolve(),
     babel({
       exclude: 'node_modules/**',
     }),
-    replace({
-      __DEV__: production ? 'false' : 'true',
-      'process.env.NODE_ENV': production ? 'production' : 'development',
+    resolve({
+      browser: true,
+      jsnext: true,
+      main: true,
     }),
     commonjs({
-      ignoreGlobal: false
+      ignoreGlobal: false,
+    }),
+    replace({
+      __DEV__: production ? 'false' : 'true',
+      'process.env.NODE_ENV': production ? '"production"' : '"development"',
     }),
     sourceMaps(),
     globals(),

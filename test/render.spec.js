@@ -60,7 +60,7 @@ describe('render', () => {
         bundleType: 1,
         version: VERSION,
         rendererPackageName: PACKAGE_NAME,
-        findFiberByHostInstance: PixiFiber.findFiberByHostInstance,
+        findHostInstanceByFiber: PixiFiber.findHostInstance,
       })
     )
   })

@@ -158,10 +158,7 @@ class Stage extends React.Component {
       return null
     }
 
-    const canvasProps = getCanvasProps(this.props)
-    console.log({canvasProps})
-
-    return <canvas {...canvasProps} ref={c => (this._canvas = c)} />
+    return <canvas {...getCanvasProps(this.props)} ref={c => (this._canvas = c)} />
   }
 }
 

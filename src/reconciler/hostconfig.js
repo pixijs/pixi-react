@@ -35,11 +35,11 @@ function insertBefore(parent, child, beforeChild) {
 
 export default {
   getRootHostContext(rootContainerInstance) {
-    return emptyObject
+    return rootContainerInstance
   },
 
   getChildHostContext() {
-    return emptyObject
+    return {}
   },
 
   getPublicInstance(instance) {

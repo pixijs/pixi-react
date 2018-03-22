@@ -9,10 +9,12 @@
   "private": true,
   "scripts": {
     "eslint": "eslint .",
+    "build:watch": "NODE_ENV=development rollup -c --watch",
     "build:dev": "NODE_ENV=development rollup -c",
     "build:prod": "rollup -c",
     "build": "rimraf ./dist && npm run build:dev && npm run build:prod",
-    "test": "jest --silent"
+    "test": "jest --silent",
+    "test:watch": "jest --silent --watch"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.42",

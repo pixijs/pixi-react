@@ -2,6 +2,7 @@
 
 exports[`stage prop types 1`] = `
 Object {
+  "children": [Function],
   "height": [Function],
   "onMount": [Function],
   "options": [Function],

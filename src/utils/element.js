@@ -1,6 +1,7 @@
+import invariant from 'fbjs/lib/invariant'
+import idx from 'idx'
 import { applyDefaultProps } from './props'
 import * as components from '../components'
-import idx from 'idx'
 
 /**
  * Available tag types
@@ -21,10 +22,14 @@ export const TYPES = {
   Rope: 'Rope',
 }
 
-const ELEMENTS = Object.keys(TYPES).reduce(
-  (elements, type) => ({ ...elements, [type]: components[type] }),
-  {}
-)
+const ELEMENTS = Object.keys(TYPES).reduce((elements, type) => ({ ...elements, [type]: components[type] }), {})
+
+/**
+ * Inject types
+ *
+ * @type {Object}
+ */
+export const TYPES_INJECTED = {}
 
 /**
  * Create an element based on tag type
@@ -47,6 +52,13 @@ export function createElement(type, props = {}, root = null) {
 
   if (!instance) {
     // not found, is there any injected custom component?
+    const injected = TYPES_INJECTED[type]
+    if (injected) {
+      instance = injected.create(props)
+      instance.didMount = injected.didMount ? injected.didMount.bind(instance) : undefined
+      instance.willUnmount = injected.willUnmount ? injected.willUnmount.bind(instance) : undefined
+      instance.applyProps = injected.applyProps ? injected.applyProps.bind(instance) : undefined
+    }
   }
 
   // apply initial props!
@@ -59,4 +71,17 @@ export function createElement(type, props = {}, root = null) {
   }
 
   return instance
+}
+
+/**
+ * Create Component
+ *
+ * @param {string} type
+ * @param {Object} lifecycle methods
+ */
+export function PixiComponent(type, lifecycle) {
+  invariant(!!type, 'Expect type to be defined, got `%s`', type)
+  invariant(!TYPES[type], 'Component `%s` could not be created, already exists in default components.', type)
+
+  TYPES_INJECTED[type] = lifecycle
 }

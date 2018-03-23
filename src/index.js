@@ -1,6 +1,7 @@
 import { TYPES } from './utils/element'
 import { render } from './render'
 import Stage from './stage'
+import Provider from './stage/provider'
 
 /**
  * -------------------------------------------
@@ -8,7 +9,7 @@ import Stage from './stage'
  * -------------------------------------------
  */
 
-export { render, Stage }
+export { render, Stage, Provider }
 
 export const BitmapText = TYPES.BitmapText
 export const Container = TYPES.Container

@@ -4,6 +4,7 @@ import renderer from 'react-test-renderer'
 import { PixiFiber, PACKAGE_NAME, VERSION } from '../src/reconciler'
 import { runningInBrowser } from '../src/helpers'
 import { Stage, Container, Text } from '../src'
+import Provider from '../src/stage/provider'
 import { getCanvasProps } from '../src/stage'
 import { mockToSpy } from './__utils__/mock'
 
@@ -220,6 +221,29 @@ describe('stage', () => {
       el.update(<Stage raf={false} renderOnComponentChange={false} />)
 
       expect(app.renderer.render).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('provider', () => {
+    test('pass down app to child component', () => {
+      const fn = jest.fn(() => <Container />)
+      const el = renderer.create(
+        <Stage>
+          <Container>
+            <Container>
+              <Container>
+                <Provider>{fn}</Provider>
+              </Container>
+            </Container>
+          </Container>
+        </Stage>
+      )
+
+      const instance = el.getInstance()
+
+      expect(fn).toHaveBeenCalled()
+      expect(fn).toHaveBeenCalledTimes(1)
+      expect(fn).toHaveBeenCalledWith(instance.app)
     })
   })
 })

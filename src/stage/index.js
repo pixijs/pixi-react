@@ -95,6 +95,11 @@ export function getCanvasProps(props) {
 
 class Stage extends React.Component {
   _canvas = null
+  app = null
+
+  getChildContext() {
+    return { app: this.app }
+  }
 
   componentWillMount() {
     invariant(runningInBrowser(), `Cannot mount Stage, window object is not defined`)
@@ -164,5 +169,6 @@ class Stage extends React.Component {
 
 Stage.propTypes = propTypes
 Stage.defaultProps = defaultProps
+Stage.childContextTypes = { app: PropTypes.object }
 
 export default Stage

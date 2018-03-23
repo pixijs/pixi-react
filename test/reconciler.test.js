@@ -150,9 +150,9 @@ describe('reconciler', () => {
     beforeEach(() => {
       hostconfig.createInstance.mockImplementation((...args) => {
         const ins = createElement(...args)
-        ins.didMount = (...args) => didMount(ins, ...args)
-        ins.willUnmount = (...args) => willUnmount(ins, ...args)
-        ins.applyProps = (...args) => applyProps(ins, ...args)
+        ins.didMount = (...args) => didMount(...args)
+        ins.willUnmount = (...args) => willUnmount(...args)
+        ins.applyProps = (...args) => applyProps(...args)
         return ins
       })
     })

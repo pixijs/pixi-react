@@ -8,6 +8,7 @@ Object {
   "Mesh": "Mesh",
   "NineSlicePlane": "NineSlicePlane",
   "ParticleContainer": "ParticleContainer",
+  "PixiComponent": [Function],
   "Provider": [Function],
   "Rope": "Rope",
   "Shape": "Shape",

@@ -1,7 +1,6 @@
 import idx from 'idx/lib/idx'
 import invariant from 'fbjs/lib/invariant'
 import performanceNow from 'performance-now'
-import emptyObject from 'fbjs/lib/emptyObject'
 import { createElement } from '../utils/element'
 import { applyDefaultProps } from '../utils/props'
 
@@ -10,14 +9,14 @@ function appendChild(parent, child) {
     parent.addChild(child)
 
     if (typeof child.didMount === 'function') {
-      child.didMount.call(child, parent)
+      child.didMount.call(child, child, parent)
     }
   }
 }
 
 function removeChild(parent, child) {
   if (typeof child.willUnmount === 'function') {
-    child.willUnmount(parent)
+    child.willUnmount.call(child, child, parent)
   }
 
   parent.removeChild(child)
@@ -100,9 +99,9 @@ export default {
     commitUpdate(instance, updatePayload, type, oldProps, newProps) {
       let applyProps = idx(instance, _ => _.applyProps)
       if (typeof applyProps !== 'function') {
-        applyProps = (a, b) => applyDefaultProps(instance, a, b)
+        applyProps = applyDefaultProps
       }
-      applyProps(oldProps, newProps)
+      applyProps(instance, oldProps, newProps)
     },
 
     commitMount(instance, updatePayload, type, oldProps, newProps) {

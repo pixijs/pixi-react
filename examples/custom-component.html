@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>React Pixi - Custom Component</title>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.7.1/pixi.js"></script>
+  <script src="../dist/react-pixi.development.umd.js"></script>
+  <style type="text/css">
+    html,
+    body {
+      height: 100vh;
+      background: #012b30;
+    }
+
+    body {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    canvas {
+      box-shadow: 5px 5px #888888;
+      border: 1px solid #888888;
+    }
+
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+
+  const { Stage, Provider, Container, PixiComponent } = ReactPixi
+
+  class Mover extends React.Component {
+
+    state = { value: 0 }
+    counter = 0
+
+    componentDidMount() {
+      this.setState({ value: this.props.from })
+      this.props.ticker.add(this.tick)
+    }
+
+    componentWillUnmount() {
+      this.props.ticker.remove(this.tick)
+    }
+
+    tick = (delta) => {
+      const { ease, from, to, speed } = this.props
+
+      this.counter += speed * delta
+      const value = from + (to-from) / 2 + ease(this.counter) * (from - to) / 2
+
+      this.setState({ value })
+    }
+
+    render() {
+      return this.props.children({ value: this.state.value, i: this.counter })
+    }
+  }
+
+  const Rectangle = PixiComponent('Rectangle', {
+    create: () => new PIXI.Graphics(),
+    applyProps: (g, _, props) => {
+      const { fill, x, y, width, height } = props
+
+      g.clear()
+      g.beginFill(fill)
+      g.drawRect(x, y, width, height)
+      g.endFill()
+    }
+  })
+
+  const Circle = PixiComponent('Circle', {
+    create: () => new PIXI.Graphics(),
+    applyProps: (g, _, props) => {
+      const { fill, x, y, radius } = props
+
+      g.clear()
+      g.beginFill(fill)
+      g.drawCircle(x, y, radius)
+      g.endFill()
+    }
+  })
+
+  const App = () => (
+    <Stage width={500} height={500} options={{ antialias: true, backgroundColor: 0x012b30 }}>
+      <Provider>
+        {app => (
+          <Container>
+            <Mover ticker={app.ticker} from={0} to={400} ease={Math.sin} speed={0.05}>
+              {({ value, i }) => (
+                <Rectangle x={value}
+                           y={value}
+                           width={100}
+                           height={(100 + Math.cos(i)*50)}
+                           fill={0xff0000} />
+              )}
+            </Mover>
+            <Mover ticker={app.ticker} from={30} to={40} ease={Math.cos} speed={0.1}>
+              {({ value, i }) => (
+                <Circle x={220 + value + Math.sin(i)* 10}
+                        y={220 + value + Math.cos(i/2)* 50}
+                        radius={30 + Math.cos(i/10) * 20} fill={0x00ff00}/>
+              )}
+            </Mover>
+          </Container>
+        )}
+      </Provider>
+    </Stage>
+  )
+
+  ReactDOM.render(<App />, document.getElementById('root'))
+
+</script>
+</body>
+</html>

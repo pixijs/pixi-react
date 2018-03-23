@@ -84,4 +84,6 @@ export function PixiComponent(type, lifecycle) {
   invariant(!TYPES[type], 'Component `%s` could not be created, already exists in default components.', type)
 
   TYPES_INJECTED[type] = lifecycle
+
+  return type
 }

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>React Pixi - Rotating Sprite</title>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.7.1/pixi.js"></script>
+  <script src="../dist/react-pixi.development.umd.js"></script>
+  <style type="text/css">
+    html,
+    body {
+      height: 100vh;
+      background: #012b30;
+    }
+
+    body {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    canvas {
+      box-shadow: 5px 5px #888888;
+      border: 1px solid #888888;
+    }
+
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+
+  const { Stage, Container, Provider, Sprite } = ReactPixi
+
+  class RotatingBunny extends React.Component {
+
+    state = { rotation: 0 }
+
+    componentDidMount() {
+      this.props.app.ticker.add(this.tick)
+    }
+
+    componentWillUnmount() {
+      this.props.app.ticker.remove(this.tick)
+    }
+
+    tick = (delta) => {
+      this.setState(state => ({
+        rotation: state.rotation + 0.1 * delta
+      }))
+    }
+
+    render() {
+      return (
+        <Sprite image="https://i.imgur.com/IaUrttj.png"
+                rotation={this.state.rotation}
+                anchor={[0.5, 0.5]} />
+      )
+    }
+  }
+
+  const App = () => (
+    <Stage width={500} height={500} options={{ backgroundColor: 0x012b30 }}>
+      <Container x={250} y={250}>
+        <Provider>
+          {app => (<RotatingBunny app={app}/>)}
+        </Provider>
+      </Container>
+    </Stage>
+  )
+
+  ReactDOM.render(<App />, document.getElementById('root'))
+
+</script>
+</body>
+</html>

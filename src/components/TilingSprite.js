@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js'
-import { getTextureFromProps } from '../utils/props'
-import omit from 'lodash/omit'
+import { getTextureFromProps, applyDefaultProps } from '../utils/props'
+import { parsePoint } from '../utils/pixi'
 
 const TilingSprite = (root, props) => {
   const { width = 100, height = 100 } = props
@@ -8,11 +8,18 @@ const TilingSprite = (root, props) => {
 
   const ts = new PIXI.extras.TilingSprite(texture, width, height)
 
-  // apply remaining prop members
-  let members = omit(props, 'width', 'height', 'texture', 'image')
-  Object.keys(members).forEach(m => {
-    ts[m] = members[m]
-  })
+  ts.applyProps = (instance, oldProps, newProps) => {
+    const { tileScale, tilePosition, ...props } = newProps
+    applyDefaultProps(instance, oldProps, props)
+
+    if (tilePosition) {
+      instance.tilePosition.set(...parsePoint(tilePosition))
+    }
+
+    if (tileScale) {
+      instance.tileScale.set(...parsePoint(tileScale))
+    }
+  }
 
   return ts
 }

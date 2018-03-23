@@ -1,10 +1,16 @@
 import * as PIXI from 'pixi.js'
+import { applyDefaultProps } from '../utils/props'
 
-const Graphics = (root, props) => {
+const Graphics = () => {
   const g = new PIXI.Graphics()
 
-  if (props.draw) {
-    props.draw.call(g)
+  g.applyProps = (instance, oldProps, newProps) => {
+    const { draw, ...props } = newProps
+    applyDefaultProps(instance, oldProps, props)
+
+    if (draw && typeof draw === 'function') {
+      draw.call(g, g)
+    }
   }
 
   return g

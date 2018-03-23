@@ -15,8 +15,11 @@
     "build": "rimraf ./dist && npm run build:dev && npm run build:prod",
     "test": "jest --silent",
     "test:watch": "jest --silent --watch",
-    "prepublish": "npm run build"
+    "prepublish": "npm run test && npm run eslint && npm run build"
   },
+  "files": [
+    "dist/"
+  ],
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.42",
     "@babel/core": "^7.0.0-beta.42",

@@ -6,7 +6,7 @@
   "module": "dist/react-pixi.production.es5.js",
   "author": "Patrick Brouwer",
   "license": "MIT",
-  "private": true,
+  "repository": "git+https://github.com/inlet/react-pixi.git",
   "scripts": {
     "eslint": "eslint .",
     "build:watch": "NODE_ENV=development rollup -c --watch",

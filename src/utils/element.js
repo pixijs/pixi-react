@@ -65,9 +65,9 @@ export function createElement(type, props = {}, root = null) {
   if (instance) {
     applyProps = idx(instance, _ => _.applyProps)
     if (typeof applyProps !== 'function') {
-      applyProps = (a, b) => applyDefaultProps(instance, a, b)
+      applyProps = applyDefaultProps
     }
-    applyProps({}, props)
+    applyProps(instance, {}, props)
   }
 
   return instance

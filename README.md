@@ -13,9 +13,12 @@ A custom React 16 (Fiber) renderer. Write [PIXI](http://www.pixijs.com/) applica
 
 ## Install
 
-```
-yarn add @inlet/react-pixi
-```
+    yarn add @inlet/react-pixi
+
+or
+
+    npm install @inlet/react-pixi --save
+
 
 ## Usage 
 
@@ -56,10 +59,10 @@ export default new PixiComponent('Rectangle', {
   create: props => {
     return new PIXI.Graphics()
   },
-  didMount: parent => {
+  didMount: (instance, parent) => {
     // apply custom logic on mount
   },
-  willUnmount: parent => {
+  willUnmount: (instance, parent) => {
     // clean up before removal
   },
   applyProps: (instance, oldProps, newProps) => {

@@ -9,15 +9,4 @@ import TilingSprite from './TilingSprite'
 import Mesh from './Mesh'
 import Rope from './Rope'
 
-export {
-  BitmapText,
-  Container,
-  Graphics,
-  NineSlicePlane,
-  ParticleContainer,
-  Sprite,
-  Text,
-  TilingSprite,
-  Mesh,
-  Rope,
-}
+export { BitmapText, Container, Graphics, NineSlicePlane, ParticleContainer, Sprite, Text, TilingSprite, Mesh, Rope }

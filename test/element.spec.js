@@ -1,6 +1,6 @@
 import React from 'react'
 import * as PIXI from 'pixi.js'
-import { createElement, TYPES } from '../src/utils/element'
+import { createElement, TYPES, TYPES_INJECTED, PixiComponent } from '../src/utils/element'
 
 import { emptyTexture } from './__fixtures__/textures'
 import { desyrel } from './__fixtures__/bitmapfonts'
@@ -65,5 +65,68 @@ describe('createElement', () => {
 
   test('get undefined', () => {
     expect(createElement('INVALID')).toBeUndefined()
+  })
+})
+
+describe('PixiComponent', () => {
+  afterEach(() => {
+    Object.keys(TYPES_INJECTED).forEach(k => {
+      delete TYPES_INJECTED[k]
+    })
+  })
+
+  test('type must be defined', () => {
+    expect(() => new PixiComponent(null)).toThrow('Expect type to be defined, got `null`')
+  })
+
+  test('cannot override existing component', () => {
+    expect(() => new PixiComponent('Text', {})).toThrow(
+      'Component `Text` could not be created, already exists in default components.'
+    )
+  })
+
+  test('inject custom component', () => {
+    let lifecycle = { create: props => {} }
+    new PixiComponent('Rectangle', lifecycle)
+    expect(TYPES_INJECTED).toHaveProperty('Rectangle', lifecycle)
+  })
+
+  test('create injected component', () => {
+    const scoped = jest.fn()
+
+    const lifecycle = {
+      create: jest.fn(() => new PIXI.Graphics()),
+      didMount: jest.fn(),
+      willUnmount: jest.fn(),
+      applyProps: jest.fn(function() {
+        scoped(this)
+      }),
+    }
+
+    new PixiComponent('Rectangle', lifecycle)
+
+    const props = { x: 100, y: 200 }
+    const element = createElement('Rectangle', props)
+
+    expect(element.didMount).toBeDefined()
+    expect(element.willUnmount).toBeDefined()
+    expect(element.applyProps).toBeDefined()
+    expect(element).toBeInstanceOf(PIXI.Graphics)
+    expect(lifecycle.create).toHaveBeenCalledTimes(1)
+    expect(lifecycle.create).toHaveBeenCalledWith(props)
+    expect(lifecycle.applyProps).toHaveBeenCalledTimes(1)
+    expect(scoped).toHaveBeenCalledTimes(1)
+    expect(scoped).toHaveBeenCalledWith(element)
+  })
+
+  test('create injected component without lifecycle methods', () => {
+    new PixiComponent('Rectangle', {
+      create: () => new PIXI.Graphics(),
+    })
+
+    const element = createElement('Rectangle')
+    expect(element.didMount).toBeUndefined()
+    expect(element.willUnmount).toBeUndefined()
+    expect(element.applyProps).toBeUndefined()
   })
 })

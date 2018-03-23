@@ -1,8 +1,9 @@
 # Third party
-**/node_modules
+node_modules/
 
-# Build products
 lib/
-coverage/
+test/
+examples/
+dist/
 
 rollup.config.js

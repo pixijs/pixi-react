@@ -143,18 +143,6 @@ declare namespace ReactPixi {
 
   class Provider extends React.Component<ProviderProps> {}
 
-  function withPixiApp(baseComponent: React.Component): React.Component;
-
-  /**
-   * -------------------------------------------
-   * Renderer
-   * -------------------------------------------
-   */
-
-  function render(pixiElement: PIXI.DisplayObject | PIXI.DisplayObject[],
-                  pixiContainer: PIXI.Container,
-                  callback?: Function): void;
-
   /**
    * -------------------------------------------
    * Custom Component
@@ -168,30 +156,41 @@ declare namespace ReactPixi {
     applyProps(instance: PIXI.DisplayObject, oldProps: object, newProps: object): void;
   }
 
-  function PixiComponent<T extends string>(type: T, lifecycle: LifeCycleMethods): T
-
   /**
    * -------------------------------------------
    * Public API
    * -------------------------------------------
    */
-  
+
   interface ReactPixiStatic {
     Stage: Stage;
-    render: render;
-    withPixiApp: withPixiApp;
+
+    render(pixiElement: PIXI.DisplayObject | PIXI.DisplayObject[], pixiContainer: PIXI.Container, callback?: Function): void;
+
+    withPixiApp(baseComponent: React.Component): React.Component;
+
+    PixiComponent<T extends string>(type: T, lifecycle: LifeCycleMethods): T;
+
     Provider: Provider;
-    PixiComponent: PixiComponent;
 
     BitmapText: BitmapText;
+
     Text: Text;
+
     Sprite: Sprite;
+
     NineSlicePlane: NineSlicePlane;
+
     Graphics: Graphics;
+
     Container: Container;
+
     Rope: Rope;
+
     Mesh: Mesh;
+
     TilingSprite: TilingSprite;
+
     ParticleContainer: ParticleContainer;
   }
 

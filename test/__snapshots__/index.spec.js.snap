@@ -11,7 +11,6 @@ Object {
   "PixiComponent": [Function],
   "Provider": [Function],
   "Rope": "Rope",
-  "Shape": "Shape",
   "Sprite": "Sprite",
   "Stage": [Function],
   "Text": "Text",

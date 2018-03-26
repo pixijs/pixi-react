@@ -9,7 +9,6 @@ Object {
   "NineSlicePlane": "NineSlicePlane",
   "ParticleContainer": "ParticleContainer",
   "Rope": "Rope",
-  "Shape": "Shape",
   "Sprite": "Sprite",
   "Text": "Text",
   "TilingSprite": "TilingSprite",

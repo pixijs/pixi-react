@@ -115,11 +115,11 @@ describe('stage', () => {
 
   test('call onMount()', () => {
     const spy = jest.fn()
-    const el = renderer.create(<Stage onMount={spy} />)
+    renderer.create(<Stage onMount={spy} />)
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy.mock.calls[0]).toHaveLength(1)
-    expect(spy.mock.calls[0][0]).toBeInstanceOf(PIXI.CanvasRenderer)
+    expect(spy.mock.calls[0][0]).toBeInstanceOf(PIXI.Application)
   })
 
   test('can be unmounted', () => {

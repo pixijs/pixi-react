@@ -19,6 +19,5 @@ export const ParticleContainer = TYPES.ParticleContainer
 export const Sprite = TYPES.Sprite
 export const Text = TYPES.Text
 export const TilingSprite = TYPES.TilingSprite
-export const Shape = TYPES.Shape
 export const Mesh = TYPES.Mesh
 export const Rope = TYPES.Rope

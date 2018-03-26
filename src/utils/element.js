@@ -17,7 +17,6 @@ export const TYPES = {
   Sprite: 'Sprite',
   Text: 'Text',
   TilingSprite: 'TilingSprite',
-  Shape: 'Shape',
   Mesh: 'Mesh',
   Rope: 'Rope',
 }

@@ -3,7 +3,7 @@ import * as PIXI from 'pixi.js'
 import renderer from 'react-test-renderer'
 import { PixiFiber, PACKAGE_NAME, VERSION } from '../src/reconciler'
 import { runningInBrowser } from '../src/helpers'
-import { Stage, Provider, Container, Text } from '../src'
+import { Stage, Provider, withPixiApp, Container, Text } from '../src'
 import { getCanvasProps } from '../src/stage'
 import { mockToSpy } from './__utils__/mock'
 
@@ -240,7 +240,26 @@ describe('stage', () => {
 
       const instance = el.getInstance()
 
-      expect(fn).toHaveBeenCalled()
+      expect(fn).toHaveBeenCalledTimes(1)
+      expect(fn).toHaveBeenCalledWith(instance.app)
+    })
+  })
+
+  describe('provider as a higher order component', () => {
+    test('pass down app to child component', () => {
+      const fn = jest.fn(() => <Container />)
+      const Comp = withPixiApp(({ app }) => fn(app))
+
+      const el = renderer.create(
+        <Stage>
+          <Container>
+            <Comp />
+          </Container>
+        </Stage>
+      )
+
+      const instance = el.getInstance()
+
       expect(fn).toHaveBeenCalledTimes(1)
       expect(fn).toHaveBeenCalledWith(instance.app)
     })

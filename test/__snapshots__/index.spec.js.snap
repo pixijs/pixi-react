@@ -17,5 +17,6 @@ Object {
   "Text": "Text",
   "TilingSprite": "TilingSprite",
   "render": [Function],
+  "withPixiApp": [Function],
 }
 `;

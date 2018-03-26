@@ -123,7 +123,7 @@ class Stage extends React.Component {
 
     injectDevtools()
 
-    onMount(this.app.renderer)
+    onMount(this.app)
     this.renderStage()
   }
 

@@ -1,7 +1,7 @@
 import { TYPES, PixiComponent } from './utils/element'
 import { render } from './render'
 import Stage from './stage'
-import Provider from './stage/provider'
+import { Provider, withPixiApp } from './stage/provider'
 
 /**
  * -------------------------------------------
@@ -9,7 +9,7 @@ import Provider from './stage/provider'
  * -------------------------------------------
  */
 
-export { render, Stage, Provider, PixiComponent }
+export { render, Stage, Provider, withPixiApp, PixiComponent }
 
 export const BitmapText = TYPES.BitmapText
 export const Container = TYPES.Container

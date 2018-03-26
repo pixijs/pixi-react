@@ -18,8 +18,11 @@
     "prepublish": "npm run test && npm run eslint && npm run build"
   },
   "files": [
-    "dist/"
+    "dist/",
+    "LICENSE",
+    "index.d.ts"
   ],
+  "typings": "./index.d.ts",
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.42",
     "@babel/core": "^7.0.0-beta.42",

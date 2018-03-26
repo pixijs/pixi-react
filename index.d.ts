@@ -1,17 +1,22 @@
 import * as React from 'react';
 import * as PIXI from 'pixi.js';
 
-declare module '@inlet/react-pixi' {
+declare var ReactPixi: ReactPixi.ReactPixiStatic;
 
-  export type Diff<T extends string, U extends string> = ({ [P in T]: P } & { [P in U]: never } & { [x: string]: never })[T];
+export = ReactPixi;
+export as namespace ReactPixi;
 
-  export type Omit<T, K extends keyof T> = Pick<T, Diff<keyof T, K>>;
+declare namespace ReactPixi {
+
+  type Diff<T extends string, U extends string> = ({ [P in T]: P } & { [P in U]: never } & { [x: string]: never })[T];
+
+  type Omit<T, K extends keyof T> = Pick<T, Diff<keyof T, K>>;
 
   interface ObjectWithChildren { children?: any; }
 
-  export type Childless<T extends ObjectWithChildren> = Omit<T, 'children'>;
+  type Childless<T extends ObjectWithChildren> = Omit<T, 'children'>;
 
-  export interface ChildrenProperties {
+  interface ChildrenProperties {
     children?: React.ReactNode;
   }
 
@@ -21,9 +26,9 @@ declare module '@inlet/react-pixi' {
    * -------------------------------------------
    */
 
-  export type ChildlessComponent<T extends ObjectWithChildren> = Partial<Childless<T>>;
+  type ChildlessComponent<T extends ObjectWithChildren> = Partial<Childless<T>>;
 
-  export type Component<T extends ObjectWithChildren> = ChildlessComponent<T> & ChildrenProperties;
+  type Component<T extends ObjectWithChildren> = ChildlessComponent<T> & ChildrenProperties;
 
   /**
    * -------------------------------------------
@@ -31,59 +36,59 @@ declare module '@inlet/react-pixi' {
    * -------------------------------------------
    */
 
-  export interface BitmapTextProperties extends ChildlessComponent<PIXI.extras.BitmapText> { text: string; }
+  interface BitmapTextProperties extends ChildlessComponent<PIXI.extras.BitmapText> { text: string; }
 
-  export class BitmapText extends React.Component<BitmapTextProperties> {}
+  class BitmapText extends React.Component<BitmapTextProperties> {}
 
-  export interface ContainerProperties extends Component<PIXI.Container> {}
+  interface ContainerProperties extends Component<PIXI.Container> {}
 
-  export class Container extends React.Component<ContainerProperties> {}
+  class Container extends React.Component<ContainerProperties> {}
 
-  export interface GraphicsProperties extends ChildlessComponent<PIXI.Graphics> {
+  interface GraphicsProperties extends ChildlessComponent<PIXI.Graphics> {
     draw(graphics: PIXI.Graphics): void;
   }
 
-  export class Graphics extends React.Component<GraphicsProperties> {}
+  class Graphics extends React.Component<GraphicsProperties> {}
 
-  export interface ParticleContainerProperties extends Component<PIXI.particles.ParticleContainer> {}
+  interface ParticleContainerProperties extends Component<PIXI.particles.ParticleContainer> {}
 
-  export class ParticleContainer extends React.Component<ParticleContainerProperties> {}
+  class ParticleContainer extends React.Component<ParticleContainerProperties> {}
 
-  export interface SpriteProperties extends ChildlessComponent<PIXI.Sprite> {
+  interface SpriteProperties extends ChildlessComponent<PIXI.Sprite> {
     texture?: PIXI.Texture;
     image?: string;
   }
 
-  export class Sprite extends React.Component<SpriteProperties> {}
+  class Sprite extends React.Component<SpriteProperties> {}
 
-  export interface TextProperties extends ChildlessComponent<PIXI.Text> {}
+  interface TextProperties extends ChildlessComponent<PIXI.Text> {}
 
-  export class Text extends React.Component<TextProperties> {}
+  class Text extends React.Component<TextProperties> {}
 
-  export interface TilingSpriteProperties extends ChildlessComponent<PIXI.extras.TilingSprite> {
+  interface TilingSpriteProperties extends ChildlessComponent<PIXI.extras.TilingSprite> {
     texture?: PIXI.Texture;
     image?: string;
   }
 
-  export class TilingSprite extends React.Component<TilingSpriteProperties> {}
+  class TilingSprite extends React.Component<TilingSpriteProperties> {}
 
-  export interface MeshProperties extends ChildlessComponent<PIXI.mesh.Mesh> {}
+  interface MeshProperties extends ChildlessComponent<PIXI.mesh.Mesh> {}
 
-  export class Mesh extends React.Component<MeshProperties> {}
+  class Mesh extends React.Component<MeshProperties> {}
 
-  export interface RopeProperties extends ChildlessComponent<PIXI.mesh.Rope> {
+  interface RopeProperties extends ChildlessComponent<PIXI.mesh.Rope> {
     texture?: PIXI.Texture;
     image?: string;
   }
 
-  export class Rope extends React.Component<RopeProperties> {}
+  class Rope extends React.Component<RopeProperties> {}
 
-  export interface NineSlicePlaneProperties extends ChildlessComponent<PIXI.mesh.NineSlicePlane> {
+  interface NineSlicePlaneProperties extends ChildlessComponent<PIXI.mesh.NineSlicePlane> {
     texture?: PIXI.Texture;
     image?: string;
   }
 
-  export class NineSlicePlane extends React.Component<NineSlicePlaneProperties> {}
+  class NineSlicePlane extends React.Component<NineSlicePlaneProperties> {}
 
   /**
    * -------------------------------------------
@@ -123,7 +128,7 @@ declare module '@inlet/react-pixi' {
     }
   }
 
-  export class Stage extends React.Component<StageProps> {
+  class Stage extends React.Component<StageProps> {
   }
 
   interface ProviderProps {
@@ -136,10 +141,9 @@ declare module '@inlet/react-pixi' {
    * -------------------------------------------
    */
 
-  export class Provider extends React.Component<ProviderProps> {
-  }
+  class Provider extends React.Component<ProviderProps> {}
 
-  export function withPixiApp(baseComponent: React.Component): React.Component;
+  function withPixiApp(baseComponent: React.Component): React.Component;
 
   /**
    * -------------------------------------------
@@ -147,9 +151,9 @@ declare module '@inlet/react-pixi' {
    * -------------------------------------------
    */
 
-  export function render(pixiElement: PIXI.DisplayObject | PIXI.DisplayObject[],
-                         pixiContainer: PIXI.Container,
-                         callback?: Function): void;
+  function render(pixiElement: PIXI.DisplayObject | PIXI.DisplayObject[],
+                  pixiContainer: PIXI.Container,
+                  callback?: Function): void;
 
   /**
    * -------------------------------------------
@@ -164,6 +168,31 @@ declare module '@inlet/react-pixi' {
     applyProps(instance: PIXI.DisplayObject, oldProps: object, newProps: object): void;
   }
 
-  export function PixiComponent<T extends string>(type: T, lifecycle: LifeCycleMethods): T
+  function PixiComponent<T extends string>(type: T, lifecycle: LifeCycleMethods): T
+
+  /**
+   * -------------------------------------------
+   * Public API
+   * -------------------------------------------
+   */
+  
+  interface ReactPixiStatic {
+    Stage: Stage;
+    render: render;
+    withPixiApp: withPixiApp;
+    Provider: Provider;
+    PixiComponent: PixiComponent;
+
+    BitmapText: BitmapText;
+    Text: Text;
+    Sprite: Sprite;
+    NineSlicePlane: NineSlicePlane;
+    Graphics: Graphics;
+    Container: Container;
+    Rope: Rope;
+    Mesh: Mesh;
+    TilingSprite: TilingSprite;
+    ParticleContainer: ParticleContainer;
+  }
 
 }

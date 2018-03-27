@@ -20,7 +20,9 @@
   "files": [
     "dist/",
     "LICENSE",
-    "index.d.ts"
+    "index.d.ts",
+    "index.js",
+    "module.js"
   ],
   "typings": "./index.d.ts",
   "devDependencies": {

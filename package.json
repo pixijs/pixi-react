@@ -3,7 +3,7 @@
   "version": "0.0.7",
   "description": "Write PixiJS applications using React declarative style.",
   "main": "index.js",
-  "module": "dist/react-pixi.production.es5.js",
+  "module": "module.js",
   "author": "Patrick Brouwer",
   "license": "MIT",
   "repository": "git+https://github.com/inlet/react-pixi.git",

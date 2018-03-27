@@ -2,7 +2,7 @@
   "name": "@inlet/react-pixi",
   "version": "0.0.6",
   "description": "Write PixiJS applications using React declarative style.",
-  "main": "dist/react-pixi.production.umd.js",
+  "main": "index.js",
   "module": "dist/react-pixi.production.es5.js",
   "author": "Patrick Brouwer",
   "license": "MIT",

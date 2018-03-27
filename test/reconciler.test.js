@@ -1,5 +1,4 @@
 import React from 'react'
-import omit from 'lodash/omit'
 import * as PIXI from 'pixi.js'
 import { render, roots } from '../src/render'
 import hostconfig from '../src/reconciler/hostconfig'
@@ -135,10 +134,51 @@ describe('reconciler', () => {
       )
 
       const m = getCall(hostconfig.mutation.commitUpdate)
-      expect(m.fn).toHaveBeenCalledTimes(2)
+      expect(m.fn).toHaveBeenCalledTimes(1)
       expect(m(0).args[3]).toHaveProperty('text', 'a')
       expect(m(0).args[4]).toHaveProperty('text', 'b')
       expect(m(0).args[0].text).toEqual('b')
+    })
+  })
+
+  describe('prepare updates', () => {
+    test('prevent commitUpdate when prop is not changed, ', () => {
+      renderInContainer(<Text x={100} />)
+      renderInContainer(<Text x={100} />)
+
+      expect(hostconfig.mutation.commitUpdate).not.toBeCalled()
+    })
+
+    test('commitUpdate for prop removal', () => {
+      renderInContainer(<Text x={100} />)
+      renderInContainer(<Text />)
+
+      const m = getCall(hostconfig.mutation.commitUpdate)
+      expect(m.fn).toHaveBeenCalledTimes(1)
+
+      const args = m(0).args
+
+      expect(args[0]).toBeInstanceOf(PIXI.Text)
+      expect(args[1]).toEqual(['x', null])
+      expect(args[2]).toEqual('Text')
+      expect(args[3]).toEqual({ x: 100 })
+      expect(args[4]).toEqual({})
+    })
+
+    test('commitUpdate for prop change', () => {
+      renderInContainer(<Text x={100} />)
+      renderInContainer(<Text x={105} />)
+
+      const m = getCall(hostconfig.mutation.commitUpdate)
+      expect(m.fn).toHaveBeenCalledTimes(1)
+
+      const args = m(0).args
+
+      expect(args[0]).toBeInstanceOf(PIXI.Text)
+      expect(args[1]).toEqual(['x', 105])
+      expect(args[2]).toEqual('Text')
+      expect(args[3]).toEqual({ x: 100 })
+      expect(args[4]).toEqual({ x: 105 })
     })
   })
 
@@ -208,17 +248,13 @@ describe('reconciler', () => {
         </Container>
       )
 
-      expect(applyProps).toHaveBeenCalledTimes(2)
+      expect(applyProps).toHaveBeenCalledTimes(1)
 
       const m = getCall(applyProps)
 
       expect(m(0).args[0]).toBeInstanceOf(PIXI.Text)
       expect(m(0).args[1]).toEqual({})
       expect(m(0).args[2]).toEqual({ x: 100 })
-
-      expect(m(1).args[0]).toBeInstanceOf(PIXI.Container)
-      expect(omit(m(1).args[1], 'children')).toEqual({})
-      expect(omit(m(1).args[2], 'children')).toEqual({})
     })
   })
 })

@@ -4,13 +4,14 @@ import * as PIXI from 'pixi.js'
 import { eventHandlers, setValue } from './pixi'
 import { isFunction, not, hasKey } from '../helpers'
 
+export const CHILDREN = 'children'
 /**
  * Reserved props
  *
  * @type {Object}
  */
 export const PROPS_RESERVED = {
-  children: true,
+  [CHILDREN]: true,
   parent: true,
   worldAlpha: true,
   worldTransform: true,

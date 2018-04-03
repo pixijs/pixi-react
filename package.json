@@ -33,11 +33,11 @@
     "@babel/preset-stage-0": "^7.0.0-beta.42",
     "@types/jest": "^22.2.0",
     "@types/pixi.js": "^4.7.2",
-    "@types/react": "^16.0.40",
+    "@types/react": "^16.3.2",
     "@types/react-dom": "^16.0.4",
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^8.2.2",
-    "babel-jest": "^23.0.0-alpha.0",
+    "babel-jest": "^22.4.3",
     "canvas-prebuilt": "^1.6.5-prerelease.1",
     "eslint": "^4.18.2",
     "eslint-config-prettier": "^2.9.0",
@@ -49,9 +49,9 @@
     "pixi.js": "^4.7.1",
     "prettier": "^1.11.1",
     "prop-types": "^15.6.1",
-    "react": "^16.3.0-alpha.2",
-    "react-dom": "^16.3.0-alpha.2",
-    "react-test-renderer": "^16.3.0-alpha.2",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
+    "react-test-renderer": "^16.3.0",
     "rimraf": "^2.6.2",
     "rollup": "^0.57.1",
     "rollup-plugin-babel": "^4.0.0-beta.2",
@@ -72,7 +72,7 @@
   "dependencies": {
     "fbjs": "^0.8.16",
     "performance-now": "^2.1.0",
-    "react-reconciler": "^0.7.0"
+    "react-reconciler": "^0.8.0"
   },
   "jest": {
     "collectCoverage": false,

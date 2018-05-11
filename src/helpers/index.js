@@ -18,6 +18,7 @@ export const hasKey = collection => {
   return key => coll.indexOf(key) !== -1
 }
 
+// See https://github.com/michalochman/react-pixi-fiber/blob/a4dbddbef0ffbf0f563c64d30766ea28222a51ea/src/utils.js#L7
 export const not = boolFn => (...args) => !boolFn(...args)
 
 export const runningInBrowser = () => Boolean(window)

@@ -20,6 +20,7 @@ export const PROPS_RESERVED = {
 
 /**
  * Default display object props
+ * See https://github.com/michalochman/react-pixi-fiber/blob/a4dbddbef0ffbf0f563c64d30766ea28222a51ea/src/props.js#L9
  *
  * @type {Object}
  */

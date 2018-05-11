@@ -33,6 +33,7 @@ export function parsePoint(value) {
 
 /**
  * Determine value is type of Point or ObservablePoint
+ * See https://github.com/michalochman/react-pixi-fiber/blob/a4dbddbef0ffbf0f563c64d30766ea28222a51ea/src/utils.js#L48
  *
  * @param {*} value
  * @returns {boolean}
@@ -79,6 +80,7 @@ export const eventHandlers = [
 
 /**
  * Set value on a PIXI.DisplayObject
+ * See https://github.com/Izzimach/react-pixi/blob/a25196251a13ed9bb116a8576d93e9fceac2a14c/src/ReactPIXI.js#L114
  *
  * @param {PIXI.DisplayObject} instance
  * @param {string} prop

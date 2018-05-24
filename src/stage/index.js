@@ -153,6 +153,7 @@ class Stage extends React.Component {
   componentWillUnmount() {
     PixiFiber.updateContainer(null, this.mountNode, this)
     this.renderStage()
+    this.app.destroy()
   }
 
   render() {

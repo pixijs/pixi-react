@@ -132,6 +132,16 @@ describe('stage', () => {
     expect(instance.componentWillUnmount).toBeCalled()
   })
 
+  test('destroys application on unmount', () => {
+    const el = renderer.create(<Stage />)
+    const instance = el.getInstance()
+
+    jest.spyOn(instance.app, 'destroy')
+
+    el.unmount()
+    expect(instance.app.destroy).toBeCalled()
+  })
+
   test('call PixiFiber.createContainer on componentDidMount', () => {
     const el = renderer.create(<Stage />)
     const stage = el.getInstance().app.stage

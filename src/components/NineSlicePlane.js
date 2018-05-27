@@ -1,11 +1,22 @@
 import * as PIXI from 'pixi.js'
-import { getTextureFromProps } from '../utils/props'
+import { getTextureFromProps, applyDefaultProps } from '../utils/props'
 
 const NineSlicePlane = (root, props) => {
   const { leftWidth = 10, topHeight = 10, rightWidth = 10, bottomHeight = 10 } = props
   const texture = getTextureFromProps('NineSlicePlane', props)
 
-  return new PIXI.mesh.NineSlicePlane(texture, leftWidth, topHeight, rightWidth, bottomHeight)
+  const nineSlicePlane = new PIXI.mesh.NineSlicePlane(texture, leftWidth, topHeight, rightWidth, bottomHeight)
+
+  nineSlicePlane.applyProps = (instance, oldProps, newProps) => {
+    const { image, texture, ...props } = newProps
+    applyDefaultProps(instance, oldProps, props)
+
+    if (image || texture) {
+      instance.texture = getTextureFromProps('NineSlicePlane', newProps)
+    }
+  }
+
+  return nineSlicePlane
 }
 
 export default NineSlicePlane

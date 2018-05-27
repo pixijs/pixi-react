@@ -50,7 +50,9 @@ declare namespace ReactPixi {
     callback?: Function
   ): void
 
-  function withPixiApp(baseComponent: React.Component): React.Component
+  function withPixiApp<P extends { app: PIXI.Application }>(
+    baseComponent: React.ComponentType<P>
+  ): React.ComponentType<_ReactPixi.Omit<P, 'app'>>
 
   /**
    * -------------------------------------------

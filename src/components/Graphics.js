@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js'
 import { applyDefaultProps } from '../utils/props'
 
-const Graphics = () => {
+const Graphics = (root, props) => {
   const g = new PIXI.Graphics()
 
   g.applyProps = (instance, oldProps, newProps) => {

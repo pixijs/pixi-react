@@ -68,6 +68,106 @@ describe('createElement', () => {
   })
 })
 
+describe('element.applyProps', () => {
+  let spy
+
+  beforeAll(() => {
+    spy = jest.spyOn(PIXI.Texture, 'fromImage').mockReturnValue(emptyTexture)
+  })
+
+  afterAll(() => {
+    spy.mockRestore()
+  })
+
+  test('Sprite.applyProps exists', () => {
+    const element = createElement(TYPES.Sprite, { image: './image.png' })
+    expect(element).toHaveProperty('applyProps')
+    expect(spy).toHaveBeenCalledWith('./image.png')
+  })
+
+  test('Sprite.applyProps image', () => {
+    const element = createElement(TYPES.Sprite, { image: './image.png' })
+    expect(spy).lastCalledWith('./image.png')
+
+    element.applyProps(element, { image: './image.png' }, { image: './new-image.png' })
+    expect(spy).lastCalledWith('./new-image.png')
+  })
+
+  test('TilingSprite.applyProps exists', () => {
+    const element = createElement(TYPES.TilingSprite, { image: './image.png' })
+    expect(element).toHaveProperty('applyProps')
+    expect(spy).toHaveBeenCalledWith('./image.png')
+  })
+
+  test('TilingSprite.applyProps image', () => {
+    const element = createElement(TYPES.TilingSprite, { image: './image.png' })
+    expect(spy).lastCalledWith('./image.png')
+
+    element.applyProps(element, { image: './image.png' }, { image: './new-image.png' })
+    expect(spy).lastCalledWith('./new-image.png')
+  })
+
+  test('Rope.applyProps exists', () => {
+    const element = createElement(TYPES.Rope, { image: './image.png', points: [] })
+    expect(element).toHaveProperty('applyProps')
+    expect(spy).toHaveBeenCalledWith('./image.png')
+  })
+
+  test('Rope.applyProps image', () => {
+    const element = createElement(TYPES.Rope, { image: './image.png', points: [] })
+    expect(spy).lastCalledWith('./image.png')
+
+    element.applyProps(element, { image: './image.png' }, { image: './new-image.png', points: [] })
+    expect(spy).lastCalledWith('./new-image.png')
+  })
+
+  test('NineSlicePlane.applyProps exists', () => {
+    const element = createElement(TYPES.NineSlicePlane, { image: './image.png' })
+    expect(element).toHaveProperty('applyProps')
+    expect(spy).toHaveBeenCalledWith('./image.png')
+  })
+
+  test('NineSlicePlane.applyProps image', () => {
+    const element = createElement(TYPES.NineSlicePlane, { image: './image.png' })
+    expect(spy).lastCalledWith('./image.png')
+
+    element.applyProps(element, { image: './image.png' }, { image: './new-image.png' })
+    expect(spy).lastCalledWith('./new-image.png')
+  })
+
+  test('Mesh.applyProps exists', () => {
+    const element = createElement(TYPES.Mesh, { image: './image.png' })
+    expect(element).toHaveProperty('applyProps')
+    expect(spy).toHaveBeenCalledWith('./image.png')
+  })
+
+  test('Mesh.applyProps image', () => {
+    const element = createElement(TYPES.Mesh, { image: './image.png' })
+    expect(spy).lastCalledWith('./image.png')
+
+    element.applyProps(element, { image: './image.png' }, { image: './new-image.png' })
+    expect(spy).lastCalledWith('./new-image.png')
+  })
+
+  test('Graphics.applyProps exists', () => {
+    const spy = jest.fn()
+
+    const element = createElement(TYPES.Graphics, { draw: spy })
+    expect(element).toHaveProperty('applyProps')
+    expect(spy).toBeCalledWith(element)
+  })
+
+  test('Graphics.applyProps draw', () => {
+    const spy = jest.fn()
+
+    const element = createElement(TYPES.Graphics, { draw: spy })
+    expect(spy).toHaveBeenCalledTimes(1)
+
+    element.applyProps(element, { draw: spy }, { draw: spy })
+    expect(spy).toHaveBeenCalledTimes(2)
+  })
+})
+
 describe('PixiComponent', () => {
   afterEach(() => {
     Object.keys(TYPES_INJECTED).forEach(k => {

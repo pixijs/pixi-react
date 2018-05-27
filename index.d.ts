@@ -1,20 +1,19 @@
-import * as React from 'react';
-import * as PIXI from 'pixi.js';
+import * as PIXI from 'pixi.js'
+import * as React from 'react'
 
 declare namespace _ReactPixi {
-  type Diff<T extends string, U extends string> = ({ [P in T]: P } &
-    { [P in U]: never } & { [x: string]: never })[T];
+  type Diff<T extends string, U extends string> = ({ [P in T]: P } & { [P in U]: never } & { [x: string]: never })[T]
 
-  type Omit<T, K extends keyof T> = Pick<T, Diff<keyof T, K>>;
+  type Omit<T, K extends keyof T> = Pick<T, Diff<keyof T, K>>
 
   interface ObjectWithChildren {
-    children?: any;
+    children?: any
   }
 
-  type Childless<T extends ObjectWithChildren> = Omit<T, 'children'>;
+  type Childless<T extends ObjectWithChildren> = Omit<T, 'children'>
 
   interface ChildrenProperties {
-    children?: React.ReactNode;
+    children?: React.ReactNode
   }
 }
 
@@ -30,47 +29,28 @@ declare namespace ReactPixi {
    * -------------------------------------------
    */
 
-  interface StageProps {
-    children: React.ReactNode;
+  interface StageProps extends React.CanvasHTMLAttributes<HTMLCanvasElement> {
+    children?: React.ReactNode
 
-    width?: number;
-    height?: number;
+    width?: number
+    height?: number
 
-    onMount?(callback: () => PIXI.Application): void;
+    onMount?(callback: () => PIXI.Application): void
 
-    raf?: boolean;
-    renderOnComponentChange?: boolean;
+    raf?: boolean
+    renderOnComponentChange?: boolean
 
-    options?: {
-      antialias?: boolean;
-      autoStart?: boolean;
-      width?: number;
-      height?: number;
-      transparent?: boolean;
-      preserveDrawingBuffer?: boolean;
-      resolution?: number;
-      forceCanvas?: boolean;
-      backgroundColor?: number;
-      clearBeforeRender?: boolean;
-      roundPixels?: boolean;
-      forceFXAA?: boolean;
-      legacy?: boolean;
-      powerPreference?: string;
-      sharedTicker?: boolean;
-      sharedLoader?: boolean;
-      view?: HTMLCanvasElement;
-    };
+    options?: PIXI.ApplicationOptions
   }
-
-  class Stage extends React.Component<StageProps> {}
+  const Stage: React.SFC<StageProps>
 
   function render(
     pixiElement: PIXI.DisplayObject | PIXI.DisplayObject[],
     pixiContainer: PIXI.Container,
     callback?: Function
-  ): void;
+  ): void
 
-  function withPixiApp(baseComponent: React.Component): React.Component;
+  function withPixiApp(baseComponent: React.Component): React.Component
 
   /**
    * -------------------------------------------
@@ -79,10 +59,9 @@ declare namespace ReactPixi {
    */
 
   interface ProviderProps {
-    children(app: PIXI.Application): React.ReactNode;
+    children(app: PIXI.Application): React.ReactNode
   }
-
-  class Provider extends React.Component<ProviderProps> {}
+  const Provider: React.SFC<ProviderProps>
 
   /**
    * -------------------------------------------
@@ -90,12 +69,9 @@ declare namespace ReactPixi {
    * -------------------------------------------
    */
 
-  type ChildlessComponent<T extends _ReactPixi.ObjectWithChildren> = Partial<
-    _ReactPixi.Childless<T>
-  >;
+  type ChildlessComponent<T extends _ReactPixi.ObjectWithChildren> = Partial<_ReactPixi.Childless<T>>
 
-  type Component<T extends _ReactPixi.ObjectWithChildren> = ChildlessComponent<T> &
-    _ReactPixi.ChildrenProperties;
+  type Component<T extends _ReactPixi.ObjectWithChildren> = ChildlessComponent<T> & _ReactPixi.ChildrenProperties
 
   /**
    * -------------------------------------------
@@ -103,14 +79,18 @@ declare namespace ReactPixi {
    * -------------------------------------------
    */
 
-  interface LifeCycleMethods {
-    create(props: object): PIXI.DisplayObject;
-    didMount(instance: PIXI.DisplayObject, parent: PIXI.Container): void;
-    willUnmount(instance: PIXI.DisplayObject, parent: PIXI.Container): void;
-    applyProps(instance: PIXI.DisplayObject, oldProps: object, newProps: object): void;
+  interface LifeCycleMethods<P, PixiInstance extends PIXI.DisplayObject> {
+    create(props: P): PixiInstance
+    didMount?(instance: PixiInstance, parent: PIXI.Container): void
+    willUnmount?(instance: PixiInstance, parent: PIXI.Container): void
+    applyProps?(instance: PixiInstance, oldProps: Readonly<P>, newProps: Readonly<P>): void
   }
 
-  function PixiComponent<T extends string>(type: T, lifecycle: LifeCycleMethods): T;
+  // e.g. const Circle = PixiComponent<{radius: number}, PIXI.Graphics>(...)
+  function PixiComponent<P, PixiInstance extends PIXI.DisplayObject>(
+    type: string,
+    lifecycle: LifeCycleMethods<P, PixiInstance>
+  ): React.SFC<P>
 
   /**
    * -------------------------------------------
@@ -119,60 +99,51 @@ declare namespace ReactPixi {
    */
 
   interface BitmapTextProperties extends ChildlessComponent<PIXI.extras.BitmapText> {
-    text: string;
+    text: string
   }
-
-  class BitmapText extends React.Component<BitmapTextProperties> {}
+  const BitmapText: React.SFC<BitmapTextProperties>
 
   interface ContainerProperties extends Component<PIXI.Container> {}
-
-  class Container extends React.Component<ContainerProperties> {}
+  const Container: React.SFC<ContainerProperties>
 
   interface GraphicsProperties extends ChildlessComponent<PIXI.Graphics> {
-    draw(graphics: PIXI.Graphics): void;
+    draw(graphics: PIXI.Graphics): void
   }
-
-  class Graphics extends React.Component<GraphicsProperties> {}
+  const Graphics: React.SFC<GraphicsProperties>
 
   interface ParticleContainerProperties extends Component<PIXI.particles.ParticleContainer> {}
-
-  class ParticleContainer extends React.Component<ParticleContainerProperties> {}
+  const ParticleContainer: React.SFC<ParticleContainerProperties>
 
   interface SpriteProperties extends ChildlessComponent<PIXI.Sprite> {
-    texture?: PIXI.Texture;
-    image?: string;
+    texture?: PIXI.Texture
+    image?: string
   }
-
-  class Sprite extends React.Component<SpriteProperties> {}
+  const Sprite: React.SFC<SpriteProperties>
 
   interface TextProperties extends ChildlessComponent<PIXI.Text> {}
-
-  class Text extends React.Component<TextProperties> {}
+  const Text: React.SFC<TextProperties>
 
   interface TilingSpriteProperties extends ChildlessComponent<PIXI.extras.TilingSprite> {
-    texture?: PIXI.Texture;
-    image?: string;
+    texture?: PIXI.Texture
+    image?: string
   }
-
-  class TilingSprite extends React.Component<TilingSpriteProperties> {}
+  const TilingSprite: React.SFC<TilingSpriteProperties>
 
   interface MeshProperties extends ChildlessComponent<PIXI.mesh.Mesh> {}
-
-  class Mesh extends React.Component<MeshProperties> {}
+  const Mesh: React.SFC<MeshProperties>
 
   interface RopeProperties extends ChildlessComponent<PIXI.mesh.Rope> {
-    texture?: PIXI.Texture;
-    image?: string;
+    texture?: PIXI.Texture
+    image?: string
   }
-
-  class Rope extends React.Component<RopeProperties> {}
+  const Rope: React.SFC<RopeProperties>
 
   interface NineSlicePlaneProperties extends ChildlessComponent<PIXI.mesh.NineSlicePlane> {
-    texture?: PIXI.Texture;
-    image?: string;
+    texture?: PIXI.Texture
+    image?: string
   }
-
-  class NineSlicePlane extends React.Component<NineSlicePlaneProperties> {}
+  const NineSlicePlane: React.SFC<NineSlicePlaneProperties>
 }
 
-export = ReactPixi;
+export = ReactPixi
+export as namespace ReactPixi

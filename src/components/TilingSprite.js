@@ -9,7 +9,7 @@ const TilingSprite = (root, props) => {
   const ts = new PIXI.extras.TilingSprite(texture, width, height)
 
   ts.applyProps = (instance, oldProps, newProps) => {
-    const { tileScale, tilePosition, ...props } = newProps
+    const { tileScale, tilePosition, image, texture, ...props } = newProps
     applyDefaultProps(instance, oldProps, props)
 
     if (tilePosition) {
@@ -18,6 +18,10 @@ const TilingSprite = (root, props) => {
 
     if (tileScale) {
       instance.tileScale.set(...parsePoint(tileScale))
+    }
+
+    if (image || texture) {
+      instance.texture = getTextureFromProps('Sprite', newProps)
     }
   }
 

@@ -9,21 +9,15 @@
   "repository": "git+https://github.com/inlet/react-pixi.git",
   "scripts": {
     "eslint": "eslint .",
-    "build:watch": "NODE_ENV=development rollup -c --watch",
-    "build:dev": "NODE_ENV=development rollup -c",
+    "build:watch": "cross-env NODE_ENV=development rollup -c --watch",
+    "build:dev": "cross-env NODE_ENV=development rollup -c",
     "build:prod": "rollup -c",
     "build": "rimraf ./dist && npm run build:dev && npm run build:prod",
     "test": "jest --silent",
     "test:watch": "jest --silent --watch",
     "prepublish": "npm run test && npm run eslint && npm run build"
   },
-  "files": [
-    "dist/",
-    "LICENSE",
-    "index.d.ts",
-    "index.js",
-    "module.js"
-  ],
+  "files": ["dist/", "LICENSE", "index.d.ts", "index.js", "module.js"],
   "typings": "./index.d.ts",
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.42",
@@ -39,6 +33,7 @@
     "babel-eslint": "^8.2.2",
     "babel-jest": "^22.4.3",
     "canvas-prebuilt": "^1.6.5-prerelease.1",
+    "cross-env": "^5.1.6",
     "eslint": "^4.18.2",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
@@ -76,9 +71,7 @@
   },
   "jest": {
     "collectCoverage": false,
-    "setupFiles": [
-      "./test/bootstrap.js"
-    ],
+    "setupFiles": ["./test/bootstrap.js"],
     "transform": {
       "^.+\\.jsx?$": "babel-jest"
     }

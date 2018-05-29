@@ -1,6 +1,6 @@
 {
   "name": "@inlet/react-pixi",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Write PixiJS applications using React declarative style.",
   "main": "index.js",
   "module": "module.js",
@@ -17,7 +17,13 @@
     "test:watch": "jest --silent --watch",
     "prepublish": "npm run test && npm run eslint && npm run build"
   },
-  "files": ["dist/", "LICENSE", "index.d.ts", "index.js", "module.js"],
+  "files": [
+    "dist/",
+    "LICENSE",
+    "index.d.ts",
+    "index.js",
+    "module.js"
+  ],
   "typings": "./index.d.ts",
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.42",
@@ -71,7 +77,9 @@
   },
   "jest": {
     "collectCoverage": false,
-    "setupFiles": ["./test/bootstrap.js"],
+    "setupFiles": [
+      "./test/bootstrap.js"
+    ],
     "transform": {
       "^.+\\.jsx?$": "babel-jest"
     }

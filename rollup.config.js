@@ -5,7 +5,7 @@ import sourceMaps from 'rollup-plugin-sourcemaps'
 import json from 'rollup-plugin-json'
 import replace from 'rollup-plugin-replace'
 import globals from 'rollup-plugin-node-globals'
-import uglify from 'rollup-plugin-uglify'
+import { terser } from 'rollup-plugin-terser'
 import camelCase from 'lodash/camelCase'
 import upperFirst from 'lodash/upperFirst'
 
@@ -47,7 +47,7 @@ export default {
     }),
     sourceMaps(),
     globals(),
-    production && uglify()
+    production && terser()
   ],
   external: [
     'pixi.js',

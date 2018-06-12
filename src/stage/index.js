@@ -143,6 +143,13 @@ class Stage extends React.Component {
     const { children } = this.props
     return <context.Provider value={this.app}>{children}</context.Provider>
   }
+
+  componentDidCatch(error, errorInfo) {
+    console.error(`Error occurred in \`Stage\`.`)
+    console.error(error)
+    console.error(errorInfo)
+  }
+
   renderStage() {
     const { renderOnComponentChange, raf } = this.props
 

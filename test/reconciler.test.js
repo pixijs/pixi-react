@@ -93,7 +93,7 @@ describe('reconciler', () => {
         </Container>
       )
 
-      const m = getCall(hostconfig.mutation.removeChild)
+      const m = getCall(hostconfig.removeChild)
       expect(m.fn).toHaveBeenCalledTimes(2)
       expect(m.all.map(([_, ins]) => ins.text)).toEqual(['two', 'three'])
     })
@@ -114,7 +114,7 @@ describe('reconciler', () => {
         </Container>
       )
 
-      const m = getCall(hostconfig.mutation.insertBefore)(0)
+      const m = getCall(hostconfig.insertBefore)(0)
       expect(m.args[0]).toBeInstanceOf(PIXI.Container) // parent
       expect(m.args[1].text).toEqual('two') // child
       expect(m.args[2].text).toEqual('three') // beforeChild
@@ -133,7 +133,7 @@ describe('reconciler', () => {
         </Container>
       )
 
-      const m = getCall(hostconfig.mutation.commitUpdate)
+      const m = getCall(hostconfig.commitUpdate)
       expect(m.fn).toHaveBeenCalledTimes(1)
       expect(m(0).args[3]).toHaveProperty('text', 'a')
       expect(m(0).args[4]).toHaveProperty('text', 'b')
@@ -146,14 +146,14 @@ describe('reconciler', () => {
       renderInContainer(<Text x={100} />)
       renderInContainer(<Text x={100} />)
 
-      expect(hostconfig.mutation.commitUpdate).not.toBeCalled()
+      expect(hostconfig.commitUpdate).not.toBeCalled()
     })
 
     test('commitUpdate for prop removal', () => {
       renderInContainer(<Text x={100} />)
       renderInContainer(<Text />)
 
-      const m = getCall(hostconfig.mutation.commitUpdate)
+      const m = getCall(hostconfig.commitUpdate)
       expect(m.fn).toHaveBeenCalledTimes(1)
 
       const args = m(0).args
@@ -169,7 +169,7 @@ describe('reconciler', () => {
       renderInContainer(<Text x={100} />)
       renderInContainer(<Text x={105} />)
 
-      const m = getCall(hostconfig.mutation.commitUpdate)
+      const m = getCall(hostconfig.commitUpdate)
       expect(m.fn).toHaveBeenCalledTimes(1)
 
       const args = m(0).args

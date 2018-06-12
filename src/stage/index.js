@@ -36,6 +36,7 @@ const propTypes = {
 
   // will return renderer
   onMount: PropTypes.func,
+  onUnmount: PropTypes.func,
 
   // run ticker at start?
   raf: PropTypes.bool,
@@ -82,6 +83,7 @@ const defaultProps = {
   width: 800,
   height: 600,
   onMount: noop,
+  onUnmount: noop,
   raf: true,
   renderOnComponentChange: true,
 }
@@ -159,6 +161,8 @@ class Stage extends React.Component {
   }
 
   componentWillUnmount() {
+    this.props.onUnmount(this.app)
+
     PixiFiber.updateContainer(null, this.mountNode, this)
     this.renderStage()
     this.app.destroy()

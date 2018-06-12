@@ -1,4 +1,2 @@
-import * as PIXI from 'pixi.js'
-
 // skip the banner in console
-PIXI.utils.skipHello()
+require('pixi.js').utils.skipHello()

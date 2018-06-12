@@ -5,6 +5,7 @@ Object {
   "children": [Function],
   "height": [Function],
   "onMount": [Function],
+  "onUnmount": [Function],
   "options": [Function],
   "raf": [Function],
   "renderOnComponentChange": [Function],
@@ -16,6 +17,7 @@ exports[`stage prop types 2`] = `
 Object {
   "height": 600,
   "onMount": [Function],
+  "onUnmount": [Function],
   "raf": true,
   "renderOnComponentChange": true,
   "width": 800,

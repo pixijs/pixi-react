@@ -6,6 +6,7 @@ import { PROPS_DISPLAY_OBJECT } from '../utils/props'
 import { runningInBrowser } from '../helpers'
 import { PixiFiber } from '../reconciler'
 import { injectDevtools } from '../render'
+import { context } from './provider'
 
 const noop = () => {}
 
@@ -97,16 +98,12 @@ class Stage extends React.Component {
   _canvas = null
   app = null
 
-  getChildContext() {
-    return { app: this.app }
-  }
-
   componentWillMount() {
     invariant(runningInBrowser(), `Cannot mount Stage, window object is not defined`)
   }
 
   componentDidMount() {
-    const { onMount, children, width, height, options, raf } = this.props
+    const { onMount, width, height, options, raf } = this.props
 
     this.app = new PIXI.Application(width, height, {
       ...options,
@@ -119,7 +116,7 @@ class Stage extends React.Component {
     }
 
     this.mountNode = PixiFiber.createContainer(this.app.stage)
-    PixiFiber.updateContainer(children, this.mountNode, this)
+    PixiFiber.updateContainer(this.getChildren(), this.mountNode, this)
 
     injectDevtools()
 
@@ -128,7 +125,7 @@ class Stage extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, prevContext) {
-    const { children, width, height } = this.props
+    const { width, height } = this.props
 
     // handle resize
     if (prevProps.height !== height || prevProps.width !== width) {
@@ -138,10 +135,14 @@ class Stage extends React.Component {
     // handle resolution ?
 
     // flush fiber
-    PixiFiber.updateContainer(children, this.mountNode, this)
+    PixiFiber.updateContainer(this.getChildren(), this.mountNode, this)
     this.renderStage()
   }
 
+  getChildren() {
+    const { children } = this.props
+    return <context.Provider value={this.app}>{children}</context.Provider>
+  }
   renderStage() {
     const { renderOnComponentChange, raf } = this.props
 
@@ -170,6 +171,5 @@ class Stage extends React.Component {
 
 Stage.propTypes = propTypes
 Stage.defaultProps = defaultProps
-Stage.childContextTypes = { app: PropTypes.object }
 
 export default Stage

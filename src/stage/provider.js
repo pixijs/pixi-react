@@ -1,5 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
+const context = React.createContext(null)
 
 /**
  * Provider for exposing the PIXI.Application
@@ -18,9 +19,7 @@ import PropTypes from 'prop-types'
  *   )
  *
  */
-const Provider = ({ children }, { app }) => children(app)
-Provider.contextTypes = { app: PropTypes.object }
-Provider.propTypes = { children: PropTypes.func }
+const Provider = context.Consumer
 
 /**
  * Or as a Higher Order Component
@@ -33,14 +32,9 @@ Provider.propTypes = { children: PropTypes.func }
  *
  */
 const withPixiApp = BaseComponent => {
-  class WithPIXIApp extends React.Component {
-    render() {
-      return <BaseComponent {...this.props} app={this.context.app} />
-    }
-  }
-
-  WithPIXIApp.contextTypes = { app: PropTypes.object }
-  return WithPIXIApp
+  const wrapper = props => <context.Consumer>{app => <BaseComponent {...props} app={app} />}</context.Consumer>
+  wrapper.displayName = `withPIXIApp(${BaseComponent.displayName || BaseComponent.name})`
+  return wrapper
 }
 
-export { withPixiApp, Provider }
+export { withPixiApp, Provider, context }

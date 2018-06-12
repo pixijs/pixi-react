@@ -100,7 +100,7 @@ class Stage extends React.Component {
   _canvas = null
   app = null
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     invariant(runningInBrowser(), `Cannot mount Stage, window object is not defined`)
   }
 

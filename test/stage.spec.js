@@ -4,6 +4,7 @@ import renderer from 'react-test-renderer'
 import { PixiFiber, PACKAGE_NAME, VERSION } from '../src/reconciler'
 import { runningInBrowser } from '../src/helpers'
 import { Stage, Provider, withPixiApp, Container, Text } from '../src'
+import { context } from '../src/stage/provider'
 import { getCanvasProps } from '../src/stage'
 import { mockToSpy } from './__utils__/mock'
 
@@ -160,7 +161,10 @@ describe('stage', () => {
     const instance = el.getInstance()
 
     expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1)
-    expect(PixiFiber.updateContainer).toHaveBeenCalledWith(<Text text="Hello World!" />, instance.mountNode, instance)
+    expect(PixiFiber.updateContainer).toHaveBeenCalledWith(
+      <context.Provider value={instance.app}>
+        <Text text="Hello World!" />
+      </context.Provider>, instance.mountNode, instance)
   })
 
   test('call PixiFiber.injectIntoDevtools on componentDidMount', () => {
@@ -179,13 +183,11 @@ describe('stage', () => {
 
   test('call PixiFiber.updateContainer on componentDidUpdate', () => {
     const el = renderer.create(<Stage />)
-    const instance = el.getInstance()
 
     PixiFiber.updateContainer.mockClear()
     el.update(<Stage />)
 
     expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1)
-    expect(PixiFiber.updateContainer).toHaveBeenCalledWith(undefined, instance.mountNode, instance)
   })
 
   test('call PixiFiber.updateContainer on componentWillUnmount', () => {

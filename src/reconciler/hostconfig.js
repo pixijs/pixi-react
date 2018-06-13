@@ -1,3 +1,13 @@
+/**
+ * -------------------------------------------
+ * Host Config file.
+ *
+ * See:
+ *   https://github.com/facebook/react/tree/master/packages/react-reconciler
+ *   https://github.com/facebook/react/blob/master/packages/react-reconciler/src/forks/ReactFiberHostConfig.custom.js
+ * -------------------------------------------
+ */
+
 import idx from 'idx/lib/idx'
 import invariant from 'fbjs/lib/invariant'
 import performanceNow from 'performance-now'
@@ -124,41 +134,47 @@ export default {
     invariant(false, 'PixiFiber does not support text instances. Use `<Text /> component` instead.')
   },
 
-  resetTextContent(pixiElement) {
+  now: performanceNow,
+
+  isPrimaryRenderer: false,
+
+  supportsMutation: true,
+
+  /**
+   * -------------------------------------------
+   * Mutation
+   * -------------------------------------------
+   */
+
+  appendChild,
+
+  appendChildToContainer: appendChild,
+
+  removeChild,
+
+  removeChildFromContainer: removeChild,
+
+  insertBefore,
+
+  insertInContainerBefore: insertBefore,
+
+  commitUpdate(instance, updatePayload, type, oldProps, newProps) {
+    let applyProps = idx(instance, _ => _.applyProps)
+    if (typeof applyProps !== 'function') {
+      applyProps = applyDefaultProps
+    }
+    applyProps(instance, oldProps, newProps)
+  },
+
+  commitMount(instance, updatePayload, type, oldProps, newProps) {
     // noop
   },
 
-  now: performanceNow,
+  commitTextUpdate(textInstance, oldText, newText) {
+    // noop
+  },
 
-  useSyncScheduling: true,
-
-  mutation: {
-    appendChild,
-
-    removeChild,
-
-    insertBefore,
-
-    commitUpdate(instance, updatePayload, type, oldProps, newProps) {
-      let applyProps = idx(instance, _ => _.applyProps)
-      if (typeof applyProps !== 'function') {
-        applyProps = applyDefaultProps
-      }
-      applyProps(instance, oldProps, newProps)
-    },
-
-    commitMount(instance, updatePayload, type, oldProps, newProps) {
-      // noop
-    },
-
-    commitTextUpdate(textInstance, oldText, newText) {
-      // noop
-    },
-
-    appendChildToContainer: appendChild,
-
-    removeChildFromContainer: removeChild,
-
-    insertInContainerBefore: insertBefore,
+  resetTextContent(pixiElement) {
+    // noop
   },
 }

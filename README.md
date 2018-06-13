@@ -212,6 +212,7 @@ Props:
 - `width` the width of the renderers view, default `800`
 - `height` the height of the renderers view, default `600`
 - `onMount` a callback function for the created app instance
+- `onUnMount` a callback function when the Stage gets unmounted
 - `raf` use the internal PIXI ticker (requestAnimationFrame), default `true`
 - `renderOnComponentChange` render stage on Stage changes? only useful in combination with `raf`
 - `options` see [PIXI.Application options](http://pixijs.download/release/docs/PIXI.Application.html)

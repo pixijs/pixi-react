@@ -1,6 +1,6 @@
 {
   "name": "@inlet/react-pixi",
-  "version": "0.0.13",
+  "version": "0.1.0",
   "description": "Write PixiJS applications using React declarative style.",
   "main": "index.js",
   "module": "module.js",

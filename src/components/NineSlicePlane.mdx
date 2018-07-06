@@ -1,0 +1,39 @@
+---
+name: NineSlicePlane
+order: 1
+---
+
+import { Playground, PropsTable } from 'docz'
+import Stage from './../stage';
+import { NineSlicePlane } from './../index'
+
+# NineSlicePlane
+
+http://pixijs.download/dev/docs/PIXI.mesh.NineSlicePlane.html
+
+
+<PropsTable of={NineSlicePlane} />
+
+
+<Playground>
+  <Stage width={300} height={300}>
+    <NineSlicePlane 
+      anchor={new PIXI.Point(200, 100)}
+      pivot={new PIXI.Point(200, 100)}
+      leftWidth={50}
+      topHeight={30}
+      rightWidth={60}
+      bottomHeight={180}
+      width={200}
+      height={300}
+      x={200}
+      y={100}
+      image={'https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/speech_bubble.png'} />
+  </Stage>
+</Playground>
+
+
+## CodePen Example
+
+<iframe height='500' scrolling='no' title='React PIXI - NineSlicePlane' src='//codepen.io/inlet/embed/JLrBqK/?height=265&theme-id=0&default-tab=js,result&embed-version=2' frameBorder='no' allowtransparency='true' allowFullScreen='true' style={{width: '100%'}}>See the Pen <a href='https://codepen.io/inlet/pen/JLrBqK/'>React PIXI - NineSlicePlane</a> by Inlet (<a href='https://codepen.io/inlet'>@inlet</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>

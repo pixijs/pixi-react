@@ -1,0 +1,52 @@
+---
+name: Graphics
+---
+
+import { Playground, PropsTable } from 'docz'
+import Stage from './../stage';
+import { Graphics } from './../index'
+
+# Graphics
+
+http://pixijs.download/dev/docs/PIXI.Graphics.html
+
+
+<PropsTable of={Graphics} />
+
+
+<Playground>
+  <Stage width={600} height={300}>
+    <Graphics
+      draw={g => {
+        g.beginFill(0xff3300)
+        g.lineStyle(4, 0xffd900, 1)
+
+        g.moveTo(50, 50)
+        g.lineTo(250, 50)
+        g.lineTo(100, 100)
+        g.lineTo(50, 50)
+        g.endFill()
+
+        g.lineStyle(2, 0x0000ff, 1)
+        g.beginFill(0xff700b, 1)
+        g.drawRect(50, 150, 120, 120)
+
+        g.lineStyle(2, 0xff00ff, 1)
+        g.beginFill(0xff00bb, 0.25)
+        g.drawRoundedRect(150, 100, 300, 100, 15)
+        g.endFill()
+
+        g.lineStyle(0)
+        g.beginFill(0xffff0b, 0.5)
+        g.drawCircle(470, 90, 60)
+        g.endFill()
+      }}
+    />
+  </Stage>
+</Playground>
+
+
+## Codepen example
+
+<iframe height='500' scrolling='no' title='React PIXI - Graphics' src='//codepen.io/inlet/embed/vRejPV/?height=265&theme-id=0&default-tab=js,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style={{width: '100%'}}>See the Pen <a href='https://codepen.io/inlet/pen/vRejPV/'>React PIXI - Graphics</a> by Inlet (<a href='https://codepen.io/inlet'>@inlet</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>

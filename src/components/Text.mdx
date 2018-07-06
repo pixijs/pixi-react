@@ -1,0 +1,42 @@
+---
+name: Text
+---
+
+import { Playground, PropsTable } from 'docz'
+import Stage from './../stage';
+import { Text } from './../index'
+
+# Text
+
+http://pixijs.download/dev/docs/PIXI.Text.html
+
+
+<PropsTable of={Text} />
+
+
+<Playground>
+  <Stage width={300} height={300}>
+    <Text text="hello" style={new PIXI.TextStyle({
+  fontFamily: 'Arial',
+  fontSize: 36,
+  fontStyle: 'italic',
+  fontWeight: 'bold',
+  fill: ['#ffffff', '#00ff99'], // gradient
+  stroke: '#4a1850',
+  strokeThickness: 5,
+  dropShadow: true,
+  dropShadowColor: '#000000',
+  dropShadowBlur: 4,
+  dropShadowAngle: Math.PI / 6,
+  dropShadowDistance: 6,
+  wordWrap: true,
+  wordWrapWidth: 440,
+})} />
+  </Stage>
+</Playground>
+
+
+## CodePen Example
+
+<iframe height='500' scrolling='no' title='React PIXI - Text' src='//codepen.io/inlet/embed/zWEaoR/?height=265&theme-id=0&default-tab=js,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style={{width: '100%'}}>See the Pen <a href='https://codepen.io/inlet/pen/zWEaoR/'>React PIXI - Text</a> by Inlet (<a href='https://codepen.io/inlet'>@inlet</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>

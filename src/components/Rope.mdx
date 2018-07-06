@@ -1,0 +1,37 @@
+---
+name: Rope
+---
+
+import { Playground, PropsTable } from 'docz'
+import Stage from './../stage';
+import { Rope } from './../index'
+
+# Rope
+
+http://pixijs.download/dev/docs/PIXI.mesh.Rope.html
+
+
+<PropsTable of={Rope} />
+
+
+<Playground>
+  <Stage width={500} height={300}>
+    <Rope
+      points={
+        [
+          new PIXI.Point(0, 150),
+          new PIXI.Point(100, 100),
+          new PIXI.Point(150, 150),
+          new PIXI.Point(200, 100),
+          new PIXI.Point(400, 150),
+        ]
+      }
+      image={'https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/snake.png'} />
+  </Stage>
+</Playground>
+
+
+## CodePen Example
+
+<iframe height='500' scrolling='no' title='React PIXI - Rope' src='//codepen.io/inlet/embed/RMLWxV/?height=265&theme-id=0&default-tab=js,result&embed-version=2' frameBorder='no' allowtransparency='true' allowFullScreen='true' style={{width: '100%'}}>See the Pen <a href='https://codepen.io/inlet/pen/RMLWxV/'>React PIXI - Rope</a> by Inlet (<a href='https://codepen.io/inlet'>@inlet</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>

@@ -42,7 +42,7 @@
     "babel-jest": "^23.0.1",
     "canvas-prebuilt": "^1.6.5-prerelease.1",
     "cross-env": "^5.1.6",
-    "docz": "^0.5.2",
+    "docz": "^0.5.5",
     "eslint": "^4.18.2",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",

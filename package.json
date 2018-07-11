@@ -8,6 +8,8 @@
   "license": "MIT",
   "repository": "git+https://github.com/inlet/react-pixi.git",
   "scripts": {
+    "docz:dev": "docz dev",
+    "docz:build": "docz build",
     "eslint": "eslint .",
     "build:watch": "cross-env NODE_ENV=development rollup -c --watch",
     "build:dev": "cross-env NODE_ENV=development rollup -c",
@@ -40,6 +42,7 @@
     "babel-jest": "^23.0.1",
     "canvas-prebuilt": "^1.6.5-prerelease.1",
     "cross-env": "^5.1.6",
+    "docz": "^0.5.5",
     "eslint": "^4.18.2",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",

@@ -80,10 +80,22 @@ export function applyDefaultProps(instance, oldProps, newProps) {
   )
 
   // update event handlers
-  eventHandlers.forEach(function(evt) {
-    isFunction(oldProps[evt], instance.removeListener) && instance.removeListener(evt, oldProps[evt])
-    isFunction(newProps[evt], instance.on) && instance.on(evt, newProps[evt])
-  })
+  if (!newProps.ignoreEvents) {
+    eventHandlers.forEach(function(evt) {
+      isFunction(oldProps[evt], instance.removeListener) && instance.removeListener(evt, oldProps[evt])
+      isFunction(newProps[evt], instance.on) && instance.on(evt, newProps[evt])
+    })
+  }
+
+  // hard overwrite all props? can speed up performance
+  if (newProps.overwriteProps) {
+    for (let p in newProps) {
+      if (oldProps[p] !== newProps[p]) {
+        setValue(instance, p, newProps[p])
+      }
+    }
+    return
+  }
 
   let props = Object.keys(newProps || {})
     .filter(not(hasKey(PROPS_RESERVED)))

@@ -8,7 +8,6 @@
  * -------------------------------------------
  */
 
-import idx from 'idx/lib/idx'
 import invariant from 'fbjs/lib/invariant'
 import performanceNow from 'performance-now'
 import { createElement } from '../utils/element'
@@ -159,7 +158,7 @@ export default {
   insertInContainerBefore: insertBefore,
 
   commitUpdate(instance, updatePayload, type, oldProps, newProps) {
-    let applyProps = idx(instance, _ => _.applyProps)
+    let applyProps = instance && instance.applyProps
     if (typeof applyProps !== 'function') {
       applyProps = applyDefaultProps
     }

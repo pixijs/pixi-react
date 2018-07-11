@@ -2,7 +2,10 @@ import * as PIXI from 'pixi.js'
 import { applyDefaultProps, getTextureFromProps } from '../utils/props'
 
 const Mesh = (root, props) => {
-  const mesh = new PIXI.mesh.Mesh(getTextureFromProps('Mesh', props))
+  const texture = getTextureFromProps('Mesh', props)
+  const { vertices, uvs, indices, drawMode = PIXI.mesh.Mesh.DRAW_MODES.TRIANGLES } = props
+
+  const mesh = new PIXI.mesh.Mesh(texture, vertices, uvs, indices, drawMode)
 
   mesh.applyProps = (instance, oldProps, newProps) => {
     const { image, texture, ...props } = newProps

@@ -1,0 +1,46 @@
+---
+name: Rope
+order: 7
+menu: Components
+route: /components/mesh/rope
+---
+
+import { Playground } from 'docz'
+import Stage from '../stage'
+import { Rope } from '../index'
+
+# Rope
+
+## Props
+
+http://pixijs.download/dev/docs/PIXI.mesh.Rope.html
+
+## Usage
+
+<Playground>
+  <Stage width={500} height={300} options={{ backgroundColor: 0xeef1f5 }}>
+    <Rope
+      points={
+        [
+          new PIXI.Point(0, 150),
+          new PIXI.Point(100, 100),
+          new PIXI.Point(150, 150),
+          new PIXI.Point(200, 100),
+          new PIXI.Point(400, 150),
+        ]
+      }
+      image={'https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/snake.png'} />
+  </Stage>
+</Playground>
+
+## Example
+
+<iframe 
+  height={500} 
+  scrolling="no"
+  title="Container" 
+  src="//codepen.io/inlet/embed/aecfbdab7d8d320d2ae19ca800d77594/?height=300&theme-id=33987&default-tab=result&embed-version=2"
+  frameBorder="no" 
+  allowransparency="true"
+  allowFullScreen="true"
+  style={{ width: '100%' }} />

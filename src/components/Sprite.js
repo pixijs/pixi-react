@@ -8,7 +8,7 @@ const Sprite = (root, props) => {
     const { image, texture, ...props } = newProps
     applyDefaultProps(instance, oldProps, props)
 
-    if (image || texture) {
+    if ((texture && oldProps.texture !== newProps.texture) || (image && oldProps.image !== newProps.image)) {
       instance.texture = getTextureFromProps('Sprite', newProps)
     }
   }

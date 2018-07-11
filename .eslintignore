@@ -1,9 +1,13 @@
-# Third party
-node_modules/
+.circleci/
+.docz/
+.github/
+.idea/
 
+node_modules/
 lib/
 test/
 examples/
 dist/
+docs/
 
 rollup.config.js

@@ -80,10 +80,13 @@ export function applyDefaultProps(instance, oldProps, newProps) {
   )
 
   // update event handlers
-  eventHandlers.forEach(function(evt) {
-    isFunction(oldProps[evt], instance.removeListener) && instance.removeListener(evt, oldProps[evt])
-    isFunction(newProps[evt], instance.on) && instance.on(evt, newProps[evt])
-  })
+  if (!newProps.ignoreEvents) {
+    eventHandlers.forEach(function(evt) {
+      isFunction(oldProps[evt], instance.removeListener) && instance.removeListener(evt, oldProps[evt])
+      isFunction(newProps[evt], instance.on) && instance.on(evt, newProps[evt])
+    })
+  }
+
 
   let props = Object.keys(newProps || {})
     .filter(not(hasKey(PROPS_RESERVED)))

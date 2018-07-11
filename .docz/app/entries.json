@@ -1,0 +1,459 @@
+{
+  "README.mdx": {
+    "name": "About React Pixi",
+    "order": 0,
+    "route": "/",
+    "id": "01CJ57JZPNHKT2QSCNNQHZMD7W",
+    "filepath": "README.mdx",
+    "slug": "readme",
+    "menu": null,
+    "headings": [
+      {
+        "depth": 1,
+        "slug": "react-fiber-renderer-for-pixi",
+        "value": "React fiber renderer for pixi"
+      },
+      {
+        "depth": 2,
+        "slug": "install",
+        "value": "Install"
+      },
+      {
+        "depth": 3,
+        "slug": "node",
+        "value": "Node"
+      },
+      {
+        "depth": 3,
+        "slug": "browser",
+        "value": "Browser"
+      },
+      {
+        "depth": 2,
+        "slug": "usage",
+        "value": "Usage"
+      },
+      {
+        "depth": 4,
+        "slug": "with-react-dom",
+        "value": "With react dom"
+      },
+      {
+        "depth": 4,
+        "slug": "without-react-dom",
+        "value": "Without react dom"
+      },
+      {
+        "depth": 2,
+        "slug": "examples",
+        "value": "Examples"
+      },
+      {
+        "depth": 2,
+        "slug": "custom-components",
+        "value": "Custom components"
+      },
+      {
+        "depth": 2,
+        "slug": "access-pixi-application",
+        "value": "Access pixi application"
+      },
+      {
+        "depth": 3,
+        "slug": "via-render-props-function-as-child",
+        "value": "Via render props function as child"
+      },
+      {
+        "depth": 3,
+        "slug": "via-higher-order-component-withpixiapp",
+        "value": "Via higher order component withpixiapp"
+      },
+      {
+        "depth": 2,
+        "slug": "stage",
+        "value": "Stage"
+      },
+      {
+        "depth": 3,
+        "slug": "props",
+        "value": "Props"
+      },
+      {
+        "depth": 2,
+        "slug": "components",
+        "value": "Components"
+      }
+    ]
+  },
+  "src/components/BitmapText.mdx": {
+    "name": "BitmapText",
+    "order": 10,
+    "menu": "Components",
+    "route": "/components/bitmap-text",
+    "id": "01CJ57JZPQ63PK2XV6DEQ5WWQ1",
+    "filepath": "src/components/BitmapText.mdx",
+    "slug": "src-components-bitmap-text",
+    "headings": [
+      {
+        "depth": 1,
+        "slug": "bitmaptext",
+        "value": "Bitmaptext"
+      },
+      {
+        "depth": 2,
+        "slug": "props",
+        "value": "Props"
+      },
+      {
+        "depth": 2,
+        "slug": "usage",
+        "value": "Usage"
+      },
+      {
+        "depth": 2,
+        "slug": "example",
+        "value": "Example"
+      }
+    ]
+  },
+  "src/components/Container.mdx": {
+    "name": "Container",
+    "menu": "Components",
+    "route": "/components/container",
+    "order": 1,
+    "id": "01CJ57JZPRNKTH2MYV2T5RMEKF",
+    "filepath": "src/components/Container.mdx",
+    "slug": "src-components-container",
+    "headings": [
+      {
+        "depth": 1,
+        "slug": "container",
+        "value": "Container"
+      },
+      {
+        "depth": 2,
+        "slug": "props",
+        "value": "Props"
+      },
+      {
+        "depth": 2,
+        "slug": "usage",
+        "value": "Usage"
+      },
+      {
+        "depth": 2,
+        "slug": "example",
+        "value": "Example"
+      }
+    ]
+  },
+  "src/components/Graphics.mdx": {
+    "name": "Graphics",
+    "order": 5,
+    "menu": "Components",
+    "route": "/components/graphics",
+    "id": "01CJ57JZPRW8JHVHH2FFP9KF12",
+    "filepath": "src/components/Graphics.mdx",
+    "slug": "src-components-graphics",
+    "headings": [
+      {
+        "depth": 1,
+        "slug": "graphics",
+        "value": "Graphics"
+      },
+      {
+        "depth": 2,
+        "slug": "props",
+        "value": "Props"
+      },
+      {
+        "depth": 3,
+        "slug": "draw",
+        "value": "Draw"
+      },
+      {
+        "depth": 2,
+        "slug": "usage",
+        "value": "Usage"
+      },
+      {
+        "depth": 2,
+        "slug": "example",
+        "value": "Example"
+      }
+    ]
+  },
+  "src/components/Mesh.mdx": {
+    "name": "Mesh",
+    "order": 6,
+    "menu": "Components",
+    "route": "/components/mesh",
+    "id": "01CJ57JZPRR79QEERJTV890G7W",
+    "filepath": "src/components/Mesh.mdx",
+    "slug": "src-components-mesh",
+    "headings": [
+      {
+        "depth": 1,
+        "slug": "mesh",
+        "value": "Mesh"
+      },
+      {
+        "depth": 2,
+        "slug": "props",
+        "value": "Props"
+      },
+      {
+        "depth": 2,
+        "slug": "usage",
+        "value": "Usage"
+      },
+      {
+        "depth": 2,
+        "slug": "example",
+        "value": "Example"
+      }
+    ]
+  },
+  "src/components/NineSlicePlane.mdx": {
+    "name": "NineSlicePlane",
+    "order": 8,
+    "menu": "Components",
+    "route": "/components/mesh/nine-slice-plane",
+    "id": "01CJ57JZPRKFBS8DT8GM2D0JB2",
+    "filepath": "src/components/NineSlicePlane.mdx",
+    "slug": "src-components-nine-slice-plane",
+    "headings": [
+      {
+        "depth": 1,
+        "slug": "ninesliceplane",
+        "value": "Ninesliceplane"
+      },
+      {
+        "depth": 2,
+        "slug": "props",
+        "value": "Props"
+      },
+      {
+        "depth": 2,
+        "slug": "usage",
+        "value": "Usage"
+      },
+      {
+        "depth": 2,
+        "slug": "example",
+        "value": "Example"
+      }
+    ]
+  },
+  "src/components/ParticleContainer.mdx": {
+    "name": "ParticleContainer",
+    "order": 2,
+    "menu": "Components",
+    "route": "/components/particle-container",
+    "id": "01CJ57JZPSBV1NDJ2VEEN440XQ",
+    "filepath": "src/components/ParticleContainer.mdx",
+    "slug": "src-components-particle-container",
+    "headings": [
+      {
+        "depth": 1,
+        "slug": "particlecontainer",
+        "value": "Particlecontainer"
+      },
+      {
+        "depth": 2,
+        "slug": "props",
+        "value": "Props"
+      },
+      {
+        "depth": 3,
+        "slug": "maxsize",
+        "value": "Maxsize"
+      },
+      {
+        "depth": 3,
+        "slug": "properties",
+        "value": "Properties"
+      },
+      {
+        "depth": 3,
+        "slug": "batchsize",
+        "value": "Batchsize"
+      },
+      {
+        "depth": 3,
+        "slug": "autoresize",
+        "value": "Autoresize"
+      },
+      {
+        "depth": 2,
+        "slug": "usage",
+        "value": "Usage"
+      },
+      {
+        "depth": 2,
+        "slug": "example",
+        "value": "Example"
+      }
+    ]
+  },
+  "src/components/Rope.mdx": {
+    "name": "Rope",
+    "order": 7,
+    "menu": "Components",
+    "route": "/components/mesh/rope",
+    "id": "01CJ57JZPSKZ7YXG3VT5JZSJZR",
+    "filepath": "src/components/Rope.mdx",
+    "slug": "src-components-rope",
+    "headings": [
+      {
+        "depth": 1,
+        "slug": "rope",
+        "value": "Rope"
+      },
+      {
+        "depth": 2,
+        "slug": "props",
+        "value": "Props"
+      },
+      {
+        "depth": 2,
+        "slug": "usage",
+        "value": "Usage"
+      },
+      {
+        "depth": 2,
+        "slug": "example",
+        "value": "Example"
+      }
+    ]
+  },
+  "src/components/Sprite.mdx": {
+    "name": "Sprite",
+    "order": 3,
+    "menu": "Components",
+    "route": "/components/sprite",
+    "id": "01CJ57JZPS24DQQB7FV4T6TX1M",
+    "filepath": "src/components/Sprite.mdx",
+    "slug": "src-components-sprite",
+    "headings": [
+      {
+        "depth": 1,
+        "slug": "sprite",
+        "value": "Sprite"
+      },
+      {
+        "depth": 2,
+        "slug": "props",
+        "value": "Props"
+      },
+      {
+        "depth": 2,
+        "slug": "usage",
+        "value": "Usage"
+      },
+      {
+        "depth": 2,
+        "slug": "example",
+        "value": "Example"
+      }
+    ]
+  },
+  "src/components/Text.mdx": {
+    "name": "Text",
+    "order": 9,
+    "menu": "Components",
+    "route": "/components/text",
+    "id": "01CJ57JZPSG773EK6J2RA3S083",
+    "filepath": "src/components/Text.mdx",
+    "slug": "src-components-text",
+    "headings": [
+      {
+        "depth": 1,
+        "slug": "text",
+        "value": "Text"
+      },
+      {
+        "depth": 2,
+        "slug": "props",
+        "value": "Props"
+      },
+      {
+        "depth": 2,
+        "slug": "style-props",
+        "value": "Style props"
+      },
+      {
+        "depth": 2,
+        "slug": "usage",
+        "value": "Usage"
+      },
+      {
+        "depth": 2,
+        "slug": "example",
+        "value": "Example"
+      }
+    ]
+  },
+  "src/components/TilingSprite.mdx": {
+    "name": "TilingSprite",
+    "order": 4,
+    "menu": "Components",
+    "route": "/components/tiling-sprite",
+    "id": "01CJ57JZPTZS1G83DJFDCW8E6J",
+    "filepath": "src/components/TilingSprite.mdx",
+    "slug": "src-components-tiling-sprite",
+    "headings": [
+      {
+        "depth": 1,
+        "slug": "tilingsprite",
+        "value": "Tilingsprite"
+      },
+      {
+        "depth": 2,
+        "slug": "props",
+        "value": "Props"
+      },
+      {
+        "depth": 2,
+        "slug": "usage",
+        "value": "Usage"
+      },
+      {
+        "depth": 2,
+        "slug": "example",
+        "value": "Example"
+      }
+    ]
+  },
+  "src/stage/Stage.mdx": {
+    "name": "Stage",
+    "order": 1,
+    "route": "/stage",
+    "id": "01CJ57JZPTVTDWYQJKZM87DA4H",
+    "filepath": "src/stage/Stage.mdx",
+    "slug": "src-stage-stage",
+    "menu": null,
+    "headings": [
+      {
+        "depth": 1,
+        "slug": "stage",
+        "value": "Stage"
+      },
+      {
+        "depth": 2,
+        "slug": "props",
+        "value": "Props"
+      },
+      {
+        "depth": 2,
+        "slug": "usage",
+        "value": "Usage"
+      },
+      {
+        "depth": 2,
+        "slug": "example",
+        "value": "Example"
+      }
+    ]
+  }
+}

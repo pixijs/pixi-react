@@ -1,0 +1,7 @@
+{
+  "title": "React Pixi",
+  "description": "Write PIXI applications using React declarative style",
+  "colors": {
+    "primary": "tomato"
+  }
+}

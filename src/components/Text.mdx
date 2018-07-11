@@ -1,31 +1,39 @@
 ---
 name: Text
+menu: Components
+route: /components/text
+order: 50
 ---
 
-import { Playground, PropsTable } from 'docz'
-import Stage from './../stage';
-import { Text } from './../index'
+import { Playground } from 'docz'
+import Stage from '../stage'
+import { Text } from '../index'
 
 # Text
 
+## Props
+
 http://pixijs.download/dev/docs/PIXI.Text.html
 
+## Style Props
 
-<PropsTable of={Text} />
+http://pixijs.download/dev/docs/PIXI.TextStyle.html
 
+## Usage
 
 <Playground>
-  <Stage width={300} height={300}>
-    <Text text="hello" style={new PIXI.TextStyle({
-  fontFamily: 'Arial',
-  fontSize: 36,
-  fontStyle: 'italic',
-  fontWeight: 'bold',
+  <Stage width={300} height={300} options={{ backgroundColor: 0xeef1f5 }}>
+    <Text text="Hello World" anchor={0.5} x={150} y={150} style={new PIXI.TextStyle({
+      align: 'center',
+  fontFamily: '"Source Sans Pro", Helvetica, sans-serif',
+  fontSize: 50,
+  fontWeight: 400,
   fill: ['#ffffff', '#00ff99'], // gradient
-  stroke: '#4a1850',
+  stroke: '#01d27e',
   strokeThickness: 5,
+  letterSpacing: 20,
   dropShadow: true,
-  dropShadowColor: '#000000',
+  dropShadowColor: '#ccced2',
   dropShadowBlur: 4,
   dropShadowAngle: Math.PI / 6,
   dropShadowDistance: 6,
@@ -35,8 +43,14 @@ http://pixijs.download/dev/docs/PIXI.Text.html
   </Stage>
 </Playground>
 
+## Example
 
-## CodePen Example
-
-<iframe height='500' scrolling='no' title='React PIXI - Text' src='//codepen.io/inlet/embed/zWEaoR/?height=265&theme-id=0&default-tab=js,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style={{width: '100%'}}>See the Pen <a href='https://codepen.io/inlet/pen/zWEaoR/'>React PIXI - Text</a> by Inlet (<a href='https://codepen.io/inlet'>@inlet</a>) on <a href='https://codepen.io'>CodePen</a>.
-</iframe>
+<iframe 
+  height={600} 
+  scrolling="no"
+  title="Container" 
+  src="//codepen.io/inlet/embed/ec46cd42dc7fed3c383fc934a0dcf6b4/?height=600&theme-id=33987&default-tab=result&embed-version=2"
+  frameBorder="no" 
+  allowtransparency="true"
+  allowFullScreen="true"
+  style={{ width: '100%' }} />

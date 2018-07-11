@@ -1,21 +1,50 @@
 ---
 name: BitmapText
+menu: Components
+route: /components/bitmap-text
+order: 40
 ---
 
-import { Playground, PropsTable } from 'docz'
-import Stage from './../stage';
-import { BitmapText } from './../index'
+import { Playground } from 'docz'
+import Stage from '../stage'
+import BitmapText from './BitmapTextDocz'
 
 # BitmapText
 
+## Props
+
 http://pixijs.download/dev/docs/PIXI.extras.BitmapText.html
 
-
-<PropsTable of={BitmapText} />
-
+## Usage
 
 <Playground>
-  <Stage width={300} height={300}>
-    <BitmapText text="text using a fancy font!" size={35} style={{font: {name: "Desyrel", size: 35}}} />
+  <Stage width={500} height={300} options={{ backgroundColor: 0xeef1f5 }}>
+    <BitmapText anchor={0.5} x={250} y={150} text="Hello World!" style={{ font: '50px Desyrel' }}/>
   </Stage>
 </Playground>
+
+## Example
+
+Make sure to load the bitmap font data before mounting.
+
+See https://pixijs.io/examples/#/demos/text-demo.js
+
+```js
+
+import { render } from 'react-dom'
+import { Stage, BitmapText } from '@inlet/react-pixi'
+
+PIXI.loader
+  .add('desyrel', './assets/desyrel.xml')
+  .load(onAssetsLoaded)
+
+const App = () => (
+  <Stage>
+    <BitmapText text="Hello World" style={{ font: '35px Desyrel' }}>
+  </Stage>
+)
+
+function onAssetsLoaded() {
+  render(<App />, document.getElementById('root'))
+}
+```

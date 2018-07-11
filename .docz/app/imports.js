@@ -21,4 +21,6 @@ export const imports = {
     import(/* webpackPrefetch: true, webpackChunkName: "src-components-text" */ 'src/components/Text.mdx'),
   'src/components/TilingSprite.mdx': () =>
     import(/* webpackPrefetch: true, webpackChunkName: "src-components-tiling-sprite" */ 'src/components/TilingSprite.mdx'),
+  'src/stage/Stage.mdx': () =>
+    import(/* webpackPrefetch: true, webpackChunkName: "src-stage-stage" */ 'src/stage/Stage.mdx'),
 }

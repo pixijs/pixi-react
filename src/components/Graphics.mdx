@@ -1,21 +1,31 @@
 ---
 name: Graphics
+menu: Components
+route: /components/graphics
+order: 60
 ---
 
 import { Playground, PropsTable } from 'docz'
-import Stage from './../stage';
-import { Graphics } from './../index'
+import Stage from '../stage'
+import { Graphics } from '../index'
 
 # Graphics
 
+## Props
+
 http://pixijs.download/dev/docs/PIXI.Graphics.html
 
+### draw
 
-<PropsTable of={Graphics} />
+Draw graphics inline using the imperative `PIXI.Graphics` API.
 
+> Use with caution, the `draw` method is costly. If the component needs to update frequently (requestAnimationFrame) 
+> it might be better to use a cached texture instead.
+
+## Usage
 
 <Playground>
-  <Stage width={600} height={300}>
+  <Stage width={600} height={300} options={{ backgroundColor: 0xffffff }}>
     <Graphics
       draw={g => {
         g.beginFill(0xff3300)
@@ -46,7 +56,14 @@ http://pixijs.download/dev/docs/PIXI.Graphics.html
 </Playground>
 
 
-## Codepen example
+## Example
 
-<iframe height='500' scrolling='no' title='React PIXI - Graphics' src='//codepen.io/inlet/embed/vRejPV/?height=265&theme-id=0&default-tab=js,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style={{width: '100%'}}>See the Pen <a href='https://codepen.io/inlet/pen/vRejPV/'>React PIXI - Graphics</a> by Inlet (<a href='https://codepen.io/inlet'>@inlet</a>) on <a href='https://codepen.io'>CodePen</a>.
-</iframe>
+<iframe 
+  height={500} 
+  scrolling="no"
+  title="Container" 
+  src="//codepen.io/inlet/embed/d3b1be3b908b1d890442ee0c8baceaaf/?height=300&theme-id=33987&default-tab=result&embed-version=2"
+  frameBorder="no" 
+  allowtransparency="true"
+  allowFullScreen="true"
+  style={{ width: '100%' }} />

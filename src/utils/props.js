@@ -87,6 +87,15 @@ export function applyDefaultProps(instance, oldProps, newProps) {
     })
   }
 
+  // hard overwrite all props? can speed up performance
+  if (newProps.overwriteProps) {
+    for (let p in newProps) {
+      if (oldProps[p] !== newProps[p]) {
+        setValue(instance, p, newProps[p])
+      }
+    }
+    return
+  }
 
   let props = Object.keys(newProps || {})
     .filter(not(hasKey(PROPS_RESERVED)))

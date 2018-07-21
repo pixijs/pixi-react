@@ -43,7 +43,10 @@ declare namespace ReactPixi {
   const Stage: React.ComponentType<StageProps>
 
   function render(
-    reactPixiElement: React.ReactElement<any> | React.ReactElement<any>[],
+    reactPixiElement:
+      React.ReactElement<any> |
+      React.ReactElement<any>[] |
+      React.Factory<any>,
     pixiContainer: PIXI.Container,
     callback?: Function
   ): void

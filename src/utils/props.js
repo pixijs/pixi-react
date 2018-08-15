@@ -28,7 +28,7 @@ export const PROPS_DISPLAY_OBJECT = {
   alpha: 1,
   buttonMode: false,
   cacheAsBitmap: false,
-  cursor: 'auto',
+  cursor: null,
   filterArea: null,
   filters: null,
   hitArea: null,
@@ -107,7 +107,7 @@ export function applyDefaultProps(instance, oldProps, newProps) {
     if (!isNil(value)) {
       // set value if defined
       setValue(instance, prop, value)
-    } else if (!isNil(instance[prop]) && !isNil(PROPS_DISPLAY_OBJECT[prop])) {
+    } else if (!isNil(instance[prop]) && prop in PROPS_DISPLAY_OBJECT) {
       // is a default value, use that
       console.warn(`setting default value: ${prop}, from: ${instance[prop]} to: ${value} for`, instance)
       setValue(instance, prop, PROPS_DISPLAY_OBJECT[prop])

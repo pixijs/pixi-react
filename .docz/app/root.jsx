@@ -1,17 +1,10 @@
 import React from 'react'
 import { hot } from 'react-hot-loader'
 import Theme from 'docz-theme-default'
-
-import config from './config.json'
-import entries from './entries.json'
+import db from './db.json'
 
 const Root = ({ imports }) => (
-  <Theme
-    config={config}
-    entries={entries}
-    imports={imports}
-    hashRouter={true}
-  />
+  <Theme db={db} imports={imports} hashRouter={true} />
 )
 
 export default hot(module)(Root)

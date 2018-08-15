@@ -92,7 +92,7 @@ You can easily add new components to your project:
 import * as PIXI from 'pixi.js'
 import { PixiComponent } from '@inlet/react-pixi'
 
-export default new PixiComponent('Rectangle', {
+export default PixiComponent('Rectangle', {
   create: props => {
     return new PIXI.Graphics()
   },

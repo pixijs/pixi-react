@@ -28,7 +28,7 @@ export const PROPS_DISPLAY_OBJECT = {
   alpha: 1,
   buttonMode: false,
   cacheAsBitmap: false,
-  cursor: 'auto',
+  cursor: null,
   filterArea: null,
   filters: null,
   hitArea: null,

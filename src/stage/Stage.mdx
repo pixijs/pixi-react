@@ -7,6 +7,7 @@ route: /stage
 import { Playground } from 'docz'
 import Stage from '../stage'
 import { Sprite } from '../index'
+import times from 'lodash/times'
 
 # Stage
 
@@ -44,21 +45,34 @@ render(<App />, document.getElementById('root'))
 ## Example
 
 <Playground>
-  <Stage width={500} height={300} options={{ backgroundColor: 0x07ff9c, antialias: true, roundPixels: true }}>
-    { [...Array(10)].map((a, i) => i).map(i => {
+  {() => {
+    const count = 10
+    const stageProps = {
+      height: 300,
+      width: 500,
+      options: {
+        backgroundColor: 0x07ff9c,
+        antialias: true,
+        roundPixel: true,
+      }
+    }
 
-      return (
-            <Sprite  key={i} image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/coin.png" 
-                     scale={0.17} 
-                     anchor={0.5}
-                     rotation={(i * 36) * (Math.PI / 180)}
-                     x={250 + Math.cos((i * 36) * (Math.PI / 180)) * 100} 
-                     y={150 + Math.sin((i * 36) * (Math.PI / 180)) * 100}  />
-      )
-
-    }) }
-    
-  </Stage>
+    return (
+      <Stage {...stageProps}>
+        {
+          times(count, i => (
+            <Sprite key={i}
+                    image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/coin.png"
+                    scale={(360/count) * 0.004}
+                    anchor={0.5}
+                    rotation={(i * (360/count)) * (Math.PI / 180)}
+                    x={250 + Math.cos((i * (360/count)) * (Math.PI / 180)) * 100}
+                    y={150 + Math.sin((i * (360/count)) * (Math.PI / 180)) * 100}  />
+          ))
+        }
+      </Stage>
+    )
+  }}
 </Playground>
 
 

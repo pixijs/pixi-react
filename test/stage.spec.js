@@ -214,6 +214,18 @@ describe('stage', () => {
       expect(app.ticker.started).toBeFalsy()
     })
 
+    test('ticker to be toggable', async () => {
+      const el = renderer.create(<Stage raf={false} />)
+      const app = el.getInstance().app
+      expect(app.ticker.started).toBeFalsy()
+
+      el.update(<Stage raf={true} />)
+      expect(app.ticker.started).toBeTruthy()
+
+      el.update(<Stage raf={false} />)
+      expect(app.ticker.started).toBeFalsy()
+    })
+
     test('render stage on component update with raf to false', () => {
       const el = renderer.create(<Stage raf={false} />)
       const app = el.getInstance().app

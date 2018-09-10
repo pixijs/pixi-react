@@ -1,3 +1,4 @@
+import 'webpack-serve-overlay'
 import React from 'react'
 import ReactDOM from 'react-dom'
 

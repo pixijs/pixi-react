@@ -19,8 +19,10 @@ http://pixijs.download/dev/docs/PIXI.Graphics.html
 
 Draw graphics inline using the imperative `PIXI.Graphics` API.
 
-> Use with caution, the `draw` method is costly. If the component needs to update frequently (requestAnimationFrame) 
+> Use with caution, the `draw` method is costly. If the component needs to update frequently
 > it might be better to use a cached texture instead.
+>
+> Make sure to call `g.clear()` if you'd like to redraw the graphics.
 
 ## Usage
 
@@ -28,6 +30,10 @@ Draw graphics inline using the imperative `PIXI.Graphics` API.
   <Stage width={600} height={300} options={{ backgroundColor: 0xffffff }}>
     <Graphics
       draw={g => {
+        // clear the graphics
+        g.clear()
+
+        // start drawing
         g.beginFill(0xff3300)
         g.lineStyle(4, 0xffd900, 1)
 

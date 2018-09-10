@@ -25,7 +25,8 @@ export default {
     },
     {
       file: outputFile('es5'),
-      format: 'es'
+      format: 'iife',
+      name: 'ReactPixi'
     },
   ],
   plugins: [

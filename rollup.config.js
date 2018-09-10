@@ -47,8 +47,10 @@ function getConfig(dest, format, ugly) {
   }
 }
 
-export default [
+const configs = [
   getConfig(`dist/reaxt-pixi${!prod ? '.dev' : ''}.js`, 'cjs', false),
   getConfig(`dist/react-pixi.umd${!prod ? '-dev' : ''}.js`, 'umd', true),
   getConfig(`dist/react-pixi.module${!prod ? '-dev' : ''}.js`, 'es', false),
 ]
+
+export default configs

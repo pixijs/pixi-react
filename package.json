@@ -19,7 +19,7 @@
     "build": "rimraf ./dist && npm run build:dev && npm run build:prod",
     "test": "jest --silent",
     "test:watch": "jest --silent --watch",
-    "prepublish": "npm run test && npm run eslint && npm run build"
+    "prepublish": "if-env CI=true && echo \"skip build\" || (npm run test && npm run eslint && npm run build)"
   },
   "files": [
     "dist/",
@@ -66,6 +66,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.11.1",
     "idx": "^2.4.0",
+    "if-env": "^1.0.4",
     "jest": "^23.5.0",
     "lodash": "^4.17.10",
     "pixi.js": "^4.8.1",

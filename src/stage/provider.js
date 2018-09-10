@@ -1,6 +1,6 @@
 import React from 'react'
 
-const context = React.createContext(null)
+const Context = React.createContext(null)
 
 /**
  * Provider for exposing the PIXI.Application
@@ -19,7 +19,7 @@ const context = React.createContext(null)
  *   )
  *
  */
-const Provider = context.Consumer
+const Provider = Context.Consumer
 
 /**
  * Or as a Higher Order Component
@@ -32,9 +32,9 @@ const Provider = context.Consumer
  *
  */
 const withPixiApp = BaseComponent => {
-  const wrapper = props => <context.Consumer>{app => <BaseComponent {...props} app={app} />}</context.Consumer>
+  const wrapper = props => <Context.Consumer>{app => <BaseComponent {...props} app={app} />}</Context.Consumer>
   wrapper.displayName = `withPIXIApp(${BaseComponent.displayName || BaseComponent.name})`
   return wrapper
 }
 
-export { withPixiApp, Provider, context }
+export { withPixiApp, Provider, Context }

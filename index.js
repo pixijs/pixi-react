@@ -1,3 +1,1 @@
-const __DEV__ = process.env.NODE_ENV === 'development'
-
-module.exports = __DEV__ ? require('./dist/react-pixi.dev.js') : require('./dist/react-pixi.js')
+module.exports = require(`./dist/react-pixi.cjs${process.env.NODE_ENV === 'development' ? '-dev' : ''}`)

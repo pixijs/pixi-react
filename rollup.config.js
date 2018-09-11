@@ -9,16 +9,19 @@ import globals from 'rollup-plugin-node-globals'
 
 const prod = process.env.NODE_ENV === 'production'
 
-function getConfig(dest, format, ugly) {
+function getConfig(dest, format) {
   return {
     input: 'src/index.js',
     output: {
       exports: 'named',
       file: dest,
       format,
-      name: 'react-pixi',
+      name: 'ReactPixi',
       sourcemap: !prod,
-      globals: { 'pixi.js': 'PIXI', 'react': 'React' },
+      globals: {
+        'pixi.js': 'PIXI',
+        'react': 'React'
+      },
     },
     plugins: [
       json(),
@@ -36,7 +39,7 @@ function getConfig(dest, format, ugly) {
         'process.env.NODE_ENV': prod ? '"production"' : '"development"',
       }),
       globals(),
-      ugly && terser(),
+      prod && terser(),
       filesize(),
     ].filter(Boolean),
     external: [
@@ -47,10 +50,12 @@ function getConfig(dest, format, ugly) {
   }
 }
 
+const buildType = prod ? '' : '-dev'
+
 const configs = [
-  getConfig(`dist/reaxt-pixi${!prod ? '.dev' : ''}.js`, 'cjs', false),
-  getConfig(`dist/react-pixi.umd${!prod ? '-dev' : ''}.js`, 'umd', true),
-  getConfig(`dist/react-pixi.module${!prod ? '-dev' : ''}.js`, 'es', false),
+  getConfig(`dist/react-pixi.cjs${buildType}.js`, 'cjs'),
+  getConfig(`dist/react-pixi.umd${buildType}.js`, 'umd'),
+  getConfig(`dist/react-pixi.module${buildType}.js`, 'es'),
 ]
 
 export default configs

@@ -1,57 +1,61 @@
-import resolve from 'rollup-plugin-node-resolve'
-import babel from 'rollup-plugin-babel'
 import commonjs from 'rollup-plugin-commonjs'
-import sourceMaps from 'rollup-plugin-sourcemaps'
+import filesize from 'rollup-plugin-filesize'
+import resolve from 'rollup-plugin-node-resolve'
+import { terser } from 'rollup-plugin-terser'
 import json from 'rollup-plugin-json'
+import babel from 'rollup-plugin-babel'
 import replace from 'rollup-plugin-replace'
 import globals from 'rollup-plugin-node-globals'
-import { terser } from 'rollup-plugin-terser'
-import camelCase from 'lodash/camelCase'
-import upperFirst from 'lodash/upperFirst'
 
-const nodeEnv = process.env.NODE_ENV || 'production'
-const production = nodeEnv === 'production'
-const libraryName = 'react-pixi'
-const outputFile = format => `dist/${libraryName}.${nodeEnv}.${format}.js`
+const prod = process.env.NODE_ENV === 'production'
 
-export default {
-  input: 'src/index.js',
-  output: [
-    {
-      file: outputFile('umd'), name: upperFirst(camelCase(libraryName)),
-      format: 'umd',
-      globals: { 'pixi.js': 'PIXI', 'react': 'React' },
-      sourcemap: !production
+function getConfig(dest, format) {
+  return {
+    input: 'src/index.js',
+    output: {
+      exports: 'named',
+      file: dest,
+      format,
+      name: 'ReactPixi',
+      sourcemap: !prod,
+      globals: {
+        'pixi.js': 'PIXI',
+        'react': 'React'
+      },
     },
-    {
-      file: outputFile('es5'),
-      format: 'es'
-    },
-  ],
-  plugins: [
-    json(),
-    babel({
-      exclude: 'node_modules/**',
-    }),
-    resolve({
-      browser: true,
-      jsnext: true,
-      main: true,
-    }),
-    commonjs({
-      ignoreGlobal: false,
-    }),
-    replace({
-      __DEV__: production ? 'false' : 'true',
-      'process.env.NODE_ENV': production ? '"production"' : '"development"',
-    }),
-    sourceMaps(),
-    globals(),
-    production && terser()
-  ],
-  external: [
-    'pixi.js',
-    'react',
-    'react-dom'
-  ]
+    plugins: [
+      json(),
+      babel({ exclude: 'node_modules/**' }),
+      resolve({
+        browser: true,
+        jsnext: true,
+        main: true,
+      }),
+      commonjs({
+        ignoreGlobal: false
+      }),
+      replace({
+        __DEV__: prod ? 'false' : 'true',
+        'process.env.NODE_ENV': prod ? '"production"' : '"development"',
+      }),
+      globals(),
+      prod && terser(),
+      filesize(),
+    ].filter(Boolean),
+    external: [
+      'pixi.js',
+      'react',
+      'react-dom'
+    ]
+  }
 }
+
+const buildType = prod ? '' : '-dev'
+
+const configs = [
+  getConfig(`dist/react-pixi.cjs${buildType}.js`, 'cjs'),
+  getConfig(`dist/react-pixi.umd${buildType}.js`, 'umd'),
+  getConfig(`dist/react-pixi.module${buildType}.js`, 'es'),
+]
+
+export default configs

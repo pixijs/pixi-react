@@ -10,6 +10,7 @@
     "ordering": "ascending",
     "version": "0.1.4",
     "repository": "https://github.com/inlet/react-pixi",
+    "native": false,
     "propsParser": false,
     "hashRouter": true,
     "dest": "docs"
@@ -28,7 +29,7 @@
         {
           "depth": 1,
           "slug": "react-fiber-renderer-for-pixi",
-          "value": "React fiber renderer for pixi"
+          "value": "React Fiber renderer for PIXI"
         },
         {
           "depth": 2,
@@ -53,12 +54,12 @@
         {
           "depth": 4,
           "slug": "with-react-dom",
-          "value": "With react dom"
+          "value": "With React-DOM"
         },
         {
           "depth": 4,
           "slug": "without-react-dom",
-          "value": "Without react dom"
+          "value": "Without React-DOM"
         },
         {
           "depth": 2,
@@ -68,22 +69,22 @@
         {
           "depth": 2,
           "slug": "custom-components",
-          "value": "Custom components"
+          "value": "Custom Components"
         },
         {
           "depth": 2,
           "slug": "access-pixi-application",
-          "value": "Access pixi application"
+          "value": "Access PIXI Application"
         },
         {
           "depth": 3,
           "slug": "via-render-props-function-as-child",
-          "value": "Via render props function as child"
+          "value": "Via Render Props (function as child)"
         },
         {
           "depth": 3,
           "slug": "via-higher-order-component-withpixiapp",
-          "value": "Via higher order component withpixiapp"
+          "value": "Via Higher Order Component  withPixiApp"
         },
         {
           "depth": 2,
@@ -115,7 +116,7 @@
         {
           "depth": 1,
           "slug": "bitmaptext",
-          "value": "Bitmaptext"
+          "value": "BitmapText"
         },
         {
           "depth": 2,
@@ -189,7 +190,7 @@
         {
           "depth": 3,
           "slug": "draw",
-          "value": "Draw"
+          "value": "draw"
         },
         {
           "depth": 2,
@@ -248,7 +249,7 @@
         {
           "depth": 1,
           "slug": "ninesliceplane",
-          "value": "Ninesliceplane"
+          "value": "NineSlicePlane"
         },
         {
           "depth": 2,
@@ -280,7 +281,7 @@
         {
           "depth": 1,
           "slug": "particlecontainer",
-          "value": "Particlecontainer"
+          "value": "ParticleContainer"
         },
         {
           "depth": 2,
@@ -290,22 +291,22 @@
         {
           "depth": 3,
           "slug": "maxsize",
-          "value": "Maxsize"
+          "value": "maxSize"
         },
         {
           "depth": 3,
           "slug": "properties",
-          "value": "Properties"
+          "value": ""
         },
         {
           "depth": 3,
           "slug": "batchsize",
-          "value": "Batchsize"
+          "value": "batchSize"
         },
         {
           "depth": 3,
           "slug": "autoresize",
-          "value": "Autoresize"
+          "value": "autoResize"
         },
         {
           "depth": 2,
@@ -406,7 +407,7 @@
         {
           "depth": 2,
           "slug": "style-props",
-          "value": "Style props"
+          "value": "Style Props"
         },
         {
           "depth": 2,
@@ -433,7 +434,7 @@
         {
           "depth": 1,
           "slug": "tilingsprite",
-          "value": "Tilingsprite"
+          "value": "TilingSprite"
         },
         {
           "depth": 2,

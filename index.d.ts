@@ -89,16 +89,18 @@ declare namespace _ReactPixi {
 // public
 declare namespace ReactPixi {
   // components
-  const Sprite: React.ComponentType<_ReactPixi.ISprite>
-  const Text: React.ComponentType<_ReactPixi.Container<PIXI.Text>>
-  const Container: React.ComponentType<_ReactPixi.Container<PIXI.Container>>
-  const Graphics: React.ComponentType<_ReactPixi.IGraphics>
-  const BitmapText: React.ComponentType<_ReactPixi.IBitmapText>
-  const NineSlicePlane: React.ComponentType<_ReactPixi.INineSlicePlane>
-  const ParticleContainer: React.ComponentType<_ReactPixi.IParticleContainer>
-  const TilingSprite: React.ComponentType<_ReactPixi.ITilingSprite>
-  const Rope: React.ComponentType<_ReactPixi.IRope>
-  const Mesh: React.ComponentType<_ReactPixi.IMesh>
+
+  // const Sprite: React.Component<_ReactPixi.ISprite>
+  class Sprite extends React.Component<_ReactPixi.ISprite> {}
+  class Text extends React.Component<_ReactPixi.Container<PIXI.Text>> {}
+  class Container extends React.Component<_ReactPixi.Container<PIXI.Container>> {}
+  class Graphics extends React.Component<_ReactPixi.IGraphics> {}
+  class BitmapText extends React.Component<_ReactPixi.IBitmapText> {}
+  class NineSlicePlane extends React.Component<_ReactPixi.INineSlicePlane> {}
+  class ParticleContainer extends React.Component<_ReactPixi.IParticleContainer> {}
+  class TilingSprite extends React.Component<_ReactPixi.ITilingSprite> {}
+  class Rope extends React.Component<_ReactPixi.IRope> {}
+  class Mesh extends React.Component<_ReactPixi.IMesh> {}
 
   // renderer
   const render: (
@@ -120,13 +122,13 @@ declare namespace ReactPixi {
   const PixiFiber: _ReactPixi.IReactFiber
 
   // stage
-  const Stage: React.ComponentType<_ReactPixi.IStageProps>
+  class Stage extends React.Component<_ReactPixi.IStageProps> {}
 
   // custom component
   const PixiComponent: <P, PixiInstance extends PIXI.DisplayObject>(
     componentName: string,
     lifecycle: _ReactPixi.ICustomComponent<P, PixiInstance>
-  ) => React.ComponentType<P>;
+  ) => React.ComponentClass<P>;
 }
 
 export = ReactPixi

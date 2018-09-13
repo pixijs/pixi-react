@@ -1,151 +1,132 @@
-import * as PIXI from 'pixi.js'
-import * as React from 'react'
+import * as PIXI from 'pixi.js';
+import * as React from 'react';
 
+// private
 declare namespace _ReactPixi {
-  type Omit<T, K> = Pick<T, Exclude<keyof T, K>>
+  type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 
-  interface ObjectWithChildren {
-    children?: any
+  type InteractionEvents = {
+    [P in PIXI.interaction.InteractionEventTypes]?: () => void;
   }
 
-  type Childless<T extends ObjectWithChildren> = Omit<T, 'children'>
+  type Container<T> = Partial<Omit<T, 'children'>> & InteractionEvents
 
-  interface ChildrenProperties {
-    children?: React.ReactNode
+  interface ISprite extends Container<PIXI.Sprite> {
+    image?: string;
+  }
+
+  interface IGraphics extends Container<PIXI.Graphics> {
+    draw?(graphics: PIXI.Graphics): void;
+  }
+
+  interface IBitmapText extends Container<PIXI.extras.BitmapText> {
+    style?: PIXI.extras.BitmapTextStyle;
+  }
+
+  interface INineSlicePlane extends Container<PIXI.mesh.NineSlicePlane> {
+    image?: string;
+  }
+
+  interface IParticleContainer extends Container<PIXI.particles.ParticleContainer> {
+    maxSize?: number;
+    batchSize?: number;
+    autoResize?: boolean;
+    properties?: PIXI.particles.ParticleContainerProperties
+  }
+
+  interface ITilingSprite extends Container<PIXI.extras.TilingSprite> {
+    image?: string;
+  }
+
+  interface IRope extends Container<PIXI.mesh.Rope> {
+    image?: string;
+  }
+
+  interface IMesh extends Container<PIXI.mesh.Mesh> {
+    image?: string;
+  }
+
+  interface IProvider {
+    children(app: PIXI.Application): React.ReactNode | React.ReactNodeArray
+  }
+
+  interface IDevtoolsConfig {
+    bundleType: 0 | 1;
+    version: string;
+    rendererPackageName: string;
+
+    findFiberByHostInstance(instance: any): object;
+    getInspectorDataForViewTag(tag: number): object;
+  }
+
+  interface IReactFiber {
+    createContainer(containerInfo: PIXI.Container, isAsync: boolean, hydrate: boolean): object;
+    updateContainer(element: React.ReactNode, container: object, parentComponent: React.Component<any, any>, callback?: () => void): number;
+    getPublicRootInstance(container: object): React.Component<any, any> | null;
+    findHostInstance(component: object): any;
+    injectIntoDevTools(devToolsConfig: IDevtoolsConfig): boolean;
+  }
+
+  interface IStageProps {
+    width?: number;
+    height?: number;
+    raf?: boolean;
+    renderOnComponentChange?: boolean;
+    options?: PIXI.ApplicationOptions;
+
+    onMount?(app: PIXI.Application): void;
+    onUnmount?(app: PIXI.Application): void;
+  }
+
+  interface ICustomComponent<P, PixiInstance extends PIXI.DisplayObject> {
+    create(props: P): PixiInstance;
+    didMount?(instance: PixiInstance, parent: PIXI.Container): void;
+    willUnmount?(instance: PixiInstance, parent: PIXI.Container): void;
+    applyProps?(instance: PixiInstance, oldProps: Readonly<P>, newProps: Readonly<P>): void;
   }
 }
 
-/**
- * -------------------------------------------
- * Public API
- * -------------------------------------------
- */
+// public
 declare namespace ReactPixi {
-  /**
-   * -------------------------------------------
-   * Stage
-   * -------------------------------------------
-   */
+  // components
+  const Sprite: React.ComponentType<_ReactPixi.ISprite>
+  const Text: React.ComponentType<_ReactPixi.Container<PIXI.Text>>
+  const Container: React.ComponentType<_ReactPixi.Container<PIXI.Container>>
+  const Graphics: React.ComponentType<_ReactPixi.IGraphics>
+  const BitmapText: React.ComponentType<_ReactPixi.IBitmapText>
+  const NineSlicePlane: React.ComponentType<_ReactPixi.INineSlicePlane>
+  const ParticleContainer: React.ComponentType<_ReactPixi.IParticleContainer>
+  const TilingSprite: React.ComponentType<_ReactPixi.ITilingSprite>
+  const Rope: React.ComponentType<_ReactPixi.IRope>
+  const Mesh: React.ComponentType<_ReactPixi.IMesh>
 
-  interface StageProps extends React.CanvasHTMLAttributes<HTMLCanvasElement> {
-    children?: React.ReactNode
+  // renderer
+  const render: (
+    element:
+      | React.ReactElement<any>
+      | React.ReactElement<any>[]
+      | React.Factory<any>,
+    container: PIXI.Container,
+    callback?: () => void
+  ) => any
 
-    width?: number
-    height?: number
+  // context provider
+  const Provider: React.ComponentType<_ReactPixi.IProvider>
 
-    onMount?(callback: () => PIXI.Application): void
+  // context HOC
+  const withPixiApp: (baseComponent: React.ComponentClass<{ app: PIXI.Application }>) => React.ComponentClass<any>
 
-    raf?: boolean
-    renderOnComponentChange?: boolean
+  // fiber
+  const PixiFiber: _ReactPixi.IReactFiber
 
-    options?: PIXI.ApplicationOptions
-  }
-  const Stage: React.ComponentType<StageProps>
+  // stage
+  const Stage: React.ComponentType<_ReactPixi.IStageProps>
 
-  function render(
-    reactPixiElement:
-      React.ReactElement<any> |
-      React.ReactElement<any>[] |
-      React.Factory<any>,
-    pixiContainer: PIXI.Container,
-    callback?: Function
-  ): void
-
-  function withPixiApp<P extends { app: PIXI.Application }>(
-    baseComponent: React.ComponentType<P>
-  ): React.ComponentType<_ReactPixi.Omit<P, 'app'>>
-
-  /**
-   * -------------------------------------------
-   * Providers
-   * -------------------------------------------
-   */
-
-  interface ProviderProps {
-    children(app: PIXI.Application): React.ReactNode
-  }
-  const Provider: React.ComponentType<ProviderProps>
-
-  /**
-   * -------------------------------------------
-   * Component types
-   * -------------------------------------------
-   */
-
-  type ChildlessComponent<T extends _ReactPixi.ObjectWithChildren> = Partial<_ReactPixi.Childless<T>>
-
-  type Component<T extends _ReactPixi.ObjectWithChildren> = ChildlessComponent<T> & _ReactPixi.ChildrenProperties
-
-  /**
-   * -------------------------------------------
-   * Custom Component
-   * -------------------------------------------
-   */
-
-  interface LifeCycleMethods<P, PixiInstance extends PIXI.DisplayObject> {
-    create(props: P): PixiInstance
-    didMount?(instance: PixiInstance, parent: PIXI.Container): void
-    willUnmount?(instance: PixiInstance, parent: PIXI.Container): void
-    applyProps?(instance: PixiInstance, oldProps: Readonly<P>, newProps: Readonly<P>): void
-  }
-
-  // e.g. const Circle = PixiComponent<{radius: number}, PIXI.Graphics>(...)
-  function PixiComponent<P, PixiInstance extends PIXI.DisplayObject>(
-    type: string,
-    lifecycle: LifeCycleMethods<P, PixiInstance>
-  ): React.ComponentType<P>
-
-  /**
-   * -------------------------------------------
-   * PIXI Components
-   * -------------------------------------------
-   */
-
-  interface BitmapTextProperties extends ChildlessComponent<PIXI.extras.BitmapText> {
-    text: string
-  }
-  const BitmapText: React.ComponentType<BitmapTextProperties>
-
-  interface ContainerProperties extends Component<PIXI.Container> {}
-  const Container: React.ComponentType<ContainerProperties>
-
-  interface GraphicsProperties extends ChildlessComponent<PIXI.Graphics> {
-    draw(graphics: PIXI.Graphics): void
-  }
-  const Graphics: React.ComponentType<GraphicsProperties>
-
-  interface ParticleContainerProperties extends Component<PIXI.particles.ParticleContainer> {}
-  const ParticleContainer: React.ComponentType<ParticleContainerProperties>
-
-  interface SpriteProperties extends ChildlessComponent<PIXI.Sprite> {
-    texture?: PIXI.Texture
-    image?: string
-  }
-  const Sprite: React.ComponentType<SpriteProperties>
-
-  interface TextProperties extends ChildlessComponent<PIXI.Text> {}
-  const Text: React.ComponentType<TextProperties>
-
-  interface TilingSpriteProperties extends ChildlessComponent<PIXI.extras.TilingSprite> {
-    texture?: PIXI.Texture
-    image?: string
-  }
-  const TilingSprite: React.ComponentType<TilingSpriteProperties>
-
-  interface MeshProperties extends ChildlessComponent<PIXI.mesh.Mesh> {}
-  const Mesh: React.ComponentType<MeshProperties>
-
-  interface RopeProperties extends ChildlessComponent<PIXI.mesh.Rope> {
-    texture?: PIXI.Texture
-    image?: string
-  }
-  const Rope: React.ComponentType<RopeProperties>
-
-  interface NineSlicePlaneProperties extends ChildlessComponent<PIXI.mesh.NineSlicePlane> {
-    texture?: PIXI.Texture
-    image?: string
-  }
-  const NineSlicePlane: React.ComponentType<NineSlicePlaneProperties>
+  // custom component
+  const PixiComponent: <P, PixiInstance extends PIXI.DisplayObject>(
+    componentName: string,
+    lifecycle: _ReactPixi.ICustomComponent<P, PixiInstance>
+  ) => React.ComponentType<P>;
 }
 
 export = ReactPixi

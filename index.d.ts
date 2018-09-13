@@ -72,7 +72,11 @@ declare namespace ReactPixi {
    * -------------------------------------------
    */
 
-  type ChildlessComponent<T extends _ReactPixi.ObjectWithChildren> = Partial<_ReactPixi.Childless<T>>
+  type PixiEventProps = {
+    [key in PIXI.interaction.InteractionEventTypes]: (event: PIXI.interaction.InteractionEvent) => void
+  }
+
+  type ChildlessComponent<T extends _ReactPixi.ObjectWithChildren> = Partial<_ReactPixi.Childless<T> & PixiEventProps>
 
   type Component<T extends _ReactPixi.ObjectWithChildren> = ChildlessComponent<T> & _ReactPixi.ChildrenProperties
 

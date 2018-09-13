@@ -6,7 +6,7 @@ declare namespace _ReactPixi {
   type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 
   type InteractionEvents = {
-    [P in PIXI.interaction.InteractionEventTypes]?: () => void;
+    [P in PIXI.interaction.InteractionEventTypes]?: (event: PIXI.interaction.InteractionEvent) => void;
   }
 
   type Container<T> = Partial<Omit<T, 'children'>> & InteractionEvents

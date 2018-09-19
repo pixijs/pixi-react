@@ -67,7 +67,7 @@ declare namespace _ReactPixi {
     injectIntoDevTools(devToolsConfig: IDevtoolsConfig): boolean;
   }
 
-  interface IStageProps {
+  interface IStageProps extends React.CanvasHTMLAttributes<HTMLCanvasElement> {
     width?: number;
     height?: number;
     raf?: boolean;

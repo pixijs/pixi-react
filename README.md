@@ -163,26 +163,26 @@ class RotatingBunny extends React.Component {
 
 There are 2 ways of accessing the `PIXI.Application` instance.
 
-1. Using `Provider` and pass the instance via [function as child](https://medium.com/merrickchristensen/function-as-child-components-5f3920a9ace9):
+1. Using `AppConsumer` and pass the instance via [render props](https://reactjs.org/docs/render-props.html):
 
 `App.js`
 
 ```jsx
-import { Stage, Container, Provider } from '@inlet/react-pixi'
+import { Stage, Container, AppConsumer } from '@inlet/react-pixi'
 import { RotatingBunny } from './components/RotatingBunny'
 
 export default () => (
   <Stage>
     <Container>
-      <Provider>
+      <AppConsumer>
         {app => <RotatingBunny app={app} />}
-      </Provider>
+      </AppConsumer>
     </Container>
   </Stage>
 )
 ```
 
-2. Or use a Higher Order Component:
+2. Or use a [Higher Order Component](https://reactjs.org/docs/higher-order-components.html):
 
 `App.js`
 

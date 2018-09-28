@@ -145,15 +145,15 @@ Accessing the `PIXI.Application` instance in your child components.
 ```jsx
 // App.js
 
-import { Stage, Container, Provider } from '@inlet/react-pixi'
+import { Stage, Container, AppConsumer } from '@inlet/react-pixi'
 import { RotatingBunny } from './components/RotatingBunny'
 
 export default () => (
   <Stage>
     <Container>
-      <Provider>
+      <AppConsumer>
         {app => <RotatingBunny app={app} />}
-      </Provider>
+      </AppConsumer>
     </Container>
   </Stage>
 )

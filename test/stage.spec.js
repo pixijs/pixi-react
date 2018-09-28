@@ -3,7 +3,7 @@ import * as PIXI from 'pixi.js'
 import renderer from 'react-test-renderer'
 import { PixiFiber, PACKAGE_NAME, VERSION } from '../src/reconciler'
 import { runningInBrowser } from '../src/helpers'
-import { Stage, Provider, withPixiApp, Container, Text } from '../src'
+import { Stage, AppConsumer, withPixiApp, Container, Text } from '../src'
 import { Context } from '../src/stage/provider'
 import { getCanvasProps } from '../src/stage'
 import { mockToSpy } from './__utils__/mock'
@@ -255,7 +255,7 @@ describe('stage', () => {
           <Container>
             <Container>
               <Container>
-                <Provider>{fn}</Provider>
+                <AppConsumer>{fn}</AppConsumer>
               </Container>
             </Container>
           </Container>

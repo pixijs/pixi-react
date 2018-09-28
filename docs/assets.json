@@ -1,8 +1,8 @@
 {
-  "vendors.js": "/static/js/vendors.3a778ae5.js",
-  "app.js": "/static/js/app.32524000.js",
-  "readme.js": "/static/js/readme.4960d906.js",
-  "src-components-bitmap-text.js": "/static/js/src-components-bitmap-text.e06a3aab.js",
+  "vendors.js": "/static/js/vendors.497a4944.js",
+  "app.js": "/static/js/app.828b0234.js",
+  "readme.js": "/static/js/readme.b158cd33.js",
+  "src-components-bitmap-text.js": "/static/js/src-components-bitmap-text.66ab24a2.js",
   "src-components-container.js": "/static/js/src-components-container.ddf7ffd8.js",
   "src-components-graphics.js": "/static/js/src-components-graphics.9ed503c5.js",
   "src-components-mesh.js": "/static/js/src-components-mesh.a30a0c33.js",
@@ -12,7 +12,7 @@
   "src-components-sprite.js": "/static/js/src-components-sprite.3b3d5b47.js",
   "src-components-text.js": "/static/js/src-components-text.04fe22c7.js",
   "src-components-tiling-sprite.js": "/static/js/src-components-tiling-sprite.14182193.js",
-  "src-stage-stage.js": "/static/js/src-stage-stage.92604366.js",
-  "runtime~app.js": "/static/js/runtime~app.7c3002d7f33cd66f9bc6.js",
+  "src-stage-stage.js": "/static/js/src-stage-stage.158479be.js",
+  "runtime~app.js": "/static/js/runtime~app.190e89548de6a4819b97.js",
   "index.html": "/index.html"
 }

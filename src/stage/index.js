@@ -6,7 +6,7 @@ import { PROPS_DISPLAY_OBJECT } from '../utils/props'
 import { runningInBrowser } from '../helpers'
 import { PixiFiber } from '../reconciler'
 import { injectDevtools } from '../render'
-import { Context } from './provider'
+import { AppProvider } from './provider'
 
 const noop = () => {}
 
@@ -147,7 +147,7 @@ class Stage extends React.Component {
 
   getChildren() {
     const { children } = this.props
-    return <Context.Provider value={this.app}>{children}</Context.Provider>
+    return <AppProvider value={this.app}>{children}</AppProvider>
   }
 
   componentDidCatch(error, errorInfo) {

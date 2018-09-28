@@ -2,6 +2,34 @@
 
 exports[`index export modules 1`] = `
 Object {
+  "AppConsumer": Object {
+    "$$typeof": Symbol(react.context),
+    "Consumer": [Circular],
+    "Provider": Object {
+      "$$typeof": Symbol(react.provider),
+      "_context": [Circular],
+    },
+    "_calculateChangedBits": null,
+    "_currentRenderer": null,
+    "_currentRenderer2": null,
+    "_currentValue": null,
+    "_currentValue2": null,
+    "unstable_read": [Function],
+  },
+  "AppProvider": Object {
+    "$$typeof": Symbol(react.provider),
+    "_context": Object {
+      "$$typeof": Symbol(react.context),
+      "Consumer": [Circular],
+      "Provider": [Circular],
+      "_calculateChangedBits": null,
+      "_currentRenderer": null,
+      "_currentRenderer2": null,
+      "_currentValue": null,
+      "_currentValue2": null,
+      "unstable_read": [Function],
+    },
+  },
   "BitmapText": "BitmapText",
   "Container": "Container",
   "Graphics": "Graphics",
@@ -28,20 +56,6 @@ Object {
     "unbatchedUpdates": [Function],
     "updateContainer": [Function],
     "updateContainerAtExpirationTime": [Function],
-  },
-  "Provider": Object {
-    "$$typeof": Symbol(react.context),
-    "Consumer": [Circular],
-    "Provider": Object {
-      "$$typeof": Symbol(react.provider),
-      "_context": [Circular],
-    },
-    "_calculateChangedBits": null,
-    "_currentRenderer": null,
-    "_currentRenderer2": null,
-    "_currentValue": null,
-    "_currentValue2": null,
-    "unstable_read": [Function],
   },
   "Rope": "Rope",
   "Sprite": "Sprite",

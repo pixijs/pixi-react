@@ -8,7 +8,7 @@
       }
     },
     "ordering": "ascending",
-    "version": "0.1.4",
+    "version": "0.1.7",
     "repository": "https://github.com/inlet/react-pixi",
     "native": false,
     "propsParser": false,

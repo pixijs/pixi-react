@@ -1,13 +1,13 @@
-# React Fiber renderer for PIXI
+# React PixiJS
 
 ![](https://img.shields.io/badge/tested_with-jest-green.svg)
 [![CircleCI](https://img.shields.io/circleci/project/github/inlet/react-pixi/master.svg)](https://circleci.com/gh/inlet/react-pixi-fiber)
 ![](https://img.shields.io/badge/license-MIT-green.svg) 
 ![](https://img.shields.io/badge/code_style-prettier-blue.svg)
-![](https://img.shields.io/badge/react-v16.6-ff69b4.svg)
+![](https://img.shields.io/badge/react-v16.6+-ff69b4.svg)
 ![](https://img.shields.io/badge/pixi-v4+-ff69b4.svg)
 
-A custom React 16 (Fiber) renderer. Write [PIXI](http://www.pixijs.com/) applications using React declarative style.
+Write [PixiJS](http://www.pixijs.com/) applications using React declarative style.
 
 ![](https://user-images.githubusercontent.com/232559/37669267-b46a8f8e-2c66-11e8-96e7-cae2ae6bdd7d.png)
 

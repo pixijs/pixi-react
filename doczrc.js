@@ -6,8 +6,5 @@ export default {
   hashRouter: true,
   dest: 'docs',
   themeConfig: {
-    colors: {
-      primary: 'tomato',
-    },
   },
 }

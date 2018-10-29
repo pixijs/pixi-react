@@ -2,13 +2,9 @@
   "config": {
     "title": "React Pixi",
     "description": "Write PIXI applications using React declarative style",
-    "themeConfig": {
-      "colors": {
-        "primary": "tomato"
-      }
-    },
+    "themeConfig": {},
     "ordering": "ascending",
-    "version": "0.1.7",
+    "version": "0.3.0",
     "repository": "https://github.com/inlet/react-pixi",
     "native": false,
     "propsParser": false,
@@ -28,8 +24,8 @@
       "headings": [
         {
           "depth": 1,
-          "slug": "react-fiber-renderer-for-pixi",
-          "value": "React Fiber renderer for PIXI"
+          "slug": "react-pixijs",
+          "value": "React PixiJS"
         },
         {
           "depth": 2,

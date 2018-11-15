@@ -42,7 +42,6 @@ create a valid `<canvas />` element to render to.
 #### Without ReactDOM
 
 ```jsx
-import { render, Text } from '@inlet/react-pixi'
 import * as PIXI from 'pixi.js'
 
 // Setup PIXI app

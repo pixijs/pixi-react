@@ -189,7 +189,7 @@ class RotatingBunny extends React.Component {
 
   state = { rotation: 0 }
 
-  componenDidMount() {
+  componentDidMount() {
     // listen to tick events (raf)
     this.props.app.ticker.add(this.tick)
   }
@@ -199,12 +199,12 @@ class RotatingBunny extends React.Component {
     this.props.app.ticker.remove(this.tick)
   }
   
-  tick(delta) {
-    // rotate this sucker 🙌
-    this.setState(({ rotation }) => ({
-      rotation + 0.1 * delta
-    }))
-  }
+  tick = (delta) => {
+      // rotate this sucker 🙌
+      this.setState(({ rotation }) => ({
+          rotation: rotation + 0.1 * delta
+      }))
+  };
   
   render() {
     return <Sprite image="./bunny.png" rotation={this.state.rotation} />

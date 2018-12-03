@@ -74,7 +74,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.7.0-alpha.2",
     "react-dom": "^16.7.0-alpha.2",
-    "react-test-renderer": "^16.6.3",
+    "react-test-renderer": "^16.7.0-alpha.2",
     "rimraf": "^2.6.2",
     "rollup": "^0.67.4",
     "rollup-plugin-babel": "^4.0.0-beta.2",
@@ -95,7 +95,7 @@
   "dependencies": {
     "fbjs": "^1.0.0",
     "performance-now": "^2.1.0",
-    "react-reconciler": "^0.17.2"
+    "react-reconciler": "^0.18.0-alpha.2"
   },
   "jest": {
     "collectCoverage": false,

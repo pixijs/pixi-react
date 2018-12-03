@@ -3,6 +3,7 @@ import { render } from './render'
 import Stage from './stage'
 import { PixiFiber } from './reconciler'
 import { AppProvider, AppConsumer, withPixiApp } from './stage/provider'
+import { useTick, useApp } from './hooks'
 
 /**
  * -------------------------------------------
@@ -11,6 +12,7 @@ import { AppProvider, AppConsumer, withPixiApp } from './stage/provider'
  */
 
 export { render, Stage, AppProvider, AppConsumer, withPixiApp, PixiComponent, PixiFiber }
+export { useTick, useApp }
 
 export const BitmapText = TYPES.BitmapText
 export const Container = TYPES.Container

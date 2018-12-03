@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import * as PIXI from 'pixi.js'
 import renderer from 'react-test-renderer'
 import { PixiFiber, PACKAGE_NAME, VERSION } from '../src/reconciler'
@@ -247,8 +247,8 @@ describe('stage', () => {
     })
   })
 
-  describe('provider', () => {
-    test('pass down app to child component', () => {
+  describe('context', () => {
+    test('pass down app to child component via render prop', () => {
       const fn = jest.fn(() => <Container />)
       const el = renderer.create(
         <Stage>
@@ -267,10 +267,8 @@ describe('stage', () => {
       expect(fn).toHaveBeenCalledTimes(1)
       expect(fn).toHaveBeenCalledWith(instance.app)
     })
-  })
 
-  describe('provider as a higher order component', () => {
-    test('pass down app to child component', () => {
+    test('pass down app to child component via HOC', () => {
       const fn = jest.fn(() => <Container />)
       const Comp = withPixiApp(({ app }) => fn(app))
 
@@ -287,5 +285,26 @@ describe('stage', () => {
       expect(fn).toHaveBeenCalledTimes(1)
       expect(fn).toHaveBeenCalledWith(instance.app)
     })
+    
+    test('use context via hooks', () => {
+      const fn = jest.fn()
+
+      const Comp = () => {
+        fn(useContext(Context))
+        return <Container />
+      }
+
+      const el = renderer.create(
+        <Stage>
+          <Comp />
+        </Stage>
+      )
+
+      const instance = el.getInstance()
+
+      expect(fn).toHaveBeenCalledTimes(1)
+      expect(fn).toHaveBeenCalledWith(instance.app)
+    })
   })
+
 })

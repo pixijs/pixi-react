@@ -72,6 +72,8 @@ Object {
   "Text": "Text",
   "TilingSprite": "TilingSprite",
   "render": [Function],
+  "useApp": [Function],
+  "useTick": [Function],
   "withPixiApp": [Function],
 }
 `;

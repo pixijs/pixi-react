@@ -1,10 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import * as PIXI from 'pixi.js'
 import renderer from 'react-test-renderer'
 import { PixiFiber, PACKAGE_NAME, VERSION } from '../src/reconciler'
 import { runningInBrowser } from '../src/helpers'
 import { Stage, AppConsumer, withPixiApp, Container, Text } from '../src'
 import { Context } from '../src/stage/provider'
+import { useTick } from '../src/hooks'
 import { getCanvasProps } from '../src/stage'
 import { mockToSpy } from './__utils__/mock'
 
@@ -164,7 +165,10 @@ describe('stage', () => {
     expect(PixiFiber.updateContainer).toHaveBeenCalledWith(
       <Context.Provider value={instance.app}>
         <Text text="Hello World!" />
-      </Context.Provider>, instance.mountNode, instance)
+      </Context.Provider>,
+      instance.mountNode,
+      instance
+    )
   })
 
   test('call PixiFiber.injectIntoDevtools on componentDidMount', () => {
@@ -285,7 +289,7 @@ describe('stage', () => {
       expect(fn).toHaveBeenCalledTimes(1)
       expect(fn).toHaveBeenCalledWith(instance.app)
     })
-    
+
     test('use context via hooks', () => {
       const fn = jest.fn()
 
@@ -307,4 +311,80 @@ describe('stage', () => {
     })
   })
 
+  describe('hook `useTick`', function() {
+    test('throw error no context found', () => {
+      const Comp = () => {
+        useTick(() => {})
+        return <Container />
+      }
+
+      const createApp = () =>
+        renderer.create(
+          <Container>
+            <Comp />
+          </Container>
+        )
+
+      expect(createApp).toThrow(
+        'No Context found with `PIXI.Application`. Make sure to wrap component with `AppProvider`'
+      )
+    })
+
+    test('mount & unmount once', () => {
+      let app
+
+      const Comp = () => {
+        useTick(() => {})
+        return <Container />
+      }
+
+      const renderStage = (Comp) => (
+        <Stage onMount={_app => { app = _app }}>
+          <Container>{ Comp }</Container>
+        </Stage>
+      )
+
+      const render = renderer.create(
+        renderStage()
+      )
+
+      jest.spyOn(app.ticker, 'add')
+      jest.spyOn(app.ticker, 'remove')
+
+      render.update(renderStage(<Comp />))
+      render.update(renderStage(<Comp />))
+
+      expect(app.ticker.add).toHaveBeenCalledTimes(1)
+      expect(app.ticker.remove).toHaveBeenCalledTimes(0)
+
+      render.update(renderStage())
+
+      expect(app.ticker.remove).toHaveBeenCalledTimes(1)
+    })
+
+    test('update state', () => {
+      const fn = jest.fn()
+      
+      const Dummy = ({ x }) => {
+        fn(x)
+        return <Container /> 
+      }
+      
+      const Comp = () => {
+        const [x, setX] = useState(0)
+        useTick(() => setX(x + 1))
+        return <Dummy x={x} />
+      }
+
+      const renderStage = () => (
+        <Stage>
+          <Comp />
+        </Stage>
+      )
+
+      const el = renderer.create(renderStage())
+      el.update(renderStage())
+      expect(fn).toBeCalledTimes(2)
+    })
+  })
 })

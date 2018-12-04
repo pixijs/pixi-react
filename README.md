@@ -4,7 +4,7 @@
 [![CircleCI](https://img.shields.io/circleci/project/github/inlet/react-pixi/master.svg)](https://circleci.com/gh/inlet/react-pixi-fiber)
 ![](https://img.shields.io/badge/license-MIT-green.svg) 
 ![](https://img.shields.io/badge/code_style-prettier-blue.svg)
-![](https://img.shields.io/badge/react-v16.6+-ff69b4.svg)
+![](https://img.shields.io/badge/react-v16.7+-ff69b4.svg)
 ![](https://img.shields.io/badge/pixi-v4+-ff69b4.svg)
 
 Write [PixiJS](http://www.pixijs.com/) applications using React declarative style.
@@ -132,7 +132,7 @@ export default () => (
 
 Consider this rotating bunny example:
 
-`./components/RotatingBunny.js`
+`./components/RotatingBunny.jsx`
 
 ```jsx
 import { Sprite } from '@inlet/react-pixi'
@@ -165,7 +165,7 @@ There are 2 ways of accessing the `PIXI.Application` instance.
 
 1. Using `AppConsumer` and pass the instance via [render props](https://reactjs.org/docs/render-props.html):
 
-`App.js`
+`App.jsx`
 
 ```jsx
 import { Stage, Container, AppConsumer } from '@inlet/react-pixi'
@@ -184,7 +184,7 @@ export default () => (
 
 2. Or use a [Higher Order Component](https://reactjs.org/docs/higher-order-components.html):
 
-`App.js`
+`App.jsx`
 
 ```jsx
 import { Stage, Container, withPixiApp } from '@inlet/react-pixi'
@@ -199,6 +199,23 @@ export default () => (
     </Container>
   </Stage>
 )
+```
+
+3. Use hooks API in Functional Components
+
+`RotatingBunny.jsx`
+
+```jsx
+import { useApp } from '@inlet/react-pixi'
+
+function RotatingBunny(props) {
+  const app = useApp()
+  // app => PIXI.Application
+  
+  return (
+    ...
+  )
+}
 ```
 
 ## API

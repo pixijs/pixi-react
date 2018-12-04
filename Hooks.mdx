@@ -1,0 +1,56 @@
+---
+name: Hooks
+order: 2
+route: /
+---
+
+# Hooks
+
+React Pixi now support React hooks 🌟
+
+### useApp
+
+Access the `PIXI.Application` in your component
+
+```jsx
+import { useApp } from '@inlet/react-pixi'
+
+function MyComponent () {
+  const app = useApp()
+  // app => PIXI.Application
+
+  return (
+    ...
+  )
+}
+```
+
+### useTick
+
+Bind listener to the `PIXI.Application` ticker event
+
+```jsx
+import { useTick } from '@inlet/react-pixi'
+
+function MyComponent () {
+  useTick(delta => {
+    // do something here
+  })
+
+  return (
+    ...
+  )
+}
+```
+
+Example:
+
+<iframe
+  height={500}
+  scrolling="no"
+  title="useTick"
+  src="//codepen.io/inlet/embed/EOMBer/?height=300&theme-id=33987&default-tab=result&embed-version=2"
+  frameBorder="no"
+  allowtransparency="true"
+  allowFullScreen="true"
+  style={{ width: '100%' }} />

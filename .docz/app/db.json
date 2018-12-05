@@ -4,7 +4,7 @@
     "description": "Write PIXI applications using React declarative style",
     "themeConfig": {},
     "ordering": "ascending",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "repository": "https://github.com/inlet/react-pixi",
     "native": false,
     "propsParser": false,
@@ -12,6 +12,33 @@
     "dest": "docs"
   },
   "entries": {
+    "Hooks.mdx": {
+      "name": "Hooks",
+      "order": 2,
+      "route": "/hooks",
+      "id": "6ba60be05e2abd029427a08fa0018f04",
+      "filepath": "Hooks.mdx",
+      "link": "https://github.com/inlet/react-pixi/edit/master/Hooks.mdx",
+      "slug": "hooks",
+      "menu": null,
+      "headings": [
+        {
+          "depth": 1,
+          "slug": "hooks",
+          "value": "Hooks"
+        },
+        {
+          "depth": 3,
+          "slug": "useapp",
+          "value": "useApp"
+        },
+        {
+          "depth": 3,
+          "slug": "usetick",
+          "value": "useTick"
+        }
+      ]
+    },
     "README.mdx": {
       "name": "About React Pixi",
       "order": 0,
@@ -81,6 +108,11 @@
           "depth": 3,
           "slug": "via-higher-order-component-withpixiapp",
           "value": "Via Higher Order Component  withPixiApp"
+        },
+        {
+          "depth": 3,
+          "slug": "use-hooks-api-in-functional-components",
+          "value": "Use hooks API in Functional Components"
         },
         {
           "depth": 2,

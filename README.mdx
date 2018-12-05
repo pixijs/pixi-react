@@ -95,7 +95,7 @@ Currently the following Components are implemented by default:
 You can easily add new components to your project:
 
 ```jsx
-// ./components/Rectangle.js
+// ./components/Rectangle.jsx
 
 import * as PIXI from 'pixi.js'
 import { PixiComponent } from '@inlet/react-pixi'
@@ -121,7 +121,7 @@ export default PixiComponent('Rectangle', {
 ```
 
 ```jsx
-// App.js
+// App.jsx
 
 import { Stage } from '@inlet/react-pixi'
 import Rectangle from './components/Rectangle'
@@ -138,12 +138,12 @@ export default () => (
 
 ## Access PIXI Application
 
-Accessing the `PIXI.Application` instance in your child components.
+Accessing the `PIXI.Application` instance in child components.
 
 ### Via Render Props (function as child)
 
 ```jsx
-// App.js
+// App.jsx
 
 import { Stage, Container, AppConsumer } from '@inlet/react-pixi'
 import { RotatingBunny } from './components/RotatingBunny'
@@ -162,7 +162,7 @@ export default () => (
 ### Via Higher Order Component `withPixiApp`
 
 ```jsx
-// App.js
+// App.jsx
 
 import { Stage, Container, withPixiApp } from '@inlet/react-pixi'
 import { RotatingBunny } from './components/RotatingBunny'
@@ -178,10 +178,29 @@ export default () => (
 )
 ```
 
-For the sake of completeness, the `RotatingBunny` component could look something like this:
+### Use hooks API in Functional Components
+
+Note that you can also use the `useTick` hook to listen for ticker events.
 
 ```jsx
-// ./components/RotatingBunny.js
+// RotatingBunny.jsx
+
+import { useApp } from '@inlet/react-pixi'
+
+function RotatingBunny(props) {
+  const app = useApp()
+  // app => PIXI.Application
+
+  return (
+    ...
+  )
+}
+```
+
+The `RotatingBunny` class component could look something like this:
+
+```jsx
+// ./components/RotatingBunny.jsx
 
 import { Sprite } from '@inlet/react-pixi'
 

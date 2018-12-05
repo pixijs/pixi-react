@@ -20,6 +20,24 @@ Object {
       "_threadCount": 0,
     },
   },
+  "AppContext": Object {
+    "$$typeof": Symbol(react.context),
+    "Consumer": Object {
+      "$$typeof": Symbol(react.context),
+      "_calculateChangedBits": null,
+      "_context": [Circular],
+    },
+    "Provider": Object {
+      "$$typeof": Symbol(react.provider),
+      "_context": [Circular],
+    },
+    "_calculateChangedBits": null,
+    "_currentRenderer": null,
+    "_currentRenderer2": null,
+    "_currentValue": null,
+    "_currentValue2": null,
+    "_threadCount": 0,
+  },
   "AppProvider": Object {
     "$$typeof": Symbol(react.provider),
     "_context": Object {

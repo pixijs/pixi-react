@@ -17,6 +17,7 @@ Object {
       "_currentRenderer2": null,
       "_currentValue": null,
       "_currentValue2": null,
+      "_threadCount": 0,
     },
   },
   "AppProvider": Object {
@@ -34,6 +35,7 @@ Object {
       "_currentRenderer2": null,
       "_currentValue": null,
       "_currentValue2": null,
+      "_threadCount": 0,
     },
   },
   "BitmapText": "BitmapText",
@@ -70,6 +72,8 @@ Object {
   "Text": "Text",
   "TilingSprite": "TilingSprite",
   "render": [Function],
+  "useApp": [Function],
+  "useTick": [Function],
   "withPixiApp": [Function],
 }
 `;

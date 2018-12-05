@@ -1,4 +1,6 @@
 export const imports = {
+  'Hooks.mdx': () =>
+    import(/* webpackPrefetch: true, webpackChunkName: "hooks" */ 'Hooks.mdx'),
   'README.mdx': () =>
     import(/* webpackPrefetch: true, webpackChunkName: "readme" */ 'README.mdx'),
   'src/components/BitmapText.mdx': () =>

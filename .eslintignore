@@ -9,5 +9,6 @@ test/
 examples/
 dist/
 docs/
+doczrc.js
 
 rollup.config.js

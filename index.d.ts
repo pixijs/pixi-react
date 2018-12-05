@@ -110,16 +110,16 @@ declare namespace ReactPixi {
       | React.Factory<any>,
     container: PIXI.Container,
     callback?: () => void
-  ) => any
+  ) => any;
 
   // context provider
-  const Provider: React.ComponentType<_ReactPixi.IProvider>
+  const Provider: React.ComponentType<_ReactPixi.IProvider>;
 
   // context HOC
-  const withPixiApp: (baseComponent: React.ComponentClass<{ app: PIXI.Application }>) => React.ComponentClass<any>
+  const withPixiApp: (baseComponent: React.ComponentClass<{ app: PIXI.Application }>) => React.ComponentClass<any>;
 
   // fiber
-  const PixiFiber: _ReactPixi.IReactFiber
+  const PixiFiber: _ReactPixi.IReactFiber;
 
   // stage
   class Stage extends React.Component<_ReactPixi.IStageProps> {}
@@ -129,6 +129,10 @@ declare namespace ReactPixi {
     componentName: string,
     lifecycle: _ReactPixi.ICustomComponent<P, PixiInstance>
   ) => React.ComponentClass<P>;
+
+  // hooks
+  const useTick: (tick: (delta?: number) => void) => void;
+  const useApp: () => PIXI.Application;
 }
 
 export = ReactPixi

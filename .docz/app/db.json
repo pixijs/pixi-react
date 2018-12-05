@@ -15,7 +15,7 @@
     "Hooks.mdx": {
       "name": "Hooks",
       "order": 2,
-      "route": "/",
+      "route": "/hooks",
       "id": "6ba60be05e2abd029427a08fa0018f04",
       "filepath": "Hooks.mdx",
       "link": "https://github.com/inlet/react-pixi/edit/master/Hooks.mdx",

@@ -242,7 +242,7 @@ Order Component](#access-the-pixiapplication-in-child-components).
 Pass component options as props, example:
 
 ```jsx
-import { Sprite } from '@inlet/pixi-react'
+import { Sprite } from '@inlet/react-pixi'
 
 const MyComponent = () => (
   <Sprite image=".image.png" x={100} y={200} />
@@ -252,7 +252,7 @@ const MyComponent = () => (
 The `image` prop here is a short-hand for [`PIXI.Sprite.fromImage()`](http://pixijs.download/release/docs/PIXI.Sprite.html#.fromImage):
 
 ```jsx
-import { Sprite } from '@inlet/pixi-react'
+import { Sprite } from '@inlet/react-pixi'
 
 const texture = new PIXI.Sprite.fromImage('./image.png')
 

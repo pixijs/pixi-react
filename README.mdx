@@ -274,7 +274,7 @@ Pass down PIXI options as props. Reference the [PIXI documentation](http://pixij
 For example The Sprite can have [x](http://pixijs.download/dev/docs/PIXI.Sprite.html#x) and [y](http://pixijs.download/dev/docs/PIXI.Sprite.html#x) values as writable members:
 
 ```jsx
-import { Sprite } from '@inlet/pixi-react'
+import { Sprite } from '@inlet/react-pixi'
 
 const MyComponent = () => (
   <Sprite image=".image.png" x={100} y={200} />
@@ -284,7 +284,7 @@ const MyComponent = () => (
 The `image` prop here is shorthand for [`PIXI.Sprite.fromImage()`](http://pixijs.download/release/docs/PIXI.Sprite.html#.fromImage):
 
 ```jsx
-import { Sprite } from '@inlet/pixi-react'
+import { Sprite } from '@inlet/react-pixi'
 
 const texture = new PIXI.Sprite.fromImage('./image.png')
 

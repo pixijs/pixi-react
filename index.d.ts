@@ -6,20 +6,30 @@ declare namespace _ReactPixi {
   type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 
   type InteractionEvents = {
-    [P in PIXI.interaction.InteractionEventTypes]?: (event: PIXI.interaction.InteractionEvent) => void;
-  }
+    [P in PIXI.interaction.InteractionEventTypes]?: (event: PIXI.interaction.InteractionEvent) => void
+  };
 
-  type Container<T> = Partial<Omit<T, 'children'>> & InteractionEvents
+  type PointLike = PIXI.Point | PIXI.ObservablePoint | number[] | number;
 
-  interface ISprite extends Container<PIXI.Sprite> {
+  type Container<T> = Partial<Omit<T, 'children' | 'position' | 'scale' | 'pivot'>> &
+    InteractionEvents & {
+      position?: PointLike;
+      scale?: PointLike;
+      pivot?: PointLike;
+    };
+
+  interface ISprite extends Container<Omit<PIXI.Sprite, 'anchor' | 'roundPixels'>> {
+    anchor?: PointLike;
     image?: string;
+    roundPixels?: boolean;
   }
 
   interface IGraphics extends Container<PIXI.Graphics> {
     draw?(graphics: PIXI.Graphics): void;
   }
 
-  interface IBitmapText extends Container<PIXI.extras.BitmapText> {
+  interface IBitmapText extends Container<Omit<PIXI.extras.BitmapText, 'anchor'>> {
+    anchor: PointLike;
     style?: PIXI.extras.BitmapTextStyle;
   }
 
@@ -31,10 +41,12 @@ declare namespace _ReactPixi {
     maxSize?: number;
     batchSize?: number;
     autoResize?: boolean;
-    properties?: PIXI.particles.ParticleContainerProperties
+    properties?: PIXI.particles.ParticleContainerProperties;
   }
 
-  interface ITilingSprite extends Container<PIXI.extras.TilingSprite> {
+  interface ITilingSprite extends Container<Omit<PIXI.extras.TilingSprite, 'tileScale' | 'tilePosition'>> {
+    tileScale?: PointLike;
+    tilePosition: PointLike;
     image?: string;
   }
 
@@ -47,7 +59,7 @@ declare namespace _ReactPixi {
   }
 
   interface IProvider {
-    children(app: PIXI.Application): React.ReactNode | React.ReactNodeArray
+    children(app: PIXI.Application): React.ReactNode | React.ReactNodeArray;
   }
 
   interface IDevtoolsConfig {
@@ -61,7 +73,12 @@ declare namespace _ReactPixi {
 
   interface IReactFiber {
     createContainer(containerInfo: PIXI.Container, isAsync: boolean, hydrate: boolean): object;
-    updateContainer(element: React.ReactNode, container: object, parentComponent: React.Component<any, any>, callback?: () => void): number;
+    updateContainer(
+      element: React.ReactNode,
+      container: object,
+      parentComponent: React.Component<any, any>,
+      callback?: () => void
+    ): number;
     getPublicRootInstance(container: object): React.Component<any, any> | null;
     findHostInstance(component: object): any;
     injectIntoDevTools(devToolsConfig: IDevtoolsConfig): boolean;
@@ -104,10 +121,7 @@ declare namespace ReactPixi {
 
   // renderer
   const render: (
-    element:
-      | React.ReactElement<any>
-      | React.ReactElement<any>[]
-      | React.Factory<any>,
+    element: React.ReactElement<any> | React.ReactElement<any>[] | React.Factory<any>,
     container: PIXI.Container,
     callback?: () => void
   ) => any;
@@ -135,5 +149,5 @@ declare namespace ReactPixi {
   const useApp: () => PIXI.Application;
 }
 
-export = ReactPixi
-export as namespace ReactPixi
+export = ReactPixi;
+export as namespace ReactPixi;

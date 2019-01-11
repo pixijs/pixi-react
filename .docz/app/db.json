@@ -4,7 +4,7 @@
     "description": "Write PIXI applications using React declarative style",
     "themeConfig": {},
     "ordering": "ascending",
-    "version": "0.4.0",
+    "version": "0.4.3",
     "repository": "https://github.com/inlet/react-pixi",
     "native": false,
     "propsParser": false,

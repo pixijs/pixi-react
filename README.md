@@ -122,7 +122,7 @@ export default () => (
     <Rectangle x={100} 
                y={100} 
                width={500} 
-               heigth={300} 
+               height={300}
                fill={0xff0000} />
   </Stage>
 )

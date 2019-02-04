@@ -9,7 +9,6 @@ module.exports = function(wallaby) {
 
     env: {
       type: 'node',
-      runner: 'node',
     },
 
     testFramework: 'jest',

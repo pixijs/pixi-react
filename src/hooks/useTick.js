@@ -1,9 +1,9 @@
 import invariant from 'fbjs/lib/invariant'
 import * as PIXI from 'pixi.js'
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useContext, useRef } from 'react'
 import { Context } from '../stage/provider'
 
-export function useTick(fn) {
+function useTick(callback) {
   const app = useContext(Context)
   invariant(
     app instanceof PIXI.Application,
@@ -12,8 +12,18 @@ export function useTick(fn) {
     'AppProvider'
   )
 
+  const savedRef = useRef(null)
+
   useEffect(() => {
-    app.ticker.add(fn)
-    return () => app.ticker.remove(fn)
+    savedRef.current = callback
+  }, [callback])
+
+  useEffect(() => {
+    const tick = delta => savedRef.current(delta)
+
+    app.ticker.add(tick)
+    return () => app.ticker.remove(tick)
   }, [])
 }
+
+export { useTick }

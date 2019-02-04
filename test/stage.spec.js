@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useLayoutEffect } from 'react'
 import * as PIXI from 'pixi.js'
 import renderer from 'react-test-renderer'
 import { PixiFiber, PACKAGE_NAME, VERSION } from '../src/reconciler'
@@ -311,7 +311,7 @@ describe('stage', () => {
     })
   })
 
-  describe('hook `useTick`', function() {
+  describe.only('hook `useTick`', function() {
     test('throw error no context found', () => {
       const Comp = () => {
         useTick(() => {})
@@ -364,16 +364,14 @@ describe('stage', () => {
 
     test('update state', () => {
       const fn = jest.fn()
-      
-      const Dummy = ({ x }) => {
-        fn(x)
-        return <Container /> 
-      }
-      
+
       const Comp = () => {
         const [x, setX] = useState(0)
+
         useTick(() => setX(x + 1))
-        return <Dummy x={x} />
+        useLayoutEffect(() => fn(x), [x])
+
+        return <Container />
       }
 
       const renderStage = () => (
@@ -383,8 +381,18 @@ describe('stage', () => {
       )
 
       const el = renderer.create(renderStage())
-      el.update(renderStage())
-      expect(fn).toBeCalledTimes(2)
+      const instance = el.getInstance().app
+
+      const update = () => {
+        instance.ticker.update(Date.now())
+        el.update(renderStage())
+      }
+
+      update()
+      update()
+      update()
+
+      expect(fn.mock.calls.map(call => call[0])).toEqual([0, 1, 2])
     })
   })
 })

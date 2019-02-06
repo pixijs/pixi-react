@@ -84,19 +84,19 @@
     "rollup-plugin-node-globals": "^1.2.1",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-replace": "^2.1.0",
-    "rollup-plugin-terser": "^4.0.4",
-    "scheduler": "^0.13.0"
+    "rollup-plugin-terser": "^4.0.4"
   },
   "peerDependencies": {
-    "pixi.js": "^4.7.1",
-    "prop-types": "^15.6.1",
-    "react": "^16.8.0-alpha.1",
-    "react-dom": "^16.8.0-alpha.1"
+    "pixi.js": "^4.8.5",
+    "prop-types": "^15.6.2",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   },
   "dependencies": {
     "fbjs": "^1.0.0",
     "performance-now": "^2.1.0",
-    "react-reconciler": "^0.19.0"
+    "react-reconciler": "^0.19.0",
+    "scheduler": "^0.13.0"
   },
   "jest": {
     "collectCoverage": false,

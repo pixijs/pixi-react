@@ -32,7 +32,13 @@ function getConfig(dest, format) {
         main: true,
       }),
       commonjs({
-        ignoreGlobal: false
+        ignoreGlobal: false,
+        namedExports: {
+          'node_modules/scheduler/index.js': [
+            'unstable_scheduleCallback',
+            'unstable_cancelCallback'
+          ]
+        }
       }),
       replace({
         __DEV__: prod ? 'false' : 'true',

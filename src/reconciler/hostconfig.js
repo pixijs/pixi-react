@@ -10,6 +10,11 @@
 
 import invariant from 'fbjs/lib/invariant'
 import performanceNow from 'performance-now'
+import {
+  unstable_scheduleCallback as scheduleDeferredCallback,
+  unstable_cancelCallback as cancelDeferredCallback,
+} from 'scheduler'
+
 import { createElement } from '../utils/element'
 import { CHILDREN, applyDefaultProps } from '../utils/props'
 
@@ -176,4 +181,10 @@ export default {
   resetTextContent(pixiElement) {
     // noop
   },
+
+  schedulePassiveEffects: scheduleDeferredCallback,
+
+  cancelPassiveEffects: cancelDeferredCallback,
+
+  scheduleDeferredCallback,
 }

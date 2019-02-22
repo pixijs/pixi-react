@@ -106,8 +106,6 @@ declare namespace _ReactPixi {
 // public
 declare namespace ReactPixi {
   // components
-
-  // const Sprite: React.Component<_ReactPixi.ISprite>
   class Sprite extends React.Component<_ReactPixi.ISprite> {}
   class Text extends React.Component<_ReactPixi.Container<PIXI.Text>> {}
   class Container extends React.Component<_ReactPixi.Container<PIXI.Container>> {}
@@ -126,11 +124,15 @@ declare namespace ReactPixi {
     callback?: () => void
   ) => any;
 
-  // context provider
-  const Provider: React.ComponentType<_ReactPixi.IProvider>;
+  // context
+  const AppContext: React.Context<PIXI.Application>;
+  const AppProvider: React.ComponentType<React.ProviderProps<PIXI.Application>>;
+  const AppConsumer: React.ComponentType<React.ConsumerProps<PIXI.Application>>;
 
   // context HOC
-  const withPixiApp: (baseComponent: React.ComponentClass<{ app: PIXI.Application }>) => React.ComponentClass<any>;
+  const withPixiApp: (
+    baseComponent: React.ComponentClass<{ app: PIXI.Application }>
+  ) => React.ComponentClass<any>;
 
   // fiber
   const PixiFiber: _ReactPixi.IReactFiber;

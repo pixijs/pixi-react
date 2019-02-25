@@ -46,6 +46,8 @@ export const PROPS_DISPLAY_OBJECT = {
   y: 0,
 }
 
+const filterProps = not(hasKey([...Object.keys(PROPS_RESERVED), ...Object.keys(eventHandlers)]))
+
 /**
  * Helper util for fetching the texture from props
  * Can be either texture or image
@@ -87,9 +89,12 @@ export function applyDefaultProps(instance, oldProps, newProps) {
     })
   }
 
+  const newPropKeys = Object.keys(newProps || {})
+
   // hard overwrite all props? can speed up performance
   if (newProps.overwriteProps) {
-    for (let p in newProps) {
+    for (let i = 0; i < newPropKeys.length; i++) {
+      const p = newPropKeys[i]
       if (oldProps[p] !== newProps[p]) {
         setValue(instance, p, newProps[p])
       }
@@ -97,11 +102,10 @@ export function applyDefaultProps(instance, oldProps, newProps) {
     return
   }
 
-  let props = Object.keys(newProps || {})
-    .filter(not(hasKey(PROPS_RESERVED)))
-    .filter(not(hasKey(eventHandlers)))
+  const props = newPropKeys.filter(filterProps)
 
-  props.forEach(prop => {
+  for (let i = 0; i < props.length; i++) {
+    const prop = props[i]
     const value = newProps[prop]
 
     if (!isNil(value)) {
@@ -114,5 +118,5 @@ export function applyDefaultProps(instance, oldProps, newProps) {
     } else {
       console.warn(`ignoring prop: ${prop}, from ${instance[prop]} to ${value} for`, instance)
     }
-  })
+  }
 }

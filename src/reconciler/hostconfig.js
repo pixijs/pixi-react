@@ -51,8 +51,12 @@ function insertBefore(parent, child, beforeChild) {
 function diffProperties(pixiElement, type, lastProps, nextProps, rootContainerElement) {
   let updatePayload = null
 
-  for (let propKey in lastProps) {
-    if (nextProps.hasOwnProperty(propKey) || !lastProps.hasOwnProperty(propKey) || lastProps[propKey] == null) {
+  const lastKeys = Object.keys(lastProps)
+  const nextKeys = Object.keys(nextProps)
+
+  for (let i = 0; i < lastKeys.length; i++) {
+    const propKey = lastKeys[i]
+    if (nextProps.hasOwnProperty(propKey) || lastProps[propKey] == null) {
       continue
     }
     if (propKey === CHILDREN) {
@@ -67,11 +71,12 @@ function diffProperties(pixiElement, type, lastProps, nextProps, rootContainerEl
     }
   }
 
-  for (let propKey in nextProps) {
+  for (let i = 0; i < nextKeys.length; i++) {
+    const propKey = nextKeys[i]
     const nextProp = nextProps[propKey]
     const lastProp = lastProps != null ? lastProps[propKey] : undefined
 
-    if (!nextProps.hasOwnProperty(propKey) || nextProp === lastProp || (nextProp == null && lastProp == null)) {
+    if (nextProp === lastProp || (nextProp == null && lastProp == null)) {
       continue
     }
 

@@ -1,6 +1,4 @@
-export const isFunction = (...args) => {
-  return args.reduce((a, b) => a && typeof b === 'function', true)
-}
+export const isFunction = (...args) => args.every(v => typeof v === 'function')
 
 export const isObject = obj => Object.prototype.toString.call(obj) === '[object Object]'
 

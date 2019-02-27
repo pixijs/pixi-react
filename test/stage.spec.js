@@ -1,9 +1,9 @@
-import React, { useState, useContext, useLayoutEffect } from 'react'
+import React, { useState, useLayoutEffect } from 'react'
 import * as PIXI from 'pixi.js'
 import renderer from 'react-test-renderer'
 import { PixiFiber, PACKAGE_NAME, VERSION } from '../src/reconciler'
 import { runningInBrowser } from '../src/helpers'
-import { Stage, AppConsumer, withPixiApp, Container, Text } from '../src'
+import { Stage, Container, Text } from '../src'
 import { Context } from '../src/stage/provider'
 import { useTick } from '../src/hooks'
 import { getCanvasProps } from '../src/stage'
@@ -251,67 +251,7 @@ describe('stage', () => {
     })
   })
 
-  describe('context', () => {
-    test('pass down app to child component via render prop', () => {
-      const fn = jest.fn(() => <Container />)
-      const el = renderer.create(
-        <Stage>
-          <Container>
-            <Container>
-              <Container>
-                <AppConsumer>{fn}</AppConsumer>
-              </Container>
-            </Container>
-          </Container>
-        </Stage>
-      )
-
-      const instance = el.getInstance()
-
-      expect(fn).toHaveBeenCalledTimes(1)
-      expect(fn).toHaveBeenCalledWith(instance.app)
-    })
-
-    test('pass down app to child component via HOC', () => {
-      const fn = jest.fn(() => <Container />)
-      const Comp = withPixiApp(({ app }) => fn(app))
-
-      const el = renderer.create(
-        <Stage>
-          <Container>
-            <Comp />
-          </Container>
-        </Stage>
-      )
-
-      const instance = el.getInstance()
-
-      expect(fn).toHaveBeenCalledTimes(1)
-      expect(fn).toHaveBeenCalledWith(instance.app)
-    })
-
-    test('use context via hooks', () => {
-      const fn = jest.fn()
-
-      const Comp = () => {
-        fn(useContext(Context))
-        return <Container />
-      }
-
-      const el = renderer.create(
-        <Stage>
-          <Comp />
-        </Stage>
-      )
-
-      const instance = el.getInstance()
-
-      expect(fn).toHaveBeenCalledTimes(1)
-      expect(fn).toHaveBeenCalledWith(instance.app)
-    })
-  })
-
-  describe.only('hook `useTick`', function() {
+  describe('hook `useTick`', function() {
     test('throw error no context found', () => {
       const Comp = () => {
         useTick(() => {})

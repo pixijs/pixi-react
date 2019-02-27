@@ -46,8 +46,6 @@ export const PROPS_DISPLAY_OBJECT = {
   y: 0,
 }
 
-const filterProps = not(hasKey([...Object.keys(PROPS_RESERVED), ...Object.keys(eventHandlers)]))
-
 /**
  * Helper util for fetching the texture from props
  * Can be either texture or image
@@ -66,6 +64,8 @@ export const getTextureFromProps = (elementType, { texture = undefined, image = 
   invariant(texture instanceof PIXI.Texture, elementType + ' texture needs to be typeof `PIXI.Texture`')
   return texture
 }
+
+const filterProps = not(hasKey([...Object.keys(PROPS_RESERVED), ...eventHandlers]))
 
 /**
  * Apply default props on Display Object instance (which are all components)

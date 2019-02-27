@@ -311,7 +311,7 @@ describe('stage', () => {
     })
   })
 
-  describe.only('hook `useTick`', function() {
+  describe('hook `useTick`', function() {
     test('throw error no context found', () => {
       const Comp = () => {
         useTick(() => {})

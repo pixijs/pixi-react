@@ -3,7 +3,7 @@ import * as PIXI from 'pixi.js'
 import React, { useEffect, useContext, useRef } from 'react'
 import { Context } from '../stage/provider'
 
-function useTick(callback, disabled) {
+function useTick(callback, enabled = true) {
   const app = useContext(Context)
   invariant(
     app instanceof PIXI.Application,
@@ -12,16 +12,19 @@ function useTick(callback, disabled) {
     'AppProvider'
   )
 
-  const savedRef = useRef(callback)
-  if (savedRef.current !== callback) savedRef.current = callback
+  const savedRef = useRef(null)
 
   useEffect(() => {
-    if (disabled) return
-    const tick = delta => savedRef.current(delta)
+    savedRef.current = callback
+  }, [callback])
 
-    app.ticker.add(tick)
-    return () => app.ticker.remove(tick)
-  }, [disabled])
+  useEffect(() => {
+    if (enabled) {
+      const tick = delta => savedRef.current(delta)
+      app.ticker.add(tick)
+      return () => app.ticker.remove(tick)
+    }
+  }, [enabled])
 }
 
 export { useTick }

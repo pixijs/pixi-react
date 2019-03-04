@@ -334,5 +334,49 @@ describe('stage', () => {
 
       expect(fn.mock.calls.map(call => call[0])).toEqual([0, 1, 2])
     })
+
+    test('enable/disable useTick', () => {
+      const fn = jest.fn()
+
+      const Comp = ({ enabled = true }) => {
+        const [x, setX] = useState(0)
+        useTick(() => setX(x + 1), enabled)
+        useLayoutEffect(() => fn(x), [x])
+        
+        return null
+      }
+
+      const renderStage = (enabled) => (
+        <Stage>
+          <Comp enabled={enabled} />
+        </Stage>
+      )
+
+      const el = renderer.create(renderStage(false))
+      const instance = el.getInstance().app
+
+      const update = (enabled) => {
+        // set enabled
+        el.update(renderStage(enabled))
+
+        // update tick
+        instance.ticker.update(Date.now())
+
+        // again enabled to catch the tick
+        el.update(renderStage(enabled))
+      }
+
+      update(false)
+      update(true) // 1
+      update(false)
+      update(false)
+      update(true) // 2
+      update(true)
+
+      expect(fn.mock.calls.map(call => call[0])).toEqual([
+        0, // initial
+        1,
+        2
+      ])})
   })
 })

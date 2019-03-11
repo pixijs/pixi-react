@@ -130,9 +130,9 @@ declare namespace ReactPixi {
   const AppConsumer: React.ComponentType<React.ConsumerProps<PIXI.Application>>;
 
   // context HOC
-  const withPixiApp: (
-    baseComponent: React.ComponentClass<{ app: PIXI.Application }>
-  ) => React.ComponentClass<any>;
+  const withPixiApp: <P extends { app: PIXI.Application }>(
+    WrappedComponent: React.ComponentType<P>
+  ) => React.ComponentClass<_ReactPixi.Omit<P, 'app'>>;
 
   // fiber
   const PixiFiber: _ReactPixi.IReactFiber;

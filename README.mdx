@@ -6,7 +6,7 @@ route: /
 
 # React PixiJS
 
-![](https://img.shields.io/badge/tested_with-jest-green.svg) [![CircleCI](https://img.shields.io/circleci/project/github/inlet/react-pixi/master.svg)](https://circleci.com/gh/inlet/react-pixi-fiber) ![](https://img.shields.io/badge/license-MIT-green.svg) ![](https://img.shields.io/badge/code_style-prettier-blue.svg) ![](https://img.shields.io/badge/react-v16.6+-ff69b4.svg) ![](https://img.shields.io/badge/pixi-v4+-ff69b4.svg)
+![](https://img.shields.io/badge/tested_with-jest-green.svg) [![CircleCI](https://img.shields.io/circleci/project/github/inlet/react-pixi/master.svg)](https://circleci.com/gh/inlet/react-pixi-fiber) ![](https://img.shields.io/badge/license-MIT-green.svg) ![](https://img.shields.io/badge/code_style-prettier-blue.svg) ![](https://img.shields.io/badge/react-v16.8+-ff69b4.svg) ![](https://img.shields.io/badge/pixi-v4+-ff69b4.svg)
 
 Write [PixiJS](http://www.pixijs.com/) applications using React declarative style.
 
@@ -261,7 +261,7 @@ render(<App />, document.getElementById('root'))
 | `onMount`  | callback function for the created app instance  | |
 | `onUnMount`  | callback function when the Stage gets unmounted  | |
 | `raf`  | use the internal PIXI ticker (requestAnimationFrame)  | `true` |
-| `renderOnComponentChange` |  render stage on Stage changes? only useful in combination with `raf` | `true` |
+| `renderOnComponentChange` |  render stage when the Stage component updates. This is ignored if `raf` is `true`. | `true` |
 | `options` | see [PIXI.Application options](http://pixijs.download/release/docs/PIXI.Application.html) | |
 
 The Stage stores the created `PIXI.Application` instance to context, which can be accessed using a [Provider or a Higher 

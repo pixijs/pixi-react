@@ -2,9 +2,9 @@
 
 ![](https://img.shields.io/badge/tested_with-jest-green.svg)
 [![CircleCI](https://img.shields.io/circleci/project/github/inlet/react-pixi/master.svg)](https://circleci.com/gh/inlet/react-pixi-fiber)
-![](https://img.shields.io/badge/license-MIT-green.svg) 
+![](https://img.shields.io/badge/license-MIT-green.svg)
 ![](https://img.shields.io/badge/code_style-prettier-blue.svg)
-![](https://img.shields.io/badge/react-v16.7+-ff69b4.svg)
+![](https://img.shields.io/badge/react-v16.8+-ff69b4.svg)
 ![](https://img.shields.io/badge/pixi-v4+-ff69b4.svg)
 
 Write [PixiJS](http://www.pixijs.com/) applications using React declarative style.
@@ -19,8 +19,7 @@ or
 
     npm install @inlet/react-pixi --save
 
-
-## Usage 
+## Usage
 
 #### With ReactDOM
 
@@ -34,9 +33,9 @@ const App = () => (
 )
 ```
 
-This example will render a [`PIXI.Sprite`](http://pixijs.download/release/docs/PIXI.Sprite.html) object into a 
-[Root Container](http://pixijs.download/release/docs/PIXI.Application.html#stage) of a 
-[`PIXI.Application`](http://pixijs.download/release/docs/PIXI.Application.html) on the page. The `Stage` object will 
+This example will render a [`PIXI.Sprite`](http://pixijs.download/release/docs/PIXI.Sprite.html) object into a
+[Root Container](http://pixijs.download/release/docs/PIXI.Application.html#stage) of a
+[`PIXI.Application`](http://pixijs.download/release/docs/PIXI.Application.html) on the page. The `Stage` object will
 create a valid `<canvas />` element to render to.
 
 #### Without ReactDOM
@@ -48,7 +47,7 @@ import * as PIXI from 'pixi.js'
 // Setup PIXI app
 const app = new PIXI.Application(800, 600, {
   backgroundColor: 0x10bb99,
-  view: document.getElementById('container')
+  view: document.getElementById('container'),
 })
 
 // Use the custom renderer to render a valid PIXI object into a PIXI container.
@@ -108,7 +107,7 @@ export default PixiComponent('Rectangle', {
     instance.beginFill(fill)
     instance.drawRect(x, y, width, height)
     instance.endFill()
-  }
+  },
 })
 ```
 
@@ -119,11 +118,7 @@ import { Stage } from '@inlet/react-pixi'
 import Rectangle from './components/Rectangle'
 export default () => (
   <Stage>
-    <Rectangle x={100} 
-               y={100} 
-               width={500} 
-               height={300}
-               fill={0xff0000} />
+    <Rectangle x={100} y={100} width={500} height={300} fill={0xff0000} />
   </Stage>
 )
 ```
@@ -138,23 +133,22 @@ Consider this rotating bunny example:
 import { Sprite } from '@inlet/react-pixi'
 
 class RotatingBunny extends React.Component {
-
   state = { rotation: 0 }
 
   componentDidMount() {
     this.props.app.ticker.add(this.tick)
   }
-  
+
   componentWillUnmount() {
     this.props.app.ticker.remove(this.tick)
   }
-  
-  tick = (delta) => {
-      this.setState(({ rotation }) => ({
-          rotation: rotation + 0.1 * delta
-      }))
-  };
-  
+
+  tick = delta => {
+    this.setState(({ rotation }) => ({
+      rotation: rotation + 0.1 * delta,
+    }))
+  }
+
   render() {
     return <Sprite image="./bunny.png" rotation={this.state.rotation} />
   }
@@ -174,9 +168,7 @@ import { RotatingBunny } from './components/RotatingBunny'
 export default () => (
   <Stage>
     <Container>
-      <AppConsumer>
-        {app => <RotatingBunny app={app} />}
-      </AppConsumer>
+      <AppConsumer>{app => <RotatingBunny app={app} />}</AppConsumer>
     </Container>
   </Stage>
 )
@@ -211,7 +203,7 @@ import { useApp } from '@inlet/react-pixi'
 function RotatingBunny(props) {
   const app = useApp()
   // app => PIXI.Application
-  
+
   return (
     ...
   )
@@ -234,7 +226,7 @@ Props:
 - `renderOnComponentChange` render stage when the Stage component updates. This is ignored if `raf` is `true`.
 - `options` see [PIXI.Application options](http://pixijs.download/release/docs/PIXI.Application.html)
 
-The Stage stores the created `PIXI.Application` instance to context, which can be accessed using a [Provider or a Higher 
+The Stage stores the created `PIXI.Application` instance to context, which can be accessed using a [Provider or a Higher
 Order Component](#access-the-pixiapplication-in-child-components).
 
 ### Components
@@ -244,9 +236,7 @@ Pass component options as props, example:
 ```jsx
 import { Sprite } from '@inlet/react-pixi'
 
-const MyComponent = () => (
-  <Sprite image=".image.png" x={100} y={200} />
-)
+const MyComponent = () => <Sprite image=".image.png" x={100} y={200} />
 ```
 
 The `image` prop here is a short-hand for [`PIXI.Sprite.fromImage()`](http://pixijs.download/release/docs/PIXI.Sprite.html#.fromImage):
@@ -256,9 +246,7 @@ import { Sprite } from '@inlet/react-pixi'
 
 const texture = new PIXI.Sprite.fromImage('./image.png')
 
-const MyComponent = () => (
-  <Sprite texture={texture} x={100} y={200} />
-)
+const MyComponent = () => <Sprite texture={texture} x={100} y={200} />
 ```
 
 ## Scripts

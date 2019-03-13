@@ -332,7 +332,7 @@ describe('stage', () => {
       update()
       update()
 
-      expect(fn.mock.calls.map(call => call[0])).toEqual([0, 1, 2])
+      expect(fn.mock.calls.map(call => call[0])).toEqual([0, 1, 2, 3])
     })
 
     test('enable/disable useTick', () => {
@@ -376,7 +376,8 @@ describe('stage', () => {
       expect(fn.mock.calls.map(call => call[0])).toEqual([
         0, // initial
         1,
-        2
+        2,
+        3
       ])})
   })
 })

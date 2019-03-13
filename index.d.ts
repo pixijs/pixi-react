@@ -24,6 +24,10 @@ declare namespace _ReactPixi {
     roundPixels?: boolean;
   }
 
+  interface IText extends Container<Omit<PIXI.Text, "anchor">> {
+    anchor?: PointLike;
+  }
+
   interface IGraphics extends Container<PIXI.Graphics> {
     draw?(graphics: PIXI.Graphics): void;
   }
@@ -107,8 +111,8 @@ declare namespace _ReactPixi {
 declare namespace ReactPixi {
   // components
   class Sprite extends React.Component<_ReactPixi.ISprite> {}
-  class Text extends React.Component<_ReactPixi.Container<PIXI.Text>> {}
   class Container extends React.Component<_ReactPixi.Container<PIXI.Container>> {}
+  class Text extends React.Component<_ReactPixi.IText> {}
   class Graphics extends React.Component<_ReactPixi.IGraphics> {}
   class BitmapText extends React.Component<_ReactPixi.IBitmapText> {}
   class NineSlicePlane extends React.Component<_ReactPixi.INineSlicePlane> {}

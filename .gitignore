@@ -2,4 +2,5 @@ node_modules/
 lib/
 dist/
 examples/
+.docz/
 .yarn-error.log

@@ -1,9 +1,9 @@
 {
-  "vendors.js": "/static/js/vendors.8cc8102a.js",
-  "app.js": "/static/js/app.39e2b944.js",
+  "vendors.js": "/static/js/vendors.aaac1992.js",
+  "app.js": "/static/js/app.bbeb9a47.js",
   "hooks.js": "/static/js/hooks.f211a203.js",
-  "readme.js": "/static/js/readme.65d7fef3.js",
-  "runtime~app.js": "/static/js/runtime~app.a923d36d9100ad241bd0.js",
+  "readme.js": "/static/js/readme.5f0cfcc0.js",
+  "runtime~app.js": "/static/js/runtime~app.0cee6ac3286c9d051883.js",
   "src-components-bitmap-text.js": "/static/js/src-components-bitmap-text.8655c03f.js",
   "src-components-container.js": "/static/js/src-components-container.f18e6e5d.js",
   "src-components-graphics.js": "/static/js/src-components-graphics.dbb18d7d.js",

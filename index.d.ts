@@ -11,7 +11,10 @@ declare namespace _ReactPixi {
     ) => void
   };
 
-  type PointLike = PIXI.Point | PIXI.ObservablePoint | number[] | number;
+  type PointLike =
+    | PIXI.Point | PIXI.ObservablePoint
+    | [number, number] | [number]
+    | number;
 
   type Container<T> = Partial<
     Omit<T, "children" | "position" | "scale" | "pivot">

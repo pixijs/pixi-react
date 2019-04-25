@@ -51,14 +51,22 @@ export const PROPS_DISPLAY_OBJECT = {
  * Can be either texture or image
  *
  * @param {string} elementType
- * @param {PIXI.Texture} texture
+ * @param {PIXI.Texture|undefined} texture
  * @param {string|undefined} image
+ * @param {boolean|undefined} crossorigin
  * @returns {PIXI.Texture}
  */
-export const getTextureFromProps = (elementType, { texture = undefined, image = undefined, crossorigin = undefined }) => {
+export const getTextureFromProps = (
+  elementType,
+  { texture = undefined, image = undefined, crossorigin = undefined }
+) => {
   if (image) {
     invariant(typeof image === 'string', elementType + ' image needs to be a string, got `%s`', typeof image)
-    return PIXI.Texture.fromImage(image, crossorigin)
+    const args = [image]
+    if (crossorigin) {
+      args.push(crossorigin)
+    }
+    return PIXI.Texture.fromImage(...args)
   }
 
   invariant(texture instanceof PIXI.Texture, elementType + ' texture needs to be typeof `PIXI.Texture`')

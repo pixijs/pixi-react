@@ -112,6 +112,14 @@ export default {
 
   createInstance: createElement,
 
+  hideInstance(instance) {
+    instance.alpha = 0
+  },
+
+  unhideInstance(instance) {
+    instance.alpha = 1
+  },
+
   appendInitialChild: appendChild,
 
   finalizeInitialChildren(wordElement, type, props) {

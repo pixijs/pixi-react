@@ -116,8 +116,8 @@ export default {
     instance.visible = false
   },
 
-  unhideInstance(instance) {
-    instance.visible = true
+  unhideInstance(instance, props) {
+    instance.visible = props && props.visible !== undefined ? props.visible : true
   },
 
   appendInitialChild: appendChild,

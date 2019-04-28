@@ -113,11 +113,11 @@ export default {
   createInstance: createElement,
 
   hideInstance(instance) {
-    instance.alpha = 0
+    instance.visible = false
   },
 
   unhideInstance(instance) {
-    instance.alpha = 1
+    instance.visible = true
   },
 
   appendInitialChild: appendChild,

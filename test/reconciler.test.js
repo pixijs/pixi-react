@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import * as PIXI from 'pixi.js'
 import { render, roots } from '../src/render'
 import hostconfig from '../src/reconciler/hostconfig'
@@ -255,6 +255,85 @@ describe('reconciler', () => {
       expect(m(0).args[0]).toBeInstanceOf(PIXI.Text)
       expect(m(0).args[1]).toEqual({})
       expect(m(0).args[2]).toEqual({ x: 100 })
+    })
+  })
+
+  describe('suspense', () => {
+    let asyncLoaded = false
+    beforeEach(() => {
+      asyncLoaded = false
+    })
+
+    function AsyncText({ ms, text }) {
+      if (!asyncLoaded) {
+        const promise = new Promise(res => {
+          setTimeout(() => {
+            asyncLoaded = true
+            res()
+          }, ms)
+        })
+        throw promise
+      }
+
+      return <Text text={text} />
+    }
+
+    test('renders suspense fallback', async () => {
+      jest.useFakeTimers()
+
+      const loadingTextRef = React.createRef(null)
+      const siblingTextRef = React.createRef(null)
+
+      let getRenderContent = () => (
+        <Suspense fallback={<Text text="loading" ref={loadingTextRef} />}>
+          <Text text="hidden" ref={siblingTextRef} />
+          <AsyncText ms={500} text={'content'} />
+        </Suspense>
+      )
+
+      renderInContainer(getRenderContent())
+      jest.runAllTimers()
+
+      // loading Text should be rendered
+      expect(loadingTextRef.current).toBeDefined()
+
+      // content should be hidden
+      const hideInstanceMock = getCall(hostconfig.hideInstance)
+      expect(hideInstanceMock.fn).toHaveBeenCalledTimes(1)
+      expect(siblingTextRef.current.visible).toEqual(false)
+    })
+
+    test('renders suspense content', async () => {
+      jest.useFakeTimers()
+      const siblingTextRef = React.createRef(null)
+
+      let getRenderContent = () => (
+        <Suspense fallback={<Text text="loading" />}>
+          <Text text="A" ref={siblingTextRef} />
+          <AsyncText ms={500} text={'content'} />
+        </Suspense>
+      )
+
+      renderInContainer(getRenderContent())
+
+      jest.runAllTimers()
+
+      renderInContainer(getRenderContent())
+
+      // hidden content should be visible again
+      expect(siblingTextRef.current.visible).toEqual(true)
+
+      // sibling text is hidden
+      const hideInstanceMock = getCall(hostconfig.hideInstance)
+      expect(hideInstanceMock.fn).toHaveBeenCalledTimes(1)
+
+      // sibling text & AsyncText content is unhidden
+      const unhideInstanceMock = getCall(hostconfig.unhideInstance)
+      expect(unhideInstanceMock.fn).toHaveBeenCalledTimes(2)
+
+      // loading text, sibling text, and async text content were all created
+      const createInstanceMock = getCall(hostconfig.createInstance)
+      expect(createInstanceMock.all.map(([ins]) => ins)).toEqual(['Text', 'Text', 'Text'])
     })
   })
 })

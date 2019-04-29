@@ -112,6 +112,16 @@ export default {
 
   createInstance: createElement,
 
+  hideInstance(instance) {
+    instance.visible = false
+  },
+
+  unhideInstance(instance, props) {
+    const visible = props !== undefined && props !== null && props.hasOwnProperty('visible') ? props.visible : true
+
+    instance.visible = visible
+  },
+
   appendInitialChild: appendChild,
 
   finalizeInitialChildren(wordElement, type, props) {

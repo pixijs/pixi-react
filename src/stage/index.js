@@ -108,8 +108,8 @@ class Stage extends React.Component {
     const { onMount, width, height, options, raf } = this.props
 
     this.app = new PIXI.Application(width, height, {
-      ...options,
       view: this._canvas,
+      ...options,
     })
 
     this.app.ticker.autoStart = false

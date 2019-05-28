@@ -66,6 +66,14 @@ describe('stage', () => {
     )
   })
 
+  test('passes options.view to PIXI.Application', () => {
+    const view = document.createElement('canvas')
+    const el = renderer.create(<Stage options={{ view }} />)
+    const app = el.getInstance().app
+
+    expect(app.view).toBe(view)
+  })
+
   test('passes props to canvas element', () => {
     const id = 'stage'
     const className = 'canvas__element'

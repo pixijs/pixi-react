@@ -83,6 +83,26 @@ describe('props', () => {
       expect(newFn).toHaveBeenCalledWith(instance)
     })
 
+    test('prevent teardown/setup on same values', () => {
+      const spyAdd = jest.spyOn(instance, 'on')
+      const spyRemove = jest.spyOn(instance, 'removeListener')
+
+      applyDefaultProps(instance, {}, { click: fn })
+
+      expect(spyRemove).toHaveBeenCalledTimes(0)
+      expect(spyAdd).toHaveBeenCalledTimes(1)
+
+      applyDefaultProps(instance, { click: fn }, { click: fn })
+
+      expect(spyRemove).toHaveBeenCalledTimes(0)
+      expect(spyAdd).toHaveBeenCalledTimes(1)
+
+      applyDefaultProps(instance, { click: fn }, { click: () => {} })
+
+      expect(spyRemove).toHaveBeenCalledTimes(1)
+      expect(spyAdd).toHaveBeenCalledTimes(2)
+    });
+
     test('invalid instance', () => {
       expect(() => applyDefaultProps()).toThrow('instance needs to be typeof `PIXI.DisplayObject`, got `undefined`')
     })

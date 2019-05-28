@@ -286,17 +286,15 @@ describe('stage', () => {
         return <Container />
       }
 
-      const renderStage = Comp => (
-        <Stage
-          onMount={_app => {
-            app = _app
-          }}
-        >
-          <Container>{Comp}</Container>
+      const renderStage = (Comp) => (
+        <Stage onMount={_app => { app = _app }}>
+          <Container>{ Comp }</Container>
         </Stage>
       )
 
-      const render = renderer.create(renderStage())
+      const render = renderer.create(
+        renderStage()
+      )
 
       jest.spyOn(app.ticker, 'add')
       jest.spyOn(app.ticker, 'remove')
@@ -352,11 +350,11 @@ describe('stage', () => {
         const [x, setX] = useState(0)
         useTick(() => setX(x + 1), enabled)
         useLayoutEffect(() => fn(x), [x])
-
+        
         return null
       }
 
-      const renderStage = enabled => (
+      const renderStage = (enabled) => (
         <Stage>
           <Comp enabled={enabled} />
         </Stage>
@@ -365,7 +363,7 @@ describe('stage', () => {
       const el = renderer.create(renderStage(false))
       const instance = el.getInstance().app
 
-      const update = enabled => {
+      const update = (enabled) => {
         // set enabled
         el.update(renderStage(enabled))
 
@@ -387,8 +385,7 @@ describe('stage', () => {
         0, // initial
         1,
         2,
-        3,
-      ])
-    })
+        3
+      ])})
   })
 })

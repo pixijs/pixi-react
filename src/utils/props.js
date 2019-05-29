@@ -91,13 +91,16 @@ export function applyDefaultProps(instance, oldProps, newProps) {
 
   // update event handlers
   if (!newProps.ignoreEvents) {
+    const hasRemoveListener = typeof instance.removeListener === 'function'
+    const hasOn = typeof instance.on === 'function'
+
     for (let i = 0; i < eventHandlers.length; i++) {
       const evt = eventHandlers[i]
       if (oldProps[evt] !== newProps[evt]) {
-        if (typeof oldProps[evt] === 'function' && typeof instance.removeListener === 'function') {
+        if (typeof oldProps[evt] === 'function' && hasRemoveListener) {
           instance.removeListener(evt, oldProps[evt])
         }
-        if (typeof newProps[evt] === 'function' && typeof instance.on === 'function') {
+        if (typeof newProps[evt] === 'function' && hasOn) {
           instance.on(evt, newProps[evt])
         }
       }

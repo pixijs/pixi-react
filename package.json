@@ -19,7 +19,7 @@
     "build": "rimraf ./dist && npm run build:dev && npm run build:prod",
     "test": "jest --silent",
     "test:watch": "jest --silent --watch",
-    "prepublish": "if-env CI=true && echo \"skip build\" || (npm run test && npm run eslint && npm run build)"
+    "prepare": "if-env CI=true && echo \"skip build\" || (npm run test && npm run eslint && npm run build)"
   },
   "files": [
     "dist/",

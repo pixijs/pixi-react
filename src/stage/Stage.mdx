@@ -1,7 +1,6 @@
 ---
-name: Stage
-order: 1
-route: /stage
+name: 'Stage'
+route: '/stage'
 ---
 
 import { Playground } from 'docz'
@@ -12,8 +11,6 @@ import times from 'lodash/times'
 # Stage
 
 The Stage component renders a `PIXI.Application` onto a canvas element and makes the `PIXI.Application` available for child components using the React's Context API.
-
-**Renderer: React DOM.**
 
 ## Props
 
@@ -74,5 +71,4 @@ render(<App />, document.getElementById('root'))
     )
   }}
 </Playground>
-
 

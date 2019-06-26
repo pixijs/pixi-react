@@ -28,8 +28,7 @@ function getConfig(dest, format) {
       babel({ exclude: 'node_modules/**' }),
       resolve({
         browser: true,
-        jsnext: true,
-        main: true,
+        mainFields: ['main', 'jsnext']
       }),
       commonjs({
         ignoreGlobal: false,

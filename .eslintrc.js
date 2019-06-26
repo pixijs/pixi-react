@@ -18,7 +18,8 @@ module.exports = {
   rules: {
     'prettier/prettier': 'error',
     'no-unused-vars': 'off',
-    'no-console': 'off'
+    'no-console': 'off',
+    'no-prototype-builtins': 'off'
   },
   settings: {
     react: { version: '16' }

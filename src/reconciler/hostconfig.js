@@ -9,6 +9,11 @@
  */
 
 import invariant from 'fbjs/lib/invariant'
+import performanceNow from 'performance-now'
+import {
+  unstable_scheduleCallback as scheduleDeferredCallback,
+  unstable_cancelCallback as cancelDeferredCallback,
+} from 'scheduler'
 
 import { createElement } from '../utils/element'
 import { CHILDREN, applyDefaultProps } from '../utils/props'
@@ -143,17 +148,11 @@ export default {
     invariant(false, 'PixiFiber does not support text instances. Use `<Text /> component` instead.')
   },
 
+  now: performanceNow,
+
   isPrimaryRenderer: false,
 
-  warnsIfNotActing: true,
   supportsMutation: true,
-  supportsHydration: true,
-  supportsPersistence: false,
-
-  mountEventComponent: () => {},
-  unmountEventComponent: () => {},
-  updateEventComponent: () => {},
-  getChildHostContextForEventComponent: p => p,
 
   /**
    * -------------------------------------------
@@ -193,8 +192,9 @@ export default {
     // noop
   },
 
-  // schedule
-  scheduleTimeout: setTimeout,
-  cancelTimeout: clearTimeout,
-  noTimeout: -1,
+  schedulePassiveEffects: scheduleDeferredCallback,
+
+  cancelPassiveEffects: cancelDeferredCallback,
+
+  scheduleDeferredCallback,
 }

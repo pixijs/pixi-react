@@ -3,6 +3,12 @@ name: About React Pixi
 route: /
 ---
 
+import { useReducer, useRef } from 'react';
+import { Playground } from 'docz'
+import Stage from './src/stage'
+import { Sprite, Container, useTick } from './src'
+import times from 'lodash/times'
+
 # React PIXI 🌈
 
 ![jest](https://img.shields.io/badge/tested_with-jest-green.svg) &nbsp;&nbsp; [![CircleCI](https://img.shields.io/circleci/project/github/inlet/react-pixi/master.svg)](https://circleci.com/gh/inlet/react-pixi-fiber) &nbsp;&nbsp; ![license](https://img.shields.io/badge/license-MIT-green.svg) &nbsp;&nbsp; ![prettier](https://img.shields.io/badge/code_style-prettier-blue.svg) &nbsp;&nbsp; ![react](https://img.shields.io/badge/react-v16.8+-ff69b4.svg) &nbsp;&nbsp; ![pixi](https://img.shields.io/badge/pixi-v4+-ff69b4.svg)
@@ -65,3 +71,38 @@ Codepen examples:
 - [Particle Emitter](https://codepen.io/inlet/pen/feddc8fa71e3b5afc6c3e4eda9cc83df)
 - [Animated Sprite](https://codepen.io/inlet/pen/5aaed9ddeadb4d7bb5ea435d77df397a)
 - [Display](https://codepen.io/inlet/pen/mvzzLb)
+
+## Example
+
+<Playground>
+  {() => {
+    const reducer = (_, { data }) => data;
+
+    const Bunny = () => {
+      const [motion, update] = useReducer(reducer);
+      const iter = useRef(0);
+
+      useTick(delta => {
+        const i = iter.current += .05 * delta;
+
+        update({ type: 'update', data: {
+          x: Math.sin(i) * 100,
+          y: Math.sin(i/1.5) * 100,
+          rotation: -10 + Math.sin(i/10 + Math.PI * 2) * 10
+          } })
+      });
+
+      return (
+        <Sprite image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png" anchor={.5} {...motion} />
+      )
+    };
+
+    return (
+      <Stage width={300} height={300} options={{ backgroundColor: 0x1d2230 }}>
+        <Container x={150} y={150}>
+          <Bunny />
+        </Container>
+      </Stage>
+    )
+  }}
+</Playground>

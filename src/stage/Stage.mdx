@@ -55,7 +55,13 @@ render(<App />, document.getElementById('root'))
     }
 
     return (
-      <Stage {...stageProps}>
+      <Stage
+        width={300}
+        height={300}
+        options={{
+          backgroundColor: 0x01262a
+        }}
+      >
         {
           times(count, i => (
             <Sprite key={i}

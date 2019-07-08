@@ -1,37 +1,38 @@
 ---
-name: Mesh
+name: SimpleMesh
 menu: Components
 route: /components/mesh
 ---
 
 import { Playground } from 'docz'
-import * as PIXI from 'pixi.js'
+import { DRAW_MODES } from 'pixi.js'
 import Stage from '../stage'
-import { Mesh } from '../index'
-import { uvs, vertices, indices } from './MeshDocz'
+import { SimpleMesh } from '../index'
+import { uvs, vertices, indices } from './SimpleMeshDocz'
 
-# Mesh
+# SimpleMesh
 
 ## Props
 
-http://pixijs.download/dev/docs/PIXI.mesh.Mesh.html
+http://pixijs.download/dev/docs/PIXI.SimpleMesh.html
 
 ## Usage
 
 <Playground>
   <Stage width={500} height={300} options={{ backgroundColor: 0xeef1f5}}>
-    <Mesh image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/placeholder.png" 
+    <SimpleMesh image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/placeholder.png"
           uvs={uvs}
-          vertices={vertices} 
-          indices={indices} 
-          drawMode={PIXI.mesh.Mesh.DRAW_MODES.TRIANGLES} />
+          vertices={vertices}
+          indices={indices}
+          drawMode={DRAW_MODES.TRIANGLES}
+    />
   </Stage>
 </Playground>
 
 ## Example
 
-<iframe 
-  height={500} 
+<iframe
+  height={500}
   scrolling="no"
   title="Mesh"
   src="//codepen.io/inlet/embed/69e7153234c4e01232a7dbc50bbceb40/?height=300&theme-id=33987&default-tab=result&embed-version=2"

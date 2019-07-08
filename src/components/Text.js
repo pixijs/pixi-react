@@ -1,8 +1,8 @@
-import * as PIXI from 'pixi.js'
+import { Text as PixiText } from 'pixi.js'
 
 const Text = (root, props) => {
   const { text = '', style = {} } = props
-  return new PIXI.Text(text, style)
+  return new PixiText(text, style) // TODO: ask @inlet why it does not print bouh
 }
 
 export default Text

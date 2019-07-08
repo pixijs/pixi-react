@@ -1,5 +1,5 @@
 import React from 'react'
-import * as PIXI from 'pixi.js'
+import * as PIXI from 'pixi.js-legacy'
 import PropTypes from 'prop-types'
 import invariant from 'fbjs/lib/invariant'
 import { PROPS_DISPLAY_OBJECT } from '../utils/props'
@@ -107,7 +107,10 @@ class Stage extends React.Component {
   componentDidMount() {
     const { onMount, width, height, options, raf } = this.props
 
-    this.app = new PIXI.Application(width, height, {
+    this.app = new PIXI.Application({
+      // TODO: ask @inlet if we should move this to options props as PIXI does?
+      width,
+      height,
       view: this._canvas,
       ...options,
     })

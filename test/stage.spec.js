@@ -96,7 +96,7 @@ describe('stage', () => {
 
     expect(app.stage).toBeInstanceOf(PIXI.Container)
     expect(app).toBeInstanceOf(PIXI.Application)
-    expect(app._options).toMatchObject({
+    expect(app.renderer.options).toMatchObject({
       backgroundColor: 0xff0000,
       width: 100,
       height: 50,
@@ -350,7 +350,7 @@ describe('stage', () => {
         const [x, setX] = useState(0)
         useTick(() => setX(x + 1), enabled)
         useLayoutEffect(() => fn(x), [x])
-        
+
         return null
       }
 

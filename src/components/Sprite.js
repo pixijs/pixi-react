@@ -1,8 +1,8 @@
-import * as PIXI from 'pixi.js'
+import { Sprite as PixiSprite } from 'pixi.js'
 import { getTextureFromProps, applyDefaultProps } from '../utils/props'
 
 const Sprite = (root, props) => {
-  const sprite = new PIXI.Sprite(getTextureFromProps('Sprite', props))
+  const sprite = new PixiSprite(getTextureFromProps('Sprite', props))
 
   sprite.applyProps = (instance, oldProps, newProps) => {
     const { image, texture, ...props } = newProps

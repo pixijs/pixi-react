@@ -1,4 +1,3 @@
-import React from 'react'
 import * as PIXI from 'pixi.js'
 import { createElement, TYPES, TYPES_INJECTED, PixiComponent } from '../src/utils/element'
 
@@ -30,17 +29,17 @@ describe('createElement', () => {
 
   test('create ParticleContainer', () => {
     const element = createElement(TYPES.ParticleContainer)
-    expect(element).toBeInstanceOf(PIXI.particles.ParticleContainer)
+    expect(element).toBeInstanceOf(PIXI.ParticleContainer)
   })
 
   test('create BitmapText', () => {
     const element = createElement(TYPES.BitmapText, { text: 'foobar', style: { font: '35px Desyrel' } })
-    expect(element).toBeInstanceOf(PIXI.extras.BitmapText)
+    expect(element).toBeInstanceOf(PIXI.BitmapText)
   })
 
   test('create TilingSprite', () => {
     const element = createElement(TYPES.TilingSprite, { texture: emptyTexture })
-    expect(element).toBeInstanceOf(PIXI.extras.TilingSprite)
+    expect(element).toBeInstanceOf(PIXI.TilingSprite)
   })
 
   test('create Graphics', () => {
@@ -50,17 +49,17 @@ describe('createElement', () => {
 
   test('create NineSlicePlane', () => {
     const element = createElement(TYPES.NineSlicePlane, { texture: emptyTexture })
-    expect(element).toBeInstanceOf(PIXI.mesh.NineSlicePlane)
+    expect(element).toBeInstanceOf(PIXI.NineSlicePlane)
   })
 
-  test('create Mesh', () => {
-    const element = createElement(TYPES.Mesh, { texture: emptyTexture })
-    expect(element).toBeInstanceOf(PIXI.mesh.Mesh)
+  test('create SimpleMesh', () => {
+    const element = createElement(TYPES.SimpleMesh, { texture: emptyTexture })
+    expect(element).toBeInstanceOf(PIXI.SimpleMesh)
   })
 
-  test('create Rope', () => {
-    const element = createElement(TYPES.Rope, { texture: emptyTexture, points: [] })
-    expect(element).toBeInstanceOf(PIXI.mesh.Rope)
+  test('create SimpleRope', () => {
+    const element = createElement(TYPES.SimpleRope, { texture: emptyTexture, points: [] })
+    expect(element).toBeInstanceOf(PIXI.SimpleRope)
   })
 
   test('get undefined', () => {
@@ -72,7 +71,7 @@ describe('element.applyProps', () => {
   let spy
 
   beforeAll(() => {
-    spy = jest.spyOn(PIXI.Texture, 'fromImage').mockReturnValue(emptyTexture)
+    spy = jest.spyOn(PIXI.Texture, 'from').mockReturnValue(emptyTexture)
   })
 
   afterAll(() => {
@@ -107,14 +106,14 @@ describe('element.applyProps', () => {
     expect(spy).lastCalledWith('./new-image.png')
   })
 
-  test('Rope.applyProps exists', () => {
-    const element = createElement(TYPES.Rope, { image: './image.png', points: [] })
+  test('SimpleRope.applyProps exists', () => {
+    const element = createElement(TYPES.SimpleRope, { image: './image.png', points: [] })
     expect(element).toHaveProperty('applyProps')
     expect(spy).toHaveBeenCalledWith('./image.png')
   })
 
-  test('Rope.applyProps image', () => {
-    const element = createElement(TYPES.Rope, { image: './image.png', points: [] })
+  test('SimpleRope.applyProps image', () => {
+    const element = createElement(TYPES.SimpleRope, { image: './image.png', points: [] })
     expect(spy).lastCalledWith('./image.png')
 
     element.applyProps(element, { image: './image.png' }, { image: './new-image.png', points: [] })
@@ -135,14 +134,14 @@ describe('element.applyProps', () => {
     expect(spy).lastCalledWith('./new-image.png')
   })
 
-  test('Mesh.applyProps exists', () => {
-    const element = createElement(TYPES.Mesh, { image: './image.png' })
+  test('SimpleMesh.applyProps exists', () => {
+    const element = createElement(TYPES.SimpleMesh, { image: './image.png' })
     expect(element).toHaveProperty('applyProps')
     expect(spy).toHaveBeenCalledWith('./image.png')
   })
 
-  test('Mesh.applyProps image', () => {
-    const element = createElement(TYPES.Mesh, { image: './image.png' })
+  test('SimpleMesh.applyProps image', () => {
+    const element = createElement(TYPES.SimpleMesh, { image: './image.png' })
     expect(spy).lastCalledWith('./image.png')
 
     element.applyProps(element, { image: './image.png' }, { image: './new-image.png' })

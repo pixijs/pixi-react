@@ -73,7 +73,8 @@
     "jest": "^24.8.0",
     "jest-environment-jsdom-fourteen": "^0.1.0",
     "lodash": "^4.17.10",
-    "pixi.js": "4.8.8",
+    "pixi.js": "^5.0.4",
+    "pixi.js-legacy": "^5.0.4",
     "prettier": "^1.18.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
@@ -91,7 +92,6 @@
     "rollup-plugin-terser": "^5.1.0"
   },
   "peerDependencies": {
-    "pixi.js": "^4.8.5",
     "prop-types": "^15.6.2",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"

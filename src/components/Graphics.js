@@ -1,8 +1,8 @@
-import * as PIXI from 'pixi.js'
+import { Graphics as PixiGraphics } from 'pixi.js'
 import { applyDefaultProps } from '../utils/props'
 
 const Graphics = (root, props) => {
-  const g = new PIXI.Graphics()
+  const g = new PixiGraphics()
 
   g.applyProps = (instance, oldProps, newProps) => {
     const { draw, ...props } = newProps

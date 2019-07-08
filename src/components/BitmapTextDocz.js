@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import * as PIXI from 'pixi.js'
+import { Loader } from 'pixi.js'
 import { BitmapText, Text } from '../index'
 
 export default class BitmapTextWithLoader extends React.PureComponent {
@@ -11,7 +11,7 @@ export default class BitmapTextWithLoader extends React.PureComponent {
   state = { loaded: false }
 
   componentDidMount() {
-    this.loader = new PIXI.loaders.Loader()
+    this.loader = new Loader()
 
     this.loader.add('desyrel', 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/bitmapfont.xml').load(() => {
       this.setState({ loaded: true })

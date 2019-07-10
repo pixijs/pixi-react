@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer'
 import { Stage, AppConsumer, withPixiApp, Container } from '../src'
 import { Context } from '../src/stage/provider'
 
-describe.skip('stage-context', () => {
+describe('stage-context', () => {
   test('pass down app to child component via render prop', () => {
     const fn = jest.fn(() => <Container />)
     const el = renderer.create(

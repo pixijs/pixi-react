@@ -23,7 +23,7 @@ jest.mock('../src/reconciler', () => ({
   },
 }))
 
-describe.skip('render', () => {
+describe('render', () => {
   beforeEach(() => {
     roots.clear()
     jest.resetAllMocks()

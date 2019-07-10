@@ -89,7 +89,7 @@ export const eventHandlers = [
 export function setValue(instance, prop, value) {
   if (isPointType(instance[prop]) && isPointType(value)) {
     // copy value
-    instance[prop].copy(value)
+    instance[prop].copyFrom(value)
   } else if (isPointType(instance[prop])) {
     // parse value if a non-Point type is being assigned to a Point type
     const coordinates = parsePoint(value)

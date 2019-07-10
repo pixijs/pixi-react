@@ -105,8 +105,8 @@
   "jest": {
     "collectCoverage": false,
     "setupFiles": [
-      "./test/bootstrap.js",
-      "jest-webgl-canvas-mock"
+      "jest-webgl-canvas-mock",
+      "./test/bootstrap.js"
     ]
   }
 }

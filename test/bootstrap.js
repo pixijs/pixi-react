@@ -1,2 +1,3 @@
 // skip the banner in console
-require('pixi.js').utils.skipHello()
+// TODO: wait for a new version of jest-webgl-canvas-mock
+// TODO: require('pixi.js').utils.skipHello()

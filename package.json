@@ -71,7 +71,7 @@
     "idx": "^2.5.6",
     "if-env": "^1.0.4",
     "jest": "^24.8.0",
-    "jest-environment-jsdom-fourteen": "^0.1.0",
+    "jest-webgl-canvas-mock": "^0.2.2",
     "lodash": "^4.17.10",
     "pixi.js": "^5.0.4",
     "pixi.js-legacy": "^5.0.4",
@@ -104,9 +104,9 @@
   },
   "jest": {
     "collectCoverage": false,
-    "testEnvironment": "jest-environment-jsdom-fourteen",
     "setupFiles": [
-      "./test/bootstrap.js"
+      "./test/bootstrap.js",
+      "jest-webgl-canvas-mock"
     ]
   }
 }

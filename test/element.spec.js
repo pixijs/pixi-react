@@ -57,9 +57,17 @@ describe('createElement', () => {
     expect(element).toBeInstanceOf(PIXI.SimpleMesh)
   })
 
-  // FIXME:
-  test.skip('create SimpleRope', () => {
-    const element = createElement(TYPES.SimpleRope, { texture: emptyTexture, points: [] })
+  test('create SimpleRope', () => {
+    const element = createElement(
+      TYPES.SimpleRope,
+      {
+        texture: emptyTexture,
+        points: [
+          new PIXI.Point(0, 0),
+          new PIXI.Point(20, 20),
+        ],
+      },
+    )
     expect(element).toBeInstanceOf(PIXI.SimpleRope)
   })
 
@@ -107,19 +115,45 @@ describe('element.applyProps', () => {
     expect(spy).lastCalledWith('./new-image.png')
   })
 
-  // FIXME:
-  test.skip('SimpleRope.applyProps exists', () => {
-    const element = createElement(TYPES.SimpleRope, { image: './image.png', points: [] })
+  test('SimpleRope.applyProps exists', () => {
+    const element = createElement(
+      TYPES.SimpleRope,
+      {
+        image: './image.png',
+        points: [
+          new PIXI.Point(0, 0),
+          new PIXI.Point(20, 20),
+        ],
+      },
+    )
     expect(element).toHaveProperty('applyProps')
     expect(spy).toHaveBeenCalledWith('./image.png')
   })
 
-  // FIXME:
-  test.skip('SimpleRope.applyProps image', () => {
-    const element = createElement(TYPES.SimpleRope, { image: './image.png', points: [] })
+  test('SimpleRope.applyProps image', () => {
+    const element = createElement(
+      TYPES.SimpleRope,
+      {
+        image: './image.png',
+        points: [
+          new PIXI.Point(0, 0),
+          new PIXI.Point(20, 20),
+        ],
+      },
+    )
     expect(spy).lastCalledWith('./image.png')
 
-    element.applyProps(element, { image: './image.png' }, { image: './new-image.png', points: [] })
+    element.applyProps(
+      element,
+      { image: './image.png' },
+      {
+        image: './new-image.png',
+        points: [
+          new PIXI.Point(0, 0),
+          new PIXI.Point(20, 20),
+        ],
+      },
+    )
     expect(spy).lastCalledWith('./new-image.png')
   })
 

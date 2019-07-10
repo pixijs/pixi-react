@@ -1,4 +1,4 @@
-import { Text as PixiText } from 'pixi.js-legacy'
+import { Text as PixiText } from 'pixi.js'
 
 const Text = (root, props) => {
   const { text = '', style = {} } = props

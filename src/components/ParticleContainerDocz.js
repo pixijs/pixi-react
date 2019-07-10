@@ -1,4 +1,4 @@
-import { Loader } from 'pixi.js-legacy'
+import { Loader } from 'pixi.js'
 import React from 'react'
 import { ParticleContainer } from '../index'
 

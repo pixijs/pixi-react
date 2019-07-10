@@ -1,5 +1,5 @@
 import invariant from 'fbjs/lib/invariant'
-import * as PIXI from 'pixi.js-legacy'
+import * as PIXI from 'pixi.js'
 import React, { useEffect, useContext, useRef } from 'react'
 import { Context } from '../stage/provider'
 

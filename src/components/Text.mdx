@@ -6,6 +6,7 @@ route: /components/text
 ---
 
 import { Playground } from 'docz'
+import { TextStyle } from 'pixi.js'
 import Stage from '../stage'
 import { Text } from '../index'
 
@@ -23,33 +24,39 @@ http://pixijs.download/dev/docs/PIXI.TextStyle.html
 
 <Playground>
   <Stage width={300} height={300} options={{ backgroundColor: 0xeef1f5 }}>
-    <Text text="Hello World" anchor={0.5} x={150} y={150} style={new PIXI.TextStyle({
-      align: 'center',
-  fontFamily: '"Source Sans Pro", Helvetica, sans-serif',
-  fontSize: 50,
-  fontWeight: 400,
-  fill: ['#ffffff', '#00ff99'], // gradient
-  stroke: '#01d27e',
-  strokeThickness: 5,
-  letterSpacing: 20,
-  dropShadow: true,
-  dropShadowColor: '#ccced2',
-  dropShadowBlur: 4,
-  dropShadowAngle: Math.PI / 6,
-  dropShadowDistance: 6,
-  wordWrap: true,
-  wordWrapWidth: 440,
-})} />
+    <Text
+      text="Hello World"
+      anchor={0.5}
+      x={150}
+      y={150}
+      style={new TextStyle({
+        align: 'center',
+        fontFamily: '"Source Sans Pro", Helvetica, sans-serif',
+        fontSize: 50,
+        fontWeight: 400,
+        fill: ['#ffffff', '#00ff99'], // gradient
+        stroke: '#01d27e',
+        strokeThickness: 5,
+        letterSpacing: 20,
+        dropShadow: true,
+        dropShadowColor: '#ccced2',
+        dropShadowBlur: 4,
+        dropShadowAngle: Math.PI / 6,
+        dropShadowDistance: 6,
+        wordWrap: true,
+        wordWrapWidth: 440,
+      })}
+    />
   </Stage>
 </Playground>
 
 ## Example
 
-<iframe 
-  height={600} 
+<iframe
+  height={600}
   scrolling="no"
   title="Text"
   src="//codepen.io/inlet/embed/ec46cd42dc7fed3c383fc934a0dcf6b4/?height=600&theme-id=33987&default-tab=result&embed-version=2"
-  frameBorder="no" 
+  frameBorder="no"
   allowFullScreen={true}
   style={{ width: '100%' }} />

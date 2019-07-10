@@ -5,8 +5,9 @@ route: /components/mesh/simplerope
 ---
 
 import { Playground } from 'docz'
+import { Point } from 'pixi.js'
 import Stage from '../stage'
-import { Rope } from '../index'
+import { SimpleRope } from '../index'
 
 # SimpleRope
 
@@ -21,11 +22,11 @@ http://pixijs.download/dev/docs/PIXI.SimpleRope.html
     <SimpleRope
       points={
         [
-          new PIXI.Point(0, 150),
-          new PIXI.Point(100, 100),
-          new PIXI.Point(150, 150),
-          new PIXI.Point(200, 100),
-          new PIXI.Point(400, 150),
+          new Point(0, 150),
+          new Point(100, 100),
+          new Point(150, 150),
+          new Point(200, 100),
+          new Point(400, 150),
         ]
       }
       image={'https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/snake.png'}

@@ -1,4 +1,4 @@
-import { Graphics as PixiGraphics } from 'pixi.js'
+import { Graphics as PixiGraphics } from 'pixi.js-legacy'
 import { applyDefaultProps } from '../utils/props'
 
 const Graphics = (root, props) => {

@@ -1,4 +1,4 @@
-import { Sprite as PixiSprite } from 'pixi.js'
+import { Sprite as PixiSprite } from 'pixi.js-legacy'
 import { getTextureFromProps, applyDefaultProps } from '../utils/props'
 
 const Sprite = (root, props) => {

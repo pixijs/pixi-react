@@ -1,5 +1,5 @@
 import React from 'react'
-import { Application } from 'pixi.js'
+import { Application } from 'pixi.js-legacy'
 import PropTypes from 'prop-types'
 import invariant from 'fbjs/lib/invariant'
 import { PROPS_DISPLAY_OBJECT } from '../utils/props'

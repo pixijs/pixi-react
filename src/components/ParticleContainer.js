@@ -1,4 +1,4 @@
-import { ParticleContainer as PixiParticleContainer } from 'pixi.js'
+import { ParticleContainer as PixiParticleContainer } from 'pixi.js-legacy'
 
 const ParticleContainer = (root, props) => {
   const { maxSize = 1500, batchSize = 16384, autoResize = false } = props

@@ -1,5 +1,5 @@
 // TODO: test it
-import { TilingSprite as PixiTilingSprite } from 'pixi.js'
+import { TilingSprite as PixiTilingSprite } from 'pixi.js-legacy'
 import { getTextureFromProps, applyDefaultProps } from '../utils/props'
 import { parsePoint } from '../utils/pixi'
 

@@ -1,5 +1,5 @@
 import invariant from 'fbjs/lib/invariant'
-import * as PIXI from 'pixi.js'
+import { Container } from 'pixi.js-legacy'
 import { PixiFiber, PACKAGE_NAME, VERSION } from '../reconciler'
 
 // cache root containers
@@ -15,7 +15,7 @@ export const roots = new Map()
  */
 export function render(element, container, callback = undefined) {
   invariant(
-    PIXI.Container.prototype.isPrototypeOf(container),
+    Container.prototype.isPrototypeOf(container),
     'Invalid argument `container`, expected instance of `PIXI.Container`.'
   )
 

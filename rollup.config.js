@@ -19,7 +19,7 @@ function getConfig(dest, format) {
       name: 'ReactPixi',
       sourcemap: !prod,
       globals: {
-        'pixi.js': 'PIXI',
+        'pixi.js-legacy': 'PIXI',
         'react': 'React'
       },
     },
@@ -48,7 +48,7 @@ function getConfig(dest, format) {
       filesize(),
     ].filter(Boolean),
     external: [
-      'pixi.js',
+      'pixi.js-legacy',
       'react',
       'react-dom'
     ]

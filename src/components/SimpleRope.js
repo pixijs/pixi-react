@@ -1,4 +1,4 @@
-import { SimpleRope as PixiSimpleRope } from 'pixi.js'
+import { SimpleRope as PixiSimpleRope } from 'pixi.js-legacy'
 import invariant from 'fbjs/lib/invariant'
 import { getTextureFromProps, applyDefaultProps } from '../utils/props'
 

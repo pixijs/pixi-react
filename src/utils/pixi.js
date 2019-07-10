@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js'
+import { Point, ObservablePoint } from 'pixi.js-legacy'
 import invariant from 'fbjs/lib/invariant'
 import idx from 'idx'
 import isNil from 'lodash/isNil'
@@ -39,7 +39,7 @@ export function parsePoint(value) {
  * @returns {boolean}
  */
 export function isPointType(value) {
-  return value instanceof PIXI.Point || value instanceof PIXI.ObservablePoint
+  return value instanceof Point || value instanceof ObservablePoint
 }
 
 /**

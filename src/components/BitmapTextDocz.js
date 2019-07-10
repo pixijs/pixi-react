@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Loader } from 'pixi.js'
+import { Loader } from 'pixi.js-legacy'
 import { BitmapText, Text } from '../index'
 
 export default class BitmapTextWithLoader extends React.PureComponent {

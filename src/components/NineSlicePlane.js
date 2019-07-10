@@ -1,4 +1,3 @@
-// TODO: test it
 import { NineSlicePlane as PixiNineSlicePlane } from 'pixi.js-legacy'
 import { getTextureFromProps, applyDefaultProps } from '../utils/props'
 

@@ -1,4 +1,3 @@
-// TODO: test it
 import { SimpleMesh as PixiSimpleMesh, DRAW_MODES } from 'pixi.js-legacy'
 import { applyDefaultProps, getTextureFromProps } from '../utils/props'
 

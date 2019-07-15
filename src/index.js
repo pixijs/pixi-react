@@ -25,3 +25,4 @@ export const Text = TYPES.Text
 export const TilingSprite = TYPES.TilingSprite
 export const Mesh = TYPES.Mesh
 export const Rope = TYPES.Rope
+export const Star = TYPES.Star

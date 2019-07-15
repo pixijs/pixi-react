@@ -19,6 +19,7 @@ export const TYPES = {
   TilingSprite: 'TilingSprite',
   Mesh: 'Mesh',
   Rope: 'Rope',
+  Star: 'Star',
 }
 
 const ELEMENTS = Object.keys(TYPES).reduce((elements, type) => ({ ...elements, [type]: components[type] }), {})

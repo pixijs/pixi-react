@@ -1,0 +1,41 @@
+---
+name: Star
+menu: Components
+route: /components/star
+---
+
+import { Playground } from 'docz'
+import Stage from '../stage'
+import { Star } from '../index'
+
+# Star
+
+## Props
+
+http://pixijs.download/v4.8.8/docs/PIXI.Graphics.html#drawStar
+
+## Usage
+
+<Playground>
+  <Stage width={300} height={300} options={{ backgroundColor: 0xeef1f5 }}>
+    <Star
+      color={0x0000FF}
+      radius={8}
+      innerRadius={4}
+      points={6}
+      x={10}
+      y={10}
+    />
+  </Stage>
+</Playground>
+
+## Example
+
+<iframe 
+  height={500} 
+  scrolling="no"
+  title="Sprite"
+  src="//codepen.io/inlet/embed/f68c95780536e31af9678bab19fdd4b5/?height=300&theme-id=33987&default-tab=result&embed-version=2"
+  frameBorder="no"
+  allowFullScreen={true}
+  style={{ width: '100%' }} />

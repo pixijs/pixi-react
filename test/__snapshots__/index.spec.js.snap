@@ -87,6 +87,7 @@ Object {
   "Rope": "Rope",
   "Sprite": "Sprite",
   "Stage": [Function],
+  "Star": "Star",
   "Text": "Text",
   "TilingSprite": "TilingSprite",
   "render": [Function],

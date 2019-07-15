@@ -1941,11 +1941,6 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.12.tgz#cc791b402360db1eaf7176479072f91ee6c6c7ca"
   integrity sha512-Uy0PN4R5vgBUXFoJrKryf5aTk3kJ8Rv3PdlHjl6UaX+Cqp1QE0yPQ68MPXGrZOfG7gZVNDIJZYyot0B9ubXUrQ==
 
-"@types/pixi.js@^4.8.8":
-  version "4.8.8"
-  resolved "https://registry.yarnpkg.com/@types/pixi.js/-/pixi.js-4.8.8.tgz#48af24a4d8e4bf4735f6819fef04536522d6ea1b"
-  integrity sha512-5wmLnmL3foK/rqYMrrEM/3DxEwvwxJaP73RyqY8aMqq8zUm6CBlmc+12RIBH6iR/RHqU76XL238vWWJV1IN/zw==
-
 "@types/prop-types@*":
   version "15.7.1"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.1.tgz#f1a11e7babb0c3cad68100be381d1e064c68f1f6"

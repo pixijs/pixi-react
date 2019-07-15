@@ -5,6 +5,7 @@ route: /components/mesh/nine-slice-plane
 ---
 
 import { Playground } from 'docz'
+import { Point } from 'pixi.js'
 import Stage from '../stage'
 import { NineSlicePlane } from '../index'
 
@@ -18,9 +19,9 @@ http://pixijs.download/dev/docs/PIXI.mesh.NineSlicePlane.html
 
 <Playground>
   <Stage width={500} height={300} options={{ backgroundColor: 0xeef1f5 }}>
-    <NineSlicePlane 
-      anchor={new PIXI.Point(200, 100)}
-      pivot={new PIXI.Point(200, 100)}
+    <NineSlicePlane
+      anchor={new Point(200, 100)}
+      pivot={new Point(200, 100)}
       leftWidth={50}
       topHeight={30}
       rightWidth={60}
@@ -36,11 +37,11 @@ http://pixijs.download/dev/docs/PIXI.mesh.NineSlicePlane.html
 
 ## Example
 
-<iframe 
-  height={500} 
+<iframe
+  height={500}
   scrolling="no"
   title="Nine Slice Plane"
   src="//codepen.io/inlet/embed/8bf47b3e9a4539c472ea2836780c59eb/?height=300&theme-id=33987&default-tab=result&embed-version=2"
-  frameBorder="no" 
+  frameBorder="no"
   allowFullScreen={true}
   style={{ width: '100%' }} />

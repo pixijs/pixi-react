@@ -1,5 +1,5 @@
-import * as PIXI from 'pixi.js'
+import { Texture } from 'pixi.js'
 
-export const emptyTexture = PIXI.Texture.fromImage(
+export const emptyTexture = Texture.from(
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQAAAAA3bvkkAAAAAnRSTlMAAHaTzTgAAAAKSURBVHgBY2AAAAACAAFzdQEYAAAAAElFTkSuQmCC'
 )

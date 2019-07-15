@@ -54,7 +54,6 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime": "7.5.0",
     "@types/jest": "^24.0.15",
-    "@types/pixi.js": "^4.8.8",
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.4",
     "babel-core": "^7.0.0-beta.3",
@@ -71,9 +70,9 @@
     "idx": "^2.5.6",
     "if-env": "^1.0.4",
     "jest": "^24.8.0",
-    "jest-environment-jsdom-fourteen": "^0.1.0",
+    "jest-webgl-canvas-mock": "^0.2.2",
     "lodash": "^4.17.10",
-    "pixi.js": "4.8.8",
+    "pixi.js": "^5.0.4",
     "prettier": "^1.18.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
@@ -91,7 +90,6 @@
     "rollup-plugin-terser": "^5.1.0"
   },
   "peerDependencies": {
-    "pixi.js": "^4.8.5",
     "prop-types": "^15.6.2",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
@@ -104,8 +102,8 @@
   },
   "jest": {
     "collectCoverage": false,
-    "testEnvironment": "jest-environment-jsdom-fourteen",
     "setupFiles": [
+      "jest-webgl-canvas-mock",
       "./test/bootstrap.js"
     ]
   }

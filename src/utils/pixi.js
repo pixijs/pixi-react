@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js'
+import { Point, ObservablePoint } from 'pixi.js'
 import invariant from 'fbjs/lib/invariant'
 import idx from 'idx'
 import isNil from 'lodash/isNil'
@@ -39,7 +39,7 @@ export function parsePoint(value) {
  * @returns {boolean}
  */
 export function isPointType(value) {
-  return value instanceof PIXI.Point || value instanceof PIXI.ObservablePoint
+  return value instanceof Point || value instanceof ObservablePoint
 }
 
 /**
@@ -89,7 +89,7 @@ export const eventHandlers = [
 export function setValue(instance, prop, value) {
   if (isPointType(instance[prop]) && isPointType(value)) {
     // copy value
-    instance[prop].copy(value)
+    instance[prop].copyFrom(value)
   } else if (isPointType(instance[prop])) {
     // parse value if a non-Point type is being assigned to a Point type
     const coordinates = parsePoint(value)

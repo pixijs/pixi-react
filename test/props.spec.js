@@ -14,7 +14,7 @@ describe('props', () => {
     let spy
 
     beforeAll(() => {
-      spy = jest.spyOn(PIXI.Texture, 'fromImage').mockReturnValue(emptyTexture)
+      spy = jest.spyOn(PIXI.Texture, 'from').mockReturnValue(emptyTexture)
     })
 
     afterAll(() => {

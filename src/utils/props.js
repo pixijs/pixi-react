@@ -1,8 +1,8 @@
 import isNil from 'lodash/isNil'
 import invariant from 'fbjs/lib/invariant'
-import * as PIXI from 'pixi.js'
+import { Texture, DisplayObject } from 'pixi.js'
 import { eventHandlers, setValue } from './pixi'
-import { isFunction, not, hasKey } from '../helpers'
+import { not, hasKey } from '../helpers'
 
 export const CHILDREN = 'children'
 /**
@@ -63,13 +63,15 @@ export const getTextureFromProps = (
   if (image) {
     invariant(typeof image === 'string', elementType + ' image needs to be a string, got `%s`', typeof image)
     const args = [image]
+    // TODO: fix this, it seems crossorigin is not the second args, but in options.resourcesOptions.crossorigin
+    // TODO: + this not the only option a dev would set I guess
     if (crossorigin) {
       args.push(crossorigin)
     }
-    return PIXI.Texture.fromImage(...args)
+    return Texture.from(...args)
   }
 
-  invariant(texture instanceof PIXI.Texture, elementType + ' texture needs to be typeof `PIXI.Texture`')
+  invariant(texture instanceof Texture, elementType + ' texture needs to be typeof `PIXI.Texture`')
   return texture
 }
 
@@ -84,7 +86,7 @@ const filterProps = not(hasKey([...Object.keys(PROPS_RESERVED), ...eventHandlers
  */
 export function applyDefaultProps(instance, oldProps, newProps) {
   invariant(
-    PIXI.DisplayObject.prototype.isPrototypeOf(instance),
+    DisplayObject.prototype.isPrototypeOf(instance),
     'instance needs to be typeof `PIXI.DisplayObject`, ' + 'got `%s`',
     typeof instance
   )

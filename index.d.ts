@@ -23,16 +23,42 @@ declare namespace _ReactPixi {
       [P in T]?: PointLike;
     };
 
-  interface WithImage {
+  type ImageSource = string | HTMLImageElement;
+  type VideoSource = string | HTMLVideoElement;
+  type AllSource = number | ImageSource | VideoSource | HTMLCanvasElement | PIXI.Texture;
+
+  interface WithSource {
     /**
-     * Directly apply an image to a Sprite.
-     * The image will be automatically texturized and chached.
+     * Directly apply an image
      *
      * @example
      *
      * image="./image.png"
      */
-    image?: string;
+    image?: ImageSource;
+
+    /**
+     * Directly apply a video
+     *
+     * @example
+     *
+     * video="./video.mp4"
+     */
+    video?: VideoSource;
+
+    /**
+     * Directly apply a source.
+     * Can be an image, video, canvas, frame id or even a texture
+     *
+     * @example
+     *
+     * source="./image.jpg"
+     * source="./video.mp4"
+     * source={document.querySelector('img')}
+     * source={document.querySelector('video')}
+     * source={document.querySelector('canvas')}
+     */
+    source?: AllSource;
   }
 
   type InteractionEvents = {
@@ -47,7 +73,7 @@ declare namespace _ReactPixi {
     > &
     InteractionEvents;
 
-  type ISprite = Container<PIXI.Sprite> & WithImage;
+  type ISprite = Container<PIXI.Sprite> & WithSource;
   type IText = WithPointLike<Container<PIXI.Text>, 'anchor'>;
   type IContainer = Container<PIXI.Container>;
   type IGraphics = Container<PIXI.Graphics> & {
@@ -75,7 +101,7 @@ declare namespace _ReactPixi {
      */
     style?: ConstructorParameters<typeof PIXI.BitmapText>[1];
   };
-  type INineSlicePlane = Container<PIXI.NineSlicePlane> & WithImage;
+  type INineSlicePlane = Container<PIXI.NineSlicePlane> & WithSource;
   type IParticleContainer = Container<PIXI.ParticleContainer> & {
     maxSize?: ConstructorParameters<typeof PIXI.ParticleContainer>[0];
     properties?: ConstructorParameters<typeof PIXI.ParticleContainer>[1];
@@ -83,11 +109,11 @@ declare namespace _ReactPixi {
     autoResize?: ConstructorParameters<typeof PIXI.ParticleContainer>[3];
   };
   type ITilingSprite = RequiredProperty<
-    Container<WithPointLike<PIXI.TilingSprite, 'tileScale' | 'tilePosition'>> & WithImage,
+    Container<WithPointLike<PIXI.TilingSprite, 'tileScale' | 'tilePosition'>> & WithSource,
     'tilePosition'
     >;
-  type ISimpleRope = Container<PIXI.SimpleRope> & WithImage;
-  type ISimpleMesh = Container<PIXI.SimpleMesh> & WithImage;
+  type ISimpleRope = Container<PIXI.SimpleRope> & WithSource;
+  type ISimpleMesh = Container<PIXI.SimpleMesh> & WithSource;
   type IStage = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
     /**
      * Width of the Stage and canvas

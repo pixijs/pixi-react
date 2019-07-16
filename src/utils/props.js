@@ -51,24 +51,17 @@ export const PROPS_DISPLAY_OBJECT = {
  * Can be either texture or image
  *
  * @param {string} elementType
- * @param {PIXI.Texture|undefined} texture
- * @param {string|undefined} image
- * @param {boolean|undefined} crossorigin
+ * @param {object} props
+ * @param {PIXI.Texture|undefined} props.texture
+ * @param {string|undefined} props.image
  * @returns {PIXI.Texture}
  */
-export const getTextureFromProps = (
-  elementType,
-  { texture = undefined, image = undefined, crossorigin = undefined }
-) => {
+export const getTextureFromProps = (elementType, props) => {
+  const { texture = undefined, image = undefined } = props
+
   if (image) {
     invariant(typeof image === 'string', elementType + ' image needs to be a string, got `%s`', typeof image)
-    const args = [image]
-    // TODO: fix this, it seems crossorigin is not the second args, but in options.resourcesOptions.crossorigin
-    // TODO: + this not the only option a dev would set I guess
-    if (crossorigin) {
-      args.push(crossorigin)
-    }
-    return Texture.from(...args)
+    return Texture.from(image)
   }
 
   invariant(texture instanceof Texture, elementType + ' texture needs to be typeof `PIXI.Texture`')

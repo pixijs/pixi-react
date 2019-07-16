@@ -1,124 +1,29 @@
-import * as PIXI from "pixi.js";
-import * as React from "react";
+import * as PIXI from 'pixi.js';
+import * as React from 'react';
+import { Reconciler } from 'react-reconciler';
 
 // private
 declare namespace _ReactPixi {
-  /***************************************************************
-   * Polyfills for interfaces removed in Pixi v5 typings
-   ***************************************************************/
-  interface BitmapTextStyle {
-    font: string | { name: string, size: number };
-    align: string;
-    tint: number;
-  }
+  type ApplicationOptions = ConstructorParameters<typeof PIXI.Application>[0];
 
-  interface ApplicationOptions {
-    autoStart?: boolean;
-    width?: number;
-    height?: number;
-    view?: HTMLCanvasElement;
-    transparent?: boolean;
-    autoDensity?: boolean;
-    antialias?: boolean;
-    preserveDrawingBuffer?: boolean;
-    resolution?: number;
-    forceCanvas?: boolean;
-    backgroundColor?: number;
-    clearBeforeRender?: boolean;
-    forceFXAA?: boolean;
-    powerPreference?: string;
-    sharedTicker?: boolean;
-    sharedLoader?: boolean;
-    resizeTo?: Window | HTMLElement;
-  }
-
-  interface ParticleContainerProperties {
-    vertices?: boolean;
-    position?: boolean;
-    rotation?: boolean;
-    uvs?: boolean;
-    tint?: boolean;
-  }
-
-  /***************************************************************
-   * End of polyfilled interfaces
-   ***************************************************************/
-
-  type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
-
-  type InteractionEvents = {
-    [P in PIXI.interaction.InteractionEventTypes]?: (
-      event: PIXI.interaction.InteractionEvent
-    ) => void
-  };
+  type RequiredProperty<T, I extends keyof T> = Omit<T, I> &
+    {
+      [P in I]-?: T[I];
+    };
 
   type PointLike =
-    | PIXI.Point | PIXI.ObservablePoint
-    | [number, number] | [number]
+    | PIXI.Point
+    | PIXI.ObservablePoint
+    | [number, number]
+    | [number]
     | number;
 
-  type Container<T> = Partial<
-    Omit<T, "children" | "position" | "scale" | "pivot">
-    > &
-    InteractionEvents & {
-    /**
-     * The coordinate of the object relative to the local coordinates of the parent.
-     * Assignment by value since pixi-v4.
-     *
-     * @example
-     *
-     * position={100}
-     * position={[100, 100]}
-     * position={{x: 100, y: 100}}
-     * position={new PIXI.Point(100, 100)}
-     * position={new PIXI.ObservablePoint(100, 100)}
-     */
-    position?: PointLike;
+  type WithPointLike<O extends object, T extends keyof any> = Omit<O, T> &
+    {
+      [P in T]?: PointLike;
+    };
 
-    /**
-     * The scale factor of the object.
-     * Assignment by value since pixi-v4.
-     *
-     * @example
-     *
-     * scale={0.5}
-     * scale={[0.5, 0.5]}
-     * scale={{x: 0.5, y: 0.5}}
-     * scale={new PIXI.Point(0.5, 0.5)}
-     * scale={new PIXI.ObservablePoint(0.5, 0.5)}
-     */
-    scale?: PointLike;
-
-    /**
-     * The pivot point of the displayObject that it rotates around.
-     * Assignment by value since pixi-v4.
-     *
-     * @example
-     *
-     * pivot={100}
-     * pivot={[100, 100]}
-     * pivot={{x: 100, y: 100}}
-     * pivot={new PIXI.Point(100, 100)}
-     * pivot={new PIXI.ObservablePoint(100, 100)}
-     */
-    pivot?: PointLike;
-  };
-
-  interface ISprite
-    extends Container<Omit<PIXI.Sprite, "anchor" | "roundPixels">> {
-    /**
-     * The anchor sets the origin point.
-     * The default is `(0,0)`, this means the sprite's origin is the top left.
-     * If you pass only single parameter, it will set both x and y to the same value as shown in the example below.
-     *
-     * @example
-     *
-     * anchor={0.5}
-     * anchor={[0.5, 0.5]}
-     * anchor={new PIXI.ObservablePoint(0.5, 0.5)}
-     */
-    anchor?: PointLike;
-
+  interface WithImage {
     /**
      * Directly apply an image to a Sprite.
      * The image will be automatically texturized and chached.
@@ -128,31 +33,24 @@ declare namespace _ReactPixi {
      * image="./image.png"
      */
     image?: string;
-
-    /**
-     * If true PixiJS will Math.floor() x/y values when rendering, stopping pixel interpolation.
-     * Advantages can include sharper image quality (like text) and faster rendering on canvas.
-     * The main disadvantage is movement of objects may appear less smooth.
-     */
-    roundPixels?: boolean;
   }
 
-  interface IText extends Container<Omit<PIXI.Text, "anchor">> {
-    /**
-     * The anchor sets the origin point of the text.
-     * The default is `(0,0)`, this means the text's origin is the top left.
-     * If you pass only single parameter, it will set both x and y to the same value as shown in the example below.
-     *
-     * @example
-     *
-     * anchor={0.5}
-     * anchor={[0.5, 0.5]}
-     * anchor={new PIXI.ObservablePoint(0.5, 0.5)}
-     */
-    anchor?: PointLike;
-  }
+  type InteractionEvents = {
+    [P in PIXI.interaction.InteractionEventTypes]?: (
+      event: PIXI.interaction.InteractionEvent
+    ) => void;
+  };
 
-  interface IGraphics extends Container<PIXI.Graphics> {
+  type Container<T extends { [key: string]: any }> = WithPointLike<
+    Omit<Partial<T>, 'children'>,
+    'position' | 'scale' | 'pivot'
+    > &
+    InteractionEvents;
+
+  type ISprite = Container<PIXI.Sprite> & WithImage;
+  type IText = WithPointLike<Container<PIXI.Text>, 'anchor'>;
+  type IContainer = Container<PIXI.Container>;
+  type IGraphics = Container<PIXI.Graphics> & {
     /**
      * Draw a graphic with imperative callback.
      *
@@ -166,23 +64,8 @@ declare namespace _ReactPixi {
      * }}
      */
     draw?(graphics: PIXI.Graphics): void;
-  }
-
-  interface IBitmapText
-    extends Container<Omit<PIXI.BitmapText, "anchor">> {
-    /**
-     * The anchor sets the origin point of the text.
-     * The default is `(0,0)`, this means the text's origin is the top left.
-     * If you pass only single parameter, it will set both x and y to the same value as shown in the example below.
-     *
-     * @example
-     *
-     * anchor={0.5}
-     * anchor={[0.5, 0.5]}
-     * anchor={new PIXI.ObservablePoint(0.5, 0.5)}
-     */
-    anchor?: PointLike;
-
+  };
+  type IBitmapText = Container<WithPointLike<PIXI.BitmapText, 'anchor'>> & {
     /**
      * Set the style object
      *
@@ -190,142 +73,22 @@ declare namespace _ReactPixi {
      *
      * style={{ font: '50px Desyrel' }}
      */
-    style?: BitmapTextStyle;
-  }
-
-  interface INineSlicePlane extends Container<PIXI.NineSlicePlane> {
-    /**
-     * Image to use for the nine-slice-plane.
-     * The image will be automatically texturized and chached.
-     *
-     * @example
-     *
-     * image="./image.png"
-     */
-    image?: string;
-  }
-
-  interface IParticleContainer
-    extends Container<PIXI.ParticleContainer> {
-    /**
-     * Max particles size
-     */
-    maxSize?: number;
-
-    /**
-     * Batch size
-     */
-    batchSize?: number;
-
-    /**
-     * Enable auto resize?
-     */
-    autoResize?: boolean;
-
-    /**
-     * Particle container properties to apply.
-     *
-     * @example
-     *
-     * properties={{ vertices: true, position: true, rotation: false }}
-     */
-    properties?: ParticleContainerProperties;
-  }
-
-  interface ITilingSprite
-    extends Container<
-      Omit<PIXI.TilingSprite, "tileScale" | "tilePosition">
-      > {
-    /**
-     * The scale factor of the tile.
-     * Assignment by value since pixi-v4.
-     *
-     * @example
-     *
-     * scale={0.5}
-     * scale={[0.5, 0.5]}
-     * scale={{x: 0.5, y: 0.5}}
-     * scale={new PIXI.Point(0.5, 0.5)}
-     * scale={new PIXI.ObservablePoint(0.5, 0.5)}
-     */
-    tileScale?: PointLike;
-
-    /**
-     * The coordinate offset of the tile
-     * Assignment by value since pixi-v4.
-     *
-     * @example
-     *
-     * tilePosition={100}
-     * tilePosition={[100, 100]}
-     * tilePosition={{x: 100, y: 100}}
-     * tilePosition={new PIXI.Point(100, 100)}
-     * tilePosition={new PIXI.ObservablePoint(100, 100)}
-     */
-    tilePosition: PointLike;
-
-    /**
-     * Tile image.
-     * The image will be automatically texturized and chached.
-     *
-     * @example
-     *
-     * image="./image.png"
-     */
-    image?: string;
-  }
-
-  interface IRope extends Container<PIXI.SimpleRope> {
-    /**
-     * Directly apply an image to the Rope.
-     * The image will be automatically texturized and chached.
-     *
-     * @example
-     *
-     * image="./image.png"
-     */
-    image?: string;
-  }
-
-  interface IMesh extends Container<PIXI.Mesh> {
-    /**
-     * Directly apply an image to a Mesh.
-     * The image will be automatically texturized and chached.
-     *
-     * @example
-     *
-     * image="./image.png"
-     */
-    image?: string;
-  }
-
-  interface IDevtoolsConfig {
-    bundleType: 0 | 1;
-    version: string;
-    rendererPackageName: string;
-
-    findFiberByHostInstance(instance: any): object;
-    getInspectorDataForViewTag(tag: number): object;
-  }
-
-  interface IReactFiber {
-    createContainer(
-      containerInfo: PIXI.Container,
-      isAsync: boolean,
-      hydrate: boolean
-    ): object;
-    updateContainer(
-      element: React.ReactNode,
-      container: object,
-      parentComponent: React.Component<any, any>,
-      callback?: () => void
-    ): number;
-    getPublicRootInstance(container: object): React.Component<any, any> | null;
-    findHostInstance(component: object): any;
-    injectIntoDevTools(devToolsConfig: IDevtoolsConfig): boolean;
-  }
-
-  interface IStageProps extends React.CanvasHTMLAttributes<HTMLCanvasElement> {
+    style?: ConstructorParameters<typeof PIXI.BitmapText>[1];
+  };
+  type INineSlicePlane = Container<PIXI.NineSlicePlane> & WithImage;
+  type IParticleContainer = Container<PIXI.ParticleContainer> & {
+    maxSize?: ConstructorParameters<typeof PIXI.ParticleContainer>[0];
+    properties?: ConstructorParameters<typeof PIXI.ParticleContainer>[1];
+    batchSize?: ConstructorParameters<typeof PIXI.ParticleContainer>[2];
+    autoResize?: ConstructorParameters<typeof PIXI.ParticleContainer>[3];
+  };
+  type ITilingSprite = RequiredProperty<
+    Container<WithPointLike<PIXI.TilingSprite, 'tileScale' | 'tilePosition'>> & WithImage,
+    'tilePosition'
+    >;
+  type ISimpleRope = Container<PIXI.SimpleRope> & WithImage;
+  type ISimpleMesh = Container<PIXI.SimpleMesh> & WithImage;
+  type IStage = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
     /**
      * Width of the Stage and canvas
      */
@@ -373,7 +136,7 @@ declare namespace _ReactPixi {
      * @param {PIXI.Application} app
      */
     onUnmount?(app: PIXI.Application): void;
-  }
+  };
 
   interface ICustomComponent<
     P extends { [key: string]: any },
@@ -422,109 +185,103 @@ declare namespace _ReactPixi {
   }
 }
 
-// public
-declare namespace ReactPixi {
-  // components
-  class Sprite extends React.Component<_ReactPixi.ISprite> {}
-  class Text extends React.Component<_ReactPixi.IText> {}
-  class Container extends React.Component<
-    _ReactPixi.Container<PIXI.Container>
-    > {}
-  class Graphics extends React.Component<_ReactPixi.IGraphics> {}
-  class BitmapText extends React.Component<_ReactPixi.IBitmapText> {}
-  class NineSlicePlane extends React.Component<_ReactPixi.INineSlicePlane> {}
-  class ParticleContainer extends React.Component<
-    _ReactPixi.IParticleContainer
-    > {}
-  class TilingSprite extends React.Component<_ReactPixi.ITilingSprite> {}
-  class Rope extends React.Component<_ReactPixi.IRope> {}
-  class Mesh extends React.Component<_ReactPixi.IMesh> {}
+// components
+export class Sprite extends React.Component<_ReactPixi.ISprite> {}
+export class Text extends React.Component<_ReactPixi.IText> {}
+export class Container extends React.Component<_ReactPixi.IContainer> {}
+export class Graphics extends React.Component<_ReactPixi.IGraphics> {}
+export class BitmapText extends React.Component<_ReactPixi.IBitmapText> {}
+export class NineSlicePlane extends React.Component<_ReactPixi.INineSlicePlane> {}
+export class ParticleContainer extends React.Component<_ReactPixi.IParticleContainer> {}
+export class TilingSprite extends React.Component<_ReactPixi.ITilingSprite> {}
+export class SimpleRope extends React.Component<_ReactPixi.ISimpleRope> {}
+export class SimpleMesh extends React.Component<_ReactPixi.ISimpleMesh> {}
 
-  // renderer
-  const render: (
-    element:
-      | React.ReactElement<any>
-      | Array<React.ReactElement<any>>
-      | React.Factory<any>,
-    container: PIXI.Container,
-    callback?: () => void
-  ) => any;
+// renderer
+export const render: (
+  element: React.ReactElement<any> | Array<React.ReactElement<any>> | React.Factory<any>,
+  container: PIXI.Container,
+  callback?: (...args: any) => void
+) => any;
 
-  // context
-  const AppContext: React.Context<PIXI.Application>;
-  const AppProvider: React.ComponentType<React.ProviderProps<PIXI.Application>>;
-  const AppConsumer: React.ComponentType<React.ConsumerProps<PIXI.Application>>;
+// context
+export const AppContext: React.Context<PIXI.Application>;
+export const AppProvider: React.ComponentType<React.ProviderProps<PIXI.Application>>;
+export const AppConsumer: React.ComponentType<React.ConsumerProps<PIXI.Application>>;
 
-  // fiber
-  const PixiFiber: _ReactPixi.IReactFiber;
+// fiber
+export const PixiFiber: Reconciler<any, any, any, any>;
 
-  // stage
-  class Stage extends React.Component<_ReactPixi.IStageProps> {}
+// stage
+export class Stage extends React.Component<_ReactPixi.IStage> {}
 
-  /**
-   * Create a Custom PIXI Component
-   *
-   * @example
-   *
-   * type RectangleProps = { x: number, y: number, color: number };
-   *
-   * const Rectangle = PixiComponent<RectangleProps, PIXI.Graphics>('Rectangle', {
-   *   create() {
-   *     return new PIXI.Graphics();
-   *   }
-   *   applyProps(ins: PIXI.Graphics, oldProps: RectangleProps, newProps: RectangleProps) {
-   *     ins.clear();
-   *     ins.beginFill(newProps.color);
-   *     ins.drawRect(newProps.x, newProps.y, 100, 100);
-   *     ins.endFill();
-   *   }
-   * });
-   */
-  const PixiComponent: <P, PixiInstance extends PIXI.DisplayObject>(
-    componentName: string,
-    lifecycle: _ReactPixi.ICustomComponent<P, PixiInstance>
-  ) => React.ComponentClass<P>;
+/**
+ * Create a Custom PIXI Component
+ *
+ * @example
+ *
+ * type RectangleProps = { x: number, y: number, color: number };
+ *
+ * const Rectangle = PixiComponent<RectangleProps, PIXI.Graphics>('Rectangle', {
+ *   create() {
+ *     return new PIXI.Graphics();
+ *   }
+ *   applyProps(ins: PIXI.Graphics, oldProps: RectangleProps, newProps: RectangleProps) {
+ *     ins.clear();
+ *     ins.beginFill(newProps.color);
+ *     ins.drawRect(newProps.x, newProps.y, 100, 100);
+ *     ins.endFill();
+ *   }
+ * });
+ */
+export const PixiComponent: <Props, PixiInstance extends PIXI.DisplayObject>(
+  componentName: string,
+  lifecycle: _ReactPixi.ICustomComponent<Props, PixiInstance>
+) => React.ComponentClass<Props>;
 
-  /**
-   * Tap into the {PIXI.Application} ticker raf.
-   *
-   * @example
-   *
-   * const MyComponent = () => {
-   *   const [x, setX] = useState(0);
-   *   useTick(() => setX(x + 1));
-   *
-   *   return <Sprite x={x} />
-   * }
-   */
-  const useTick: (tick: (delta?: number) => void) => void;
+/**
+ * Tap into the {PIXI.Application} ticker raf.
+ *
+ * @example
+ *
+ * const MyComponent = () => {
+ *   const [x, setX] = useState(0);
+ *   useTick(() => setX(x + 1));
+ *
+ *   return <Sprite x={x} />
+ * }
+ */
+export const useTick: (tick: (delta?: number) => void) => void;
 
-  /**
-   * Get the {<Stage>} {PIXI.Application} instance.
-   *
-   * @example
-   *
-   * const MyComponent = () => {
-   *   const app = useApp(); // app = PIXI.Application
-   *
-   *   return <Sprite x={x} />
-   * }
-   *
-   */
-  const useApp: () => PIXI.Application;
+/**
+ * Get the {<Stage>} {PIXI.Application} instance.
+ *
+ * @example
+ *
+ * const MyComponent = () => {
+ *   const app = useApp(); // app = PIXI.Application
+ *
+ *   return <Sprite x={x} />
+ * }
+ *
+ */
+export const useApp: () => PIXI.Application;
 
-  /**
-   * Higher Order Component to attach the {PIXI.Application} to `app` prop.
-   *
-   * @example
-   *
-   * const MyComp: FC<{ app: PIXI.Application }> = ({ app }) => <Sprite />;
-   * export default withPixiApp(MyComp);
-   */
-  const withPixiApp: <P extends { app: PIXI.Application }>(
-    WrappedComponent: React.ComponentType<P>
-  ) => React.ComponentClass<_ReactPixi.Omit<P, "app">>;
-}
-
-export = ReactPixi;
-export as namespace ReactPixi;
+/**
+ * Higher Order Component to attach the {PIXI.Application} to `app` prop.
+ *
+ * @example
+ *
+ * interface Props {
+ *   app: PIXI.Application
+ * }
+ *
+ * export default withPixiApp(
+ *   ({ app }) => (
+ *     //
+ *   )
+ * );
+ */
+export const withPixiApp: <P extends { app: PIXI.Application }>(
+  WrappedComponent: React.ComponentType<P>
+) => React.ComponentClass<Omit<P, 'app'>>;

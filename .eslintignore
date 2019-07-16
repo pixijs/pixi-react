@@ -12,3 +12,4 @@ docs/
 doczrc.js
 
 rollup.config.js
+*.ts

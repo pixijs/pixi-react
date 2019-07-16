@@ -5,11 +5,11 @@
 ![](https://img.shields.io/badge/license-MIT-green.svg)
 ![](https://img.shields.io/badge/code_style-prettier-blue.svg)
 ![](https://img.shields.io/badge/react-v16.8+-ff69b4.svg)
-![](https://img.shields.io/badge/pixi-v4+-ff69b4.svg)
+![](https://img.shields.io/badge/pixi-v5+-ff69b4.svg)
 
 Write [PixiJS](http://www.pixijs.com/) applications using React declarative style.
 
-![](https://user-images.githubusercontent.com/232559/37669267-b46a8f8e-2c66-11e8-96e7-cae2ae6bdd7d.png)
+![logo](https://user-images.githubusercontent.com/17828231/61295022-6ffa6980-a7d7-11e9-9bff-e71670156cca.png)
 
 ## Install
 
@@ -42,10 +42,12 @@ create a valid `<canvas />` element to render to.
 
 ```jsx
 import { render, Text } from '@inlet/react-pixi'
-import * as PIXI from 'pixi.js'
+import { Application } from 'pixi.js'
 
 // Setup PIXI app
-const app = new PIXI.Application(800, 600, {
+const app = new Application({
+  width: 800,
+  height: 600,
   backgroundColor: 0x10bb99,
   view: document.getElementById('container'),
 })
@@ -72,28 +74,28 @@ Watch the [collection on codepen](https://codepen.io/collection/XPpGdb).
 
 Currently the following Components are implemented by default:
 
-- [Container](http://pixijs.download/dev/docs/PIXI.Container.html)
-- [ParticleContainer](http://pixijs.download/dev/docs/PIXI.particles.ParticleContainer.html)
-- [Sprite](http://pixijs.download/dev/docs/PIXI.Sprite.html)
-- [TilingSprite](http://pixijs.download/dev/docs/PIXI.extras.TilingSprite.html)
-- [Graphics](http://pixijs.download/dev/docs/PIXI.Graphics.html)
-- [Mesh](http://pixijs.download/dev/docs/PIXI.mesh.Mesh.html)
-- [Rope](http://pixijs.download/dev/docs/PIXI.mesh.Rope.html)
-- [Text](http://pixijs.download/dev/docs/PIXI.Text.html)
-- [BitmapText](http://pixijs.download/dev/docs/PIXI.extras.BitmapText.html)
-- [NineSlicePlane](http://pixijs.download/dev/docs/PIXI.mesh.NineSlicePlane.html)
+- [Container](http://pixijs.download/release/docs/PIXI.Container.html)
+- [ParticleContainer](http://pixijs.download/release/docs/PIXI.ParticleContainer.html)
+- [Sprite](http://pixijs.download/release/docs/PIXI.Sprite.html)
+- [TilingSprite](http://pixijs.download/release/docs/PIXI.TilingSprite.html)
+- [Graphics](http://pixijs.download/release/docs/PIXI.Graphics.html)
+- [SimpleMesh](http://pixijs.download/release/docs/PIXI.SimpleMesh.html)
+- [SimpleRope](http://pixijs.download/release/docs/PIXI.SimpleRope.html)
+- [Text](http://pixijs.download/release/docs/PIXI.Text.html)
+- [BitmapText](http://pixijs.download/release/docs/PIXI.BitmapText.html)
+- [NineSlicePlane](http://pixijs.download/release/docs/PIXI.NineSlicePlane.html)
 
 You can easily add new components to your project:
 
 `./components/Rectangle.js`
 
 ```jsx
-import * as PIXI from 'pixi.js'
+import { Graphics } from 'pixi.js'
 import { PixiComponent } from '@inlet/react-pixi'
 
 export default PixiComponent('Rectangle', {
   create: props => {
-    return new PIXI.Graphics()
+    return new Graphics()
   },
   didMount: (instance, parent) => {
     // apply custom logic on mount
@@ -239,7 +241,7 @@ import { Sprite } from '@inlet/react-pixi'
 const MyComponent = () => <Sprite image=".image.png" x={100} y={200} />
 ```
 
-The `image` prop here is a short-hand for [`PIXI.Sprite.fromImage()`](http://pixijs.download/release/docs/PIXI.Sprite.html#.fromImage):
+The `image` prop here is a short-hand for [`PIXI.Sprite.from()`](http://pixijs.download/release/docs/PIXI.Sprite.html#.from):
 
 ```jsx
 import { Sprite } from '@inlet/react-pixi'

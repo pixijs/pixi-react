@@ -5,7 +5,7 @@
 ![](https://img.shields.io/badge/license-MIT-green.svg)
 ![](https://img.shields.io/badge/code_style-prettier-blue.svg)
 ![](https://img.shields.io/badge/react-v16.8+-ff69b4.svg)
-![](https://img.shields.io/badge/pixi-v4+-ff69b4.svg)
+![](https://img.shields.io/badge/pixi-v5+-ff69b4.svg)
 
 Write [PixiJS](http://www.pixijs.com/) applications using React declarative style.
 

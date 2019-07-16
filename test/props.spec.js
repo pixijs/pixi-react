@@ -22,7 +22,7 @@ describe('props', () => {
     })
 
     test('invariant image', () => {
-      expect(() => getTextureFromProps('Test', { image: 123 })).toThrow('Test image needs to be a string, got `number`')
+      expect(() => getTextureFromProps('Test', { image: 123 })).toThrow('Test image prop is invalid')
     })
 
     test('invariant texture', () => {
@@ -31,10 +31,42 @@ describe('props', () => {
       )
     })
 
-    test('get texture from image', () => {
+    test('invariant video', () => {
+      expect(() => getTextureFromProps('Test', { video: 123 })).toThrow('Test video prop is invalid')
+    })
+
+    test('invariant source', () => {
+      expect(() => getTextureFromProps('Test', { source: null })).toThrow('Test source prop is invalid')
+    })
+
+    test('get texture from image url', () => {
       const texture = getTextureFromProps('Test', { image: './image.png' })
       expect(texture).toBeInstanceOf(PIXI.Texture)
       expect(spy).toBeCalledWith('./image.png')
+    })
+
+    test('get texture from image html element', () => {
+      const image = document.createElement('img')
+      const texture = getTextureFromProps('Test', { image })
+      expect(texture).toBeInstanceOf(PIXI.Texture)
+      expect(spy).toBeCalledWith(image)
+    })
+
+    test('get texture from video url', () => {
+      const texture = getTextureFromProps('Test', { video: './video.mp4' })
+      expect(texture).toBeInstanceOf(PIXI.Texture)
+      expect(spy).toBeCalledWith('./video.mp4')
+    })
+
+    test('get texture from video html element', () => {
+      const video = document.createElement('video')
+      const texture = getTextureFromProps('Test', { video })
+      expect(texture).toBeInstanceOf(PIXI.Texture)
+      expect(spy).toBeCalledWith(video)
+    })
+
+    test('get no texture', () => {
+      expect(() => getTextureFromProps('Test', {})).toThrow('Test could not get texture from props')
     })
 
     test('get texture from texture', () => {
@@ -101,7 +133,7 @@ describe('props', () => {
 
       expect(spyRemove).toHaveBeenCalledTimes(1)
       expect(spyAdd).toHaveBeenCalledTimes(2)
-    });
+    })
 
     test('invalid instance', () => {
       expect(() => applyDefaultProps()).toThrow('instance needs to be typeof `PIXI.DisplayObject`, got `undefined`')

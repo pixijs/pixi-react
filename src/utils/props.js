@@ -51,28 +51,35 @@ export const PROPS_DISPLAY_OBJECT = {
  * Can be either texture or image
  *
  * @param {string} elementType
- * @param {PIXI.Texture|undefined} texture
- * @param {string|undefined} image
- * @param {boolean|undefined} crossorigin
- * @returns {PIXI.Texture}
+ * @param {object} props
+ * @returns {PIXI.Texture|null}
  */
-export const getTextureFromProps = (
-  elementType,
-  { texture = undefined, image = undefined, crossorigin = undefined }
-) => {
-  if (image) {
-    invariant(typeof image === 'string', elementType + ' image needs to be a string, got `%s`', typeof image)
-    const args = [image]
-    // TODO: fix this, it seems crossorigin is not the second args, but in options.resourcesOptions.crossorigin
-    // TODO: + this not the only option a dev would set I guess
-    if (crossorigin) {
-      args.push(crossorigin)
+export const getTextureFromProps = (elementType, props = {}) => {
+  const check = (inType, validator) => {
+    if (props.hasOwnProperty(inType)) {
+      const valid =
+        validator.typeofs.some(t => typeof props[inType] === t) ||
+        validator.instanceofs.some(i => props[inType] instanceof i)
+      invariant(valid, `${elementType} ${inType} prop is invalid`)
+      return props[inType]
     }
-    return Texture.from(...args)
   }
 
-  invariant(texture instanceof Texture, elementType + ' texture needs to be typeof `PIXI.Texture`')
-  return texture
+  if (props.texture) {
+    invariant(props.texture instanceof Texture, `${elementType} texture needs to be typeof \`PIXI.Texture\``)
+    return props.texture
+  } else {
+    const result =
+      check('image', { typeofs: ['string'], instanceofs: [HTMLImageElement] }) ||
+      check('video', { typeofs: ['string'], instanceofs: [HTMLVideoElement] }) ||
+      check('source', {
+        typeofs: ['string', 'number'],
+        instanceofs: [HTMLImageElement, HTMLVideoElement, HTMLCanvasElement, Texture],
+      })
+
+    invariant(!!result, `${elementType} could not get texture from props`)
+    return Texture.from(result)
+  }
 }
 
 const filterProps = not(hasKey([...Object.keys(PROPS_RESERVED), ...eventHandlers]))

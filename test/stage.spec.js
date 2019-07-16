@@ -1,6 +1,7 @@
-import React, { useState, useLayoutEffect } from 'react'
+import React, { useRef, useEffect, useCallback } from 'react'
 import * as PIXI from 'pixi.js'
 import renderer from 'react-test-renderer'
+import * as reactTest from '@testing-library/react'
 import { PixiFiber, PACKAGE_NAME, VERSION } from '../src/reconciler'
 import { runningInBrowser } from '../src/helpers'
 import { Stage, Container, Text } from '../src'
@@ -10,11 +11,13 @@ import { getCanvasProps } from '../src/stage'
 import { mockToSpy } from './__utils__/mock'
 
 jest.mock('../src/helpers', () => ({
-  ...require.requireActual('../src/helpers'),
+  ...jest.requireActual('../src/helpers'),
   runningInBrowser: jest.fn(),
 }))
 
 jest.mock('../src/reconciler')
+
+jest.useFakeTimers()
 
 describe('stage', () => {
   beforeEach(() => {
@@ -260,6 +263,21 @@ describe('stage', () => {
   })
 
   describe('hook `useTick`', function() {
+    const App = ({ children, cb }) => {
+      const app = useRef()
+      const setApp = useCallback(_ => (app.current = _), [])
+
+      useEffect(() => {
+        cb(app.current)
+      }, [app.current])
+
+      return (
+        <Stage onMount={setApp}>
+          {children}
+        </Stage>
+      )
+    }
+
     test('throw error no context found', () => {
       const Comp = () => {
         useTick(() => {})
@@ -288,13 +306,11 @@ describe('stage', () => {
 
       const renderStage = (Comp) => (
         <Stage onMount={_app => { app = _app }}>
-          <Container>{ Comp }</Container>
+          <Container>{Comp}</Container>
         </Stage>
       )
 
-      const render = renderer.create(
-        renderStage()
-      )
+      const render = renderer.create(renderStage())
 
       jest.spyOn(app.ticker, 'add')
       jest.spyOn(app.ticker, 'remove')
@@ -310,81 +326,80 @@ describe('stage', () => {
       expect(app.ticker.remove).toHaveBeenCalledTimes(1)
     })
 
-    test('update state', () => {
+    test('update state', async () => {
       const fn = jest.fn()
 
-      const Comp = () => {
-        const [x, setX] = useState(0)
-
-        useTick(() => setX(x + 1))
-        useLayoutEffect(() => fn(x), [x])
-
+      const Counter = () => {
+        const x = useRef(1)
+        useTick(() => fn(x.current++))
         return <Container />
       }
 
-      const renderStage = () => (
-        <Stage>
-          <Comp />
-        </Stage>
+      const render = () => (
+        <App cb={app => {
+          for (let i = 0; i < 10; i++) {
+            app.ticker.update()
+          }
+        }}>
+          <Counter />
+        </App>
       )
 
-      const el = renderer.create(renderStage())
-      const instance = el.getInstance().app
+      const { rerender, unmount } = reactTest.render(render())
+      rerender(render())
 
-      const update = () => {
-        instance.ticker.update(Date.now())
-        el.update(renderStage())
-      }
-
-      update()
-      update()
-      update()
-
-      expect(fn.mock.calls.map(call => call[0])).toEqual([0, 1, 2])
+      unmount()
+      expect(fn.mock.calls.join(',')).toEqual('1,2,3,4,5,6,7,8,9,10')
     })
 
     test('enable/disable useTick', () => {
-      const fn = jest.fn()
+      let fn = jest.fn()
 
-      const Comp = ({ enabled = true }) => {
-        const [x, setX] = useState(0)
-        useTick(() => setX(x + 1), enabled)
-        useLayoutEffect(() => fn(x), [x])
-
+      const Counter = ({ enabled }) => {
+        const x = useRef(1)
+        useTick(() => fn(x.current++), enabled)
         return null
       }
 
-      const renderStage = (enabled) => (
-        <Stage>
-          <Comp enabled={enabled} />
-        </Stage>
+      const render = (enabled) => (
+        <App cb={app => {
+          app.ticker.update()
+          app.ticker.update()
+          app.ticker.update()
+        }}>
+          <Counter enabled={enabled} />
+        </App>
       )
 
-      const el = renderer.create(renderStage(false))
-      const instance = el.getInstance().app
+      function testEnabled() {
+        fn.mockClear()
+        const { rerender, unmount } = reactTest.render(render(true))
 
-      const update = (enabled) => {
-        // set enabled
-        el.update(renderStage(enabled))
+        reactTest.act(() => {
+          rerender(render(true))
+          rerender(render(true))
+        })
 
-        // update tick
-        instance.ticker.update(Date.now())
+        unmount()
+        expect(fn.mock.calls.join(',')).toEqual('1,2,3')
 
-        // again enabled to catch the tick
-        el.update(renderStage(enabled))
       }
 
-      update(false)
-      update(true) // 1
-      update(false)
-      update(false)
-      update(true) // 2
-      update(true)
+      function testDisabled() {
+        fn.mockClear()
+        const { rerender, unmount } = reactTest.render(render(false))
 
-      expect(fn.mock.calls.map(call => call[0])).toEqual([
-        0, // initial
-        1,
-        2
-      ])})
+        reactTest.act(() => {
+          rerender(render(false))
+          rerender(render(false))
+        })
+
+        unmount()
+        expect(fn.mock.calls.join(',')).toEqual('')
+      }
+
+      testEnabled()
+      testDisabled()
+    })
   })
 })

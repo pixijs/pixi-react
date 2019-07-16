@@ -15,7 +15,7 @@ const element = () => (
 
 jest.mock('../src/reconciler', () => ({
   PixiFiber: {
-    ...require.requireActual('../src/reconciler').PixiFiber,
+    ...jest.requireActual('../src/reconciler').PixiFiber,
     createContainer: jest.fn(),
     updateContainer: jest.fn(),
     getPublicInstance: jest.fn(),
@@ -85,7 +85,7 @@ describe('render', () => {
 
   describe('passdown `PIXI.Application`', () => {
     beforeEach(() => {
-      const PF = require.requireActual('../src/reconciler').PixiFiber
+      const PF = jest.requireActual('../src/reconciler').PixiFiber
 
       PixiFiber.createContainer.mockImplementation(PF.createContainer)
       PixiFiber.updateContainer.mockImplementation(PF.updateContainer)

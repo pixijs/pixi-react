@@ -8,7 +8,7 @@ export const mockToSpy = path => {
 
   let original, mocked
 
-  original = require.requireActual(path)
+  original = jest.requireActual(path)
   original = original.default ? original.default : original
 
   mocked = require(path)

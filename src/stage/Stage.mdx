@@ -59,7 +59,7 @@ render(<App />, document.getElementById('root'))
         width={300}
         height={300}
         options={{
-          backgroundColor: 0x01262a
+          backgroundColor: 0x1d2230
         }}
       >
         {
@@ -69,7 +69,7 @@ render(<App />, document.getElementById('root'))
                     scale={(360/count) * 0.004}
                     anchor={0.5}
                     rotation={(i * (360/count)) * (Math.PI / 180)}
-                    x={250 + Math.cos((i * (360/count)) * (Math.PI / 180)) * 100}
+                    x={150 + Math.cos((i * (360/count)) * (Math.PI / 180)) * 100}
                     y={150 + Math.sin((i * (360/count)) * (Math.PI / 180)) * 100}  />
           ))
         }

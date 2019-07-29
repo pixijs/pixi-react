@@ -89,6 +89,7 @@ Object {
   "Stage": [Function],
   "Text": "Text",
   "TilingSprite": "TilingSprite",
+  "applyDefaultProps": [Function],
   "render": [Function],
   "useApp": [Function],
   "useTick": [Function],

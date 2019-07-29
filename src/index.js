@@ -4,7 +4,7 @@ import Stage from './stage'
 import { PixiFiber } from './reconciler'
 import { Context as AppContext, AppProvider, AppConsumer, withPixiApp } from './stage/provider'
 import { useTick, useApp } from './hooks'
-import { applyDefaultProps } from './utils/props';
+import { applyDefaultProps } from './utils/props'
 
 /**
  * -------------------------------------------

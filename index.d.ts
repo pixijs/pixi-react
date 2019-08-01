@@ -311,3 +311,23 @@ export const useApp: () => PIXI.Application;
 export const withPixiApp: <P extends { app: PIXI.Application }>(
   WrappedComponent: React.ComponentType<P>
 ) => React.ComponentClass<Omit<P, 'app'>>;
+
+/**
+ * Apply default props. Useful in Custom Components.
+ *
+ * @example
+ *
+ * const Rectangle = PixiComponent('Rectangle', {
+ *   create() {
+ *     return new PIXI.Graphics();
+ *   },
+ *   applyProps(instance, oldProps, newProps) {
+ *     applyDefaultProps(instance, oldProps, newProps);
+ *   }
+ * });
+ */
+export const applyDefaultProps: <P extends object>(
+  instance: PIXI.DisplayObject,
+  oldProps: P,
+  newProps: P
+) => void;

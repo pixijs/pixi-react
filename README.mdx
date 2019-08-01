@@ -88,15 +88,22 @@ Working with
       useTick(delta => {
         const i = iter.current += .05 * delta;
 
-        update({ type: 'update', data: {
-          x: Math.sin(i) * 100,
-          y: Math.sin(i/1.5) * 100,
-          rotation: -10 + Math.sin(i/10 + Math.PI * 2) * 10
-          } })
+        update({
+          type: 'update',
+          data: {
+            x: Math.sin(i) * 100,
+            y: Math.sin(i/1.5) * 100,
+            rotation: Math.sin(i) * Math.PI,
+            anchor: Math.sin(i/2),
+          }
+        })
       });
 
       return (
-        <Sprite image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png" anchor={.5} {...motion} />
+        <Sprite
+          image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
+          {...motion}
+        />
       )
     };
 

@@ -1,4 +1,4 @@
-# React PixiJS
+# React PIXI 🌈
 
 ![](https://img.shields.io/badge/tested_with-jest-green.svg)
 [![CircleCI](https://img.shields.io/circleci/project/github/inlet/react-pixi/master.svg)](https://circleci.com/gh/inlet/react-pixi-fiber)
@@ -7,7 +7,7 @@
 ![](https://img.shields.io/badge/react-v16.8+-ff69b4.svg)
 ![](https://img.shields.io/badge/pixi-v5+-ff69b4.svg)
 
-Write [PixiJS](http://www.pixijs.com/) applications using React declarative style.
+Write [PIXI](http://www.pixijs.com/) applications using React declarative style 👌
 
 ![logo](https://user-images.githubusercontent.com/17828231/61295022-6ffa6980-a7d7-11e9-9bff-e71670156cca.png)
 
@@ -118,11 +118,40 @@ export default PixiComponent('Rectangle', {
 ```jsx
 import { Stage } from '@inlet/react-pixi'
 import Rectangle from './components/Rectangle'
+
 export default () => (
   <Stage>
     <Rectangle x={100} y={100} width={500} height={300} fill={0xff0000} />
   </Stage>
 )
+```
+
+**Props helper**
+
+ReactPixi comes with a handy utility method `applyDefaultProps` that can help you applying 
+props directly to a PIXI primitive instance handling events, PIXI props and point-like values.
+
+Here's an example to pass through every other DisplayObject props and handle prop `count` separately:
+
+```jsx
+import { Text } from 'pixi.js'
+import { Stage, applyDefaultProps, PixiComponent } from '@inlet/react-pixi'
+
+export default PixiComponent('Counter', {
+  create: ({ count }) => {
+    return new Text(count.toString())
+  },
+  applyProps: (instance, oldProps, newProps) => {
+    const { count, ...oldP } = oldProps
+    const { count, ...newP } = newProps
+    
+    // apply rest props to PIXI.Text
+    applyDefaultProps(instance, oldP, newP)
+    
+    // set new count
+    instance.text = count.toString()
+  }
+});
 ```
 
 ## Access the `PIXI.Application` in child components

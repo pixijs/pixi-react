@@ -108,7 +108,6 @@ class Stage extends React.Component {
     const { onMount, width, height, options, raf } = this.props
 
     this.app = new Application({
-      // TODO: ask @inlet if we should move this to options props as PIXI does?
       width,
       height,
       view: this._canvas,

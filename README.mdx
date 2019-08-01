@@ -23,7 +23,7 @@ Write PIXI applications using React declarative style 👌
 npm install @inlet/react-pixi --save
 ```
 
-## Example
+## Usage
 
 ```jsx
 import { Stage, Sprite } from '@inlet/react-pixi';
@@ -41,7 +41,8 @@ const App = () => (
 
 ## Custom Components
 
-Need other PIXI primitives or new feature(s) from `pixi.js@v5`?
+ReactPixi has a few built-in components (like `Container`, `Sprite`, etc), but doesn't cover all [pixi.js](http://pixijs.github.io/docs/) components.
+However, you can easily create new components with `PixiComponent` that is automatically picked up by React's reconciler:
 
 ```jsx
 import { Graphics } from 'pixi.js';
@@ -72,7 +73,9 @@ Codepen examples:
 - [Animated Sprite](https://codepen.io/inlet/pen/5aaed9ddeadb4d7bb5ea435d77df397a)
 - [Display](https://codepen.io/inlet/pen/mvzzLb)
 
-## Example
+## A simple example
+
+Working with
 
 <Playground>
   {() => {

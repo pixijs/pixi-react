@@ -308,11 +308,12 @@ yarn test
 yarn test:watch
 ```
 
-## Resources
+## Donate
 
-- [github.com/acdlite/react-fiber-architecture](https://github.com/acdlite/react-fiber-architecture)
-- [github.com/nitin42/Making-a-custom-React-renderer](https://github.com/nitin42/Making-a-custom-React-renderer)
-- [github.com/facebook/react/tree/master/packages/react-art](https://github.com/facebook/react/tree/master/packages/react-art)
-- [github.com/facebook/react](https://github.com/facebook/react)
-- [github.com/michalochman/react-pixi-fiber](https://github.com/michalochman/react-pixi-fiber)
-- [github.com/Izzimach/react-pixi](https://github.com/Izzimach/react-pixi)
+If this project help you reduce time to develop, you can buy me a cup of coffee.
+
+🙏 Thanks!
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/donatepatrick)
+
+

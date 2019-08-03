@@ -209,6 +209,8 @@ declare namespace _ReactPixi {
       newProps: Readonly<P>
     ): void;
   }
+
+  export const TYPES_INJECTED: { [key: string]: ICustomComponent<{ [key: string]: any }, PIXI.DisplayObject> }
 }
 
 // components

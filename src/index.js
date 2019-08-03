@@ -5,6 +5,7 @@ import { PixiFiber } from './reconciler'
 import { Context as AppContext, AppProvider, AppConsumer, withPixiApp } from './stage/provider'
 import { useTick, useApp } from './hooks'
 import { applyDefaultProps } from './utils/props'
+import { TYPES_INJECTED } from './utils/element'
 
 /**
  * -------------------------------------------
@@ -16,6 +17,7 @@ export { render, Stage, withPixiApp, PixiComponent, PixiFiber }
 export { AppProvider, AppConsumer, AppContext }
 export { useTick, useApp }
 export { applyDefaultProps }
+export { TYPES_INJECTED }
 
 export const BitmapText = TYPES.BitmapText
 export const Container = TYPES.Container

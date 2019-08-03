@@ -209,8 +209,6 @@ declare namespace _ReactPixi {
       newProps: Readonly<P>
     ): void;
   }
-
-  export const TYPES_INJECTED: { [key: string]: ICustomComponent<{ [key: string]: any }, PIXI.DisplayObject> }
 }
 
 // components
@@ -333,3 +331,8 @@ export const applyDefaultProps: <P extends object>(
   oldProps: P,
   newProps: P
 ) => void;
+
+/**
+ * If not using the PixiComponent helper, any custom components will need to be added to TYPES_INJECTED.
+ */
+export const TYPES_INJECTED: { [key: string]: _ReactPixi.ICustomComponent<{ [key: string]: any }, PIXI.DisplayObject> }

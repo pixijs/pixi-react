@@ -333,6 +333,19 @@ export const applyDefaultProps: <P extends object>(
 ) => void;
 
 /**
- * If not using the PixiComponent helper, any custom components will need to be added to TYPES_INJECTED.
+ * Register Component
+ *
+ * @param {string} type
+ * @param {Object} lifecycle methods
  */
-export const TYPES_INJECTED: { [key: string]: _ReactPixi.ICustomComponent<{ [key: string]: any }, PIXI.DisplayObject> }
+export function registerComponent(type: string, lifecycle: _ReactPixi.ICustomComponent<{ [key: string]: any }, PIXI.DisplayObject>): void;
+
+/**
+ * Override existing components.
+ *
+ * This is not recommended usage, please ensure you know what you are doing before using this!
+ *
+ * @param {string} type
+ * @param {Object} lifecycle methods
+ */
+export function overrideComponent(type: string, lifecycle: _ReactPixi.ICustomComponent<{ [key: string]: any }, PIXI.DisplayObject>): void;

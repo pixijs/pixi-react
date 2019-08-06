@@ -113,6 +113,41 @@ export default PixiComponent('Rectangle', {
 })
 ```
 
+With ES6:
+
+`./components/Rectangle.mjs`
+
+```
+import { Graphics } from 'pixi.js'
+import { registerComponent } from '@inlet/react-pixi'
+
+export class Rectangle {
+  constructor() {
+    registerComponent('Rectangle', this)
+  }
+  
+  create = (props) => {
+    return new Graphics()
+  }
+  
+  didMount = (instance, parent) => {
+    // apply custom logic on mount
+  }
+  
+  willUnmount = (instance, parent) => {
+    // clean up before removal
+  }
+    
+  applyProps = (instance, oldProps, newProps) => {
+    const { fill, x, y, width, height } = newProps
+    instance.clear()
+    instance.beginFill(fill)
+    instance.drawRect(x, y, width, height)
+    instance.endFill()
+  }
+}
+```
+
 `App.js`
 
 ```jsx

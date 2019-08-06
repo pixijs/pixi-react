@@ -123,7 +123,7 @@ import { registerComponent } from '@inlet/react-pixi'
 
 export class Rectangle {
   constructor() {
-    registerComponent('Rectangle', this)
+    
   }
   
   create = (props) => {
@@ -146,6 +146,8 @@ export class Rectangle {
     instance.endFill()
   }
 }
+
+registerComponent('Rectangle', this)
 ```
 
 `App.js`

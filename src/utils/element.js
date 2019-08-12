@@ -110,7 +110,7 @@ export function overrideComponent(type, lifecycle) {
  * @param {Object} lifecycle methods
  */
 export function PixiComponent(type, lifecycle) {
-  this.registerComponent(type, lifecycle)
+  registerComponent(type, lifecycle)
 
   return type
 }

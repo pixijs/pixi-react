@@ -1,11 +1,10 @@
-import { TYPES, PixiComponent } from './utils/element'
+import { TYPES, PixiComponent, registerComponent, overrideComponent } from './utils/element'
 import { render } from './render'
 import Stage from './stage'
 import { PixiFiber } from './reconciler'
 import { Context as AppContext, AppProvider, AppConsumer, withPixiApp } from './stage/provider'
 import { useTick, useApp } from './hooks'
 import { applyDefaultProps } from './utils/props'
-import { registerComponent, overrideComponent } from './utils/element'
 
 /**
  * -------------------------------------------
@@ -13,11 +12,10 @@ import { registerComponent, overrideComponent } from './utils/element'
  * -------------------------------------------
  */
 
-export { render, Stage, withPixiApp, PixiComponent, PixiFiber }
+export { render, Stage, withPixiApp, PixiComponent, registerComponent, overrideComponent, PixiFiber }
 export { AppProvider, AppConsumer, AppContext }
 export { useTick, useApp }
 export { applyDefaultProps }
-export { registerComponent, overrideComponent }
 
 export const BitmapText = TYPES.BitmapText
 export const Container = TYPES.Container

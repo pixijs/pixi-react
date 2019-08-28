@@ -15,6 +15,7 @@ export const TYPES = {
   NineSlicePlane: 'NineSlicePlane',
   ParticleContainer: 'ParticleContainer',
   Sprite: 'Sprite',
+  AnimatedSprite: 'AnimatedSprite',
   Text: 'Text',
   TilingSprite: 'TilingSprite',
   SimpleMesh: 'SimpleMesh',

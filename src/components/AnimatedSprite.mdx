@@ -1,0 +1,42 @@
+---
+name: AnimatedSprite
+menu: Components
+route: /components/animated-sprite
+---
+
+import { Playground } from 'docz'
+import * as PIXI from 'pixi.js'
+import Stage from '../stage'
+import { Container, AnimatedSprite } from '../index'
+import textures from './AnimatedSpriteDocz'
+
+# Container
+
+## Props
+
+http://pixijs.download/dev/docs/PIXI.AnimatedSprite.html
+
+### Additional Props
+
+| Prop | Default Value | Description |
+| ---- | ------------- | ----------- |
+| textures `array` |  | Generate the animated sprite from the textures |
+| images `array` | | Generate the animated sprite directly from the images |
+| isPlaying `boolean` | true | whether the animation starts automatically |
+| initialFrame `integer` | 0 | Which frame the animation starts from |
+
+## Usage 
+
+<Playground>
+  <Stage width={300} height={300} options={{ backgroundColor: 0xeef1f5 }}>
+  	<Container position={[150, 150]}>
+  	  <AnimatedSprite 
+  	    anchor={0.5}
+  	    textures={textures}
+  	    isPlaying={true}
+  	    initialFrame={0}
+  	    animationSpeed={0.1}
+  	  />
+  	</Container>
+  </Stage>
+</Playground>

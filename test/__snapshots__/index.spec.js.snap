@@ -2,6 +2,7 @@
 
 exports[`index export modules 1`] = `
 Object {
+  "AnimatedSprite": "AnimatedSprite",
   "AppConsumer": Object {
     "$$typeof": Symbol(react.context),
     "_calculateChangedBits": null,

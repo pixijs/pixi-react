@@ -27,6 +27,11 @@ describe('createElement', () => {
     expect(element).toBeInstanceOf(PIXI.Sprite)
   })
 
+  test('create AnimatedSprite', () => {
+    const element = createElement(TYPES.AnimatedSprite, { textures: [emptyTexture] })
+    expect(element).toBeInstanceOf(PIXI.AnimatedSprite)
+  })
+
   test('create ParticleContainer', () => {
     const element = createElement(TYPES.ParticleContainer)
     expect(element).toBeInstanceOf(PIXI.ParticleContainer)
@@ -91,6 +96,18 @@ describe('element.applyProps', () => {
     const element = createElement(TYPES.Sprite, { image: './image.png' })
     expect(element).toHaveProperty('applyProps')
     expect(spy).toHaveBeenCalledWith('./image.png')
+  })
+
+  test('AnimatedSprite.applyProps with images prop exists', () => {
+    const element = createElement(TYPES.AnimatedSprite, { images: ['./image.png'] })
+    expect(element).toHaveProperty('applyProps')
+    expect(spy).lastCalledWith('./image.png')
+  })
+
+  test('AnimatedSprite.applyProps with textures prop exists', () => {
+    const element = createElement(TYPES.AnimatedSprite, { textures: [PIXI.Texture.from('./image.png')] })
+    expect(element).toHaveProperty('applyProps')
+    expect(spy).lastCalledWith('./image.png')
   })
 
   test('Sprite.applyProps image', () => {

@@ -1,11 +1,11 @@
 # React PIXI 🌈
 
-![](https://img.shields.io/badge/tested_with-jest-green.svg)
+![release](https://img.shields.io/github/v/release/inlet/react-pixi)
+![downloads](https://img.shields.io/npm/dm/@inlet/react-pixi)
 [![CircleCI](https://img.shields.io/circleci/project/github/inlet/react-pixi/master.svg)](https://circleci.com/gh/inlet/react-pixi-fiber)
-![](https://img.shields.io/badge/license-MIT-green.svg)
-![](https://img.shields.io/badge/code_style-prettier-blue.svg)
-![](https://img.shields.io/badge/react-v16.8+-ff69b4.svg)
-![](https://img.shields.io/badge/pixi-v5+-ff69b4.svg)
+![license](https://img.shields.io/badge/license-MIT-green.svg)
+![react](https://img.shields.io/badge/react-v16.8+-ff69b4.svg)
+![pixi](https://img.shields.io/badge/pixi-v5+-ff69b4.svg)
 
 Write [PIXI](http://www.pixijs.com/) applications using React declarative style 👌
 

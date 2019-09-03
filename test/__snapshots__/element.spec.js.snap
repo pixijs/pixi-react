@@ -2,6 +2,7 @@
 
 exports[`createElement types 1`] = `
 Object {
+  "AnimatedSprite": "AnimatedSprite",
   "BitmapText": "BitmapText",
   "Container": "Container",
   "Graphics": "Graphics",

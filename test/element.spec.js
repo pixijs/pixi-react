@@ -81,6 +81,56 @@ describe('createElement', () => {
     expect(element).toBeInstanceOf(PIXI.SimpleRope)
   })
 
+  test('create Spine with autoplay', () => {
+    const spineElementMock = {
+      getSpineObject: jest.fn().mockReturnValue(new PIXI.Container()),
+      play: jest.fn()
+    }
+     
+    const spy1 = jest.spyOn(spineElementMock, 'getSpineObject')
+    const spy2 = jest.spyOn(spineElementMock, 'play')
+    
+    const element = createElement(
+      TYPES.Spine,
+      {
+        spineElement: spineElementMock
+      }
+    )
+    
+    expect(element).toBeInstanceOf(PIXI.Container)
+    expect(spy1).toHaveBeenCalled()
+    expect(spy2).toHaveBeenCalled()
+    
+  })
+
+
+test('create Spine without autoplay', () => {
+    const spineElementMock = {
+      getSpineObject: jest.fn().mockReturnValue(new PIXI.Container()),
+      play: jest.fn()
+    }
+     
+    const spy1 = jest.spyOn(spineElementMock, 'getSpineObject')
+    const spy2 = jest.spyOn(spineElementMock, 'play')
+    
+    const element = createElement(
+      TYPES.Spine,
+      {
+        autoPlay: false,
+        spineElement: spineElementMock
+      }
+    )
+    const spy3 = jest.spyOn(element, 'addChild')
+    expect(element).toBeInstanceOf(PIXI.Container)
+    expect(spy1).toHaveBeenCalled()
+    expect(spy2).not.toHaveBeenCalled()
+    
+    jest.clearAllMocks()
+    jest.resetAllMocks()
+  })
+
+
+
   test('get undefined', () => {
     expect(createElement('INVALID')).toBeUndefined()
   })
@@ -232,8 +282,6 @@ describe('element.applyProps', () => {
     element.applyProps(element, props, props)
     expect(draw).toHaveBeenCalledTimes(1)
   })
-
-
 })
 
 describe('PixiComponent', () => {

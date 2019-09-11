@@ -10,6 +10,7 @@ Object {
   "ParticleContainer": "ParticleContainer",
   "SimpleMesh": "SimpleMesh",
   "SimpleRope": "SimpleRope",
+  "Spine": "Spine",
   "Sprite": "Sprite",
   "Text": "Text",
   "TilingSprite": "TilingSprite",

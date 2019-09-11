@@ -9,6 +9,7 @@ import Text from './Text'
 import TilingSprite from './TilingSprite'
 import SimpleMesh from './SimpleMesh'
 import SimpleRope from './SimpleRope'
+import Spine from './Spine'
 
 export {
   BitmapText,
@@ -22,4 +23,5 @@ export {
   SimpleMesh,
   SimpleRope,
   AnimatedSprite,
+  Spine,
 }

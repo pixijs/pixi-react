@@ -6,7 +6,7 @@ import { Context as AppContext, AppProvider, AppConsumer, withPixiApp } from './
 import { useTick, useApp } from './hooks'
 import { withFilters } from './hoc'
 import { applyDefaultProps } from './utils/props'
-
+import SpineContainer from './components/SpineContainer'
 /**
  * -------------------------------------------
  * Public API
@@ -18,6 +18,7 @@ export { AppProvider, AppConsumer, AppContext }
 export { useTick, useApp }
 export { withFilters }
 export { applyDefaultProps }
+export { SpineContainer }
 
 export const BitmapText = TYPES.BitmapText
 export const Container = TYPES.Container
@@ -30,3 +31,4 @@ export const Text = TYPES.Text
 export const TilingSprite = TYPES.TilingSprite
 export const SimpleMesh = TYPES.SimpleMesh
 export const SimpleRope = TYPES.SimpleRope
+export const Spine = TYPES.Spine

@@ -1,0 +1,243 @@
+---
+name: 'Spine'
+route: '/Spine'
+menu: Components
+---
+
+# Spine Component
+
+The component implements the [pixi-spine plugin](https://github.com/pixijs/pixi-spine) which enables the Spine support, including some nice extra features to make easier to work with dynamic content with Spine. 
+
+```js
+ class Pixie extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      animation: 'running'
+    }
+  }
+
+  componentDidMount() {
+    const loader = PixiLoader.shared;
+    loader
+        .add('pixie', 'public/spine/pixie.json')
+        .load((ld, res) => {
+          this.setState({
+            resource: res.pixie.spineData
+          })
+        });
+  }
+  
+  animationEnd = (event, track) => {
+    console.log(event)
+    console.log(track)
+  }
+
+  animationStart = (event, track) => {
+    if(event.animation.name === 'jump') {
+      this.setState(prevState => {
+        return {
+          animation: 'running'
+        }
+      })
+    }
+  }
+
+
+  onclick = (el) => {
+    this.setState({
+      animation: 'jump'
+    })
+  }
+
+  render() {
+    const { resource, animation } = this.state
+    return (
+      <Stage width={1024} height={1024} resolution = {window.devicePixelRatio || 1} options={{ backgroundColor: 0x012b30}}>
+         <Container x={520} y={500}>
+           {resource && (
+              <SpineContainer 
+              	mixes={[{from: 'running', to: 'jump', time: 0.2}, {from: 'jump', to: 'running', time: 0.4}]} 
+              	animations={[animation]}  
+              	x={0} 
+              	y={400}
+              	scale={0.5} 
+              	pointerup={this.onclick} 
+              	interactive 
+              	buttonMode 
+              	resource={spineData} 
+              	events={
+                  {
+                    complete: this.animationEnd, // internal event
+                    start: this.animationStart // internal event
+                    halfwayJump: this.halfwayJump // custom timeline event
+                  }
+                 }>
+                   <SpineContainer.Animation name={'jump'} play={false} track={0} />
+                   <SpineContainer.Animation name={'running'} queue loop track={0} />
+              </SpineContainer>
+           )}
+         </Container>
+      </Stage>
+    )
+  }
+} 
+```
+
+## Specific props
+
+The SpineContainer accepts all properties a PIXI `DisplayObject` does, and additionally the following ones which are used to actually control the component.
+
+| Prop | Default Value | Description |
+| ---- | ------------- | ----------- |
+| spineData `object` |  | The resource spineData loaded with the pixi loader|
+| autoPlay `boolean` | true | The animation starts as soon as added to the stage|
+| width `number` |  | Width of the object in pixels|
+| height `number` |  | height of the object in pixels|
+| events `object` |  | All the animation events to listen to, whether they are the lifecycle ones or the ones emitted by the timelines [[see AnimationStateListener]](http://esotericsoftware.com/spine-api-reference#AnimationStateListener)|
+| skin `text` |  | The skeleton's skin [[see Skin]](http://esotericsoftware.com/spine-api-reference#Skin)|
+| speed `number` | 1 | The animation speed [[see timeScale]](http://esotericsoftware.com/spine-api-reference#AnimationState-timeScale)|
+| mixes `array` |  | Array of objects containing all the crossfades between animations [[see mixes]](http://esotericsoftware.com/spine-api-reference#MixBlend)|
+| animations `array` |  | Array of the animations on playing|
+
+
+
+
+## Compound Components
+
+Together with a SpineContainer the following four Components can be used:
+
+### Animation
+
+It refers to the actual animations playable in the Spine object. See [[Animation]](http://esotericsoftware.com/spine-api-reference#Animation). 
+
+
+| Prop | Default Value | Description |
+| ---- | ------------- | ----------- |
+| name `string` |  | The name of the animation (mandatory as it indentifies the animation we want to associate with the component)|
+| play `boolean` | true | If the animation is playing |
+| trackTime `number` | 0 | The position in time the animation is. Default is the start time. [[see trackTime]](http://esotericsoftware.com/spine-api-reference#TrackEntry-trackTime)|
+| timeScale `number` | 1 | The animation speed. Default is  1 [[see timeScale]](http://esotericsoftware.com/spine-api-reference#TrackEntry-timeScale)|
+| animationEnd `number` |  | The ending time of the animation, default is its duration [[see animationEnd]](http://esotericsoftware.com/spine-api-reference#TrackEntry-animationEnd)|
+| events `object` |  | The animation events to listen to, whether they are the lifecycle ones or the ones emitted by the timelines [[see AnimationStateListener]](http://esotericsoftware.com/spine-api-reference#AnimationStateListener)|
+| track `number` |  | The track index for the animation playing [[see tracks]](http://esotericsoftware.com/spine-applying-animations#Tracks)|
+| loop `boolean` |  |If the animation repeat after its duration|
+| queue `boolean` |  |If we want the animation queued for late or played immediately replacing the current one [[see difference between Playback and Queuing]](http://esotericsoftware.com/spine-applying-animations/)|
+| delay `number` | 0 | Delaying time of the animation playing|
+
+
+```js
+  <SpineContainer.Animation 
+    name={'jump'}
+    play
+    trackTime={2} // move to the 2th second of animation's duration
+    timeScale={2} // play it twice as fast
+    animationEnd={4} // end it at four seconds
+    track={0} // 
+    events: {
+	    complete: this.animationEnd, // internal event
+        start: this.animationStart // internal event
+        halfwayJump: this.halfwayJump // custom timeline event
+    }
+    loop
+    queue
+    delay={1} // start the animation after one second 
+  />
+```
+
+### Slot
+
+It refers to the Slot object. See [[Slot]](http://esotericsoftware.com/spine-api-reference#Slot). 
+
+A Slot component implements also a `Content` component, useful to add external elements to the Slot container, therefore making them inherit all the transformations the Slot goes through. In this way you can use Spine to define the animations and then use react-pixi to add content generate dynamically, such as texts or other react-pixi components.
+
+
+```js
+<SpineContainer.Slot name='txt_label_score'>
+   <SpineContainer.Slot.Content>
+     <Text text="Score" style={style} />
+   </SpineContainer.Slot.Content>
+</SpineContainer.Slot>
+```
+
+### Bone
+
+It refers to the Bone object. See [[Bone]](http://esotericsoftware.com/spine-api-reference#Bone). 
+
+As well useful to position external elements using the bone world transform. Its properties can be also changed externally.
+
+
+```js
+<SpineContainer.Bone name={'position_score'} rotation={rotation}>
+   <Text style={{fill:'#00ffcc'}} text="Score"  />
+</SpineContainer.Bone>
+```
+
+## Imperative use
+
+To access the full spine API the SpineContainer component makes available a `spineElement` prop, which, together with a `getSpineObject` which returns a reference to the `PIXI.spine` component, exposes also some useful methods to control the animations.
+
+```js
+import { Loader as PixiLoader } from 'pixi.js'
+import spine from 'pixi-spine';
+
+import {
+  Stage, Container, SpineContainer
+} from '@inlet/react-pixi';
+
+import React, { Component } from 'react';
+
+
+class Pixie extends React.Component {
+  constructor(props) {
+    super(props)
+    this.childRef = React.createRef()
+    this.state = {
+      animation: 'running'
+    }
+  }
+
+  componentDidMount() {
+    const loader = PixiLoader.shared;
+    loader
+        .add('pixie', 'public/spine/pixie.json')
+        .load((ld, res) => {
+          this.setState({
+            spineData: res.pixie.spineData
+          })
+        });
+  }
+  
+  animationEnd = (event, track) => {
+    // once the animation end go back to the beginning
+    const spine = this.childRef.current.spineElement.getSpineObject()
+    const runningTrack = spine.spineData.findAnimation('running')
+    runningTrack.trackTime = 0
+  }
+
+  render() {
+    const { spineData, animation } = this.state
+    return (
+      <Stage width={1024} height={1024} resolution = {window.devicePixelRatio || 1} options={{ backgroundColor: 0x012b30}}>
+         <Container>
+           {spineData && (
+              <SpineContainer 
+                ref={this.childRef}
+                animations={[animation]}  
+                x={300}
+                y={700}
+                spineData={spineData} 
+                events={
+                  {
+                    complete: this.animationEnd
+                  }
+                 }>
+                   <SpineContainer.Animation name={'running'} play loop track={0} />
+              </SpineContainer>
+           )}
+         </Container>
+      </Stage>
+    )
+  }
+} 
+````

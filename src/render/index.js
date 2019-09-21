@@ -1,6 +1,6 @@
 import invariant from 'fbjs/lib/invariant'
 import { Container } from 'pixi.js'
-import { PixiFiber, PACKAGE_NAME, VERSION } from '../reconciler'
+import { PixiFiber, PACKAGE_NAME, REACT_DOM_VERSION } from '../reconciler'
 
 // cache root containers
 export const roots = new Map()
@@ -42,7 +42,7 @@ export function render(element, container, callback = undefined) {
 export function injectDevtools() {
   PixiFiber.injectIntoDevTools({
     bundleType: process.env.NODE_ENV !== 'production' ? 1 : 0,
-    version: VERSION,
+    version: REACT_DOM_VERSION,
     rendererPackageName: PACKAGE_NAME,
     findHostInstanceByFiber: PixiFiber.findHostInstance,
   })

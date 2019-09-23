@@ -1,0 +1,296 @@
+---
+name: 'ClassName'
+route: '/className'
+menu: CSS Support (Beta)
+---
+
+# className attribute
+
+With the introduction of the className attribute react-pixi supports the use of css files to style pixi components almost in the same way as you would do it for React HTML elements, which means that most of the PIXI properties can be defined in your own class selectors. Names of the class selectors need to be preceded by 'pixi'.
+
+```css
+pixi.header {
+  x: 0;
+  y: 0;
+  alpha: 0.8;
+}
+
+ pixi.title {
+  fontFamily: Arial;
+  font-size: 36;
+  font-style: italic; // both the pixi camel cased and css kebab cased style are supported
+  fontWeight: bold;
+  fill: ['#FF0000', '#FFFF00'];
+  stroke: #FFFFFF;
+  strokeThickness: 5;
+  dropShadow: true;
+  dropShadowColor: #000000;
+  dropShadowBlur: 4;
+  dropShadowDistance: 6;
+  wordWrap: true;
+  wordWrapWidth: 400;
+}
+
+pixi.clickable {
+  alpha: 0.8;
+  buttonMode: true;
+}
+
+// comma to separate multiple selectors with the same styles.
+pixi.hidden, .hide {
+  alpha: 0;
+}
+
+// same declarations get merged, and same rules override each other meaning that the last one wins
+
+pixi.clickable {
+  alpha: 1;
+  interactive: true;
+}
+```
+
+Then on your React component you could use them as follow: 
+
+```js
+  <Container className='header'>
+    <Text className='title' text='Welcome' />
+  </Container>
+
+```
+
+or with the very convenient [classNames](https://github.com/JedWatson/classnames) library.
+
+```js
+  const btnClass = classNames({
+      clickable: clickable,
+      btn: true
+  });
+   <Container className={btnClass}>
+```
+
+
+Stylesheets can be imported directly in your component as usual (in this case you'll need to install `css-loader` and `style-loader` if you use a webpack build), as internal by using the `<style>` tag in the head, or even as an external stylesheet added as a link to the HTML main document (as long as the .css file is on the same domain of the html that loads it).
+
+
+## Properties inside sub-objects
+
+There are some properties that are inside sub-objects in PIXI, such as `.object.position.x`, `object.scale.y`, `object.skew.x`, and which are often used. In CSS, in order to be able to parse them you have to use the much easier format: `positionX`, `positionY`, `scaleX`, `scaleY`.
+Other properties affected are `skew`,`pivot`,`anchor`,`tilePosition` and `tileScale`.
+
+Note also that `rotation` can be written in degress, not in radians.
+
+## !important rule
+
+Same as Dom CSS, inline set props have the priority over the ones defined on the stylesheet, unless they contain the `!important` clause, in this case they would override it.
+
+```css
+pixi.header {
+  x: 0;
+  y: 0;
+  ..
+  alpha: 0.8 !important;
+}
+```
+
+```js
+  //alpha will be overriden onl
+  <Container x={10} y={10} alpha={1}>
+```
+
+## Media queries
+
+To use different rules for different devices mediaqueries are also supported
+
+
+```css
+
+@media (min-width: 1024px) {
+  pixi.header {
+    visible: false;
+  }
+}
+```
+
+## CSS Animations
+
+Very conveniently you can also define animations for your PIXI components with CSS. This feature requires the use of [gsap](https://greensock.com/gsap/) as a project dependency.
+
+
+```css
+@keyframes fromtoptobottom {
+  from {
+    y: 0;
+  }
+  to {
+    y: 590;
+  }
+}
+
+@keyframes aroundthescreen {
+  0% {
+    x:0;
+  }
+  25% {
+    x: 400;
+  }
+  50% {
+    y: 400;
+  }
+  75% {
+    x: 0;
+  }
+  100% {
+    y: 0;
+  }
+}
+
+
+pixi.from-top-to-bottom {
+  animation-name: fromtoptobottom;
+  animation-duration: 1000;
+  animation-delay: 1000;
+}
+
+pixi.around-the-screen {
+  animation-name: aroundthescreen;
+  animation-duration: 2000;
+  animation-delay: 2000;
+}
+
+```
+
+
+### 'animationEnd' event
+
+All components that use a class that is triggering a css animation call an `animationEnd` event once the animation has finished. This is true also for the classes that have `animation-direction` set as 'reverse', whereas the ones with `animation-iteration-count` set as 'infinite' never call `animationEnd`
+
+
+```js
+  <Container className='around-the-screen' animationEnd={this.handleAnimationEnd} />
+```
+
+
+### Differences with actual CSS animations
+
+- The `animation` shorthand property is currently not supported, therefore each animation params need to be declared with its own property.
+- Almost all animation parameters are supported, with the exception of the `animation-fill-mode` which is currently ignored and behaves as it would do if set as `forwards`.
+- Durations can be currently set only by using milliseconds, therefore css time format (2ms, 1s...) is not currently supported.
+- To set the `animation-timing-function` refer to https://greensock.com/ease-visualizer/ as the Dom CSS predefined ones won't work. Example of valid values would be `animation-timing-function: Power1.easeOut` or `Elastic.easeIn` 
+
+
+## CSS Transitions
+
+Together with CSS animations, also CSS transitions can be used.
+
+```css
+pixi.movable {
+ transition-property: x, y;
+ transition-duration: 1000;
+ transition-timing-function: Circ.easeIn;
+ x: 0;
+}
+
+pixi.moving {
+ x: 500;
+ y: 550;
+}
+
+```
+
+
+In the same way as Dom CSS, also on react-pixi the element first needs to be set with the class that declares the transition properties, and then any ensuing other class that will be added and that will change the values of those properties will unleash the animations. 
+
+
+### 'transitionEnd' event
+
+Same as Dom CSS animations, also components that are animated with transitions call a `transitionEnd` event once the animation has finished.
+
+
+```js
+  <Container className='around-the-screen' animationEnd={this.handleAnimationEnd} />
+```
+
+
+### Differences with actual CSS transitions
+
+- The `transition` shorthand property is currently not supported, therefore each transition params need to be declared with its own property.
+- Durations can be currently set only by using milliseconds, therefore css time format (2ms, 1s...) is not currently supported.
+- To set the `transition-timing-function` refer to https://greensock.com/ease-visualizer/ as the css predefined ones won't work. Example of valid values would be `transition-timing-function: Power1.easeOut` or `Elastic.easeIn` 
+
+## getCSSBasedProps
+
+`getCSSBasedProps` is a useful method that returns an object literal with all css properties that the className attribute has set. This allows to use the props in a more imperative way when needed. Examples of that is when using the `ref` attribute, or when setting the rules for the drawing API in the `Graphics` component such as follows.
+
+
+```css
+pixi.header {
+  width: 1024;
+  height: 100;
+  background-color: 0x555555;
+  z-index: 2;
+  x: 0;
+  y: 0;
+}
+```
+
+
+```js
+<Graphics className={'header'} draw={(graphics) => {
+  const props = graphics.getCSSBasedProps()
+  const {backgroundColor, x, y, width, height} = props
+  graphics.beginFill(backgroundColor);
+  graphics.drawRect(x, y, width, height);
+  graphics.endFill();
+}} />
+
+```
+
+## What is not supported (Yet)
+
+The supports of the className attributes comes with a huge set of css feature immediately available, which will make the writing your PIXI application with React even more declarative, and many more are on the roadmap. But right now, of course, as the Dom CSS native implementation is huge, and not all of it is useful for the kind of applications that are built with PIXI, many of them are missing. Besides, as react-pixi supports also 'styled-components', it is already easy to write components with a great level of style encapsulation. 
+
+Following some Dom CSS features that are currently incomplete, different or totally missing.
+
+### COMBINING SELECTORS
+
+Currently the only selector supported, other than the **single class** one used in all examples above, is the **compounding multiple class selector**, meaning that you can also define your selector in this way:
+
+```css
+pixi.header.desktop {
+  width: 1024;
+  height: 100;
+  background-color: 0x555555;
+  z-index: 2;
+  x: 0;
+  y: 0;
+}
+
+pixi.title {
+   fontFamily: Arial;
+   font-size: 36;
+}
+
+pixi.white {
+   fill: '#FFFFFF';
+}
+
+```
+
+and then use them like this
+
+```js
+  <Container className='header desktop'>
+    <Text className='title white' text='Welcome' />
+  </Container>
+
+```
+
+Therefore all the other combining css selectors, such as **descendant, next sibling, etc.** are not supported. Also selecting by ID, or with pseudo selectors such us `:hover` is not yet offered.  
+
+### SPECIFICITY
+
+CSS specificity between rules is not yet leveraged, therefore all CSS rules are interpreted with the same level of importance. The only levels of specificity which apply are: 
+
+- inline attributes prevail over the ones set with css classes
+- `!important` prevail over the inline set attributes
+- classes triggered by mediaquery matching prevail over the general ones, regardless of the `!important` clause.

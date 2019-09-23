@@ -1,0 +1,117 @@
+---
+name: 'Styled Components'
+route: '/styledComponents'
+menu: CSS Support (Beta)
+---
+
+# Styled Components
+
+[styled-components](https://www.styled-components.com/) is increasingly becoming a 'de facto' standard in writing css-in-js React components. The good news is that react-pixi fully supports developing and styling PIXI components using the styled way. All you need to do is to set the `styled` attribute to `true` in order to indicate that you want to use the styled-components library for that component.
+
+```js
+import styled, { keyframes, ThemeProvider } from 'styled-components'
+
+const StyledContainer = styled(Container)`
+    alpha: ${props => props.transparent ? 0.6 : 1};
+`
+
+const StyledText = styled(Text)`
+  fontFamily: Arial;
+  fontSize: 36;
+  fontStyle: italic;
+  fontWeight: bold;
+  fill: ['#FF0000', '#FFFF00'];
+  stroke: #FFFFFF;
+  strokeThickness: 5;
+  dropShadow: true;
+  dropShadowColor: #000000;
+  dropShadowBlur: 4;
+  dropShadowDistance: 6;
+  wordWrap: true;
+  wordWrapWidth: 400;
+`;
+
+
+
+<StyledContainer x={200} styled transparent> 
+    <StyledText x={10} y={10} text="should be at 300,300"  styled /> 
+</StyledContainer>
+
+
+```
+The vast majority of the features are supported, including 
+
+### Mediaqueries
+
+```js
+const MediaQueriedContainer = styled(Container)`
+  @media (min-width: 1024px) {
+    x: 200;
+  }
+`
+```
+
+### Animations
+
+
+```js
+const move = keyframes`
+  from {
+    y: 0
+  }
+  to {
+    alpha: 1;
+    y: 600;
+  }
+`;
+
+
+
+const MovingContainer = styled(Container)`
+     animation-name: ${move};
+     animation-duration: 1000;
+`
+```
+
+
+### Theming
+
+
+```js
+
+const ThemedTitle = styled(Text)`
+  fontFamily: Tahoma;
+  fontSize: ${props => props.theme.fontSize};
+  fontStyle: italic;
+  fontWeight: bold;
+  fill: ${props => props.theme.fill};
+  stroke: #FFFFFF;
+  strokeThickness: 5;
+  dropShadow: true;
+  dropShadowColor: #000000;
+  dropShadowBlur: 4;
+  dropShadowDistance: 6;
+  wordWrap: true;
+  wordWrapWidth: 400;
+`;
+
+
+ThemedTitle.defaultProps = {
+  theme: {
+    fontSize: 36,
+    fill: '#00FF00'
+  }
+}
+
+const theme = {
+  fontSize: 24,
+  fill: '#00FFFF'
+};
+
+ 
+<ThemeProvider theme={theme}>
+  <ThemedTitle x={320} y={400} text="Uses the theme"  styled /> 
+</ThemeProvider>
+
+
+```

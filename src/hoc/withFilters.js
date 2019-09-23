@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Filter as PixiFilter } from 'pixi.js'
 import { isFunction, lcFirst } from '../helpers'
 
 export const withFilters = (WrappedComponent, filters) => {

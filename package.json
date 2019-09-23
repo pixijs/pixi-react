@@ -95,7 +95,8 @@
     "pixi.js": "^5.x.x",
     "prop-types": "^15.x.x",
     "react": "^16.x.x",
-    "react-dom": "^16.x.x"
+    "react-dom": "^16.x.x",
+    "gsap": "^2.x.x"
   },
   "dependencies": {
     "@testing-library/react": "8.0.5",

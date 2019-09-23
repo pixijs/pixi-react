@@ -9,8 +9,8 @@
  */
 
 import invariant from 'fbjs/lib/invariant'
+import cssManager from '../cssManager/cssManager'
 import performanceNow from 'performance-now'
-
 import { createElement } from '../utils/element'
 import { CHILDREN, applyDefaultProps } from '../utils/props'
 
@@ -196,12 +196,22 @@ export default {
 
   insertInContainerBefore: insertBefore,
 
-  commitUpdate(instance, updatePayload, type, oldProps, newProps) {
+  commitUpdate(instance, updatePayload, type, oldProps, { className, ...newProps }) {
     let applyProps = instance && instance.applyProps
+    let cssProps
+    let cssMan = instance.cssManager
+    if (className && !cssMan) {
+      cssMan = cssManager(instance, type, applyDefaultProps)
+      instance.cssManager = cssMan
+    }
     if (typeof applyProps !== 'function') {
       applyProps = applyDefaultProps
     }
-    applyProps(instance, oldProps, newProps)
+    if (cssMan) {
+      cssMan.setProps(newProps)
+      cssProps = cssMan.setCSSProps(className, true, newProps)
+    }
+    applyProps(instance, oldProps, cssMan ? cssProps : newProps)
   },
 
   commitMount(instance, updatePayload, type, oldProps, newProps) {

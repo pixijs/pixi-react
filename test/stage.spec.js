@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useCallback } from 'react'
 import * as PIXI from 'pixi.js'
 import renderer from 'react-test-renderer'
 import * as reactTest from '@testing-library/react'
-import { PixiFiber, PACKAGE_NAME, VERSION } from '../src/reconciler'
+import { PixiFiber, PACKAGE_NAME, REACT_DOM_VERSION } from '../src/reconciler'
 import { runningInBrowser } from '../src/helpers'
 import { Stage, Container, Text } from '../src'
 import { Context } from '../src/stage/provider'
@@ -190,7 +190,7 @@ describe('stage', () => {
       expect.objectContaining({
         findHostInstanceByFiber: PixiFiber.findHostInstance,
         bundleType: 1,
-        version: VERSION,
+        version: REACT_DOM_VERSION,
         rendererPackageName: PACKAGE_NAME,
       })
     )

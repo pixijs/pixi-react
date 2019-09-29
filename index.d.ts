@@ -113,7 +113,10 @@ declare namespace _ReactPixi {
     'tilePosition'
     >;
   type ISimpleRope = Container<PIXI.SimpleRope> & WithSource;
-  type ISimpleMesh = Container<PIXI.SimpleMesh> & WithSource;
+  type ISimpleMesh = Container<PIXI.SimpleMesh> & WithSource & {
+    uvs?: ConstructorParameters<typeof PIXI.SimpleMesh>[2];
+    indices?: ConstructorParameters<typeof PIXI.SimpleMesh>[3];
+  };
   type IStage = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
     /**
      * Width of the Stage and canvas

@@ -73,7 +73,7 @@ declare namespace _ReactPixi {
     > &
     InteractionEvents;
 
-  type ISprite = Container<PIXI.Sprite> & WithSource;
+  type ISprite = WithPointLike<Container<PIXI.Sprite>, 'anchor'> & WithSource;
   type IText = WithPointLike<Container<PIXI.Text>, 'anchor'>;
   type IContainer = Container<PIXI.Container>;
   type IGraphics = Container<PIXI.Graphics> & {

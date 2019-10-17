@@ -73,7 +73,7 @@ declare namespace _ReactPixi {
     > &
     InteractionEvents;
 
-  type ISprite = Container<PIXI.Sprite> & WithSource;
+  type ISprite = WithPointLike<Container<PIXI.Sprite>, 'anchor'> & WithSource;
   type IText = WithPointLike<Container<PIXI.Text>, 'anchor'>;
   type IContainer = Container<PIXI.Container>;
   type IGraphics = Container<PIXI.Graphics> & {
@@ -113,7 +113,10 @@ declare namespace _ReactPixi {
     'tilePosition'
     >;
   type ISimpleRope = Container<PIXI.SimpleRope> & WithSource;
-  type ISimpleMesh = Container<PIXI.SimpleMesh> & WithSource;
+  type ISimpleMesh = Container<PIXI.SimpleMesh> & WithSource & {
+    uvs?: ConstructorParameters<typeof PIXI.SimpleMesh>[2];
+    indices?: ConstructorParameters<typeof PIXI.SimpleMesh>[3];
+  };
   type IStage = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
     /**
      * Width of the Stage and canvas

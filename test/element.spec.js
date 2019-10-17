@@ -219,6 +219,16 @@ describe('element.applyProps', () => {
     element.applyProps(element, { draw: spy }, { draw: spy })
     expect(spy).toHaveBeenCalledTimes(2)
   })
+
+  test('Graphics.applyProps draw prevented twice', () => {
+    const draw = jest.fn()
+    const props = { draw, preventRedraw: true }
+    const element = createElement(TYPES.Graphics, props)
+    element.applyProps(element, props, props)
+    expect(draw).toHaveBeenCalledTimes(1)
+  })
+
+
 })
 
 describe('PixiComponent', () => {

@@ -22,12 +22,14 @@ Draw graphics inline using the imperative `PIXI.Graphics` API.
 > it might be better to use a cached texture instead.
 >
 > Make sure to call `g.clear()` if you'd like to redraw the graphics.
+> Alternatively, you can set `preventRedraw` to true to force the component to be drawn only once
 
 ## Usage
 
 <Playground>
   <Stage width={600} height={300} options={{ backgroundColor: 0xffffff }}>
     <Graphics
+      preventRedraw={true}
       draw={g => {
         // clear the graphics
         g.clear()

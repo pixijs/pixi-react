@@ -3,7 +3,7 @@ import { getTextureFromProps, applyDefaultProps } from '../utils/props'
 
 const AnimatedSprite = (root, props) => {
   const { textures, images, autoUpdate, isPlaying = true, initialFrame } = props
-  const makeTexture = (textures) => {
+  const makeTexture = textures => {
     return textures.map(texture => {
       return getTextureFromProps('AnimatedSprite', {
         texture,
@@ -18,7 +18,7 @@ const AnimatedSprite = (root, props) => {
     const { textures, ...props } = newProps
     const { isPlaying, initialFrame } = props
     applyDefaultProps(instance, oldProps, props)
-    if(textures) {
+    if (textures) {
       instance.textures = makeTexture(textures)
       animatedSprite[isPlaying ? 'gotoAndPlay' : 'gotoAndStop'](initialFrame || 0)
     }

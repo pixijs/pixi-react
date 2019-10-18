@@ -94,6 +94,7 @@ Object {
   "render": [Function],
   "useApp": [Function],
   "useTick": [Function],
+  "withFilters": [Function],
   "withPixiApp": [Function],
 }
 `;

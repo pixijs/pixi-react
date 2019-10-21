@@ -1,0 +1,62 @@
+---
+name: withFilters
+menu: High Order Component
+route: /hoc/withFilters
+---
+
+# withFilters
+
+High Order Component handy for creating a wrapper one, which applies one or more filters to its children
+
+## Example
+
+
+```js
+import {AdjustmentFilter} from '@pixi/filter-adjustment';
+import { Container} from '@inlet/react-pixi';
+
+const BlurAndAdjustmentFilter = withFilters(Container, [
+  PIXI.filters.BlurFilter,
+  AdjustmentFilter
+])
+
+...
+render() {
+  return (
+    <Container>
+      <BlurAndAdjustmentFilter 
+      	blurFilter={{'blur': 5}} 
+      	adjustmentFilter={{'gamma': 3, 'brightness': 5}}
+      >
+        <Sprite texture={texture} />
+      </BlurAndAdjustmentFilter>
+    </Container>
+  )
+}
+```
+
+
+For filters that expose methods, you can use the `apply` prop that is called with an object containing all filter instances passed
+
+
+```js
+import { Container} from '@inlet/react-pixi';
+
+const ColorMatrixFilter = withFilters(Container, PIXI.filters.ColorMatrixFilter)
+
+...
+render() {
+  return (
+    <Container>
+      <ColorMatrixFilter alpha={0.5} enable={true} apply={({colorMatrixFilter}) => {
+        colorMatrixFilter.greyscale()
+      }}>
+        <Sprite texture={texture} />
+      </ColorMatrixFilter>
+    </Container>
+  )
+}
+
+```
+
+Note that when a single filter is set, its properties are passed directly as a wrapper ones, whereas when multiple filters are set (as in the first example) properties are declared in separate object literals, each of them with the filter name.

@@ -24,3 +24,7 @@ export const hasKey = collection => {
 export const not = boolFn => (...args) => !boolFn(...args)
 
 export const runningInBrowser = () => typeof window !== 'undefined'
+
+export const lcFirst = value => {
+  return value.charAt(0).toLowerCase() + value.substring(1)
+}

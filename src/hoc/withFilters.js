@@ -19,14 +19,14 @@ export const withFilters = (WrappedComponent, filters) => {
         Object.keys(allFilterProps).forEach(function(o) {
           filter[o] = allFilterProps[o]
         })
-        
+
         return filter
       })
     if (apply && typeof apply === 'function') {
       apply.call(WrappedComponent, filterObj)
     }
     return (
-      <WrappedComponent name='FilterWrapper' filters={appliedFilters} {...props}>
+      <WrappedComponent name="FilterWrapper" filters={appliedFilters} {...props}>
         {children}
       </WrappedComponent>
     )

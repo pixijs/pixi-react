@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js'
+import { AnimatedSprite as PixiAnimatedSprite } from 'pixi.js'
 import { getTextureFromProps, applyDefaultProps } from '../utils/props'
 
 const AnimatedSprite = (root, props) => {
@@ -11,8 +11,8 @@ const AnimatedSprite = (root, props) => {
     })
   }
   const animatedSprite = images
-    ? PIXI.AnimatedSprite.fromImages(images)
-    : new PIXI.AnimatedSprite(makeTexture(textures))
+    ? PixiAnimatedSprite.fromImages(images)
+    : new PixiAnimatedSprite(makeTexture(textures))
   animatedSprite[isPlaying ? 'gotoAndPlay' : 'gotoAndStop'](initialFrame || 0)
   animatedSprite.applyProps = (instance, oldProps, newProps) => {
     const { textures, ...props } = newProps

@@ -1,6 +1,42 @@
 import * as PIXI from 'pixi.js';
 import * as React from 'react';
-import { Reconciler } from 'react-reconciler';
+
+// Reconciler API
+interface Reconciler<Instance, TextInstance, Container, PublicInstance> {
+  updateContainerAtExpirationTime(
+      element: any,
+      container: any,
+      parentComponent: React.Component<any, any> | null | undefined,
+      expirationTime: any,
+      callback: () => void | null | undefined,
+  ): any;
+  createContainer(
+      containerInfo: any,
+      isConcurrent: boolean,
+      hydrate: boolean,
+  ): any;
+  updateContainer(
+      element: any,
+      container: any,
+      parentComponent: React.Component<any, any> | null | undefined,
+      callback: () => void | null | undefined,
+  ): any;
+  flushRoot(root: any, expirationTime: any): void;
+  requestWork(root: any, expirationTime: any): void;
+  computeUniqueAsyncExpiration(): any;
+  batchedUpdates<A>(fn: () => A): A;
+  unbatchedUpdates<A>(fn: () => A): A;
+  deferredUpdates<A>(fn: () => A): A;
+  syncUpdates<A>(fn: () => A): A;
+  interactiveUpdates<A>(fn: () => A): A;
+  flushInteractiveUpdates(): void;
+  flushControlled(fn: () => any): void;
+  flushSync<A>(fn: () => A): A;
+  getPublicRootInstance(container: any): React.Component<any, any> | PublicInstance | null;
+  findHostInstance(component: object): PublicInstance | null;
+  findHostInstanceWithNoPortals(component: any): PublicInstance | null;
+  injectIntoDevTools(devToolsConfig: any): boolean;
+}
 
 // private
 declare namespace _ReactPixi {

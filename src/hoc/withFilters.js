@@ -35,7 +35,7 @@ export const withFilters = (WrappedComponent, filters) => {
   filterWrapper.displayName = 'FilterWrapper'
   filterWrapper.propTypes = {
     children: PropTypes.node,
-    apply: PropTypes.function,
+    apply: PropTypes.func,
   }
 
   return filterWrapper

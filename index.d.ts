@@ -370,3 +370,27 @@ export const applyDefaultProps: <P extends object>(
   oldProps: P,
   newProps: P
 ) => void;
+
+/**
+ * High Order Component handy for creating a wrapper one,
+ * which applies one or more filters to its children
+
+ *
+ * @example
+ *
+ * render() {
+ *   return (
+ *     <Container>
+ *       <BlurAndAdjustmentFilter
+ *         blurFilter={{'blur': 5}}
+ *         adjustmentFilter={{'gamma': 3, 'brightness': 5}}
+ *       >
+ *         <Sprite texture={texture} />
+ *       </BlurAndAdjustmentFilter>
+ *     </Container>
+ *   )
+ * }
+ */
+export const withFilters: <T extends { [key: string]: any }>(
+    WrappedComponent: React.ComponentType, filters?: Array<any>
+) => React.ComponentClass<Omit<Partial<T>, 'children'>;

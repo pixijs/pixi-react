@@ -126,6 +126,15 @@ declare namespace _ReactPixi {
      * }}
      */
     draw?(graphics: PIXI.Graphics): void;
+
+    /**
+     * Set `preventRedraw` to true to force the component to be drawn only once
+     *
+     * @example
+     *
+     * preventRedraw={true}
+     */
+    preventRedraw?: boolean;
   };
   type IBitmapText = Container<WithPointLike<PIXI.BitmapText, 'anchor'>> & {
     /**
@@ -393,4 +402,4 @@ export const applyDefaultProps: <P extends object>(
  */
 export const withFilters: <T extends { [key: string]: any }>(
     WrappedComponent: React.ComponentType, filters?: Array<any>
-) => React.ComponentClass<Omit<Partial<T>, 'children'>;
+) => React.ComponentClass<Omit<Partial<T>, 'children'>>;

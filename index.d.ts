@@ -393,4 +393,4 @@ export const applyDefaultProps: <P extends object>(
  */
 export const withFilters: <T extends { [key: string]: any }>(
     WrappedComponent: React.ComponentType, filters?: Array<any>
-) => React.ComponentClass<Omit<Partial<T>, 'children'>;
+) => React.ComponentClass<Omit<Partial<T>, 'children'>>;

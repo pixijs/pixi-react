@@ -1,8 +1,13 @@
-import { Text as PixiText } from 'pixi.js'
+import { Text as PixiText, Sprite as PixiSprite } from 'pixi.js'
 
 const Text = (root, props) => {
-  const { text = '', style = {} } = props
-  return new PixiText(text, style)
+  const { text = '', style = {}, isSprite } = props
+  const pixiText = new PixiText(text, style)
+  if (isSprite) {
+    pixiText.updateText()
+    return new PixiSprite(pixiText.texture)
+  }
+  return pixiText
 }
 
 export default Text

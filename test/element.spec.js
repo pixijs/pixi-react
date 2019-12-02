@@ -22,6 +22,11 @@ describe('createElement', () => {
     expect(element).toBeInstanceOf(PIXI.Text)
   })
 
+   test('create Text as a sprite', () => {
+    const element = createElement(TYPES.Text, { text: 'foobar', isSprite: true })
+    expect(element).toBeInstanceOf(PIXI.Sprite)
+  })
+
   test('create Sprite', () => {
     const element = createElement(TYPES.Sprite, { texture: emptyTexture })
     expect(element).toBeInstanceOf(PIXI.Sprite)

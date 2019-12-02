@@ -20,6 +20,15 @@ http://pixijs.download/dev/docs/PIXI.Text.html
 
 http://pixijs.download/dev/docs/PIXI.TextStyle.html
 
+### Additional Props
+
+| Prop | Default Value | Description |
+| ---- | ------------- | ----------- |
+| isSprite `boolean` | false | renders the text as a textured objects and returns it as sprite (much better performances if the text doesn't change often)|
+
+
+Note: isSprite establishes how the Text is rendered during its whole lifecycle after it's been mounted, therefore any change to the property later on won't have effect
+
 ## Usage
 
 <Playground>

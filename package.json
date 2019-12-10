@@ -103,6 +103,9 @@
     "performance-now": "^2.1.0",
     "react-reconciler": "0.21.0-alpha.0"
   },
+  "resolutions": {
+    "serialize-javascript": "^2.1.1"
+  },
   "jest": {
     "collectCoverage": false,
     "setupFiles": [

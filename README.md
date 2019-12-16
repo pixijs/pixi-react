@@ -308,17 +308,14 @@ yarn test
 yarn test:watch
 ```
 
-## Donate
+## ❤️ Support
 
-If this project help you reduce time to develop, you can buy me a cup of coffee.
-
-🙏 Thanks!
+If this project helps you reduce time to develop and/or you want to help the maintainer of this project. You can sponsor him. Thank you!
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/donatepatrick)
 
 ## We're on Slack
 
-You're missing an amazing feature? Or just want to get in touch with fellow developers
-and have a chat? Feel free to join our Slack channel.
+You have an amazing feature in mind or just want to get in touch with fellow developers? Feel free to join our Slack channel.
 
 [Join us on Slack](https://join.slack.com/t/reactpixi/shared_invite/enQtODY0OTYzNzExMTY5LTU5Yjc0YTFhZWFjNWI5YWExZDY5N2FhODBlNTIyZWUzMGMyMDExYjFmYjBhYzM0ZTM4ZTgwMDJhODRkYWIxYTU)

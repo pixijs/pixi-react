@@ -128,7 +128,7 @@ export default () => (
 
 **Props helper**
 
-ReactPixi comes with a handy utility method `applyDefaultProps` that can help you applying 
+ReactPixi comes with a handy utility method `applyDefaultProps` that can help you applying
 props directly to a PIXI primitive instance handling events, PIXI props and point-like values.
 
 Here's an example to pass through every other DisplayObject props and handle prop `count` separately:
@@ -144,14 +144,14 @@ export default PixiComponent('Counter', {
   applyProps: (instance, oldProps, newProps) => {
     const { count, ...oldP } = oldProps
     const { count, ...newP } = newProps
-    
+
     // apply rest props to PIXI.Text
     applyDefaultProps(instance, oldP, newP)
-    
+
     // set new count
     instance.text = count.toString()
-  }
-});
+  },
+})
 ```
 
 ## Access the `PIXI.Application` in child components
@@ -316,4 +316,9 @@ If this project help you reduce time to develop, you can buy me a cup of coffee.
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/donatepatrick)
 
+## We're on Slack
 
+You're missing an amazing feature? Or just want to get in touch with fellow developers
+and have a chat? Feel free to join our Slack channel.
+
+[Join us on Slack](https://join.slack.com/t/reactpixi/shared_invite/enQtODY0OTYzNzExMTY5LTU5Yjc0YTFhZWFjNWI5YWExZDY5N2FhODBlNTIyZWUzMGMyMDExYjFmYjBhYzM0ZTM4ZTgwMDJhODRkYWIxYTU)

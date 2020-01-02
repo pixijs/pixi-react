@@ -12,7 +12,7 @@ High Order Component handy for creating a wrapper one, which applies one or more
 
 
 ```js
-import {AdjustmentFilter} from '@pixi/filter-adjustment';
+import { AdjustmentFilter } from '@pixi/filter-adjustment';
 import { Container} from '@inlet/react-pixi';
 
 const BlurAndAdjustmentFilter = withFilters(Container, [
@@ -40,7 +40,7 @@ For filters that expose methods, you can use the `apply` prop that is called wit
 
 
 ```js
-import { Container} from '@inlet/react-pixi';
+import { Container } from '@inlet/react-pixi';
 
 const ColorMatrixFilter = withFilters(Container, PIXI.filters.ColorMatrixFilter)
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Application } from 'pixi.js'
+import { Application, settings, SCALE_MODES } from 'pixi.js'
 import PropTypes from 'prop-types'
 import invariant from 'fbjs/lib/invariant'
 import { PROPS_DISPLAY_OBJECT } from '../utils/props'
@@ -77,6 +77,8 @@ const propTypes = {
       )
     },
   }),
+
+  scaleMode: PropTypes.oneOf(['linear', 'nearest']),
 }
 
 const defaultProps = {
@@ -86,6 +88,7 @@ const defaultProps = {
   onUnmount: noop,
   raf: true,
   renderOnComponentChange: true,
+  scaleMode: 'nearest',
 }
 
 export function getCanvasProps(props) {
@@ -105,7 +108,13 @@ class Stage extends React.Component {
   }
 
   componentDidMount() {
-    const { onMount, width, height, options, raf } = this.props
+    const { onMount, width, height, options, raf, scaleMode } = this.props
+
+    if (scaleMode === 'linear') {
+      settings.SCALE_MODE = SCALE_MODES.LINEAR
+    } else if (scaleMode === 'nearest') {
+      settings.SCALE_MODE = SCALE_MODES.NEAREST
+    }
 
     this.app = new Application({
       width,

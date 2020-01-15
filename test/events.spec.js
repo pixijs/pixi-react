@@ -2,12 +2,15 @@ import React from 'react'
 import * as PIXI from 'pixi.js'
 
 import hostconfig from '../src/reconciler/hostconfig'
-import { Text, Container, render } from '../src'
+import { Text, Container, render, eventHandlers } from '../src'
 import { roots } from '../src/render'
 import { mockToSpy } from './__utils__/mock'
 import { createElement } from '../src/utils/element'
 
 jest.mock('../src/reconciler/hostconfig')
+
+const CUSTOM_EVENT = 'customEvent'
+const NOT_CUSTOM_EVENT = 'notCustomEvent'
 
 describe('react', () => {
   let container = new PIXI.Container()
@@ -30,7 +33,11 @@ describe('react', () => {
     })
   })
 
-  afterEach(() => roots.clear())
+  afterEach(() => {
+    roots.clear()
+    const index = eventHandlers.indexOf(CUSTOM_EVENT)
+    if (index >= 0) eventHandlers.splice(index, 1)
+  })
 
   describe('events', () => {
     test('trigger click event', () => {
@@ -63,6 +70,34 @@ describe('react', () => {
       expect(instances).toHaveLength(1)
       expect(instances[0]._eventsCount).toEqual(1)
       expect(onClick).toHaveBeenCalledTimes(1)
+    })
+
+    test('custom events', () => {
+      let text
+      let onCustomEvent = jest.fn()
+      let onNotCustomEvent = jest.fn()
+
+      eventHandlers.push(CUSTOM_EVENT)
+
+      renderInContainer(
+        <Text ref={c => (text = c)} {...{[CUSTOM_EVENT]: onCustomEvent }} />
+      )
+
+      const customEvent = { type: CUSTOM_EVENT, data: 456 }
+
+      text.emit(CUSTOM_EVENT, customEvent)
+
+      expect(text._eventsCount).toEqual(1)
+      expect(onCustomEvent).toHaveBeenCalledTimes(1)
+      expect(onCustomEvent).toHaveBeenCalledWith(customEvent)
+
+      renderInContainer(
+        <Text ref={c => (text = c)} {...{[NOT_CUSTOM_EVENT]: onNotCustomEvent }} />
+      )
+
+      text.emit(NOT_CUSTOM_EVENT, { type: NOT_CUSTOM_EVENT, data: 789 })
+
+      expect(onNotCustomEvent).toHaveBeenCalledTimes(0)
     })
   })
 })

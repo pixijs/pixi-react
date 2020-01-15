@@ -16,7 +16,7 @@ const AnimatedSprite = (root, props) => {
     const { textures, ...props } = newProps
     const { isPlaying, initialFrame } = props
     applyDefaultProps(instance, oldProps, props)
-    if (textures) {
+    if (textures && oldProps['textures'] !== textures) {
       instance.textures = makeTexture(textures)
       animatedSprite[isPlaying ? 'gotoAndPlay' : 'gotoAndStop'](initialFrame || 0)
     }

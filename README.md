@@ -318,4 +318,4 @@ If this project helps you reduce time to develop and/or you want to help the mai
 
 You have an amazing feature in mind or just want to get in touch with fellow developers? Feel free to join our Slack channel.
 
-[Join us on Slack](https://join.slack.com/t/reactpixi/shared_invite/enQtODY0OTYzNzExMTY5LTU5Yjc0YTFhZWFjNWI5YWExZDY5N2FhODBlNTIyZWUzMGMyMDExYjFmYjBhYzM0ZTM4ZTgwMDJhODRkYWIxYTU)
+[Join us on Slack](https://join.slack.com/t/reactpixi/shared_invite/enQtODk5NjQ2ODQ4MTI5LWVjNzlkZTJjYmI4NDcxYzljNDM4MmYwMzZkYWFlM2VkNmFhNDBmYzg3OGE5YzBiY2NmZTIwZDY0MTA4ZjA4OGM)

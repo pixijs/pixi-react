@@ -6,57 +6,51 @@ route: /hoc/withFilters
 
 # withFilters
 
-High Order Component handy for creating a wrapper one, which applies one or more filters to its children
+Wrap your ReactPixi component with `withFilters` to control filter params via props.
 
-## Example
-
-
-```js
+```jsx
 import { AdjustmentFilter } from '@pixi/filter-adjustment';
-import { Container} from '@inlet/react-pixi';
+import { Container } from '@inlet/react-pixi';
 
-const BlurAndAdjustmentFilter = withFilters(Container, [
-  PIXI.filters.BlurFilter,
-  AdjustmentFilter
-])
+const Filters = withFilters(Container, {
+  blur: PIXI.filters.BlurFilter,
+  adjust: AdjustmentFilter
+});
 
-...
-render() {
-  return (
-    <Container>
-      <BlurAndAdjustmentFilter 
-      	blurFilter={{'blur': 5}} 
-      	adjustmentFilter={{'gamma': 3, 'brightness': 5}}
-      >
-        <Sprite texture={texture} />
-      </BlurAndAdjustmentFilter>
-    </Container>
-  )
-}
+const App = () => (
+  <Stage>
+    <Filters scale={2} blur={{ blur: 5 }} adjust={{ gamma: 3, brightness: 5 }}>
+      <Sprite image="./image.png" />
+    </Filters>
+  </Stage>
+);
 ```
 
+> Noticed the `scale` prop? All props are passed down to the wrapper component except for the filter props (indexed keys provided in the second argument of `withFilters`). It basically renders a `<Container scale={2} filters=[...]>`.
 
 For filters that expose methods, you can use the `apply` prop that is called with an object containing all filter instances passed
 
-
-```js
+```jsx
 import { Container } from '@inlet/react-pixi';
 
-const ColorMatrixFilter = withFilters(Container, PIXI.filters.ColorMatrixFilter)
+const Filters = withFilters(Container, { matrix: PIXI.filters.ColorMatrixFilter })
 
-...
-render() {
-  return (
-    <Container>
-      <ColorMatrixFilter alpha={0.5} enable={true} apply={({colorMatrixFilter}) => {
-        colorMatrixFilter.greyscale()
-      }}>
-        <Sprite texture={texture} />
-      </ColorMatrixFilter>
-    </Container>
-  )
-}
-
+const App = () => (
+  <Stage>
+    <Filters matrix={{ enabled: true }} apply={ ({ matrix }) => matrix.greyscale() }>
+      <Sprite image="./image.png" />
+    </Filters>
+  </Stage>
+);
 ```
 
-Note that when a single filter is set, its properties are passed directly as a wrapper ones, whereas when multiple filters are set (as in the first example) properties are declared in separate object literals, each of them with the filter name.
+## Example
+
+<iframe
+  height={500}
+  scrolling="no"
+  title="Tiling Sprite"
+  src="//codepen.io/inlet/embed/qBEGXvv/?height=300&theme-id=33987&default-tab=result&embed-version=2"
+  frameBorder="no"
+  allowFullScreen={true}
+  style={{ width: '100%' }} />

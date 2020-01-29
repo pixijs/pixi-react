@@ -1,54 +1,75 @@
-import * as PIXI from 'pixi.js'
+import React from 'react'
+import renderer from 'react-test-renderer'
 import { withFilters } from '../src/hoc/withFilters'
-import { createElement, TYPES, TYPES_INJECTED, PixiComponent } from '../src/utils/element'
 import { Container } from '../src'
 
 class BlurFilter {
-	constructor(blur, quality) {
-        this.blur = blur;
-        this.quality = quality;
-    }
-} 
-class AlphaFilter{
-		constructor(alpha) {
-	        this.alpha = alpha;
-	    }
-} 
+  constructor(blur, quality) {
+    this.blur = blur
+    this.quality = quality
+  }
+}
+
+class AlphaFilter {
+  constructor(alpha) {
+    this.alpha = alpha
+  }
+}
+
+class ColorMatrixFilter {
+  constructor() {}
+  greyscale(scale) {
+    this.greyscaleAmount = scale
+  }
+}
 
 describe('withFilters', () => {
-  test('create the filter wrapper and pass to its component used as a container the filter instances and the rest of props', () => {
-    const props = { x: 100, y: 200 }
-    const filterizedContainer = withFilters(Container, [BlurFilter, AlphaFilter])(props)
-    expect(filterizedContainer.props.filters[0].constructor.name).toEqual('BlurFilter')
-    expect(filterizedContainer.props.filters[1].constructor.name).toEqual('AlphaFilter')
-    expect(filterizedContainer.props.x).toEqual(100)
-    expect(filterizedContainer.props.y).toEqual(200)
+  let Filters
+
+  beforeAll(() => {
+    Filters = withFilters(Container, { blurFilter: BlurFilter, alphaFilter: AlphaFilter })
   })
-  test('create the filter wrapper and pass to the apply prop all filter instances', () => {
-    let filters = {}
-    const apply = (filterObj) => {
-      filters = filterObj;
-    }
-    const filterizedContainer = withFilters(Container, [BlurFilter, AlphaFilter])({
-      apply
+
+  test('create hoc and delegate wrapper component props', () => {
+    const r = renderer.create(<Filters scale={2} x={100} y={200} />).toJSON()
+    expect(r).toHaveProperty('type', 'Container')
+    expect(r).toHaveProperty('props.scale', 2)
+    expect(r).toHaveProperty('props.x', 100)
+    expect(r).toHaveProperty('props.y', 200)
+  })
+
+  test('set correct `filters` prop on wrapper component', () => {
+    const r = renderer.create(<Filters scale={2} x={100} y={100} />).toJSON()
+    expect(r).toHaveProperty('props.filters')
+    expect(r.props.filters).toHaveLength(2)
+    expect(r.props.filters[0]).toBeInstanceOf(BlurFilter)
+    expect(r.props.filters[1]).toBeInstanceOf(AlphaFilter)
+  })
+
+  test('update filter param based on prop key `blurFilter`', () => {
+    const r = renderer.create(<Filters alphaFilter={{ alpha: 0.5 }} blurFilter={{ blur: 10, quality: 5 }} />).toJSON()
+    expect(r.props.filters[0]).toHaveProperty('blur', 10)
+    expect(r.props.filters[0]).toHaveProperty('quality', 5)
+    expect(r.props.filters[1]).toHaveProperty('alpha', 0.5)
+  })
+
+  test('use `apply` prop to do custom filter logic', () => {
+    Filters = withFilters(Container, {
+      blurFilter: BlurFilter,
+      colorMatrixFilter: ColorMatrixFilter,
     })
-    expect(filters.blurFilter.constructor.name).toEqual('BlurFilter')
-    expect(filters.alphaFilter.constructor.name).toEqual('AlphaFilter')
-  })
 
-  test('create the filter wrapper with one filter only and setting its properties', () => {
-    const props = { blur: 10, quality: 5 }
-    const filterizedContainer = withFilters(Container, [BlurFilter])(props)
-    expect(filterizedContainer.props.filters[0].blur).toEqual(10)
-    expect(filterizedContainer.props.filters[0].quality).toEqual(5)
-  })
+    const r = renderer
+      .create(
+        <Filters
+          blurFilter={{ blur: 10, quality: 5 }}
+          apply={({ colorMatrixFilter }) => {
+            colorMatrixFilter.greyscale(2)
+          }}
+        />
+      )
+      .toJSON()
 
-  test('create the filter wrapper with multiple filters setting properties for each of them', () => {
-    const props = { blurFilter: { blur: 10, quality: 5}, alphaFilter: {alpha: 0.5} }
-    const filterizedContainer = withFilters(Container, [BlurFilter, AlphaFilter])(props)
-    expect(filterizedContainer.props.filters[0].blur).toEqual(10)
-    expect(filterizedContainer.props.filters[0].quality).toEqual(5)
-    expect(filterizedContainer.props.filters[1].alpha).toEqual(0.5)
+    expect(r.props.filters[1]).toHaveProperty('greyscaleAmount', 2)
   })
-
 })

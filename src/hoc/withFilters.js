@@ -1,42 +1,49 @@
-import React from 'react'
+import React, { useMemo, useRef } from 'react'
 import PropTypes from 'prop-types'
-import { Filter as PixiFilter } from 'pixi.js'
-import { isFunction, lcFirst } from '../helpers'
+import { hasKey, isFunction, not } from '../helpers'
+import invariant from 'fbjs/lib/invariant'
 
-export const withFilters = (WrappedComponent, filters) => {
-  const filterWrapper = ({ children = [], apply, ...props }) => {
-    const filterObj = {}
-    const arrayOfFilter = filters.constructor === Array ? filters : [filters]
-    const isMultiFilter = arrayOfFilter.length > 1
-    const appliedFilters = arrayOfFilter
-      .filter(f => isFunction(f))
-      .map(f => {
-        const filterName = f.name
-        const filterPropName = lcFirst(filterName)
-        const filter = !filterObj[filterPropName] ? new f() : filterObj[filterPropName]
-        filterObj[filterPropName] = filter
-        const allFilterProps = props[filterPropName] && isMultiFilter ? props[filterPropName] : props
-        Object.keys(allFilterProps).forEach(function(o) {
-          filter[o] = allFilterProps[o]
-        })
+export const withFilters = (WrapperComponent, filters) => {
+  invariant(typeof filters === 'object', 'Second argument needs to be an indexed object with { prop: Filter }')
 
-        return filter
-      })
-    if (apply && typeof apply === 'function') {
-      apply.call(WrappedComponent, filterObj)
+  const keys = Object.keys(filters)
+
+  const Wrapper = ({ children, apply, ...props }) => {
+    // create filters
+    const filterList = useRef(useMemo(() => keys.map(prop => new filters[prop]()), [keys]))
+
+    const filterObj = useMemo(() => {
+      return keys.reduce((all, c, i) => ({ ...all, [c]: filterList.current[i] }), {})
+    }, [keys])
+
+    // get rest props
+    const restProps = useMemo(() => {
+      return Object.keys(props)
+        .filter(not(hasKey(keys)))
+        .reduce((all, c) => ({ ...all, [c]: props[c] }), {})
+    }, [props, keys])
+
+    // update filter params
+    keys.forEach((k, i) => Object.assign(filterList.current[i], props[k]))
+
+    // use apply ?
+    if (apply && isFunction(apply)) {
+      apply.call(WrapperComponent, filterObj)
     }
+
     return (
-      <WrappedComponent name="FilterWrapper" filters={appliedFilters} {...props}>
+      <WrapperComponent {...restProps} filters={filterList.current}>
         {children}
-      </WrappedComponent>
+      </WrapperComponent>
     )
   }
 
-  filterWrapper.displayName = 'FilterWrapper'
-  filterWrapper.propTypes = {
+  Wrapper.displayName = 'FilterWrapper'
+
+  Wrapper.propTypes = {
     children: PropTypes.node,
     apply: PropTypes.func,
   }
 
-  return filterWrapper
+  return Wrapper
 }

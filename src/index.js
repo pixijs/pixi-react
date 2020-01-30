@@ -5,8 +5,6 @@ import { PixiFiber } from './reconciler'
 import { Context as AppContext, AppProvider, AppConsumer, withPixiApp } from './stage/provider'
 import { useTick, useApp } from './hooks'
 import { withFilters } from './hoc'
-import { eventHandlers } from './utils/pixi'
-import { applyDefaultProps } from './utils/props'
 
 /**
  * -------------------------------------------
@@ -18,8 +16,6 @@ export { render, Stage, withPixiApp, PixiComponent, PixiFiber }
 export { AppProvider, AppConsumer, AppContext }
 export { useTick, useApp }
 export { withFilters }
-export { applyDefaultProps }
-export { eventHandlers }
 
 export const BitmapText = TYPES.BitmapText
 export const Container = TYPES.Container

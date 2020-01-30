@@ -1,7 +1,6 @@
 import invariant from 'fbjs/lib/invariant'
-import idx from 'idx'
-import { applyDefaultProps } from './props'
 import * as components from '../components'
+import '../components/DisplayObject'
 
 /**
  * Available tag types
@@ -44,7 +43,6 @@ export function createElement(type, props = {}, root = null) {
   const fn = ELEMENTS[type]
 
   let instance
-  let applyProps
 
   if (typeof fn === 'function') {
     instance = fn(root, props)
@@ -57,17 +55,12 @@ export function createElement(type, props = {}, root = null) {
       instance = injected.create(props)
       instance.didMount = injected.didMount ? injected.didMount.bind(instance) : undefined
       instance.willUnmount = injected.willUnmount ? injected.willUnmount.bind(instance) : undefined
-      instance.applyProps = injected.applyProps ? injected.applyProps.bind(instance) : undefined
     }
   }
 
   // apply initial props!
   if (instance) {
-    applyProps = idx(instance, _ => _.applyProps)
-    if (typeof applyProps !== 'function') {
-      applyProps = applyDefaultProps
-    }
-    applyProps(instance, {}, props)
+    instance.reactApplyProps({}, props)
   }
 
   return instance

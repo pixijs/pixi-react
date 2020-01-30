@@ -2,12 +2,14 @@ import React from 'react'
 import * as PIXI from 'pixi.js'
 
 import hostconfig from '../src/reconciler/hostconfig'
-import {createElement} from "../src/utils/element";
-import { Text, Container, render, eventHandlers } from '../src'
+import { createElement } from '../src/utils/element';
+import { Text, Container, render } from '../src'
+import DisplayObject from '../src/components/DisplayObject'
 import { roots } from '../src/render'
 
 const CUSTOM_EVENT = 'customEvent'
 const NOT_CUSTOM_EVENT = 'notCustomEvent'
+const defaultEvents = DisplayObject.reactEventHandlers
 
 jest.mock('../src/reconciler/hostconfig')
 
@@ -41,8 +43,7 @@ describe('react', () => {
 
   afterEach(() => {
     roots.clear()
-    const index = eventHandlers.indexOf(CUSTOM_EVENT)
-    if (index >= 0) eventHandlers.splice(index, 1)
+    DisplayObject.reactEventHandlers = defaultEvents
   })
 
   describe('events', () => {
@@ -78,28 +79,33 @@ describe('react', () => {
       expect(onClick).toHaveBeenCalledTimes(1)
     })
 
-    test('custom events', () => {
-      let text
-      let onCustomEvent = jest.fn()
-      let onNotCustomEvent = jest.fn()
+    describe('custom events', () => {
+      test('add new event', () => {
+        let text
+        let onCustomEvent = jest.fn()
+        let onNotCustomEvent = jest.fn()
 
-      eventHandlers.push(CUSTOM_EVENT)
+        DisplayObject.reactEventHandlers = [
+          ...defaultEvents,
+          CUSTOM_EVENT,
+        ]
 
-      renderInContainer(<Text ref={c => (text = c)} {...{ [CUSTOM_EVENT]: onCustomEvent }} />)
+        renderInContainer(<Text ref={c => (text = c)} {...{ [CUSTOM_EVENT]: onCustomEvent }} />)
 
-      const customEvent = { type: CUSTOM_EVENT, data: 456 }
+        const customEvent = { type: CUSTOM_EVENT, data: 456 }
 
-      text.emit(CUSTOM_EVENT, customEvent)
+        text.emit(CUSTOM_EVENT, customEvent)
 
-      expect(text._eventsCount).toEqual(1)
-      expect(onCustomEvent).toHaveBeenCalledTimes(1)
-      expect(onCustomEvent).toHaveBeenCalledWith(customEvent)
+        expect(text._eventsCount).toEqual(1)
+        expect(onCustomEvent).toHaveBeenCalledTimes(1)
+        expect(onCustomEvent).toHaveBeenCalledWith(customEvent)
 
-      renderInContainer(<Text ref={c => (text = c)} {...{ [NOT_CUSTOM_EVENT]: onNotCustomEvent }} />)
+        renderInContainer(<Text ref={c => (text = c)} {...{ [NOT_CUSTOM_EVENT]: onNotCustomEvent }} />)
 
-      text.emit(NOT_CUSTOM_EVENT, { type: NOT_CUSTOM_EVENT, data: 789 })
+        text.emit(NOT_CUSTOM_EVENT, { type: NOT_CUSTOM_EVENT, data: 789 })
 
-      expect(onNotCustomEvent).toHaveBeenCalledTimes(0)
+        expect(onNotCustomEvent).toHaveBeenCalledTimes(0)
+      })
     })
   })
 })

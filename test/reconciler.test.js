@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react'
 import * as PIXI from 'pixi.js'
+import DisplayObject from '../src/components/DisplayObject'
 import { render, roots } from '../src/render'
 import hostconfig from '../src/reconciler/hostconfig'
 import { createElement } from '../src/utils/element'
@@ -83,8 +84,8 @@ describe('reconciler', () => {
       )
 
       const m = getCall(spies.appendInitialChild)(0)
+      const [container] = m.args
 
-      const container = m.args[0]
       expect(container.x).toEqual(10)
       expect(container.y).toEqual(100)
       expect(container.pivot.x).toEqual(0.5)
@@ -212,9 +213,14 @@ describe('reconciler', () => {
         hs.createInstance = (...args) => {
           const ins = createElement(...args)
 
+          const { reactApplyProps } = ins;
+
           ins.didMount = (...args) => didMount(...args)
           ins.willUnmount = (...args) => willUnmount(...args)
-          ins.applyProps = (...args) => applyProps(...args)
+          ins.reactApplyProps = function(...args) {
+            applyProps(...args)
+            return reactApplyProps.apply(this, args)
+          }
 
           return ins
         }
@@ -260,7 +266,7 @@ describe('reconciler', () => {
       expect(m[1].root).toBeUndefined()
     })
 
-    test('applyProps', () => {
+    test('DisplayObject.prototype.reactApplyProps', () => {
       renderInContainer(
         <Container>
           <Text />
@@ -277,9 +283,8 @@ describe('reconciler', () => {
 
       const m = getCall(applyProps)
 
-      expect(m(0).args[0]).toBeInstanceOf(PIXI.Text)
-      expect(m(0).args[1]).toEqual({})
-      expect(m(0).args[2]).toEqual({ x: 100 })
+      expect(m(0).args[0]).toEqual({})
+      expect(m(0).args[1]).toEqual({ x: 100 })
     })
   })
 

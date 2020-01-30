@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js'
+import DisplayObject from '../src/components/DisplayObject'
 import { parsePoint, isPointType, eventHandlers, setValue } from '../src/utils/pixi'
 
 const noop = () => {}
@@ -73,12 +74,6 @@ describe('pixi', () => {
     })
   })
 
-  describe('eventHandlers', () => {
-    test('available event handlers', () => {
-      expect(eventHandlers).toMatchSnapshot()
-    })
-  })
-
   describe('setValue', () => {
     let instance
 
@@ -87,29 +82,29 @@ describe('pixi', () => {
     })
 
     test('copy point data', () => {
-      setValue(instance, 'pivot', new PIXI.Point(100, 200))
+      DisplayObject.prototype._reactSetValue.call(instance, 'pivot', new PIXI.Point(100, 200))
       expect(instance.pivot.x).toEqual(100)
       expect(instance.pivot.y).toEqual(200)
     })
 
     test('parse point', () => {
-      setValue(instance, 'pivot', [200, 200])
+      DisplayObject.prototype._reactSetValue.call(instance, 'pivot', [200, 200])
       expect(instance.pivot.x).toEqual(200)
       expect(instance.pivot.y).toEqual(200)
 
-      setValue(instance, 'pivot', '50, 50')
+      DisplayObject.prototype._reactSetValue.call(instance, 'pivot', '50, 50')
       expect(instance.pivot.x).toEqual(50)
       expect(instance.pivot.y).toEqual(50)
     })
 
     test('failed parse point', () => {
-      expect(() => setValue(instance, 'pivot', 'invalid')).toThrow()
+      expect(() => DisplayObject.prototype._reactSetValue.call(instance, 'pivot', 'invalid')).toThrow()
       expect(instance.pivot.x).toEqual(0)
       expect(instance.pivot.y).toEqual(0)
     })
 
     test('set value', () => {
-      setValue(instance, 'alpha', 0.5)
+      DisplayObject.prototype._reactSetValue.call(instance, 'alpha', 0.5)
       expect(instance.alpha).toEqual(0.5)
     })
   })

@@ -11,8 +11,9 @@
 import invariant from 'fbjs/lib/invariant'
 import performanceNow from 'performance-now'
 
+import DisplayObject from '../components/DisplayObject'
 import { createElement } from '../utils/element'
-import { CHILDREN, applyDefaultProps } from '../utils/props'
+import { CHILDREN } from '../utils/props'
 
 function appendChild(parent, child) {
   if (parent.addChild) {
@@ -259,11 +260,7 @@ const HostConfig = (eventsMap = {}) => {
     },
 
     commitUpdate(instance, updatePayload, type, oldProps, newProps) {
-      let applyProps = instance && instance.applyProps
-      if (typeof applyProps !== 'function') {
-        applyProps = applyDefaultProps
-      }
-      applyProps(instance, oldProps, newProps)
+      instance.reactApplyProps(oldProps, newProps)
       callEvent('commitUpdate')
     },
 

@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js'
+import DisplayObject from '../src/components/DisplayObject'
 import { createElement, TYPES, TYPES_INJECTED, PixiComponent } from '../src/utils/element'
 
 import { emptyTexture } from './__fixtures__/textures'
@@ -86,7 +87,7 @@ describe('createElement', () => {
   })
 })
 
-describe('element.applyProps', () => {
+describe('element.reactApplyProps', () => {
   let spy
 
   beforeAll(() => {
@@ -97,47 +98,47 @@ describe('element.applyProps', () => {
     spy.mockRestore()
   })
 
-  test('Sprite.applyProps exists', () => {
+  test('Sprite.reactApplyProps exists', () => {
     const element = createElement(TYPES.Sprite, { image: './image.png' })
-    expect(element).toHaveProperty('applyProps')
+    expect(element.__proto__).toHaveProperty('reactApplyProps')
     expect(spy).toHaveBeenCalledWith('./image.png')
   })
 
-  test('AnimatedSprite.applyProps with images prop exists', () => {
+  test('AnimatedSprite.reactApplyProps with images prop exists', () => {
     const element = createElement(TYPES.AnimatedSprite, { images: ['./image.png'] })
-    expect(element).toHaveProperty('applyProps')
+    expect(element.__proto__).toHaveProperty('reactApplyProps')
     expect(spy).lastCalledWith('./image.png')
   })
 
-  test('AnimatedSprite.applyProps with textures prop exists', () => {
+  test('AnimatedSprite.reactApplyProps with textures prop exists', () => {
     const element = createElement(TYPES.AnimatedSprite, { textures: [PIXI.Texture.from('./image.png')] })
-    expect(element).toHaveProperty('applyProps')
+    expect(element.__proto__).toHaveProperty('reactApplyProps')
     expect(spy).lastCalledWith('./image.png')
   })
 
-  test('Sprite.applyProps image', () => {
+  test('Sprite.reactApplyProps image', () => {
     const element = createElement(TYPES.Sprite, { image: './image.png' })
     expect(spy).lastCalledWith('./image.png')
 
-    element.applyProps(element, { image: './image.png' }, { image: './new-image.png' })
+    element.reactApplyProps({ image: './image.png' }, { image: './new-image.png' })
     expect(spy).lastCalledWith('./new-image.png')
   })
 
-  test('TilingSprite.applyProps exists', () => {
+  test('TilingSprite.reactApplyProps exists', () => {
     const element = createElement(TYPES.TilingSprite, { image: './image.png' })
-    expect(element).toHaveProperty('applyProps')
+    expect(element.__proto__).toHaveProperty('reactApplyProps')
     expect(spy).toHaveBeenCalledWith('./image.png')
   })
 
-  test('TilingSprite.applyProps image', () => {
+  test('TilingSprite.reactApplyProps image', () => {
     const element = createElement(TYPES.TilingSprite, { image: './image.png' })
     expect(spy).lastCalledWith('./image.png')
 
-    element.applyProps(element, { image: './image.png' }, { image: './new-image.png' })
+    element.reactApplyProps({ image: './image.png' }, { image: './new-image.png' })
     expect(spy).lastCalledWith('./new-image.png')
   })
 
-  test('SimpleRope.applyProps exists', () => {
+  test('SimpleRope.reactApplyProps exists', () => {
     const element = createElement(
       TYPES.SimpleRope,
       {
@@ -148,11 +149,11 @@ describe('element.applyProps', () => {
         ],
       },
     )
-    expect(element).toHaveProperty('applyProps')
+    expect(element.__proto__).toHaveProperty('reactApplyProps')
     expect(spy).toHaveBeenCalledWith('./image.png')
   })
 
-  test('SimpleRope.applyProps image', () => {
+  test('SimpleRope.reactApplyProps image', () => {
     const element = createElement(
       TYPES.SimpleRope,
       {
@@ -165,8 +166,7 @@ describe('element.applyProps', () => {
     )
     expect(spy).lastCalledWith('./image.png')
 
-    element.applyProps(
-      element,
+    element.reactApplyProps(
       { image: './image.png' },
       {
         image: './new-image.png',
@@ -179,49 +179,49 @@ describe('element.applyProps', () => {
     expect(spy).lastCalledWith('./new-image.png')
   })
 
-  test('NineSlicePlane.applyProps exists', () => {
+  test('NineSlicePlane.reactApplyProps exists', () => {
     const element = createElement(TYPES.NineSlicePlane, { image: './image.png' })
-    expect(element).toHaveProperty('applyProps')
+    expect(element.__proto__).toHaveProperty('reactApplyProps')
     expect(spy).toHaveBeenCalledWith('./image.png')
   })
 
-  test('NineSlicePlane.applyProps image', () => {
+  test('NineSlicePlane.reactApplyProps image', () => {
     const element = createElement(TYPES.NineSlicePlane, { image: './image.png' })
     expect(spy).lastCalledWith('./image.png')
 
-    element.applyProps(element, { image: './image.png' }, { image: './new-image.png' })
+    element.reactApplyProps({ image: './image.png' }, { image: './new-image.png' })
     expect(spy).lastCalledWith('./new-image.png')
   })
 
-  test('SimpleMesh.applyProps exists', () => {
+  test('SimpleMesh.reactApplyProps exists', () => {
     const element = createElement(TYPES.SimpleMesh, { image: './image.png' })
-    expect(element).toHaveProperty('applyProps')
+    expect(element.__proto__).toHaveProperty('reactApplyProps')
     expect(spy).toHaveBeenCalledWith('./image.png')
   })
 
-  test('SimpleMesh.applyProps image', () => {
+  test('SimpleMesh.reactApplyProps image', () => {
     const element = createElement(TYPES.SimpleMesh, { image: './image.png' })
     expect(spy).lastCalledWith('./image.png')
 
-    element.applyProps(element, { image: './image.png' }, { image: './new-image.png' })
+    element.reactApplyProps({ image: './image.png' }, { image: './new-image.png' })
     expect(spy).lastCalledWith('./new-image.png')
   })
 
-  test('Graphics.applyProps exists', () => {
+  test('Graphics.reactApplyProps exists', () => {
     const spy = jest.fn()
 
     const element = createElement(TYPES.Graphics, { draw: spy })
-    expect(element).toHaveProperty('applyProps')
+    expect(element.__proto__).toHaveProperty('reactApplyProps')
     expect(spy).toBeCalledWith(element)
   })
 
-  test('Graphics.applyProps draw', () => {
+  test('Graphics.reactApplyProps draw', () => {
     const spy = jest.fn()
 
     const element = createElement(TYPES.Graphics, { draw: spy })
     expect(spy).toHaveBeenCalledTimes(1)
 
-    element.applyProps(element, { draw: spy }, { draw: spy })
+    element.reactApplyProps({ draw: spy }, { draw: spy })
     expect(spy).toHaveBeenCalledTimes(1)
   })
 
@@ -231,11 +231,11 @@ describe('element.applyProps', () => {
     const props = { draw: draw1 }
     const nextProps = { draw: draw2 }
     const element = createElement(TYPES.Graphics, props)
-    element.applyProps(element, props, props)
-    element.applyProps(element, props, props)
+    element.reactApplyProps(props, props)
+    element.reactApplyProps(props, props)
     expect(draw1).toHaveBeenCalledTimes(1)
-    element.applyProps(element, props, nextProps)
-    element.applyProps(element, nextProps, nextProps)
+    element.reactApplyProps(props, nextProps)
+    element.reactApplyProps(nextProps, nextProps)
     expect(draw2).toHaveBeenCalledTimes(1)
   })
 
@@ -272,10 +272,11 @@ describe('PixiComponent', () => {
       create: jest.fn(() => new PIXI.Graphics()),
       didMount: jest.fn(),
       willUnmount: jest.fn(),
-      applyProps: jest.fn(function() {
-        scoped(this)
-      }),
     }
+
+    const spy = jest.spyOn(DisplayObject.prototype, 'reactApplyProps').mockImplementation(function() {
+      scoped(this)
+    })
 
     new PixiComponent('Rectangle', lifecycle)
 
@@ -284,11 +285,11 @@ describe('PixiComponent', () => {
 
     expect(element.didMount).toBeDefined()
     expect(element.willUnmount).toBeDefined()
-    expect(element.applyProps).toBeDefined()
+    expect(element.reactApplyProps).toBeDefined()
     expect(element).toBeInstanceOf(PIXI.Graphics)
+    expect(spy).toHaveBeenCalledTimes(1)
     expect(lifecycle.create).toHaveBeenCalledTimes(1)
     expect(lifecycle.create).toHaveBeenCalledWith(props)
-    expect(lifecycle.applyProps).toHaveBeenCalledTimes(1)
     expect(scoped).toHaveBeenCalledTimes(1)
     expect(scoped).toHaveBeenCalledWith(element)
   })
@@ -301,6 +302,6 @@ describe('PixiComponent', () => {
     const element = createElement('Rectangle')
     expect(element.didMount).toBeUndefined()
     expect(element.willUnmount).toBeUndefined()
-    expect(element.applyProps).toBeUndefined()
+    expect(element.reactApplyProps).toBeDefined()
   })
 })

@@ -1,18 +1,15 @@
-import { Graphics as PixiGraphics } from 'pixi.js'
-import { applyDefaultProps } from '../utils/props'
+import { Graphics as PixiGraphics, DisplayObject } from 'pixi.js'
 
-const Graphics = (root, props) => {
-  const g = new PixiGraphics()
-  g.applyProps = (instance, oldProps, newProps) => {
-    const { draw, ...props } = newProps
-    applyDefaultProps(instance, oldProps, props)
+const Graphics = (root, props) => new PixiGraphics()
 
-    if (oldProps.draw !== draw && typeof draw === 'function') {
-      draw.call(g, g)
-    }
+PixiGraphics.prototype.reactApplyProps = function(oldProps, newProps) {
+  const { draw, ...props } = newProps
+
+  DisplayObject.prototype.reactApplyProps.call(this, oldProps, props)
+
+  if (oldProps.draw !== draw && typeof draw === 'function') {
+    draw.call(this, this)
   }
-
-  return g
 }
 
 export default Graphics

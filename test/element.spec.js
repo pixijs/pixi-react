@@ -222,15 +222,21 @@ describe('element.applyProps', () => {
     expect(spy).toHaveBeenCalledTimes(1)
 
     element.applyProps(element, { draw: spy }, { draw: spy })
-    expect(spy).toHaveBeenCalledTimes(2)
+    expect(spy).toHaveBeenCalledTimes(1)
   })
 
   test('Graphics.applyProps draw prevented twice', () => {
-    const draw = jest.fn()
-    const props = { draw, preventRedraw: true }
+    const draw1 = jest.fn()
+    const draw2 = jest.fn()
+    const props = { draw: draw1 }
+    const nextProps = { draw: draw2 }
     const element = createElement(TYPES.Graphics, props)
     element.applyProps(element, props, props)
-    expect(draw).toHaveBeenCalledTimes(1)
+    element.applyProps(element, props, props)
+    expect(draw1).toHaveBeenCalledTimes(1)
+    element.applyProps(element, props, nextProps)
+    element.applyProps(element, nextProps, nextProps)
+    expect(draw2).toHaveBeenCalledTimes(1)
   })
 
 

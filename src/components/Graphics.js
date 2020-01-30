@@ -3,14 +3,12 @@ import { applyDefaultProps } from '../utils/props'
 
 const Graphics = (root, props) => {
   const g = new PixiGraphics()
-  let drawn = false
   g.applyProps = (instance, oldProps, newProps) => {
-    const { preventRedraw, draw, ...props } = newProps
+    const { draw, ...props } = newProps
     applyDefaultProps(instance, oldProps, props)
 
-    if (draw && typeof draw === 'function' && (!drawn || !preventRedraw)) {
+    if (oldProps.draw !== draw && typeof draw === 'function') {
       draw.call(g, g)
-      drawn = true
     }
   }
 

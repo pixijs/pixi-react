@@ -13,11 +13,11 @@ Write [PIXI](http://www.pixijs.com/) applications using React declarative style 
 
 ## Install
 
-    yarn add @inlet/react-pixi
+    yarn add pixi.js @inlet/react-pixi
 
 or
 
-    npm install @inlet/react-pixi --save
+    npm install pixi.js @inlet/react-pixi --save
 
 ## Usage
 

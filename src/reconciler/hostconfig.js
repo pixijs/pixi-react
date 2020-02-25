@@ -34,7 +34,7 @@ function removeChild(parent, child) {
 }
 
 function insertBefore(parent, child, beforeChild) {
-  invariant(child !== beforeChild, 'PixiFiber cannot insert node before itself')
+  invariant(child !== beforeChild, 'react-pixi: PixiFiber cannot insert node before itself')
 
   const childExists = parent.children.indexOf(child) !== -1
   const index = parent.getChildIndex(beforeChild)
@@ -145,7 +145,10 @@ export default {
   },
 
   createTextInstance(text, rootContainerInstance, internalInstanceHandler) {
-    invariant(false, 'PixiFiber does not support text instances. Use `<Text /> component` instead.')
+    invariant(
+      false,
+      'react-pixi: PixiFiber does not support text nodes as children of a Pixi component. To pass a string value to your component, use a property other than children. If you wish to display some text, you can use <Text text={string} /> instead.'
+    )
   },
 
   mountEventComponent() {

@@ -382,6 +382,11 @@ export const applyDefaultProps: <P extends object>(
  *   )
  * }
  */
-export const withFilters: <T extends { [key: string]: any }>(
-    WrappedComponent: React.ComponentType, filters?: Array<any>
-) => React.ComponentClass<Omit<Partial<T>, 'children'>>;
+export const withFilters: <
+  Component extends React.ComponentType<_ReactPixi.IContainer>,
+  Filters extends { [filterKey: string]: any }
+>(WrapperComponent: Component, filters: Filters) => React.ComponentType<
+  React.ComponentProps<Component> & Partial<{
+    [P in keyof Filters]: Partial<InstanceType<Filters[P]>>
+  }>
+>;

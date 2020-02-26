@@ -4,60 +4,46 @@ import * as React from 'react';
 // Reconciler API
 interface Reconciler<Instance, TextInstance, Container, PublicInstance> {
   updateContainerAtExpirationTime(
-      element: any,
-      container: any,
-      parentComponent: React.Component<any, any> | null | undefined,
-      expirationTime: any,
-      callback: () => void | null | undefined,
+    element: any,
+    container: any,
+    parentComponent: React.Component<any, any> | null | undefined,
+    expirationTime: any,
+    callback: () => void | null | undefined,
   ): any;
   createContainer(
-      containerInfo: any,
-      isConcurrent: boolean,
-      hydrate: boolean,
+    containerInfo: any,
+    isConcurrent: boolean,
+    hydrate: boolean,
   ): any;
   updateContainer(
-      element: any,
-      container: any,
-      parentComponent: React.Component<any, any> | null | undefined,
-      callback: () => void | null | undefined,
-  ): any;
-  flushRoot(root: any, expirationTime: any): void;
-  requestWork(root: any, expirationTime: any): void;
-  computeUniqueAsyncExpiration(): any;
-  batchedUpdates<A>(fn: () => A): A;
-  unbatchedUpdates<A>(fn: () => A): A;
-  deferredUpdates<A>(fn: () => A): A;
-  syncUpdates<A>(fn: () => A): A;
-  interactiveUpdates<A>(fn: () => A): A;
-  flushInteractiveUpdates(): void;
-  flushControlled(fn: () => any): void;
-  flushSync<A>(fn: () => A): A;
-  getPublicRootInstance(container: any): React.Component<any, any> | PublicInstance | null;
-  findHostInstance(component: object): PublicInstance | null;
-  findHostInstanceWithNoPortals(component: any): PublicInstance | null;
-  injectIntoDevTools(devToolsConfig: any): boolean;
+    element: any,
+    container: any,
+    parentComponent: React.Component<any, any> | null | undefined,
+    callback: () => void | null | undefined
+  ): any
+  flushRoot(root: any, expirationTime: any): void
+  requestWork(root: any, expirationTime: any): void
+  computeUniqueAsyncExpiration(): any
+  batchedUpdates<A>(fn: () => A): A
+  unbatchedUpdates<A>(fn: () => A): A
+  deferredUpdates<A>(fn: () => A): A
+  syncUpdates<A>(fn: () => A): A
+  interactiveUpdates<A>(fn: () => A): A
+  flushInteractiveUpdates(): void
+  flushControlled(fn: () => any): void
+  flushSync<A>(fn: () => A): A
+  getPublicRootInstance(container: any): React.Component<any, any> | PublicInstance | null
+  findHostInstance(component: object): PublicInstance | null
+  findHostInstanceWithNoPortals(component: any): PublicInstance | null
+  injectIntoDevTools(devToolsConfig: any): boolean
 }
 
 // private
 declare namespace _ReactPixi {
   type ApplicationOptions = ConstructorParameters<typeof PIXI.Application>[0];
-
-  type RequiredProperty<T, I extends keyof T> = Omit<T, I> &
-    {
-      [P in I]-?: T[I];
-    };
-
-  type PointLike =
-    | PIXI.Point
-    | PIXI.ObservablePoint
-    | [number, number]
-    | [number]
-    | number;
-
-  type WithPointLike<O extends object, T extends keyof any> = Omit<O, T> &
-    {
-      [P in T]?: PointLike;
-    };
+  type RequiredProperty<T, I extends keyof T> = Omit<T, I> & { [P in I]-?: T[I] };
+  type PointLike = PIXI.Point | PIXI.ObservablePoint | [number, number] | [number] | number;
+  type WithPointLike<O extends object, T extends keyof any> = Omit<O, T> & { [P in T]?: PointLike };
 
   type ImageSource = string | HTMLImageElement;
   type VideoSource = string | HTMLVideoElement;
@@ -98,16 +84,13 @@ declare namespace _ReactPixi {
   }
 
   type InteractionEvents = {
-    [P in PIXI.interaction.InteractionEventTypes]?: (
-      event: PIXI.interaction.InteractionEvent
-    ) => void;
+    [P in PIXI.interaction.InteractionEventTypes]?: (event: PIXI.interaction.InteractionEvent) => void
   };
 
   type Container<T extends { [key: string]: any }> = WithPointLike<
     Omit<Partial<T>, 'children'>,
     'position' | 'scale' | 'pivot'
-    > &
-    InteractionEvents;
+  > & InteractionEvents;
 
   type ISprite = WithPointLike<Container<PIXI.Sprite>, 'anchor'> & WithSource;
   type IText = WithPointLike<Container<PIXI.Text>, 'anchor'>;
@@ -136,6 +119,7 @@ declare namespace _ReactPixi {
      */
     preventRedraw?: boolean;
   };
+
   type IBitmapText = Container<WithPointLike<PIXI.BitmapText, 'anchor'>> & {
     /**
      * Set the style object
@@ -146,22 +130,28 @@ declare namespace _ReactPixi {
      */
     style?: ConstructorParameters<typeof PIXI.BitmapText>[1];
   };
+
   type INineSlicePlane = Container<PIXI.NineSlicePlane> & WithSource;
+
   type IParticleContainer = Container<PIXI.ParticleContainer> & {
     maxSize?: ConstructorParameters<typeof PIXI.ParticleContainer>[0];
     properties?: ConstructorParameters<typeof PIXI.ParticleContainer>[1];
     batchSize?: ConstructorParameters<typeof PIXI.ParticleContainer>[2];
     autoResize?: ConstructorParameters<typeof PIXI.ParticleContainer>[3];
   };
+
   type ITilingSprite = RequiredProperty<
     Container<WithPointLike<PIXI.TilingSprite, 'tileScale' | 'tilePosition'>> & WithSource,
     'tilePosition'
-    >;
+  >;
+
   type ISimpleRope = Container<PIXI.SimpleRope> & WithSource;
+
   type ISimpleMesh = Container<PIXI.SimpleMesh> & WithSource & {
     uvs?: ConstructorParameters<typeof PIXI.SimpleMesh>[2];
     indices?: ConstructorParameters<typeof PIXI.SimpleMesh>[3];
   };
+
   type IStage = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
     /**
      * Width of the Stage and canvas
@@ -212,10 +202,7 @@ declare namespace _ReactPixi {
     onUnmount?(app: PIXI.Application): void;
   };
 
-  interface ICustomComponent<
-    P extends { [key: string]: any },
-    PixiInstance extends PIXI.DisplayObject
-    > {
+  interface ICustomComponent<P extends { [key: string]: any }, PixiInstance extends PIXI.DisplayObject> {
     /**
      * Create the PIXI instance
      * The component is created during React reconciliation.
@@ -251,11 +238,7 @@ declare namespace _ReactPixi {
      * @param oldProps
      * @param newProps
      */
-    applyProps?(
-      instance: PixiInstance,
-      oldProps: Readonly<P>,
-      newProps: Readonly<P>
-    ): void;
+    applyProps?(instance: PixiInstance, oldProps: Readonly<P>, newProps: Readonly<P>): void;
   }
 }
 
@@ -273,7 +256,7 @@ export class SimpleMesh extends React.Component<_ReactPixi.ISimpleMesh> {}
 
 // renderer
 export const render: (
-  element: React.ReactElement<any> | Array<React.ReactElement<any>> | React.Factory<any>,
+  element: React.ReactElement | React.ReactElement[] | React.Factory<any>,
   container: PIXI.Container,
   callback?: (...args: any) => void
 ) => any;
@@ -381,9 +364,8 @@ export const applyDefaultProps: <P extends object>(
 ) => void;
 
 /**
- * High Order Component handy for creating a wrapper one,
- * which applies one or more filters to its children
-
+ * Create a filter wrapper to easily facilitate filter arguments as props
+ * in a declarative way.
  *
  * @example
  *

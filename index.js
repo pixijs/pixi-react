@@ -1,1 +1,5 @@
-module.exports = require(`./dist/react-pixi.cjs${process.env.NODE_ENV === 'development' ? '-dev' : ''}`)
+if (process.env.NODE_ENV === 'development') {
+  module.exports = require('./dist/react-pixi.cjs-dev')
+} else {
+  module.exports = require('./dist/react-pixi.cjs')
+}

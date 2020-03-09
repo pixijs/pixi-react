@@ -3,22 +3,21 @@ import { getTextureFromProps, applyDefaultProps } from '../utils/props'
 
 const AnimatedSprite = (root, props) => {
   const { textures, images, autoUpdate, isPlaying = true, initialFrame } = props
-  const makeTexture = textures => {
-    return textures.map(texture => {
-      return getTextureFromProps('AnimatedSprite', {
-        texture,
-      })
-    })
-  }
+  const makeTexture = textures => textures.map(texture => getTextureFromProps('AnimatedSprite', { texture }))
+
   const animatedSprite = images ? PixiAnimatedSprite.fromImages(images) : new PixiAnimatedSprite(makeTexture(textures))
   animatedSprite[isPlaying ? 'gotoAndPlay' : 'gotoAndStop'](initialFrame || 0)
   animatedSprite.applyProps = (instance, oldProps, newProps) => {
-    const { textures, ...props } = newProps
-    const { isPlaying, initialFrame } = props
+    const { textures, isPlaying, initialFrame, ...props } = newProps
+
     applyDefaultProps(instance, oldProps, props)
+
     if (textures && oldProps['textures'] !== textures) {
       instance.textures = makeTexture(textures)
-      animatedSprite[isPlaying ? 'gotoAndPlay' : 'gotoAndStop'](initialFrame || 0)
+    }
+
+    if (isPlaying !== oldProps.isPlaying) {
+      animatedSprite[isPlaying ? 'gotoAndPlay' : 'gotoAndStop'](animatedSprite.currentFrame || 0)
     }
   }
 

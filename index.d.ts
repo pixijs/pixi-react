@@ -152,6 +152,12 @@ declare namespace _ReactPixi {
     indices?: ConstructorParameters<typeof PIXI.SimpleMesh>[3];
   };
 
+  type IAnimatedSprite = Container<PIXI.AnimatedSprite> & {
+    initialFrame?: number;
+    images?: string[];
+    isPlaying?: boolean;
+  };
+
   type IStage = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
     /**
      * Width of the Stage and canvas
@@ -253,6 +259,7 @@ export class ParticleContainer extends React.Component<_ReactPixi.IParticleConta
 export class TilingSprite extends React.Component<_ReactPixi.ITilingSprite> {}
 export class SimpleRope extends React.Component<_ReactPixi.ISimpleRope> {}
 export class SimpleMesh extends React.Component<_ReactPixi.ISimpleMesh> {}
+export class AnimatedSprite extends React.Component<_ReactPixi.IAnimatedSprite> {}
 
 // renderer
 export const render: (

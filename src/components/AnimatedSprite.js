@@ -17,7 +17,8 @@ const AnimatedSprite = (root, props) => {
     }
 
     if (isPlaying !== oldProps.isPlaying) {
-      animatedSprite[isPlaying ? 'gotoAndPlay' : 'gotoAndStop'](animatedSprite.currentFrame || 0)
+      const frame = typeof initialFrame === 'number' ? initialFrame : animatedSprite.currentFrame || 0
+      animatedSprite[isPlaying ? 'gotoAndPlay' : 'gotoAndStop'](frame)
     }
   }
 

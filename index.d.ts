@@ -81,7 +81,7 @@ declare namespace _ReactPixi {
     [P in PIXI.interaction.InteractionEventTypes]?: (event: PIXI.interaction.InteractionEvent) => void;
   };
 
-  type P = 'position' | 'scale' | 'pivot' | 'anchor';
+  type P = 'position' | 'scale' | 'pivot' | 'anchor' | 'skew';
 
   type Container<T extends PIXI.DisplayObject> = Partial<Omit<T, 'children' | P>> &
     Partial<WithPointLike<P>> &

@@ -16,7 +16,7 @@ const AnimatedSprite = (root, props) => {
       instance.textures = makeTexture(textures)
     }
 
-    if (isPlaying !== oldProps.isPlaying) {
+    if (isPlaying !== oldProps.isPlaying || initialFrame !== oldProps.initialFrame) {
       const frame = typeof initialFrame === 'number' ? initialFrame : animatedSprite.currentFrame || 0
       animatedSprite[isPlaying ? 'gotoAndPlay' : 'gotoAndStop'](frame)
     }

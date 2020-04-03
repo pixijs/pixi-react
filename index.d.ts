@@ -87,6 +87,8 @@ declare namespace _ReactPixi {
     Partial<WithPointLike<P>> &
     InteractionEvents;
 
+  type OverrideContainer<T extends PIXI.DisplayObject, P extends object> = Omit<Container<T>, keyof P> & P;
+
   type IContainer = Container<PIXI.Container>;
   type ISprite = Container<PIXI.Sprite> & WithSource;
   type IText = Container<PIXI.Text> & WithSource;
@@ -115,7 +117,8 @@ declare namespace _ReactPixi {
     preventRedraw?: boolean;
   };
 
-  type IBitmapText = Container<PIXI.BitmapText> & {
+
+  type IBitmapText = OverrideContainer<PIXI.BitmapText, {
     /**
      * Set the style object
      *
@@ -124,35 +127,32 @@ declare namespace _ReactPixi {
      * style={{ font: '50px Desyrel' }}
      */
     style?: ConstructorParameters<typeof PIXI.BitmapText>[1];
-  };
+  }>;
 
-  type INineSlicePlane = Container<PIXI.NineSlicePlane> & WithSource;
-  type IParticleContainer = Container<PIXI.ParticleContainer> & {
+  type INineSlicePlane = OverrideContainer<PIXI.NineSlicePlane, WithSource>;
+  type IParticleContainer = OverrideContainer<PIXI.ParticleContainer, {
     maxSize?: ConstructorParameters<typeof PIXI.ParticleContainer>[0];
     properties?: ConstructorParameters<typeof PIXI.ParticleContainer>[1];
     batchSize?: ConstructorParameters<typeof PIXI.ParticleContainer>[2];
     autoResize?: ConstructorParameters<typeof PIXI.ParticleContainer>[3];
-  };
+  }>;
 
-  type ITilingSprite = Container<PIXI.TilingSprite> &
-    WithSource & {
-      tileScale?: PointLike;
-      tilePosition: PointLike;
-    };
+  type ITilingSprite = OverrideContainer<PIXI.TilingSprite, WithSource & {
+    tileScale?: PointLike;
+    tilePosition: PointLike;
+  }>;
 
-  type ISimpleRope = Container<PIXI.SimpleRope> & WithSource;
-  type ISimpleMesh = Container<PIXI.SimpleMesh> &
-    WithSource & {
-      uvs?: ConstructorParameters<typeof PIXI.SimpleMesh>[2];
-      indices?: ConstructorParameters<typeof PIXI.SimpleMesh>[3];
-    };
+  type ISimpleRope = OverrideContainer<PIXI.SimpleRope, WithSource>;
+  type ISimpleMesh = OverrideContainer<PIXI.SimpleMesh, WithSource & {
+    uvs?: ConstructorParameters<typeof PIXI.SimpleMesh>[2];
+    indices?: ConstructorParameters<typeof PIXI.SimpleMesh>[3];
+  }>;
 
-  type IAnimatedSprite = Container<PIXI.AnimatedSprite> &
-    WithSource & {
-      isPlaying: boolean;
-      images?: string[];
-      initialFrame?: number;
-    };
+  type IAnimatedSprite = OverrideContainer<PIXI.AnimatedSprite, WithSource & {
+    isPlaying: boolean;
+    images?: string[];
+    initialFrame?: number;
+  }>;
 
   type IStage = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
     /**

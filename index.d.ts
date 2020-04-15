@@ -396,3 +396,18 @@ export const withFilters: <
 ) => React.ComponentType<React.ComponentProps<Component> & Partial<{
   [P in keyof Filters]: Partial<InstanceType<Filters[P]>>;
 }>>;
+
+/**
+ * Get the component instance ref
+ *
+ * @example
+ *
+ * const App = () => {
+ *   const containerRef = React.useRef<PixiRef<typeof Container>>(null);
+ *
+ *   return <Container ref={containerRef} />
+ * };
+ */
+export type PixiRef <
+  T extends React.ComponentType<React.RefAttributes<any>>
+  > = React.ComponentProps<T>["ref"] extends React.Ref<infer R> ? R : never;

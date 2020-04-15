@@ -42,6 +42,12 @@ declare namespace _ReactPixi {
   type VideoSource = string | HTMLVideoElement;
   type AnySource = number | ImageSource | VideoSource | HTMLCanvasElement | PIXI.Texture;
   type WithPointLike<T extends keyof any> = { [P in T]: PointLike };
+  type RTuple<T extends any[]> = ((...b: T) => void) extends
+    (a: any, ...b: infer I) => void ? I : [];
+  type ChildlessFC<T = {}> = (
+    (props: T, ...args: RTuple<Parameters<React.FC>>) => ReturnType<React.FC>) & {
+    [P in keyof React.FC]: React.FC[P]
+  };
 
   interface WithSource {
     /**
@@ -85,7 +91,7 @@ declare namespace _ReactPixi {
 
   type Container<T extends PIXI.DisplayObject> = Partial<Omit<T, 'children' | P>> &
     Partial<WithPointLike<P>> &
-    InteractionEvents;
+    InteractionEvents & { ref?: React.Ref<T> };
 
   type OverrideContainer<T extends PIXI.DisplayObject, P extends object> = Omit<Container<T>, keyof P> & P;
 
@@ -245,17 +251,17 @@ declare namespace _ReactPixi {
 }
 
 // components
-export class Sprite extends React.Component<_ReactPixi.ISprite> {}
-export class Text extends React.Component<_ReactPixi.IText> {}
-export class Container extends React.Component<_ReactPixi.IContainer> {}
-export class Graphics extends React.Component<_ReactPixi.IGraphics> {}
-export class BitmapText extends React.Component<_ReactPixi.IBitmapText> {}
-export class NineSlicePlane extends React.Component<_ReactPixi.INineSlicePlane> {}
-export class ParticleContainer extends React.Component<_ReactPixi.IParticleContainer> {}
-export class TilingSprite extends React.Component<_ReactPixi.ITilingSprite> {}
-export class SimpleRope extends React.Component<_ReactPixi.ISimpleRope> {}
-export class SimpleMesh extends React.Component<_ReactPixi.ISimpleMesh> {}
-export class AnimatedSprite extends React.Component<_ReactPixi.IAnimatedSprite> {}
+export const Text: _ReactPixi.ChildlessFC<_ReactPixi.IText>;
+export const Sprite: _ReactPixi.ChildlessFC<_ReactPixi.ISprite>;
+export const Container: React.FC<_ReactPixi.IContainer>;
+export const Graphics: _ReactPixi.ChildlessFC<_ReactPixi.IGraphics>;
+export const BitmapText: _ReactPixi.ChildlessFC<_ReactPixi.IBitmapText>;
+export const NineSlicePlane: _ReactPixi.ChildlessFC<_ReactPixi.INineSlicePlane>;
+export const ParticleContainer:_ReactPixi.ChildlessFC<_ReactPixi.IParticleContainer>;
+export const TilingSprite: _ReactPixi.ChildlessFC<_ReactPixi.ITilingSprite>;
+export const SimpleRope: _ReactPixi.ChildlessFC<_ReactPixi.ISimpleRope>;
+export const SimpleMesh:_ReactPixi.ChildlessFC<_ReactPixi.ISimpleMesh>;
+export const AnimatedSprite: _ReactPixi.ChildlessFC<_ReactPixi.IAnimatedSprite>;
 
 // renderer
 export const render: (
@@ -384,14 +390,9 @@ export const applyDefaultProps: <P extends object>(instance: PIXI.DisplayObject,
 export const withFilters: <
   Component extends React.ComponentType<_ReactPixi.IContainer>,
   Filters extends { [filterKey: string]: any }
->(
+  >(
   WrapperComponent: Component,
   filters: Filters
-) => React.ComponentType<
-  React.ComponentProps<Component> &
-    Partial<
-      {
-        [P in keyof Filters]: Partial<InstanceType<Filters[P]>>;
-      }
-    >
->;
+) => React.ComponentType<React.ComponentProps<Component> & Partial<{
+  [P in keyof Filters]: Partial<InstanceType<Filters[P]>>;
+}>>;

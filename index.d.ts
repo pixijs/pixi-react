@@ -42,12 +42,11 @@ declare namespace _ReactPixi {
   type VideoSource = string | HTMLVideoElement;
   type AnySource = number | ImageSource | VideoSource | HTMLCanvasElement | PIXI.Texture;
   type WithPointLike<T extends keyof any> = { [P in T]: PointLike };
-  type RTuple<T extends any[]> = ((...b: T) => void) extends
-    (a: any, ...b: infer I) => void ? I : [];
-  type ChildlessFC<T = {}> = (
-    (props: T, ...args: RTuple<Parameters<React.FC>>) => ReturnType<React.FC>) & {
-    [P in keyof React.FC]: React.FC[P]
-  };
+  type RTuple<T extends any[]> = ((...b: T) => void) extends (a: any, ...b: infer I) => void ? I : [];
+  type ChildlessFC<T = {}> = ((props: T, ...args: RTuple<Parameters<React.FC>>) => ReturnType<React.FC>) &
+    {
+      [P in keyof React.FC]: React.FC[P];
+    };
 
   interface WithSource {
     /**
@@ -123,42 +122,56 @@ declare namespace _ReactPixi {
     preventRedraw?: boolean;
   };
 
-
-  type IBitmapText = OverrideContainer<PIXI.BitmapText, {
-    /**
-     * Set the style object
-     *
-     * @example
-     *
-     * style={{ font: '50px Desyrel' }}
-     */
-    style?: ConstructorParameters<typeof PIXI.BitmapText>[1];
-  }>;
+  type IBitmapText = OverrideContainer<
+    PIXI.BitmapText,
+    {
+      /**
+       * Set the style object
+       *
+       * @example
+       *
+       * style={{ font: '50px Desyrel' }}
+       */
+      style?: ConstructorParameters<typeof PIXI.BitmapText>[1];
+    }
+  >;
 
   type INineSlicePlane = OverrideContainer<PIXI.NineSlicePlane, WithSource>;
-  type IParticleContainer = OverrideContainer<PIXI.ParticleContainer, {
-    maxSize?: ConstructorParameters<typeof PIXI.ParticleContainer>[0];
-    properties?: ConstructorParameters<typeof PIXI.ParticleContainer>[1];
-    batchSize?: ConstructorParameters<typeof PIXI.ParticleContainer>[2];
-    autoResize?: ConstructorParameters<typeof PIXI.ParticleContainer>[3];
-  }>;
+  type IParticleContainer = OverrideContainer<
+    PIXI.ParticleContainer,
+    {
+      maxSize?: ConstructorParameters<typeof PIXI.ParticleContainer>[0];
+      properties?: ConstructorParameters<typeof PIXI.ParticleContainer>[1];
+      batchSize?: ConstructorParameters<typeof PIXI.ParticleContainer>[2];
+      autoResize?: ConstructorParameters<typeof PIXI.ParticleContainer>[3];
+    }
+  >;
 
-  type ITilingSprite = OverrideContainer<PIXI.TilingSprite, WithSource & {
-    tileScale?: PointLike;
-    tilePosition: PointLike;
-  }>;
+  type ITilingSprite = OverrideContainer<
+    PIXI.TilingSprite,
+    WithSource & {
+      tileScale?: PointLike;
+      tilePosition: PointLike;
+    }
+  >;
 
   type ISimpleRope = OverrideContainer<PIXI.SimpleRope, WithSource>;
-  type ISimpleMesh = OverrideContainer<PIXI.SimpleMesh, WithSource & {
-    uvs?: ConstructorParameters<typeof PIXI.SimpleMesh>[2];
-    indices?: ConstructorParameters<typeof PIXI.SimpleMesh>[3];
-  }>;
+  type ISimpleMesh = OverrideContainer<
+    PIXI.SimpleMesh,
+    WithSource & {
+      uvs?: ConstructorParameters<typeof PIXI.SimpleMesh>[2];
+      indices?: ConstructorParameters<typeof PIXI.SimpleMesh>[3];
+    }
+  >;
 
-  type IAnimatedSprite = OverrideContainer<PIXI.AnimatedSprite, WithSource & {
-    isPlaying: boolean;
-    images?: string[];
-    initialFrame?: number;
-  }>;
+  type IAnimatedSprite = OverrideContainer<
+    PIXI.AnimatedSprite,
+    WithSource & {
+      isPlaying: boolean;
+      images?: string[];
+      initialFrame?: number;
+    }
+  >;
 
   type IStage = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
     /**
@@ -260,7 +273,7 @@ export const NineSlicePlane: _ReactPixi.ChildlessFC<_ReactPixi.INineSlicePlane>;
 export const ParticleContainer: React.FC<_ReactPixi.IParticleContainer>;
 export const TilingSprite: _ReactPixi.ChildlessFC<_ReactPixi.ITilingSprite>;
 export const SimpleRope: _ReactPixi.ChildlessFC<_ReactPixi.ISimpleRope>;
-export const SimpleMesh:_ReactPixi.ChildlessFC<_ReactPixi.ISimpleMesh>;
+export const SimpleMesh: _ReactPixi.ChildlessFC<_ReactPixi.ISimpleMesh>;
 export const AnimatedSprite: _ReactPixi.ChildlessFC<_ReactPixi.IAnimatedSprite>;
 
 // renderer
@@ -390,12 +403,17 @@ export const applyDefaultProps: <P extends object>(instance: PIXI.DisplayObject,
 export const withFilters: <
   Component extends React.ComponentType<_ReactPixi.IContainer>,
   Filters extends { [filterKey: string]: any }
-  >(
+>(
   WrapperComponent: Component,
   filters: Filters
-) => React.ComponentType<React.ComponentProps<Component> & Partial<{
-  [P in keyof Filters]: Partial<InstanceType<Filters[P]>>;
-}>>;
+) => React.ComponentType<
+  React.ComponentProps<Component> &
+    Partial<
+      {
+        [P in keyof Filters]: Partial<InstanceType<Filters[P]>>;
+      }
+    >
+>;
 
 /**
  * Get the component instance ref
@@ -408,6 +426,9 @@ export const withFilters: <
  *   return <Container ref={containerRef} />
  * };
  */
-export type PixiRef <
-  T extends React.ComponentType<React.RefAttributes<any>>
-  > = React.ComponentProps<T>["ref"] extends React.Ref<infer R> ? R : never;
+export type PixiRef<T extends React.ComponentType<any>> = Extract<
+  React.ComponentProps<T>['ref'],
+  React.RefObject<any>
+> extends React.Ref<infer R>
+  ? R
+  : never;

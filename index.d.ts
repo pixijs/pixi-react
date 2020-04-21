@@ -97,7 +97,7 @@ declare namespace _ReactPixi {
   type IContainer = Container<PIXI.Container>;
   type ISprite = Container<PIXI.Sprite> & WithSource;
   type IText = Container<PIXI.Text> & WithSource;
-  type IGraphics = Container<PIXI.Sprite> & {
+  type IGraphics = Container<PIXI.Graphics> & {
     /**
      * Draw a graphic with imperative callback.
      *

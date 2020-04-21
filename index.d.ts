@@ -43,10 +43,6 @@ declare namespace _ReactPixi {
   type AnySource = number | ImageSource | VideoSource | HTMLCanvasElement | PIXI.Texture;
   type WithPointLike<T extends keyof any> = { [P in T]: PointLike };
   type RTuple<T extends any[]> = ((...b: T) => void) extends (a: any, ...b: infer I) => void ? I : [];
-  type ChildlessFC<T = {}> = ((props: T, ...args: RTuple<Parameters<React.FC>>) => ReturnType<React.FC>) &
-    {
-      [P in keyof React.FC]: React.FC[P];
-    };
 
   interface WithSource {
     /**

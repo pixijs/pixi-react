@@ -264,17 +264,17 @@ declare namespace _ReactPixi {
 }
 
 // components
-export const Text: _ReactPixi.ChildlessFC<_ReactPixi.IText>;
-export const Sprite: _ReactPixi.ChildlessFC<_ReactPixi.ISprite>;
+export const Text: React.FC<_ReactPixi.IText>;
+export const Sprite: React.FC<_ReactPixi.ISprite>;
 export const Container: React.FC<_ReactPixi.IContainer>;
-export const Graphics: _ReactPixi.ChildlessFC<_ReactPixi.IGraphics>;
-export const BitmapText: _ReactPixi.ChildlessFC<_ReactPixi.IBitmapText>;
-export const NineSlicePlane: _ReactPixi.ChildlessFC<_ReactPixi.INineSlicePlane>;
+export const Graphics: React.FC<_ReactPixi.IGraphics>;
+export const BitmapText: React.FC<_ReactPixi.IBitmapText>;
+export const NineSlicePlane: React.FC<_ReactPixi.INineSlicePlane>;
 export const ParticleContainer: React.FC<_ReactPixi.IParticleContainer>;
-export const TilingSprite: _ReactPixi.ChildlessFC<_ReactPixi.ITilingSprite>;
-export const SimpleRope: _ReactPixi.ChildlessFC<_ReactPixi.ISimpleRope>;
-export const SimpleMesh: _ReactPixi.ChildlessFC<_ReactPixi.ISimpleMesh>;
-export const AnimatedSprite: _ReactPixi.ChildlessFC<_ReactPixi.IAnimatedSprite>;
+export const TilingSprite: React.FC<_ReactPixi.ITilingSprite>;
+export const SimpleRope: React.FC<_ReactPixi.ISimpleRope>;
+export const SimpleMesh: React.FC<_ReactPixi.ISimpleMesh>;
+export const AnimatedSprite: React.FC<_ReactPixi.IAnimatedSprite>;
 
 // renderer
 export const render: (

@@ -36,13 +36,29 @@ interface Reconciler<Instance, TextInstance, Container, PublicInstance> {
 
 // private
 declare namespace _ReactPixi {
+  type FunctionTypes<T> = {
+    [P in keyof T]: ((...args: any) => any) extends T[P] ? P : never;
+  }[keyof T];
+
+  type IfEquals<X, Y, A=X, B=never> =
+    (<T>() => T extends X ? 1 : 2) extends
+      (<T>() => T extends Y ? 1 : 2) ? A : B;
+
+  type ReadonlyKeys<T> = {
+    [P in keyof T]-?: IfEquals<{ [Q in P]: T[P] }, { -readonly [Q in P]: T[P] }, never, P>
+  }[keyof T];
+
   type ApplicationOptions = ConstructorParameters<typeof PIXI.Application>[0];
-  type PointLike = PIXI.Point | PIXI.ObservablePoint | [number, number] | [number] | number;
+  type PointLike =
+    | PIXI.Point
+    | PIXI.ObservablePoint
+    | [number, number]
+    | [number]
+    | number;
   type ImageSource = string | HTMLImageElement;
   type VideoSource = string | HTMLVideoElement;
   type AnySource = number | ImageSource | VideoSource | HTMLCanvasElement | PIXI.Texture;
   type WithPointLike<T extends keyof any> = { [P in T]: PointLike };
-  type RTuple<T extends any[]> = ((...b: T) => void) extends (a: any, ...b: infer I) => void ? I : [];
 
   interface WithSource {
     /**
@@ -79,21 +95,22 @@ declare namespace _ReactPixi {
   }
 
   type InteractionEvents = {
-    [P in PIXI.interaction.InteractionEventTypes]?: (event: PIXI.interaction.InteractionEvent) => void;
+    [P in PIXI.interaction.InteractionEventTypes]?: (
+      event: PIXI.interaction.InteractionEvent
+    ) => void;
   };
 
   type P = 'position' | 'scale' | 'pivot' | 'anchor' | 'skew';
 
-  type Container<T extends PIXI.DisplayObject> = Partial<Omit<T, 'children' | P>> &
-    Partial<WithPointLike<P>> &
-    InteractionEvents & { ref?: React.Ref<T> };
-
-  type OverrideContainer<T extends PIXI.DisplayObject, P extends object> = Omit<Container<T>, keyof P> & P;
+  type Container<T extends PIXI.DisplayObject, U = {}> = Partial<
+    Omit<T, 'children' | P | FunctionTypes<T> | ReadonlyKeys<T> | keyof U> &
+    WithPointLike<P>
+    > & U & InteractionEvents & { ref?: React.Ref<T> };
 
   type IContainer = Container<PIXI.Container>;
-  type ISprite = Container<PIXI.Sprite> & WithSource;
-  type IText = Container<PIXI.Text> & WithSource;
-  type IGraphics = Container<PIXI.Graphics> & {
+  type ISprite = Container<PIXI.Sprite, WithSource>;
+  type IText = Container<PIXI.Text, WithSource>;
+  type IGraphics = Container<PIXI.Graphics, {
     /**
      * Draw a graphic with imperative callback.
      *
@@ -116,9 +133,9 @@ declare namespace _ReactPixi {
      * preventRedraw={true}
      */
     preventRedraw?: boolean;
-  };
+  }>;
 
-  type IBitmapText = OverrideContainer<
+  type IBitmapText = Container<
     PIXI.BitmapText,
     {
       /**
@@ -130,10 +147,10 @@ declare namespace _ReactPixi {
        */
       style?: ConstructorParameters<typeof PIXI.BitmapText>[1];
     }
-  >;
+    >;
 
-  type INineSlicePlane = OverrideContainer<PIXI.NineSlicePlane, WithSource>;
-  type IParticleContainer = OverrideContainer<
+  type INineSlicePlane = Container<PIXI.NineSlicePlane, WithSource>;
+  type IParticleContainer = Container<
     PIXI.ParticleContainer,
     {
       maxSize?: ConstructorParameters<typeof PIXI.ParticleContainer>[0];
@@ -141,33 +158,33 @@ declare namespace _ReactPixi {
       batchSize?: ConstructorParameters<typeof PIXI.ParticleContainer>[2];
       autoResize?: ConstructorParameters<typeof PIXI.ParticleContainer>[3];
     }
-  >;
+    >;
 
-  type ITilingSprite = OverrideContainer<
+  type ITilingSprite = Container<
     PIXI.TilingSprite,
     WithSource & {
-      tileScale?: PointLike;
-      tilePosition: PointLike;
-    }
-  >;
+    tileScale?: PointLike;
+    tilePosition: PointLike;
+  }
+    >;
 
-  type ISimpleRope = OverrideContainer<PIXI.SimpleRope, WithSource>;
-  type ISimpleMesh = OverrideContainer<
+  type ISimpleRope = Container<PIXI.SimpleRope, WithSource>;
+  type ISimpleMesh = Container<
     PIXI.SimpleMesh,
     WithSource & {
-      uvs?: ConstructorParameters<typeof PIXI.SimpleMesh>[2];
-      indices?: ConstructorParameters<typeof PIXI.SimpleMesh>[3];
-    }
-  >;
+    uvs?: ConstructorParameters<typeof PIXI.SimpleMesh>[2];
+    indices?: ConstructorParameters<typeof PIXI.SimpleMesh>[3];
+  }
+    >;
 
-  type IAnimatedSprite = OverrideContainer<
+  type IAnimatedSprite = Container<
     PIXI.AnimatedSprite,
     WithSource & {
-      isPlaying: boolean;
-      images?: string[];
-      initialFrame?: number;
-    }
-  >;
+    isPlaying: boolean;
+    images?: string[];
+    initialFrame?: number;
+  }
+    >;
 
   type IStage = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
     /**
@@ -219,7 +236,10 @@ declare namespace _ReactPixi {
     onUnmount?(app: PIXI.Application): void;
   };
 
-  interface ICustomComponent<P extends { [key: string]: any }, PixiInstance extends PIXI.DisplayObject> {
+  interface ICustomComponent<
+    P extends { [key: string]: any },
+    PixiInstance extends PIXI.DisplayObject
+    > {
     /**
      * Create the PIXI instance
      * The component is created during React reconciliation.
@@ -255,7 +275,11 @@ declare namespace _ReactPixi {
      * @param oldProps
      * @param newProps
      */
-    applyProps?(instance: PixiInstance, oldProps: Readonly<P>, newProps: Readonly<P>): void;
+    applyProps?(
+      instance: PixiInstance,
+      oldProps: Readonly<P>,
+      newProps: Readonly<P>
+    ): void;
   }
 }
 
@@ -375,7 +399,11 @@ export const withPixiApp: <P extends { app: PIXI.Application }>(
  *   }
  * });
  */
-export const applyDefaultProps: <P extends object>(instance: PIXI.DisplayObject, oldProps: P, newProps: P) => void;
+export const applyDefaultProps: <P extends object>(
+  instance: PIXI.DisplayObject,
+  oldProps: P,
+  newProps: P
+) => void;
 
 /**
  * Create a filter wrapper to easily facilitate filter arguments as props
@@ -399,17 +427,17 @@ export const applyDefaultProps: <P extends object>(instance: PIXI.DisplayObject,
 export const withFilters: <
   Component extends React.ComponentType<_ReactPixi.IContainer>,
   Filters extends { [filterKey: string]: any }
->(
+  >(
   WrapperComponent: Component,
   filters: Filters
 ) => React.ComponentType<
   React.ComponentProps<Component> &
-    Partial<
-      {
-        [P in keyof Filters]: Partial<InstanceType<Filters[P]>>;
-      }
+  Partial<
+    {
+      [P in keyof Filters]: Partial<InstanceType<Filters[P]>>;
+    }
     >
->;
+  >;
 
 /**
  * Get the component instance ref
@@ -425,6 +453,6 @@ export const withFilters: <
 export type PixiRef<T extends React.ComponentType<any>> = Extract<
   React.ComponentProps<T>['ref'],
   React.RefObject<any>
-> extends React.Ref<infer R>
+  > extends React.Ref<infer R>
   ? R
   : never;

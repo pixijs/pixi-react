@@ -13,8 +13,8 @@ export const withFilters = (WrapperComponent, filters) => {
     const filterList = useRef(
       useMemo(() => {
         return keys.map(prop => {
-          const hasArgs = props.hasOwnProperty(prop + 'Args');
-          return new filters[prop](...(hasArgs ? props[prop + 'Args'] : []))
+          const constructorArgs = props?.[prop]?.construct || []
+          return new filters[prop](...constructorArgs)
         })
       }, [keys])
     )

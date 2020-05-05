@@ -427,17 +427,17 @@ export const applyDefaultProps: <P extends object>(
 export const withFilters: <
   Component extends React.ComponentType<_ReactPixi.IContainer>,
   Filters extends { [filterKey: string]: any }
-  >(
+>(
   WrapperComponent: Component,
   filters: Filters
 ) => React.ComponentType<
   React.ComponentProps<Component> &
-  Partial<
-    {
-      [P in keyof Filters]: Partial<InstanceType<Filters[P]>>;
-    }
+    Partial<
+      {
+        [P in keyof Filters]: Partial<InstanceType<Filters[P]> & { construct: ConstructorParameters<Filters[P]> }>
+      }
     >
-  >;
+>
 
 /**
  * Get the component instance ref

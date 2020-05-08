@@ -103,7 +103,7 @@ declare namespace _ReactPixi {
   type P = 'position' | 'scale' | 'pivot' | 'anchor' | 'skew';
 
   type Container<T extends PIXI.DisplayObject, U = {}> = Partial<
-    Omit<T, 'children' | P | FunctionTypes<T> | ReadonlyKeys<T> | keyof U> &
+    Omit<T, 'children' | P | ReadonlyKeys<T> | keyof U> &
     WithPointLike<P>
     > & U & InteractionEvents & { ref?: React.Ref<T> };
 

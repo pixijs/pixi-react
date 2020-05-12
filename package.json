@@ -11,7 +11,7 @@
   "repository": "git+https://github.com/inlet/react-pixi.git",
   "scripts": {
     "docz:dev": "rimraf ./docs && docz dev",
-    "docz:build": "rimraf ./docs && docz build",
+    "docz:build": "rimraf ./docs && yarn build:prod && docz build",
     "eslint": "eslint .",
     "build:watch": "cross-env NODE_ENV=development rollup -c --watch",
     "build:dev": "cross-env NODE_ENV=development rollup -c",

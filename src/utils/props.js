@@ -1,4 +1,4 @@
-import isNil from 'lodash/isNil'
+import isNil from 'lodash.isnil'
 import invariant from 'fbjs/lib/invariant'
 import { Texture, DisplayObject } from 'pixi.js'
 import { eventHandlers, setValue } from './pixi'

@@ -1,25 +1,11 @@
 export default {
-  title: 'React PIXI',
+  title: '👌 React PIXI',
   description: 'Write PIXI apps using React declarative style',
   propsParser: false,
-  ordering: 'ascending',
   dest: 'docs',
   public: 'config/docz/public',
-  htmlContext: {
-    favicon: 'public/favicon.ico',
-    head: {
-      links: [
-        {
-          rel: 'stylesheet',
-          href: 'https://codemirror.net/theme/lucario.css',
-        },
-      ],
-    },
-  },
+  ignore: ['README.md', 'CODE_OF_CONDUCT.md', 'CONTRIBUTING.md'],
   themeConfig: {
-    mode: 'dark',
-    showPlaygroundEditor: true,
-    // codemirrorTheme: 'duotone-dark',
-    codemirrorTheme: 'lucario',
+    initialColorMode: 'dark'
   },
 }

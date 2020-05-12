@@ -5,9 +5,7 @@ route: /components/mesh/nine-slice-plane
 ---
 
 import { Playground } from 'docz'
-import { Point } from 'pixi.js'
-import Stage from '../stage'
-import { NineSlicePlane } from '../index'
+import { Stage, NineSlicePlane } from '../../docz-rp'
 
 # NineSlicePlane
 
@@ -20,8 +18,8 @@ http://pixijs.download/dev/docs/PIXI.mesh.NineSlicePlane.html
 <Playground>
   <Stage width={500} height={300} options={{ backgroundColor: 0xeef1f5 }}>
     <NineSlicePlane
-      anchor={new Point(200, 100)}
-      pivot={new Point(200, 100)}
+      anchor={[200, 100]}
+      pivot={[200, 100]}
       leftWidth={50}
       topHeight={30}
       rightWidth={60}

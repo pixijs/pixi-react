@@ -1,45 +1,27 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Loader } from 'pixi.js'
-import { BitmapText, Text } from '../index'
+const React = require('react')
+const { BitmapText, Text } = require('../../docz-rp')
 
-export default class BitmapTextWithLoader extends React.PureComponent {
-  displayName = 'BitmapText'
+export default props => {
+  const [loaded, setLoaded] = React.useState(false)
+  const x = props.x
+  const y = props.y
 
-  loader = null
+  React.useEffect(() => {
+    const PIXI = require('pixi.js')
+    const loader = new PIXI.Loader()
 
-  state = { loaded: false }
-
-  componentDidMount() {
-    this.loader = new Loader()
-
-    this.loader.add('desyrel', 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/bitmapfont.xml').load(() => {
-      this.setState({ loaded: true })
+    loader.add('desyrel', 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/bitmapfont.xml').load(() => {
+      setLoaded(true)
     })
+
+    return () => {
+      loader.destroy()
+    }
+  }, [])
+
+  if (loaded) {
+    return <BitmapText {...props} />
   }
 
-  componentWillUnmount() {
-    this.loader && this.loader.destroy()
-  }
-
-  componentDidCatch(err, info) {
-    console.log({ err, info })
-  }
-
-  render() {
-    const { loaded } = this.state
-    const { x = 0, y = 0 } = this.props
-
-    return loaded ? (
-      <BitmapText {...this.props} />
-    ) : (
-      <Text anchor={0.5} x={x} y={y} text="⌛ Loading font..." style={{ fontFamily: 'Arial', fontSize: 15 }} />
-    )
-  }
-}
-
-BitmapTextWithLoader.propTypes = {
-  x: PropTypes.number,
-  y: PropTypes.number,
-  text: PropTypes.string,
+  return <Text anchor={0.5} x={x} y={y} text="⌛ Loading font..." style={{ fontFamily: 'Arial', fontSize: 15 }} />
 }

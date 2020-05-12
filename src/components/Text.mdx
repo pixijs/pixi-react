@@ -6,9 +6,14 @@ route: /components/text
 ---
 
 import { Playground } from 'docz'
-import { TextStyle } from 'pixi.js'
-import Stage from '../stage'
-import { Text } from '../index'
+import { Stage, Text } from '../../docz-rp'
+
+export const TextStyle = (() => {
+  if (typeof window !== 'undefined') {
+    return require('pixi.js').TextStyle
+  }
+  return {}
+})()
 
 # Text
 

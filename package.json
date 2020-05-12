@@ -63,7 +63,7 @@
     "babel-jest": "^26.0.1",
     "canvas": "^2.6.1",
     "cross-env": "^7.0.2",
-    "docz": "^2.3.1",
+    "docz": "1.2.0",
     "docz-theme-default": "1.2.0",
     "eslint": "^7.0.0",
     "eslint-config-prettier": "^6.11.0",

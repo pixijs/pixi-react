@@ -1,13 +1,11 @@
 ---
-name: About React Pixi
+name: About
 route: /
 ---
 
 import { useReducer, useRef } from 'react';
 import { Playground } from 'docz'
-import Stage from './src/stage'
-import { Sprite, Container, useTick } from './src'
-import times from 'lodash.times'
+import { Stage, Sprite, Container, useTick } from './docz-rp';
 
 # React PIXI 🌈
 
@@ -78,39 +76,34 @@ Codepen examples:
 <Playground>
   {() => {
     const reducer = (_, { data }) => data;
-
     const Bunny = () => {
-      const [motion, update] = useReducer(reducer);
-      const iter = useRef(0);
-
-      useTick(delta => {
-        const i = iter.current += .05 * delta;
-
-        update({
-          type: 'update',
-          data: {
-            x: Math.sin(i) * 100,
-            y: Math.sin(i/1.5) * 100,
-            rotation: Math.sin(i) * Math.PI,
-            anchor: Math.sin(i/2),
-          }
-        })
-      });
-
-      return (
-        <Sprite
-          image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
-          {...motion}
-        />
-      )
-    };
-
+    const [motion, update] = useReducer(reducer);
+    const iter = useRef(0);
+    useTick(delta => {
+      const i = iter.current += .05 * delta;
+      update({
+        type: 'update',
+        data: {
+          x: Math.sin(i) * 100,
+          y: Math.sin(i/1.5) * 100,
+          rotation: Math.sin(i) * Math.PI,
+          anchor: Math.sin(i/2),
+        }
+      })
+    });
     return (
-      <Stage width={300} height={300} options={{ backgroundColor: 0x1d2230 }}>
-        <Container x={150} y={150}>
-          <Bunny />
-        </Container>
-      </Stage>
+      <Sprite
+        image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
+        {...motion}
+      />
+    )
+    };
+    return (
+    <Stage width={300} height={300} options={{ transparent: true }}>
+      <Container x={150} y={150}>
+        <Bunny />
+      </Container>
+    </Stage>
     )
   }}
 </Playground>

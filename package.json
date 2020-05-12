@@ -104,8 +104,16 @@
     "react-reconciler": "0.25.1"
   },
   "eslintConfig": {
-    "extends": ["eslint:recommended", "plugin:react/recommended", "prettier", "prettier/react"],
-    "plugins": ["react", "prettier"],
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "prettier",
+      "prettier/react"
+    ],
+    "plugins": [
+      "react",
+      "prettier"
+    ],
     "parser": "babel-eslint",
     "parserOptions": {
       "sourceType": "module",

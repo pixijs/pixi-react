@@ -53,6 +53,7 @@
     "@babel/preset-env": "^7.5.4",
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime": "7.5.4",
+    "@testing-library/react": "8.0.5",
     "@types/jest": "^24.0.15",
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.4",
@@ -98,7 +99,6 @@
     "react-dom": "^16.x.x"
   },
   "dependencies": {
-    "@testing-library/react": "8.0.5",
     "fbjs": "^1.0.0",
     "performance-now": "^2.1.0",
     "react-reconciler": "0.21.0-alpha.0"

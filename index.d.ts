@@ -425,7 +425,9 @@ export const applyDefaultProps: <P extends object>(
  * }
  */
 export const withFilters: <
-  Component extends React.ComponentType<_ReactPixi.IContainer>,
+  Component extends React.ComponentType<
+    _ReactPixi.Container<PIXI.DisplayObject, any>
+  >,
   Filters extends { [filterKey: string]: any }
 >(
   WrapperComponent: Component,

@@ -54,7 +54,8 @@ declare namespace _ReactPixi {
     | PIXI.ObservablePoint
     | [number, number]
     | [number]
-    | number;
+    | number
+    | { x: number, y: number };
   type ImageSource = string | HTMLImageElement;
   type VideoSource = string | HTMLVideoElement;
   type AnySource = number | ImageSource | VideoSource | HTMLCanvasElement | PIXI.Texture;

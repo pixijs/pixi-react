@@ -23,6 +23,7 @@ Draw graphics inline using the imperative `PIXI.Graphics` API.
 > Make sure to call `g.clear()` if you'd like to redraw the graphics.
 
 ## Usage
+
 <Playground>
   {() => {
     const draw = React.useCallback(g => {
@@ -45,18 +46,14 @@ Draw graphics inline using the imperative `PIXI.Graphics` API.
       g.beginFill(0xffff0b, 0.5)
       g.drawCircle(470, 90, 60)
       g.endFill()
-    }, []);
-
+    }, [])
     return (
       <Stage width={600} height={300} options={{ backgroundColor: 0xffffff }}>
-        <Graphics
-          draw={draw}
-        />
+        <Graphics draw={draw} />
       </Stage>
-    );
+    )
   }}
 </Playground>
-
 
 ## Example
 
@@ -67,4 +64,5 @@ Draw graphics inline using the imperative `PIXI.Graphics` API.
   src="//codepen.io/inlet/embed/d3b1be3b908b1d890442ee0c8baceaaf/?height=300&theme-id=33987&default-tab=result&embed-version=2"
   frameBorder="no"
   allowFullScreen={true}
-  style={{ width: '100%' }} />
+  style={{ width: '100%' }}
+/>

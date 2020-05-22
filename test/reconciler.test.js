@@ -325,7 +325,7 @@ describe('reconciler', () => {
 
       // sibling text is hidden
       const hideInstanceMock = getCall(hostconfig.hideInstance)
-      expect(hideInstanceMock.fn).toHaveBeenCalledTimes(1)
+      expect(hideInstanceMock.fn).toHaveBeenCalledTimes(2)
 
       // sibling text & AsyncText content is unhidden
       const unhideInstanceMock = getCall(hostconfig.unhideInstance)

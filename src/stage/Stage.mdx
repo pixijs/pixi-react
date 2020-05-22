@@ -4,9 +4,8 @@ route: '/stage'
 ---
 
 import { Playground } from 'docz'
-import Stage from '../stage'
-import { Sprite } from '../index'
-import times from 'lodash/times'
+import times from 'lodash.times'
+import { Stage, Sprite } from '../../docz-rp'
 
 # Stage
 
@@ -17,7 +16,7 @@ The Stage component renders a `PIXI.Application` onto a canvas element and makes
 | Prop  | Description | Default value |
 | ------------- | ------------- | ------------- |
 | `width`  | the width of the renderers view  | `800` |
-| `height`  | the height of the renderers view  | `800` |
+| `height`  | the height of the renderers view  | `600` |
 | `onMount`  | callback function for the created app instance  | |
 | `onUnMount`  | callback function when the Stage gets unmounted  | |
 | `raf`  | use the internal PIXI ticker (requestAnimationFrame)  | `true` |
@@ -32,7 +31,7 @@ import { Stage, Container, Sprite } from '@inlet/react-pixi'
 
 const App = () => (
   <Stage width={500} height={400}>
-    { // PIXI components here... }
+    { // React-Pixi components here... }
   </Stage>
 )
 
@@ -44,23 +43,19 @@ render(<App />, document.getElementById('root'))
 <Playground>
   {() => {
     const count = 10
+    const width = 300
+    const height = 300
     const stageProps = {
-      height: 300,
-      width: 500,
+      height,
+      width,
       options: {
-        backgroundColor: 0x07ff9c,
-        antialias: true,
-        roundPixel: true,
+        transparent: true,
+        antialias: true
       }
     }
-
     return (
       <Stage
-        width={300}
-        height={300}
-        options={{
-          backgroundColor: 0x1d2230
-        }}
+        {...stageProps}
       >
         {
           times(count, i => (
@@ -69,8 +64,8 @@ render(<App />, document.getElementById('root'))
                     scale={(360/count) * 0.004}
                     anchor={0.5}
                     rotation={(i * (360/count)) * (Math.PI / 180)}
-                    x={150 + Math.cos((i * (360/count)) * (Math.PI / 180)) * 100}
-                    y={150 + Math.sin((i * (360/count)) * (Math.PI / 180)) * 100}  />
+                    x={width/2 + Math.cos((i * (360/count)) * (Math.PI / 180)) * 100}
+                    y={height/2 + Math.sin((i * (360/count)) * (Math.PI / 180)) * 100}  />
           ))
         }
       </Stage>

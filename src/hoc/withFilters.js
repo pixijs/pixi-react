@@ -10,7 +10,14 @@ export const withFilters = (WrapperComponent, filters) => {
 
   const Wrapper = ({ children, apply, ...props }) => {
     // create filters
-    const filterList = useRef(useMemo(() => keys.map(prop => new filters[prop]()), [keys]))
+    const filterList = useRef(
+      useMemo(() => {
+        return keys.map(prop => {
+          const constructorArgs = props?.[prop]?.construct || []
+          return new filters[prop](...constructorArgs)
+        })
+      }, [keys])
+    )
 
     const filterObj = useMemo(() => {
       return keys.reduce((all, c, i) => ({ ...all, [c]: filterList.current[i] }), {})

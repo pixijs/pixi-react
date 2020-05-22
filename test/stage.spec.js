@@ -3,17 +3,11 @@ import * as PIXI from 'pixi.js'
 import renderer from 'react-test-renderer'
 import * as reactTest from '@testing-library/react'
 import { PixiFiber, PACKAGE_NAME, REACT_DOM_VERSION } from '../src/reconciler'
-import { runningInBrowser } from '../src/helpers'
 import { Stage, Container, Text } from '../src'
 import { Context } from '../src/stage/provider'
 import { useTick } from '../src/hooks'
 import { getCanvasProps } from '../src/stage'
 import { mockToSpy } from './__utils__/mock'
-
-jest.mock('../src/helpers', () => ({
-  ...jest.requireActual('../src/helpers'),
-  runningInBrowser: jest.fn(),
-}))
 
 jest.mock('../src/reconciler')
 
@@ -23,7 +17,6 @@ describe('stage', () => {
   beforeEach(() => {
     jest.resetAllMocks()
     mockToSpy('../src/reconciler')
-    runningInBrowser.mockImplementation(() => true)
   })
 
   test('filter out reserved props from getCanvasProps', () => {
@@ -41,11 +34,6 @@ describe('stage', () => {
   test('prop types', () => {
     expect(Stage.propTypes).toMatchSnapshot()
     expect(Stage.defaultProps).toMatchSnapshot()
-  })
-
-  test('prevent mount when window is not found', () => {
-    runningInBrowser.mockImplementation(() => false)
-    expect(() => renderer.create(<Stage />)).toThrow('Cannot mount Stage, window object is not defined')
   })
 
   test('renders a canvas element', () => {

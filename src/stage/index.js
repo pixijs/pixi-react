@@ -3,7 +3,6 @@ import { Application } from 'pixi.js'
 import PropTypes from 'prop-types'
 import invariant from 'fbjs/lib/invariant'
 import { PROPS_DISPLAY_OBJECT } from '../utils/props'
-import { runningInBrowser } from '../helpers'
 import { PixiFiber } from '../reconciler'
 import { injectDevtools } from '../render'
 import { AppProvider } from './provider'
@@ -99,10 +98,6 @@ export function getCanvasProps(props) {
 class Stage extends React.Component {
   _canvas = null
   app = null
-
-  UNSAFE_componentWillMount() {
-    invariant(runningInBrowser(), `Cannot mount Stage, window object is not defined`)
-  }
 
   componentDidMount() {
     const { onMount, width, height, options, raf } = this.props

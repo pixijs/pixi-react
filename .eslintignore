@@ -13,3 +13,6 @@ doczrc.js
 
 rollup.config.js
 *.ts
+
+BitmapTextDocz.js
+ParticleContainerDocz.js

@@ -238,10 +238,8 @@ declare namespace _ReactPixi {
     raf?: boolean;
 
     /**
-     * Update the PIXI renderer on component updates [default=true]
-     * For this to work you need to disable raf.
-     *
-     * @deprecated this is experimental
+     * Render the PIXI stage on React component changes.
+     * You'll need to set raf={false}.
      */
     renderOnComponentChange?: boolean;
 

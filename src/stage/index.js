@@ -97,10 +97,12 @@ export function getCanvasProps(props) {
 
 class Stage extends React.Component {
   _canvas = null
+  _fiber = null
   app = null
 
   componentDidMount() {
-    const { onMount, width, height, options, raf } = this.props
+    const { onMount, width, height, options, raf, renderOnComponentChange } = this.props
+    this._fiber = PixiFiber({ commitUpdate: () => this.renderStage() })
 
     this.app = new Application({
       width,
@@ -113,10 +115,10 @@ class Stage extends React.Component {
 
     this.app.ticker[raf ? 'start' : 'stop']()
 
-    this.mountNode = PixiFiber.createContainer(this.app.stage)
-    PixiFiber.updateContainer(this.getChildren(), this.mountNode, this)
+    this.mountNode = this._fiber.createContainer(this.app.stage)
+    this._fiber.updateContainer(this.getChildren(), this.mountNode, this)
 
-    injectDevtools()
+    injectDevtools(this._fiber)
 
     onMount(this.app)
     this.renderStage()
@@ -138,7 +140,7 @@ class Stage extends React.Component {
     // handle resolution ?
 
     // flush fiber
-    PixiFiber.updateContainer(this.getChildren(), this.mountNode, this)
+    this._fiber.updateContainer(this.getChildren(), this.mountNode, this)
     this.renderStage()
   }
 
@@ -164,7 +166,7 @@ class Stage extends React.Component {
   componentWillUnmount() {
     this.props.onUnmount(this.app)
 
-    PixiFiber.updateContainer(null, this.mountNode, this)
+    this._fiber.updateContainer(null, this.mountNode, this)
     this.renderStage()
     this.app.destroy()
   }

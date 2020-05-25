@@ -13,7 +13,7 @@
     "docz:dev": "rimraf ./docs && docz dev",
     "docz:build": "rimraf ./docs && yarn build:prod && docz build",
     "eslint": "eslint .",
-    "build:watch": "cross-env NODE_ENV=development rollup -c --watch",
+    "build:watch": "cross-env FORMAT=umd NODE_ENV=development rollup -c --watch",
     "build:dev": "cross-env NODE_ENV=development rollup -c",
     "build:prod": "cross-env NODE_ENV=production rollup -c",
     "build": "rimraf ./dist && npm run build:dev && npm run build:prod",

@@ -8,6 +8,7 @@ import replace from 'rollup-plugin-replace'
 import globals from 'rollup-plugin-node-globals'
 
 const prod = process.env.NODE_ENV === 'production'
+const format = process.env.FORMAT
 
 function getConfig(dest, format) {
   return {
@@ -20,7 +21,7 @@ function getConfig(dest, format) {
       sourcemap: !prod,
       globals: {
         'pixi.js': 'PIXI',
-        'react': 'React'
+        react: 'React',
       },
     },
     plugins: [
@@ -28,16 +29,13 @@ function getConfig(dest, format) {
       babel({ exclude: 'node_modules/**' }),
       resolve({
         browser: true,
-        mainFields: ['main', 'jsnext']
+        mainFields: ['main', 'jsnext'],
       }),
       commonjs({
         ignoreGlobal: false,
         namedExports: {
-          'node_modules/scheduler/index.js': [
-            'unstable_scheduleCallback',
-            'unstable_cancelCallback'
-          ]
-        }
+          'node_modules/scheduler/index.js': ['unstable_scheduleCallback', 'unstable_cancelCallback'],
+        },
       }),
       replace({
         __DEV__: prod ? 'false' : 'true',
@@ -47,20 +45,16 @@ function getConfig(dest, format) {
       prod && terser(),
       filesize(),
     ].filter(Boolean),
-    external: [
-      'pixi.js',
-      'react',
-      'react-dom'
-    ]
+    external: ['pixi.js', 'react', 'react-dom'],
   }
 }
 
 const buildType = prod ? '' : '-dev'
 
-const configs = [
-  getConfig(`dist/react-pixi.cjs${buildType}.js`, 'cjs'),
-  getConfig(`dist/react-pixi.umd${buildType}.js`, 'umd'),
-  getConfig(`dist/react-pixi.module${buildType}.js`, 'es'),
-]
-
-export default configs
+export default format
+  ? [getConfig(`dist/react-pixi.${format}${buildType}.js`, format)]
+  : [
+      getConfig(`dist/react-pixi.cjs${buildType}.js`, 'cjs'),
+      getConfig(`dist/react-pixi.umd${buildType}.js`, 'umd'),
+      getConfig(`dist/react-pixi.module${buildType}.js`, 'es'),
+    ]

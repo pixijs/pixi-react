@@ -21,11 +21,10 @@ export function render(element, container, callback = undefined, eventsMap = {})
   )
 
   let root = roots.get(container)
-  let fiber
+  let fiber = PixiFiber(eventsMap);
 
   if (!root) {
     // get the flushed fiber container
-    fiber = PixiFiber(eventsMap)
     root = fiber.createContainer(container)
     roots.set(container, root)
   }

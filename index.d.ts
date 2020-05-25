@@ -34,6 +34,39 @@ interface Reconciler<Instance, TextInstance, Container, PublicInstance> {
   injectIntoDevTools(devToolsConfig: any): boolean;
 }
 
+interface ReconcilerConfig {
+  getRootHostContext(rootContainerInstance: any): any;
+  getChildHostContext(): any;
+  getChildHostContextForEventComponent(parentHostContext: any): any;
+  getPublicInstance(getPublicInstance: any): any;
+  prepareForCommit(): void;
+  resetAfterCommit(): void;
+  createInstance(...args: any[]): any;
+  hideInstance(ins: any): void;
+  unhideInstance(ins: any, props: any): void;
+  appendInitialChild(...args: any[]): any;
+  finalizeInitialChildren(doFinalize: boolean): boolean;
+  prepareUpdate(...args: any): any;
+  shouldSetTextContent(type: any, props: any): boolean;
+  shouldDeprioritizeSubtree(type: any, props: any):boolean;
+  createTextInstance(): void;
+  mountEventComponent(): void;
+  updateEventComponent(): void;
+  handleEventTarget(): void;
+  scheduleTimeout(...args: any[]): any;
+  cancelTimeout(...args: any[]): any;
+  appendChild(...args: any[]): any;
+  appendChildToContainer(...args: any[]): any;
+  removeChild(...args: any[]): any;
+  removeChildFromContainer(...args: any[]): any;
+  insertBefore(...args: any[]): any;
+  insertInContainerBefore(...args: any[]): any;
+  commitUpdate(...args: any[]): any;
+  commitMount(...args: any[]): any;
+  commitTextUpdate(...args: any[]): any;
+  resetTextContent(...args: any[]): any;
+}
+
 // private
 declare namespace _ReactPixi {
   type FunctionTypes<T> = {
@@ -310,7 +343,9 @@ export const AppProvider: React.ComponentType<React.ProviderProps<PIXI.Applicati
 export const AppConsumer: React.ComponentType<React.ConsumerProps<PIXI.Application>>;
 
 // fiber
-export const PixiFiber: Reconciler<any, any, any, any>;
+export const PixiFiber: (
+  eventsMap?: { [P in keyof ReconcilerConfig]: (...args: any) => void }
+) => Reconciler<any, any, any, any>;
 
 // stage
 export class Stage extends React.Component<_ReactPixi.IStage> {}

@@ -2,34 +2,40 @@ import React from 'react'
 import * as PIXI from 'pixi.js'
 
 import hostconfig from '../src/reconciler/hostconfig'
+import {createElement} from "../src/utils/element";
 import { Text, Container, render, eventHandlers } from '../src'
 import { roots } from '../src/render'
-import { mockToSpy } from './__utils__/mock'
-import { createElement } from '../src/utils/element'
-
-jest.mock('../src/reconciler/hostconfig')
 
 const CUSTOM_EVENT = 'customEvent'
 const NOT_CUSTOM_EVENT = 'notCustomEvent'
 
+jest.mock('../src/reconciler/hostconfig')
+
 describe('react', () => {
   let container = new PIXI.Container()
   container.root = true
+
+  // render in container
   const renderInContainer = comp => render(comp, container)
 
   // keep track of real PIXI instances created
-  let instances
+  let instances = []
 
   beforeEach(() => {
-    jest.resetAllMocks()
-    mockToSpy('../src/reconciler/hostconfig')
-
     instances = []
+    jest.resetAllMocks()
 
-    hostconfig.createInstance.mockImplementation((...args) => {
-      const ins = createElement(...args)
-      instances.push(ins)
-      return ins
+    // mock the createInstance
+    hostconfig.mockImplementation(() => {
+      const hs = jest.requireActual('../src/reconciler/hostconfig').default()
+
+      hs.createInstance = (...args) => {
+        const createdInstance = createElement(...args);
+        instances.push(createdInstance)
+        return createdInstance
+      }
+
+      return hs
     })
   })
 
@@ -79,9 +85,7 @@ describe('react', () => {
 
       eventHandlers.push(CUSTOM_EVENT)
 
-      renderInContainer(
-        <Text ref={c => (text = c)} {...{[CUSTOM_EVENT]: onCustomEvent }} />
-      )
+      renderInContainer(<Text ref={c => (text = c)} {...{ [CUSTOM_EVENT]: onCustomEvent }} />)
 
       const customEvent = { type: CUSTOM_EVENT, data: 456 }
 
@@ -91,9 +95,7 @@ describe('react', () => {
       expect(onCustomEvent).toHaveBeenCalledTimes(1)
       expect(onCustomEvent).toHaveBeenCalledWith(customEvent)
 
-      renderInContainer(
-        <Text ref={c => (text = c)} {...{[NOT_CUSTOM_EVENT]: onNotCustomEvent }} />
-      )
+      renderInContainer(<Text ref={c => (text = c)} {...{ [NOT_CUSTOM_EVENT]: onNotCustomEvent }} />)
 
       text.emit(NOT_CUSTOM_EVENT, { type: NOT_CUSTOM_EVENT, data: 789 })
 

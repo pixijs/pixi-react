@@ -4,7 +4,7 @@ import { render, roots } from '../src/render'
 import hostconfig from '../src/reconciler/hostconfig'
 import { createElement } from '../src/utils/element'
 import { Container, Text } from '../src'
-import { getCall, mockToSpy } from './__utils__/mock'
+import { getCall } from './__utils__/mock'
 
 jest.mock('../src/reconciler/hostconfig')
 
@@ -13,12 +13,30 @@ describe('reconciler', () => {
   container.root = true
   const renderInContainer = comp => render(comp, container)
 
+  let spies
+
   beforeEach(() => {
     jest.resetAllMocks()
-    mockToSpy('../src/reconciler/hostconfig')
+
+    spies = {}
+
+    hostconfig.mockImplementation(() => {
+      if (Object.keys(spies).length > 0) {
+        return spies
+      }
+
+      const hs = jest.requireActual('../src/reconciler/hostconfig').default()
+      Object.keys(hs).forEach(k => {
+        spies[k] = typeof hs[k] === 'function' ? jest.fn(hs[k]) : hs[k]
+      })
+      return spies
+    })
   })
 
-  afterEach(() => roots.clear())
+  afterEach(() => {
+    roots.clear()
+    spies = {}
+  })
 
   describe('single render', () => {
     test('create instances', () => {
@@ -28,7 +46,7 @@ describe('reconciler', () => {
         </Container>
       )
 
-      const m = getCall(hostconfig.createInstance)
+      const m = getCall(spies.createInstance)
 
       expect(m.fn).toHaveBeenCalledTimes(2)
       expect(m.all.map(([ins]) => ins)).toEqual(['Text', 'Container'])
@@ -51,8 +69,8 @@ describe('reconciler', () => {
         </Container>
       )
 
-      const m = getCall(hostconfig.appendInitialChild)
-      expect(m.fn).toHaveBeenCalledTimes(2)
+      const m = getCall(spies.appendInitialChild)
+      expect(m.fn).toHaveBeenCalledTimes(1)
       expect(m(0).args[0]).toBeInstanceOf(PIXI.Container)
       expect(m(0).args[1]).toBeInstanceOf(PIXI.Text)
     })
@@ -64,7 +82,7 @@ describe('reconciler', () => {
         </Container>
       )
 
-      const m = getCall(hostconfig.appendInitialChild)(0)
+      const m = getCall(spies.appendInitialChild)(0)
 
       const container = m.args[0]
       expect(container.x).toEqual(10)
@@ -93,7 +111,7 @@ describe('reconciler', () => {
         </Container>
       )
 
-      const m = getCall(hostconfig.removeChild)
+      const m = getCall(spies.removeChild)
       expect(m.fn).toHaveBeenCalledTimes(2)
       expect(m.all.map(([_, ins]) => ins.text)).toEqual(['two', 'three'])
     })
@@ -114,7 +132,7 @@ describe('reconciler', () => {
         </Container>
       )
 
-      const m = getCall(hostconfig.insertBefore)(0)
+      const m = getCall(spies.insertBefore)(0)
       expect(m.args[0]).toBeInstanceOf(PIXI.Container) // parent
       expect(m.args[1].text).toEqual('two') // child
       expect(m.args[2].text).toEqual('three') // beforeChild
@@ -133,7 +151,7 @@ describe('reconciler', () => {
         </Container>
       )
 
-      const m = getCall(hostconfig.commitUpdate)
+      const m = getCall(spies.commitUpdate)
       expect(m.fn).toHaveBeenCalledTimes(1)
       expect(m(0).args[3]).toHaveProperty('text', 'a')
       expect(m(0).args[4]).toHaveProperty('text', 'b')
@@ -146,14 +164,14 @@ describe('reconciler', () => {
       renderInContainer(<Text x={100} />)
       renderInContainer(<Text x={100} />)
 
-      expect(hostconfig.commitUpdate).not.toBeCalled()
+      expect(spies.commitUpdate).not.toBeCalled()
     })
 
     test('commitUpdate for prop removal', () => {
       renderInContainer(<Text x={100} />)
       renderInContainer(<Text />)
 
-      const m = getCall(hostconfig.commitUpdate)
+      const m = getCall(spies.commitUpdate)
       expect(m.fn).toHaveBeenCalledTimes(1)
 
       const args = m(0).args
@@ -169,7 +187,7 @@ describe('reconciler', () => {
       renderInContainer(<Text x={100} />)
       renderInContainer(<Text x={105} />)
 
-      const m = getCall(hostconfig.commitUpdate)
+      const m = getCall(spies.commitUpdate)
       expect(m.fn).toHaveBeenCalledTimes(1)
 
       const args = m(0).args
@@ -188,12 +206,19 @@ describe('reconciler', () => {
     let applyProps = jest.fn()
 
     beforeEach(() => {
-      hostconfig.createInstance.mockImplementation((...args) => {
-        const ins = createElement(...args)
-        ins.didMount = (...args) => didMount(...args)
-        ins.willUnmount = (...args) => willUnmount(...args)
-        ins.applyProps = (...args) => applyProps(...args)
-        return ins
+      hostconfig.mockImplementation(() => {
+        const hs = jest.requireActual('../src/reconciler/hostconfig').default()
+
+        hs.createInstance = (...args) => {
+          const ins = createElement(...args)
+
+          ins.didMount = (...args) => didMount(...args)
+          ins.willUnmount = (...args) => willUnmount(...args)
+          ins.applyProps = (...args) => applyProps(...args)
+
+          return ins
+        }
+        return hs
       })
     })
 
@@ -260,6 +285,7 @@ describe('reconciler', () => {
 
   describe('suspense', () => {
     let asyncLoaded = false
+
     beforeEach(() => {
       asyncLoaded = false
     })
@@ -284,55 +310,60 @@ describe('reconciler', () => {
       const loadingTextRef = React.createRef(null)
       const siblingTextRef = React.createRef(null)
 
-      let getRenderContent = () => (
+      renderInContainer(
         <Suspense fallback={<Text text="loading" ref={loadingTextRef} />}>
           <Text text="hidden" ref={siblingTextRef} />
           <AsyncText ms={500} text={'content'} />
         </Suspense>
       )
 
-      renderInContainer(getRenderContent())
       jest.runAllTimers()
 
       // loading Text should be rendered
       expect(loadingTextRef.current).toBeDefined()
 
       // content should be hidden
-      const hideInstanceMock = getCall(hostconfig.hideInstance)
+      const hideInstanceMock = getCall(spies.hideInstance)
       expect(hideInstanceMock.fn).toHaveBeenCalledTimes(1)
       expect(siblingTextRef.current.visible).toEqual(false)
     })
 
     test('renders suspense content', async () => {
       jest.useFakeTimers()
+
       const siblingTextRef = React.createRef(null)
 
-      let getRenderContent = () => (
+      console.log(spies.hideInstance) //?
+
+      renderInContainer(
         <Suspense fallback={<Text text="loading" />}>
           <Text text="A" ref={siblingTextRef} />
           <AsyncText ms={500} text={'content'} />
         </Suspense>
       )
 
-      renderInContainer(getRenderContent())
-
       jest.runAllTimers()
 
-      renderInContainer(getRenderContent())
+      renderInContainer(
+        <Suspense fallback={<Text text="loading" />}>
+          <Text text="A" ref={siblingTextRef} />
+          <AsyncText ms={500} text={'content'} />
+        </Suspense>
+      )
 
       // hidden content should be visible again
       expect(siblingTextRef.current.visible).toEqual(true)
 
       // sibling text is hidden
-      const hideInstanceMock = getCall(hostconfig.hideInstance)
-      expect(hideInstanceMock.fn).toHaveBeenCalledTimes(2)
+      const hideInstanceMock = getCall(spies.hideInstance)
+      expect(hideInstanceMock.fn).toHaveBeenCalledTimes(1)
 
       // sibling text & AsyncText content is unhidden
-      const unhideInstanceMock = getCall(hostconfig.unhideInstance)
+      const unhideInstanceMock = getCall(spies.unhideInstance)
       expect(unhideInstanceMock.fn).toHaveBeenCalledTimes(2)
 
       // loading text, sibling text, and async text content were all created
-      const createInstanceMock = getCall(hostconfig.createInstance)
+      const createInstanceMock = getCall(spies.createInstance)
       expect(createInstanceMock.all.map(([ins]) => ins)).toEqual(['Text', 'Text', 'Text'])
     })
   })

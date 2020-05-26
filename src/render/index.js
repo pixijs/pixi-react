@@ -21,7 +21,7 @@ export function render(element, container, callback = undefined, eventsMap = {})
   )
 
   let root = roots.get(container)
-  let fiber = PixiFiber(eventsMap);
+  let fiber = PixiFiber(eventsMap)
 
   if (!root) {
     // get the flushed fiber container

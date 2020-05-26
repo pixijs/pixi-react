@@ -145,7 +145,7 @@
     "rootDir": "./test",
     "setupFiles": [
       "jest-webgl-canvas-mock",
-      "./test/bootstrap.js"
+      "./bootstrap.js"
     ]
   }
 }

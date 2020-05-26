@@ -1,3 +1,5 @@
+// const path = require('path')
+
 module.exports = function (wallaby) {
   return {
     files: ['src/**/*.js', 'package.json', 'test/__fixtures__/**/*', 'test/__utils__/**/*', 'test/bootstrap.js'],
@@ -12,5 +14,12 @@ module.exports = function (wallaby) {
     },
 
     testFramework: 'jest',
+
+    setup: function () {
+      const jestConfig = require('./package.json').jest
+      jestConfig.setupFiles = ['jest-webgl-canvas-mock', './test/bootstrap.js']
+
+      wallaby.testFramework.configure(jestConfig)
+    },
   }
 }

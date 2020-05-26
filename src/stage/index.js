@@ -112,7 +112,6 @@ class Stage extends React.Component {
     })
 
     this.app.ticker.autoStart = false
-
     this.app.ticker[raf ? 'start' : 'stop']()
 
     this.mountNode = this._fiber.createContainer(this.app.stage)

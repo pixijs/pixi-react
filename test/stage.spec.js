@@ -7,16 +7,26 @@ import { Stage, Container, Text } from '../src'
 import { Context } from '../src/stage/provider'
 import { useTick } from '../src/hooks'
 import { getCanvasProps } from '../src/stage'
-import { mockToSpy } from './__utils__/mock'
 
 jest.mock('../src/reconciler')
-
 jest.useFakeTimers()
 
 describe('stage', () => {
+  let spies
+
   beforeEach(() => {
     jest.resetAllMocks()
-    mockToSpy('../src/reconciler')
+
+    spies = {}
+
+    PixiFiber.mockImplementation(() => {
+      if (Object.keys(spies).length > 0) return spies
+      const pf = jest.requireActual('../src/reconciler').PixiFiber()
+      Object.keys(pf).forEach(k => {
+        spies[k] = (typeof pf[k] === 'function') ? jest.fn(pf[k]) : pf[k]
+      })
+      return spies;
+    });
   })
 
   test('filter out reserved props from getCanvasProps', () => {
@@ -147,8 +157,8 @@ describe('stage', () => {
     const el = renderer.create(<Stage />)
     const stage = el.getInstance().app.stage
 
-    expect(PixiFiber.createContainer).toHaveBeenCalledTimes(1)
-    expect(PixiFiber.createContainer).toHaveBeenCalledWith(stage)
+    expect(spies.createContainer).toHaveBeenCalledTimes(1)
+    expect(spies.createContainer).toHaveBeenCalledWith(stage)
   })
 
   test('call PixiFiber.updateContainer on componentDidMount', () => {
@@ -160,8 +170,8 @@ describe('stage', () => {
 
     const instance = el.getInstance()
 
-    expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1)
-    expect(PixiFiber.updateContainer).toHaveBeenCalledWith(
+    expect(spies.updateContainer).toHaveBeenCalledTimes(1)
+    expect(spies.updateContainer).toHaveBeenCalledWith(
       <Context.Provider value={instance.app}>
         <Text text="Hello World!" />
       </Context.Provider>,
@@ -173,8 +183,8 @@ describe('stage', () => {
   test('call PixiFiber.injectIntoDevtools on componentDidMount', () => {
     renderer.create(<Stage />)
 
-    expect(PixiFiber.injectIntoDevTools).toHaveBeenCalledTimes(1)
-    expect(PixiFiber.injectIntoDevTools).toHaveBeenCalledWith(
+    expect(spies.injectIntoDevTools).toHaveBeenCalledTimes(1)
+    expect(spies.injectIntoDevTools).toHaveBeenCalledWith(
       expect.objectContaining({
         findHostInstanceByFiber: PixiFiber.findHostInstance,
         bundleType: 1,
@@ -187,21 +197,21 @@ describe('stage', () => {
   test('call PixiFiber.updateContainer on componentDidUpdate', () => {
     const el = renderer.create(<Stage />)
 
-    PixiFiber.updateContainer.mockClear()
+    spies.updateContainer.mockClear()
     el.update(<Stage />)
 
-    expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1)
+    expect(spies.updateContainer).toHaveBeenCalledTimes(1)
   })
 
   test('call PixiFiber.updateContainer on componentWillUnmount', () => {
     const el = renderer.create(<Stage />)
     const instance = el.getInstance()
 
-    PixiFiber.updateContainer.mockClear()
+    spies.updateContainer.mockClear()
     el.unmount()
 
-    expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1)
-    expect(PixiFiber.updateContainer).toHaveBeenCalledWith(null, instance.mountNode, instance)
+    expect(spies.updateContainer).toHaveBeenCalledTimes(1)
+    expect(spies.updateContainer).toHaveBeenCalledWith(null, instance.mountNode, instance)
   })
 
   describe('pixi application', () => {
@@ -247,6 +257,31 @@ describe('stage', () => {
       el.update(<Stage raf={false} renderOnComponentChange={false} />)
 
       expect(app.renderer.render).not.toHaveBeenCalled()
+    })
+
+    test('render stage on reconciliation `commitUpdate` using `renderOnComponentChange` to true',() => {
+      const el = renderer.create(
+        <Stage raf={false} renderOnComponentChange={true}>
+          <Container>
+            <Text text="hi" />
+          </Container>
+        </Stage>
+      )
+
+      const app = el.getInstance().app
+      jest.spyOn(app.renderer, 'render')
+
+      for (let i = 1; i <= 10; i++) {
+        el.update(
+          <Stage raf={false} renderOnComponentChange={true}>
+            <Container x={i}>
+              <Text text="hi world" />
+            </Container>
+          </Stage>
+        )
+      }
+
+      expect(app.renderer.render).toBeCalledTimes(10)
     })
   })
 

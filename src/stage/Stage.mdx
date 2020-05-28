@@ -5,6 +5,7 @@ route: '/stage'
 
 import { Playground } from 'docz'
 import times from 'lodash.times'
+import * as PIXI from 'pixi.js'
 import { Stage, Container, Sprite } from '../../docz-rp'
 
 export const useIteration = (inc = 0.1) => {
@@ -102,21 +103,22 @@ This might result in faster running cooling fans on your computer due the overhe
 
 <Playground>
   {() => {
-    const i = useIteration();
-    return (
-      <Stage
-        width={300}
-        height={300}
-        raf={false}
-        renderOnComponentChange={true}
-        options={{ backgroundColor: 0xeef1f5, antialias: true }}>
-        <Sprite
-            anchor={0.5}
-            position={[150 + Math.cos(i) * 50, 150]}
-            rotation={i}
-            image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
-        />
-      </Stage>
+     const i = useIteration(0.1)
+     return (
+       <Stage
+         width={300}
+         height={300}
+         raf={false}
+         renderOnComponentChange={true}
+         options={{ backgroundColor: 0xeef1f5, antialias: true }}
+       >
+         <Sprite
+           anchor={[-(2 + Math.sin(i/5) * 2), 0.5]}
+           position={150}
+           rotation={(Math.PI/180) * 90 + -i}
+           image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
+         />
+       </Stage>
     )
   }}
 </Playground>
@@ -131,7 +133,7 @@ This might result in faster running cooling fans on your computer due the overhe
 <Playground>
   {() => {
     const app = React.useRef();
-    const i = useIteration();
+    const i = useIteration(0.1);
     return (
       <>
         <button onClick={() => app.current.renderer.render(app.current.stage)}>Render</button>

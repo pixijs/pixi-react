@@ -7,13 +7,13 @@ import { Playground } from 'docz'
 import times from 'lodash.times'
 import { Stage, Container, Sprite } from '../../docz-rp'
 
-export const useIteration = () => {
+export const useIteration = (inc = 0.1) => {
   const [i, setI] = React.useState(0);
   React.useEffect(() => {
     let raf
     const loop = () => {
       raf = requestAnimationFrame(loop);
-      setI(_i => _i + 0.1);
+      setI(_i => _i + inc);
     };
     raf = requestAnimationFrame(loop);
     return () => {
@@ -120,6 +120,9 @@ This might result in faster running cooling fans on your computer due the overhe
     )
   }}
 </Playground>
+
+> Note: The [useIteration()](https://gist.github.com/inlet/12b38a1cab2d14236692a2844d972290) hook is not part of `react-pixi`.
+> It simply updates the state with an incremental value.
 
 ### Update stage manually
 

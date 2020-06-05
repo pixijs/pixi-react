@@ -1,5 +1,5 @@
 import React from 'react'
-import { Application } from 'pixi.js'
+import { Application, interaction } from 'pixi.js'
 import PropTypes from 'prop-types'
 import invariant from 'fbjs/lib/invariant'
 import { PROPS_DISPLAY_OBJECT } from '../utils/props'
@@ -47,22 +47,30 @@ const propTypes = {
 
   // PIXI options, see http://pixijs.download/dev/docs/PIXI.Application.html
   options: PropTypes.shape({
-    antialias: PropTypes.bool,
     autoStart: PropTypes.bool,
     width: PropTypes.number,
     height: PropTypes.number,
     transparent: PropTypes.bool,
+    autoDensity: PropTypes.bool,
+    antialias: PropTypes.bool,
     preserveDrawingBuffer: PropTypes.bool,
     resolution: PropTypes.number,
     forceCanvas: PropTypes.bool,
     backgroundColor: PropTypes.number,
     clearBeforeRender: PropTypes.bool,
-    roundPixels: PropTypes.bool,
-    forceFXAA: PropTypes.bool,
-    legacy: PropTypes.bool,
     powerPreference: PropTypes.string,
+    forceFXAA: PropTypes.bool,
     sharedTicker: PropTypes.bool,
     sharedLoader: PropTypes.bool,
+
+    // resizeTo needs to be a window or HTMLElement
+    resizeTo: (props, propName, componentName) => {
+      const el = props[propName]
+      invariant(
+        el !== window && !(el instanceof HTMLElement),
+        `Invalid prop \`resizeTo\` of type ${typeof el}, expect \`window\` or an \`HTMLElement\`.`
+      )
+    },
 
     // view is optional, use if provided
     view: (props, propName, componentName) => {
@@ -98,6 +106,7 @@ export function getCanvasProps(props) {
 class Stage extends React.Component {
   _canvas = null
   _fiber = null
+  _mediaQuery = null
   app = null
 
   componentDidMount() {
@@ -109,6 +118,7 @@ class Stage extends React.Component {
       height,
       view: this._canvas,
       ...options,
+      autoDensity: false,
     })
 
     this.app.ticker.autoStart = false
@@ -120,15 +130,36 @@ class Stage extends React.Component {
     injectDevtools(this._fiber)
 
     onMount(this.app)
+
+    if (options?.autoDensity && window.matchMedia && !options?.resolution) {
+      this._mediaQuery = window.matchMedia(`
+        (-webkit-min-device-pixel-ratio: 1.3),
+        (min-resolution: 120dpi)
+      `)
+      this._mediaQuery.addListener(this.updateSize)
+    }
+
+    this.updateSize()
     this.renderStage()
   }
 
   componentDidUpdate(prevProps, prevState, prevContext) {
-    const { width, height, raf } = this.props
+    const { width, height, raf, options } = this.props
 
-    // handle resize
-    if (prevProps.height !== height || prevProps.width !== width) {
-      this.app.renderer.resize(width, height)
+    // update resolution
+    if (options?.resolution && prevProps?.options.resolution !== options?.resolution) {
+      this.app.renderer.resolution = options.resolution
+      this.app.renderer.plugins.interaction.destroy()
+      this.app.renderer.plugins.interaction = new interaction.InteractionManager(this.app.renderer)
+    }
+
+    // update size
+    if (
+      prevProps.height !== height ||
+      prevProps.width !== width ||
+      prevProps.options?.resolution !== options?.resolution
+    ) {
+      this.updateSize()
     }
 
     // handle raf change
@@ -136,11 +167,26 @@ class Stage extends React.Component {
       this.app.ticker[raf ? 'start' : 'stop']()
     }
 
-    // handle resolution ?
-
     // flush fiber
     this._fiber.updateContainer(this.getChildren(), this.mountNode, this)
     this.renderStage()
+  }
+
+  updateSize = () => {
+    const { width, height, options } = this.props
+
+    if (!options?.resolution) {
+      this.app.renderer.resolution = window.devicePixelRatio
+      this.app.renderer.plugins.interaction.destroy()
+      this.app.renderer.plugins.interaction = new interaction.InteractionManager(this.app.renderer)
+    }
+
+    this.app.renderer.resize(width, height)
+
+    if (options?.autoDensity) {
+      this.app.view.style.width = width + 'px'
+      this.app.view.style.height = height + 'px'
+    }
   }
 
   getChildren() {
@@ -166,6 +212,8 @@ class Stage extends React.Component {
     this.props.onUnmount(this.app)
 
     this._fiber.updateContainer(null, this.mountNode, this)
+    this._mediaQuery?.removeListener(this.updateSize)
+    this._mediaQuery = null
     this.renderStage()
     this.app.destroy()
   }

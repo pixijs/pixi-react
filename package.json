@@ -142,10 +142,10 @@
   },
   "jest": {
     "collectCoverage": false,
-    "rootDir": "./test",
     "setupFiles": [
       "jest-webgl-canvas-mock",
-      "./bootstrap.js"
+      "<rootDir>/test/bootstrap.js",
+      "<rootDir>/test/__mocks__/matchMediaMock.js"
     ]
   }
 }

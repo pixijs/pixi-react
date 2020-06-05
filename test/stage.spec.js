@@ -15,7 +15,7 @@ describe('stage', () => {
   let spies
 
   beforeEach(() => {
-    jest.resetAllMocks()
+    window.matchMedia.mockClear()
 
     spies = {}
 
@@ -23,10 +23,10 @@ describe('stage', () => {
       if (Object.keys(spies).length > 0) return spies
       const pf = jest.requireActual('../src/reconciler').PixiFiber()
       Object.keys(pf).forEach(k => {
-        spies[k] = (typeof pf[k] === 'function') ? jest.fn(pf[k]) : pf[k]
+        spies[k] = typeof pf[k] === 'function' ? jest.fn(pf[k]) : pf[k]
       })
-      return spies;
-    });
+      return spies
+    })
   })
 
   test('filter out reserved props from getCanvasProps', () => {
@@ -215,19 +215,19 @@ describe('stage', () => {
   })
 
   describe('pixi application', () => {
-    test('ticker running on mount', async () => {
+    test('ticker running on mount', () => {
       const el = renderer.create(<Stage />)
       const app = el.getInstance().app
       expect(app.ticker.started).toBeTruthy()
     })
 
-    test('ticker not running on mount with prop raf to false', async () => {
+    test('ticker not running on mount with prop raf to false', () => {
       const el = renderer.create(<Stage raf={false} />)
       const app = el.getInstance().app
       expect(app.ticker.started).toBeFalsy()
     })
 
-    test('ticker to be toggable', async () => {
+    test('ticker to be toggable', () => {
       const el = renderer.create(<Stage raf={false} />)
       const app = el.getInstance().app
       expect(app.ticker.started).toBeFalsy()
@@ -259,7 +259,7 @@ describe('stage', () => {
       expect(app.renderer.render).not.toHaveBeenCalled()
     })
 
-    test('render stage on reconciliation `commitUpdate` using `renderOnComponentChange` to true',() => {
+    test('render stage on reconciliation `commitUpdate` using `renderOnComponentChange` to true', () => {
       const el = renderer.create(
         <Stage raf={false} renderOnComponentChange={true}>
           <Container>
@@ -285,7 +285,7 @@ describe('stage', () => {
     })
   })
 
-  describe('hook `useTick`', function() {
+  describe('hook `useTick`', function () {
     const App = ({ children, cb }) => {
       const app = useRef()
       const setApp = useCallback(_ => (app.current = _), [])
@@ -294,11 +294,7 @@ describe('stage', () => {
         cb(app.current)
       }, [app.current])
 
-      return (
-        <Stage onMount={setApp}>
-          {children}
-        </Stage>
-      )
+      return <Stage onMount={setApp}>{children}</Stage>
     }
 
     test('throw error no context found', () => {
@@ -327,8 +323,12 @@ describe('stage', () => {
         return <Container />
       }
 
-      const renderStage = (Comp) => (
-        <Stage onMount={_app => { app = _app }}>
+      const renderStage = Comp => (
+        <Stage
+          onMount={_app => {
+            app = _app
+          }}
+        >
           <Container>{Comp}</Container>
         </Stage>
       )
@@ -349,7 +349,7 @@ describe('stage', () => {
       expect(app.ticker.remove).toHaveBeenCalledTimes(1)
     })
 
-    test('update state', async () => {
+    test('update state', () => {
       const fn = jest.fn()
 
       const Counter = () => {
@@ -359,11 +359,13 @@ describe('stage', () => {
       }
 
       const render = () => (
-        <App cb={app => {
-          for (let i = 0; i < 10; i++) {
-            app.ticker.update()
-          }
-        }}>
+        <App
+          cb={app => {
+            for (let i = 0; i < 10; i++) {
+              app.ticker.update()
+            }
+          }}
+        >
           <Counter />
         </App>
       )
@@ -384,12 +386,14 @@ describe('stage', () => {
         return null
       }
 
-      const render = (enabled) => (
-        <App cb={app => {
-          app.ticker.update()
-          app.ticker.update()
-          app.ticker.update()
-        }}>
+      const render = enabled => (
+        <App
+          cb={app => {
+            app.ticker.update()
+            app.ticker.update()
+            app.ticker.update()
+          }}
+        >
           <Counter enabled={enabled} />
         </App>
       )
@@ -405,7 +409,6 @@ describe('stage', () => {
 
         unmount()
         expect(fn.mock.calls.join(',')).toEqual('1,2,3')
-
       }
 
       function testDisabled() {
@@ -423,6 +426,98 @@ describe('stage', () => {
 
       testEnabled()
       testDisabled()
+    })
+  })
+
+  describe('resolution', () => {
+    test('app.resolution fallback to devicePixelRatio', () => {
+      window.devicePixelRatio = 3
+
+      const el = renderer.create(<Stage />)
+      expect(el.getInstance().app.renderer.resolution).toEqual(3)
+    })
+
+    test('styles on canvas should not exist if `autoDensity` is not set', () => {
+      const { unmount, container } = reactTest.render(<Stage width={800} height={600} />)
+      expect(container.firstChild.getAttribute('style')).toEqual(null)
+      unmount()
+    })
+
+    test('set styles on canvas if `autoDensity` is set', () => {
+      const { unmount, container } = reactTest.render(
+        <Stage width={800} height={600} options={{ autoDensity: true }} />
+      )
+
+      expect(container.firstChild.getAttribute('style')).toEqual('width: 800px; height: 600px;')
+      unmount()
+    })
+
+    test('setup resolution media query', () => {
+      expect(window.matchMedia).not.toHaveBeenCalled()
+
+      const el = renderer.create(<Stage width={800} height={600} options={{ autoDensity: true }} />)
+
+      expect(el.getInstance()._mediaQuery.addListener).toHaveBeenCalled()
+      expect(window.matchMedia).toHaveBeenCalledTimes(1)
+    })
+
+    test('bypass resolution media query if `resolution` is set', () => {
+      const el = renderer.create(<Stage width={800} height={600} options={{ autoDensity: true, resolution: 1 }} />)
+      expect(el.getInstance()._mediaQuery).toEqual(null)
+    })
+
+    test('update renderer resolution on `options.resolution` change', () => {
+      let el = renderer.create(<Stage width={800} height={600} options={{ resolution: 1 }} />)
+
+      const appRenderer = el.getInstance().app.renderer
+      const spyDestroy = jest.spyOn(appRenderer.plugins.interaction, 'destroy')
+      const spyResize = jest.spyOn(appRenderer, 'resize')
+
+      el = el.update(<Stage width={800} height={600} options={{ resolution: 2 }} />)
+
+      expect(spyDestroy).toHaveBeenCalled()
+      expect(spyResize).toHaveBeenCalledWith(800, 600)
+      expect(appRenderer.resolution).toEqual(2)
+    })
+
+    test('clean up media query on unmount', () => {
+      let el = renderer.create(
+        <div>
+          <Stage width={800} height={600} options={{ autoDensity: true }} />
+        </div>
+      )
+
+      const app = el.toTree().rendered[0].instance
+      const spyDestroy = spyOn(app._mediaQuery, 'removeListener')
+
+      expect(app._mediaQuery).not.toEqual(null)
+
+      el = el.update(<div />)
+
+      expect(spyDestroy).toHaveBeenCalled()
+      expect(app._mediaQuery).toEqual(null)
+    })
+
+    test('switch resolution if `autoDensity` is on without setting `resolution` specifically', () => {
+      let app
+      let mq
+
+      const validate = res => {
+        window.devicePixelRatio = res
+        mq()
+        expect(app.renderer.resolution).toEqual(res)
+        expect(app.view.getAttribute('style')).toEqual('width: 800px; height: 600px;')
+        expect(app.view.width).toEqual(800 * res)
+        expect(app.view.height).toEqual(600 * res)
+      }
+
+      const el = renderer.create(<Stage width={800} height={600} options={{ autoDensity: true }} />)
+      app = el.getInstance().app
+      mq = el.getInstance()._mediaQuery.addListener.mock.calls[0][0] //?
+
+      for (let i = 1; i <= 10; i++) {
+        validate(i)
+      }
     })
   })
 })

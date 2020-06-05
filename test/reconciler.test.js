@@ -304,7 +304,7 @@ describe('reconciler', () => {
       return <Text text={text} />
     }
 
-    test('renders suspense fallback', async () => {
+    test('renders suspense fallback', () => {
       jest.useFakeTimers()
 
       const loadingTextRef = React.createRef(null)
@@ -328,7 +328,7 @@ describe('reconciler', () => {
       expect(siblingTextRef.current.visible).toEqual(false)
     })
 
-    test('renders suspense content', async () => {
+    test('renders suspense content', () => {
       jest.useFakeTimers()
 
       const siblingTextRef = React.createRef(null)

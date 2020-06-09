@@ -59,14 +59,7 @@ describe('render', () => {
     render(element, app.stage, callback)
 
     expect(spies.injectIntoDevTools).toHaveBeenCalledTimes(1)
-    expect(spies.injectIntoDevTools).toHaveBeenLastCalledWith(
-      expect.objectContaining({
-        bundleType: 1,
-        version: REACT_DOM_VERSION,
-        rendererPackageName: PACKAGE_NAME,
-        findHostInstanceByFiber: PixiFiber.findHostInstance,
-      })
-    )
+    expect(spies.injectIntoDevTools.mock.calls).toMatchSnapshot()
   })
 
   test('invoke callback in updateContainer', () => {

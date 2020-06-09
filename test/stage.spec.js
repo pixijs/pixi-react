@@ -184,14 +184,7 @@ describe('stage', () => {
     renderer.create(<Stage />)
 
     expect(spies.injectIntoDevTools).toHaveBeenCalledTimes(1)
-    expect(spies.injectIntoDevTools).toHaveBeenCalledWith(
-      expect.objectContaining({
-        findHostInstanceByFiber: PixiFiber.findHostInstance,
-        bundleType: 1,
-        version: REACT_DOM_VERSION,
-        rendererPackageName: PACKAGE_NAME,
-      })
-    )
+    expect(spies.injectIntoDevTools.mock.calls).toMatchSnapshot()
   })
 
   test('call PixiFiber.updateContainer on componentDidUpdate', () => {

@@ -47,6 +47,6 @@ export function injectDevtools(fiber) {
     bundleType: process.env.NODE_ENV !== 'production' ? 1 : 0,
     version: REACT_DOM_VERSION,
     rendererPackageName: PACKAGE_NAME,
-    findHostInstanceByFiber: PixiFiber.findHostInstance,
+    findHostInstanceByFiber: fiber.findHostInstance,
   })
 }

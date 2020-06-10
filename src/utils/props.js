@@ -92,6 +92,8 @@ const filterProps = not(hasKey([...Object.keys(PROPS_RESERVED), ...eventHandlers
  * @param {Object} newProps
  */
 export function applyDefaultProps(instance, oldProps, newProps) {
+  let changed = false
+
   invariant(
     DisplayObject.prototype.isPrototypeOf(instance),
     'instance needs to be typeof `PIXI.DisplayObject`, ' + 'got `%s`',
@@ -106,6 +108,7 @@ export function applyDefaultProps(instance, oldProps, newProps) {
     for (let i = 0; i < eventHandlers.length; i++) {
       const evt = eventHandlers[i]
       if (oldProps[evt] !== newProps[evt]) {
+        changed = true
         if (typeof oldProps[evt] === 'function' && hasRemoveListener) {
           instance.removeListener(evt, oldProps[evt])
         }
@@ -123,6 +126,7 @@ export function applyDefaultProps(instance, oldProps, newProps) {
     for (let i = 0; i < newPropKeys.length; i++) {
       const p = newPropKeys[i]
       if (oldProps[p] !== newProps[p]) {
+        changed = true
         setValue(instance, p, newProps[p])
       }
     }
@@ -137,13 +141,17 @@ export function applyDefaultProps(instance, oldProps, newProps) {
 
     if (!isNil(value)) {
       // set value if defined
+      changed = true
       setValue(instance, prop, value)
     } else if (!isNil(instance[prop]) && prop in PROPS_DISPLAY_OBJECT) {
       // is a default value, use that
       console.warn(`setting default value: ${prop}, from: ${instance[prop]} to: ${value} for`, instance)
+      changed = true
       setValue(instance, prop, PROPS_DISPLAY_OBJECT[prop])
     } else {
       console.warn(`ignoring prop: ${prop}, from ${instance[prop]} to ${value} for`, instance)
     }
   }
+
+  return changed
 }

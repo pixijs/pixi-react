@@ -338,4 +338,27 @@ describe('reconciler', () => {
       expect(createInstanceMock.all.map(([ins]) => ins)).toEqual(['Text', 'Text', 'Text'])
     })
   })
+
+  describe('emits request render', () => {
+    let spy = jest.fn()
+
+    beforeEach(() => {
+      spy.mockReset()
+      window.addEventListener('__REACT_PIXI_REQUEST_RENDER__', spy)
+    })
+
+    afterEach(() => {
+      window.removeEventListener('__REACT_PIXI_REQUEST_RENDER__', spy)
+    })
+
+    it('receives request events via `window` object', function () {
+      renderInContainer(
+        <Container>
+          <Text text="one" />
+        </Container>
+      )
+
+      expect(spy).toHaveBeenCalled()
+    })
+  })
 })

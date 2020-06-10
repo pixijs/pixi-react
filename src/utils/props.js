@@ -153,9 +153,12 @@ export function applyDefaultProps(instance, oldProps, newProps) {
     const prop = props[i]
     const value = newProps[prop]
 
+    if (newProps[prop] !== oldProps[prop]) {
+      changed = true
+    }
+
     if (!isNil(value)) {
       // set value if defined
-      changed = true
       setValue(instance, prop, value)
     } else if (!isNil(instance[prop]) && prop in PROPS_DISPLAY_OBJECT) {
       // is a default value, use that

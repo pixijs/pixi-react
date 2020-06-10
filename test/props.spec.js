@@ -85,34 +85,43 @@ describe('props', () => {
 
     test('call removeListener', () => {
       const spy = jest.spyOn(instance, 'removeListener')
-      applyDefaultProps(instance, { click: fn }, {})
+      const changed = applyDefaultProps(instance, { click: fn }, {})
       expect(spy).toHaveBeenCalledTimes(1)
       expect(spy).toHaveBeenCalledWith('click', fn)
+      expect(changed).toBeTruthy()
     })
 
     test('call on', () => {
       const spy = jest.spyOn(instance, 'on')
-      applyDefaultProps(instance, {}, { click: fn })
+      const changed = applyDefaultProps(instance, {}, { click: fn })
       expect(spy).toHaveBeenCalledTimes(1)
       expect(spy).toHaveBeenCalledWith('click', fn)
+      expect(changed).toBeTruthy()
+    })
+
+    test('should get change value', () => {
+      expect(applyDefaultProps(instance, { x: 0 }, { x: 1 })).toBeTruthy()
+      expect(applyDefaultProps(instance, { x: 0 }, { x: 0 })).toBeFalsy()
     })
 
     test('removes old and add new listener', () => {
-      applyDefaultProps(instance, {}, { click: fn })
+      let changed = applyDefaultProps(instance, {}, { click: fn })
 
       instance.emit('click', instance)
       instance.emit('click', instance)
       expect(fn).toHaveBeenCalledTimes(2)
       expect(fn).toHaveBeenCalledWith(instance)
+      expect(changed).toBeTruthy()
 
       const newFn = jest.fn()
       fn.mockClear()
 
-      applyDefaultProps(instance, { click: fn }, { click: newFn })
+      changed = applyDefaultProps(instance, { click: fn }, { click: newFn })
       instance.emit('click', instance)
       expect(fn).toHaveBeenCalledTimes(0)
       expect(newFn).toHaveBeenCalledTimes(1)
       expect(newFn).toHaveBeenCalledWith(instance)
+      expect(changed).toBeTruthy()
     })
 
     test('prevent teardown/setup on same values', () => {
@@ -140,21 +149,24 @@ describe('props', () => {
     })
 
     test('skip reserved props', () => {
-      applyDefaultProps(instance, {}, { children: [1, 2, 3], worldAlpha: 0 })
+      const changed = applyDefaultProps(instance, {}, { children: [1, 2, 3], worldAlpha: 0 })
       expect(instance.children).toEqual([])
       expect(instance.worldAlpha).toEqual(1)
+      expect(changed).toBeFalsy()
     })
 
     test('set prop on instance', () => {
-      applyDefaultProps(instance, {}, { foo: 'bar', alpha: 0.5 })
+      const changed = applyDefaultProps(instance, {}, { foo: 'bar', alpha: 0.5 })
       expect(instance.foo).toEqual('bar')
       expect(instance.alpha).toEqual(0.5)
+      expect(changed).toBeTruthy()
     })
 
     test('set back to default value', () => {
       instance.alpha = 10
-      applyDefaultProps(instance, {}, { alpha: null })
+      const changed = applyDefaultProps(instance, {}, { alpha: null })
       expect(instance.alpha).toEqual(1)
+      expect(changed).toBeTruthy()
     })
   })
 })

@@ -112,9 +112,7 @@ const HostConfig = {
     // noop
   },
 
-  createInstance(...args) {
-    return createElement.apply(null, args)
-  },
+  createInstance: createElement,
 
   hideInstance(instance) {
     instance.visible = false
@@ -123,10 +121,6 @@ const HostConfig = {
   unhideInstance(instance, props) {
     const visible = props !== undefined && props !== null && props.hasOwnProperty('visible') ? props.visible : true
     instance.visible = visible
-  },
-
-  appendInitialChild(...args) {
-    return appendChild.apply(null, args)
   },
 
   finalizeInitialChildren(wordElement, type, props) {
@@ -171,13 +165,9 @@ const HostConfig = {
     // noop
   },
 
-  scheduleTimeout: (...args) => {
-    return setTimeout.apply(null, args)
-  },
+  scheduleTimeout: setTimeout,
 
-  cancelTimeout: (...args) => {
-    return clearTimeout.apply(null, args)
-  },
+  cancelTimeout: clearTimeout,
 
   noTimeout: -1,
 
@@ -199,28 +189,42 @@ const HostConfig = {
    * -------------------------------------------
    */
 
+  appendInitialChild(...args) {
+    const res = appendChild.apply(null, args)
+    window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'appendInitialChild' }))
+    return res
+  },
+
   appendChild(...args) {
-    return appendChild.apply(null, args)
+    const res = appendChild.apply(null, args)
+    window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'appendChild' }))
+    return res
   },
 
   appendChildToContainer(...args) {
-    return appendChild.apply(null, args)
+    const res = appendChild.apply(null, args)
+    window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'appendChildToContainer' }))
+    return res
   },
 
   removeChild(...args) {
-    return removeChild.apply(null, args)
+    const res = removeChild.apply(null, args)
+    window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'removeChild' }))
+    return res
   },
 
   removeChildFromContainer(...args) {
-    return removeChild.apply(null, args)
+    const res = removeChild.apply(null, args)
+    window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'removeChildFromContainer' }))
+    return res
   },
 
-  insertBefore(...args) {
-    return insertBefore.apply(null, args)
-  },
+  insertBefore,
 
   insertInContainerBefore(...args) {
-    return insertBefore.apply(null, args)
+    const res = insertBefore.apply(null, args)
+    window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'insertInContainerBefore' }))
+    return res
   },
 
   commitUpdate(instance, updatePayload, type, oldProps, newProps) {
@@ -231,7 +235,7 @@ const HostConfig = {
 
     const changed = applyProps(instance, oldProps, newProps)
     if (changed || prepareChanged) {
-      window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`))
+      window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'commitUpdate' }))
     }
   },
 

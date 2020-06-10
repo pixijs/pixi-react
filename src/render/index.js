@@ -12,41 +12,39 @@ export const roots = new Map()
  * @param {*} element
  * @param {PIXI.Container} container (i.e. the Stage)
  * @param {Function} callback
- * @param eventsMap
  */
-export function render(element, container, callback = undefined, eventsMap = {}) {
+export function render(element, container, callback = undefined) {
   invariant(
     Container.prototype.isPrototypeOf(container),
     'Invalid argument `container`, expected instance of `PIXI.Container`.'
   )
 
   let root = roots.get(container)
-  let fiber = PixiFiber(eventsMap)
 
   if (!root) {
     // get the flushed fiber container
-    root = fiber.createContainer(container)
+    root = PixiFiber.createContainer(container)
     roots.set(container, root)
   }
 
   // schedules a top level update
-  fiber.updateContainer(element, root, undefined, callback)
+  PixiFiber.updateContainer(element, root, undefined, callback)
 
   // inject into react devtools
-  injectDevtools(fiber)
+  injectDevtools()
 
   // return the root instance
-  return fiber.getPublicRootInstance(root)
+  return PixiFiber.getPublicRootInstance(root)
 }
 
 /**
  * Inject into React Devtools
  */
-export function injectDevtools(fiber) {
-  fiber.injectIntoDevTools({
+export function injectDevtools() {
+  PixiFiber.injectIntoDevTools({
     bundleType: process.env.NODE_ENV !== 'production' ? 1 : 0,
     version: REACT_DOM_VERSION,
     rendererPackageName: PACKAGE_NAME,
-    findHostInstanceByFiber: fiber.findHostInstance,
+    findHostInstanceByFiber: PixiFiber.findHostInstance,
   })
 }

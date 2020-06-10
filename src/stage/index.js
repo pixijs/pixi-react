@@ -111,7 +111,7 @@ class Stage extends React.Component {
 
   componentDidMount() {
     const { onMount, width, height, options, raf, renderOnComponentChange } = this.props
-    this._fiber = PixiFiber({ commitUpdate: () => this.renderStage() })
+    this._fiber = PixiFiber
 
     this.app = new Application({
       width,

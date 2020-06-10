@@ -55,6 +55,11 @@ export const PROPS_DISPLAY_OBJECT = {
  * @returns {PIXI.Texture|null}
  */
 export const getTextureFromProps = (elementType, props = {}) => {
+  const emitChange = () =>
+    requestAnimationFrame(() => {
+      window.dispatchEvent(new CustomEvent('__REACT_PIXI_REQUEST_RENDER__'))
+    })
+
   const check = (inType, validator) => {
     if (props.hasOwnProperty(inType)) {
       const valid =
@@ -78,7 +83,16 @@ export const getTextureFromProps = (elementType, props = {}) => {
       })
 
     invariant(!!result, `${elementType} could not get texture from props`)
-    return Texture.from(result)
+
+    const texture = Texture.from(result)
+    texture.once('update', emitChange)
+    texture.once('loaded', emitChange)
+
+    if (texture.valid) {
+      emitChange()
+    }
+
+    return texture
   }
 }
 

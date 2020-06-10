@@ -1,32 +1,22 @@
-import React, { useRef, useEffect, useCallback } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import * as PIXI from 'pixi.js'
 import renderer from 'react-test-renderer'
 import * as reactTest from '@testing-library/react'
-import { PixiFiber, PACKAGE_NAME, REACT_DOM_VERSION } from '../src/reconciler'
-import { Stage, Container, Text } from '../src'
+import { PixiFiber } from '../src/reconciler'
+import { Container, Stage, Text } from '../src'
 import { Context } from '../src/stage/provider'
 import { useTick } from '../src/hooks'
 import { getCanvasProps } from '../src/stage'
+import { mockToSpy } from './__utils__/mock'
 
 jest.mock('../src/reconciler')
 jest.useFakeTimers()
 
 describe('stage', () => {
-  let spies
-
   beforeEach(() => {
     window.matchMedia.mockClear()
-
-    spies = {}
-
-    PixiFiber.mockImplementation(() => {
-      if (Object.keys(spies).length > 0) return spies
-      const pf = jest.requireActual('../src/reconciler').PixiFiber()
-      Object.keys(pf).forEach(k => {
-        spies[k] = typeof pf[k] === 'function' ? jest.fn(pf[k]) : pf[k]
-      })
-      return spies
-    })
+    jest.clearAllMocks()
+    mockToSpy('../src/reconciler')
   })
 
   test('filter out reserved props from getCanvasProps', () => {
@@ -157,8 +147,8 @@ describe('stage', () => {
     const el = renderer.create(<Stage />)
     const stage = el.getInstance().app.stage
 
-    expect(spies.createContainer).toHaveBeenCalledTimes(1)
-    expect(spies.createContainer).toHaveBeenCalledWith(stage)
+    expect(PixiFiber.createContainer).toHaveBeenCalledTimes(1)
+    expect(PixiFiber.createContainer).toHaveBeenCalledWith(stage)
   })
 
   test('call PixiFiber.updateContainer on componentDidMount', () => {
@@ -170,8 +160,8 @@ describe('stage', () => {
 
     const instance = el.getInstance()
 
-    expect(spies.updateContainer).toHaveBeenCalledTimes(1)
-    expect(spies.updateContainer).toHaveBeenCalledWith(
+    expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1)
+    expect(PixiFiber.updateContainer).toHaveBeenCalledWith(
       <Context.Provider value={instance.app}>
         <Text text="Hello World!" />
       </Context.Provider>,
@@ -183,28 +173,28 @@ describe('stage', () => {
   test('call PixiFiber.injectIntoDevtools on componentDidMount', () => {
     renderer.create(<Stage />)
 
-    expect(spies.injectIntoDevTools).toHaveBeenCalledTimes(1)
-    expect(spies.injectIntoDevTools.mock.calls).toMatchSnapshot()
+    expect(PixiFiber.injectIntoDevTools).toHaveBeenCalledTimes(1)
+    expect(PixiFiber.injectIntoDevTools.mock.calls).toMatchSnapshot()
   })
 
   test('call PixiFiber.updateContainer on componentDidUpdate', () => {
     const el = renderer.create(<Stage />)
 
-    spies.updateContainer.mockClear()
+    PixiFiber.updateContainer.mockClear()
     el.update(<Stage />)
 
-    expect(spies.updateContainer).toHaveBeenCalledTimes(1)
+    expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1)
   })
 
   test('call PixiFiber.updateContainer on componentWillUnmount', () => {
     const el = renderer.create(<Stage />)
     const instance = el.getInstance()
 
-    spies.updateContainer.mockClear()
+    PixiFiber.updateContainer.mockClear()
     el.unmount()
 
-    expect(spies.updateContainer).toHaveBeenCalledTimes(1)
-    expect(spies.updateContainer).toHaveBeenCalledWith(null, instance.mountNode, instance)
+    expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1)
+    expect(PixiFiber.updateContainer).toHaveBeenCalledWith(null, instance.mountNode, instance)
   })
 
   describe('pixi application', () => {
@@ -237,8 +227,11 @@ describe('stage', () => {
       const app = el.getInstance().app
 
       jest.spyOn(app.renderer, 'render')
-      el.update(<Stage raf={false} />)
 
+      el.update(<Stage raf={false} />)
+      expect(app.renderer.render).toHaveBeenCalledTimes(0)
+
+      el.update(<Stage raf={false} options={{ backgroundColor: 0xff0000 }} />)
       expect(app.renderer.render).toHaveBeenCalledTimes(1)
     })
 
@@ -262,7 +255,9 @@ describe('stage', () => {
       )
 
       const app = el.getInstance().app
-      jest.spyOn(app.renderer, 'render')
+      const spy = jest.spyOn(app.renderer, 'render')
+
+      console.log(spy.mock.calls.length)
 
       for (let i = 1; i <= 10; i++) {
         el.update(
@@ -274,7 +269,7 @@ describe('stage', () => {
         )
       }
 
-      expect(app.renderer.render).toBeCalledTimes(10)
+      expect(spy).toBeCalledTimes(11)
     })
   })
 

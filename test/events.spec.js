@@ -2,9 +2,10 @@ import React from 'react'
 import * as PIXI from 'pixi.js'
 
 import hostconfig from '../src/reconciler/hostconfig'
-import {createElement} from "../src/utils/element";
+import { createElement } from '../src/utils/element'
 import { Text, Container, render, eventHandlers } from '../src'
 import { roots } from '../src/render'
+import { mockToSpy } from './__utils__/mock'
 
 const CUSTOM_EVENT = 'customEvent'
 const NOT_CUSTOM_EVENT = 'notCustomEvent'
@@ -23,19 +24,13 @@ describe('react', () => {
 
   beforeEach(() => {
     instances = []
-    jest.resetAllMocks()
+    jest.clearAllMocks()
+    mockToSpy('../src/reconciler/hostconfig')
 
-    // mock the createInstance
-    hostconfig.mockImplementation(() => {
-      const hs = jest.requireActual('../src/reconciler/hostconfig').default()
-
-      hs.createInstance = (...args) => {
-        const createdInstance = createElement(...args);
-        instances.push(createdInstance)
-        return createdInstance
-      }
-
-      return hs
+    hostconfig.createInstance.mockImplementation((...args) => {
+      const ins = createElement(...args)
+      instances.push(ins)
+      return ins
     })
   })
 

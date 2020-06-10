@@ -1,6 +1,6 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
-import { withFilters } from '../src/hoc/withFilters'
+import { withFilters } from '../src/hoc'
 import { Container } from '../src'
 
 class BlurFilter {

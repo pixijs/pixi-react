@@ -105,13 +105,11 @@ export function getCanvasProps(props) {
 
 class Stage extends React.Component {
   _canvas = null
-  _fiber = null
   _mediaQuery = null
   app = null
 
   componentDidMount() {
     const { onMount, width, height, options, raf, renderOnComponentChange } = this.props
-    this._fiber = PixiFiber
 
     this.app = new Application({
       width,
@@ -124,10 +122,10 @@ class Stage extends React.Component {
     this.app.ticker.autoStart = false
     this.app.ticker[raf ? 'start' : 'stop']()
 
-    this.mountNode = this._fiber.createContainer(this.app.stage)
-    this._fiber.updateContainer(this.getChildren(), this.mountNode, this)
+    this.mountNode = PixiFiber.createContainer(this.app.stage)
+    PixiFiber.updateContainer(this.getChildren(), this.mountNode, this)
 
-    injectDevtools(this._fiber)
+    injectDevtools()
 
     onMount(this.app)
 
@@ -149,7 +147,7 @@ class Stage extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, prevContext) {
-    const { width, height, raf, options } = this.props
+    const { width, height, raf, renderOnComponentChange, options } = this.props
 
     // update resolution
     if (options?.resolution && prevProps?.options.resolution !== options?.resolution) {
@@ -172,8 +170,17 @@ class Stage extends React.Component {
     }
 
     // flush fiber
-    this._fiber.updateContainer(this.getChildren(), this.mountNode, this)
-    this.renderStage()
+    PixiFiber.updateContainer(this.getChildren(), this.mountNode, this)
+
+    if (
+      prevProps.width !== width ||
+      prevProps.height !== height ||
+      prevProps.raf !== raf ||
+      prevProps.renderOnComponentChange !== renderOnComponentChange ||
+      prevProps.options !== options
+    ) {
+      this.renderStage()
+    }
   }
 
   updateSize = () => {
@@ -220,7 +227,7 @@ class Stage extends React.Component {
 
     window.removeEventListener('__REACT_PIXI_REQUEST_RENDER__', this.renderStage)
 
-    this._fiber.updateContainer(null, this.mountNode, this)
+    PixiFiber.updateContainer(null, this.mountNode, this)
     this._mediaQuery?.removeListener(this.updateSize)
     this._mediaQuery = null
     this.renderStage()

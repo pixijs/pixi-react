@@ -149,8 +149,7 @@ class Stage extends React.Component {
     // update resolution
     if (options?.resolution && prevProps?.options.resolution !== options?.resolution) {
       this.app.renderer.resolution = options.resolution
-      this.app.renderer.plugins.interaction.destroy()
-      this.app.renderer.plugins.interaction = new interaction.InteractionManager(this.app.renderer)
+      this.resetInteractionManager()
     }
 
     // update size
@@ -177,8 +176,7 @@ class Stage extends React.Component {
 
     if (!options?.resolution) {
       this.app.renderer.resolution = window.devicePixelRatio
-      this.app.renderer.plugins.interaction.destroy()
-      this.app.renderer.plugins.interaction = new interaction.InteractionManager(this.app.renderer)
+      this.resetInteractionManager()
     }
 
     this.app.renderer.resize(width, height)
@@ -187,6 +185,12 @@ class Stage extends React.Component {
       this.app.view.style.width = width + 'px'
       this.app.view.style.height = height + 'px'
     }
+  }
+
+
+  resetInteractionManager() {
+    this.app.renderer.plugins.interaction.destroy()
+    this.app.renderer.plugins.interaction = new interaction.InteractionManager(this.app.renderer)
   }
 
   getChildren() {

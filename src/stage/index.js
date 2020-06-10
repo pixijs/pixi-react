@@ -139,6 +139,11 @@ class Stage extends React.Component {
       this._mediaQuery.addListener(this.updateSize)
     }
 
+    if (renderOnComponentChange && !raf) {
+      // listen for reconciler changes
+      window.addEventListener('__REACT_PIXI_REQUEST_RENDER__', this.renderStage)
+    }
+
     this.updateSize()
     this.renderStage()
   }
@@ -187,6 +192,12 @@ class Stage extends React.Component {
     }
   }
 
+  renderStage = () => {
+    const { renderOnComponentChange, raf } = this.props
+    if (!raf && renderOnComponentChange) {
+      this.app.renderer.render(this.app.stage)
+    }
+  }
 
   resetInteractionManager() {
     this.app.renderer.plugins.interaction.destroy()
@@ -204,16 +215,10 @@ class Stage extends React.Component {
     console.error(errorInfo)
   }
 
-  renderStage() {
-    const { renderOnComponentChange, raf } = this.props
-
-    if (!raf && renderOnComponentChange) {
-      this.app.renderer.render(this.app.stage)
-    }
-  }
-
   componentWillUnmount() {
     this.props.onUnmount(this.app)
+
+    window.removeEventListener('__REACT_PIXI_REQUEST_RENDER__', this.renderStage)
 
     this._fiber.updateContainer(null, this.mountNode, this)
     this._mediaQuery?.removeListener(this.updateSize)

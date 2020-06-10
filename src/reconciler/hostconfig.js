@@ -85,203 +85,171 @@ function diffProperties(pixiElement, type, lastProps, nextProps, rootContainerEl
   return updatePayload
 }
 
-const HostConfig = (eventsMap = {}) => {
-  const callEvent = (event, ...value) => {
-    if (eventsMap[event]) {
-      eventsMap[event](...value)
+let prepareChanged = null
+
+const HostConfig = {
+  getRootHostContext(rootContainerInstance) {
+    return rootContainerInstance
+  },
+
+  getChildHostContext() {
+    return {}
+  },
+
+  getChildHostContextForEventComponent(parentHostContext) {
+    return parentHostContext
+  },
+
+  getPublicInstance(instance) {
+    return instance
+  },
+
+  prepareForCommit() {
+    // noop
+  },
+
+  resetAfterCommit() {
+    // noop
+  },
+
+  createInstance: createElement,
+
+  hideInstance(instance) {
+    instance.visible = false
+  },
+
+  unhideInstance(instance, props) {
+    const visible = props !== undefined && props !== null && props.hasOwnProperty('visible') ? props.visible : true
+    instance.visible = visible
+  },
+
+  finalizeInitialChildren(wordElement, type, props) {
+    return false
+  },
+
+  prepareUpdate(pixiElement, type, oldProps, newProps, rootContainerInstance, hostContext) {
+    prepareChanged = diffProperties(pixiElement, type, oldProps, newProps, rootContainerInstance)
+    return prepareChanged
+  },
+
+  shouldSetTextContent(type, props) {
+    return false
+  },
+
+  shouldDeprioritizeSubtree(type, props) {
+    const isAlphaVisible = typeof props.alpha === 'undefined' || props.alpha > 0
+    const isRenderable = typeof props.renderable === 'undefined' || props.renderable === true
+    const isVisible = typeof props.visible === 'undefined' || props.visible === true
+
+    return !(isAlphaVisible && isRenderable && isVisible)
+  },
+
+  createTextInstance(text, rootContainerInstance, internalInstanceHandler) {
+    invariant(
+      false,
+      'react-pixi: PixiFiber does not support text nodes as children of a Pixi component. ' +
+        'To pass a string value to your component, use a property other than children. ' +
+        'If you wish to display some text, you can use &lt;Text text={string} /&gt; instead.'
+    )
+  },
+
+  mountEventComponent() {
+    // noop
+  },
+
+  updateEventComponent() {
+    // noop
+  },
+
+  handleEventTarget() {
+    // noop
+  },
+
+  scheduleTimeout: setTimeout,
+
+  cancelTimeout: clearTimeout,
+
+  noTimeout: -1,
+
+  warnsIfNotActing: false,
+
+  now: performanceNow,
+
+  isPrimaryRenderer: false,
+
+  supportsMutation: true,
+
+  supportsPersistence: false,
+
+  supportsHydration: false,
+
+  /**
+   * -------------------------------------------
+   * Mutation
+   * -------------------------------------------
+   */
+
+  appendInitialChild(...args) {
+    const res = appendChild.apply(null, args)
+    window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'appendInitialChild' }))
+    return res
+  },
+
+  appendChild(...args) {
+    const res = appendChild.apply(null, args)
+    window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'appendChild' }))
+    return res
+  },
+
+  appendChildToContainer(...args) {
+    const res = appendChild.apply(null, args)
+    window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'appendChildToContainer' }))
+    return res
+  },
+
+  removeChild(...args) {
+    const res = removeChild.apply(null, args)
+    window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'removeChild' }))
+    return res
+  },
+
+  removeChildFromContainer(...args) {
+    const res = removeChild.apply(null, args)
+    window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'removeChildFromContainer' }))
+    return res
+  },
+
+  insertBefore,
+
+  insertInContainerBefore(...args) {
+    const res = insertBefore.apply(null, args)
+    window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'insertInContainerBefore' }))
+    return res
+  },
+
+  commitUpdate(instance, updatePayload, type, oldProps, newProps) {
+    let applyProps = instance && instance.applyProps
+    if (typeof applyProps !== 'function') {
+      applyProps = applyDefaultProps
     }
-  }
 
-  return {
-    getRootHostContext(rootContainerInstance) {
-      callEvent('getRootHostContext', rootContainerInstance)
-      return rootContainerInstance
-    },
+    const changed = applyProps(instance, oldProps, newProps)
+    if (changed || prepareChanged) {
+      window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'commitUpdate' }))
+    }
+  },
 
-    getChildHostContext() {
-      callEvent('getChildHostContext', {})
-      return {}
-    },
+  commitMount(instance, updatePayload, type, oldProps, newProps) {
+    // noop
+  },
 
-    getChildHostContextForEventComponent(parentHostContext) {
-      callEvent('getChildHostContextForEventComponent', parentHostContext)
-      return parentHostContext
-    },
+  commitTextUpdate(textInstance, oldText, newText) {
+    // noop
+  },
 
-    getPublicInstance(instance) {
-      callEvent('getPublicInstance', instance)
-      return instance
-    },
-
-    prepareForCommit() {
-      callEvent('prepareForCommit')
-      // noop
-    },
-
-    resetAfterCommit() {
-      callEvent('resetAfterCommit')
-      // noop
-    },
-
-    createInstance(...args) {
-      const result = createElement.apply(null, args)
-      callEvent('createInstance', result)
-      return result
-    },
-
-    hideInstance(instance) {
-      instance.visible = false
-      callEvent('hideInstance', false)
-    },
-
-    unhideInstance(instance, props) {
-      const visible = props !== undefined && props !== null && props.hasOwnProperty('visible') ? props.visible : true
-      instance.visible = visible
-
-      callEvent('unhideInstance', visible)
-    },
-
-    appendInitialChild(...args) {
-      const result = appendChild.apply(null, args)
-      callEvent('appendInitialChild', result)
-      return result
-    },
-
-    finalizeInitialChildren(wordElement, type, props) {
-      callEvent('finalizeInitialChildren', false)
-      return false
-    },
-
-    prepareUpdate(pixiElement, type, oldProps, newProps, rootContainerInstance, hostContext) {
-      const result = diffProperties(pixiElement, type, oldProps, newProps, rootContainerInstance)
-      callEvent('prepareUpdate', result)
-      return result
-    },
-
-    shouldSetTextContent(type, props) {
-      callEvent('shouldSetTextContent', false)
-      return false
-    },
-
-    shouldDeprioritizeSubtree(type, props) {
-      const isAlphaVisible = typeof props.alpha === 'undefined' || props.alpha > 0
-      const isRenderable = typeof props.renderable === 'undefined' || props.renderable === true
-      const isVisible = typeof props.visible === 'undefined' || props.visible === true
-
-      const result = !(isAlphaVisible && isRenderable && isVisible)
-      callEvent('shouldDeprioritizeSubtree', result)
-      return result
-    },
-
-    createTextInstance(text, rootContainerInstance, internalInstanceHandler) {
-      invariant(
-        false,
-        'react-pixi: PixiFiber does not support text nodes as children of a Pixi component. ' +
-          'To pass a string value to your component, use a property other than children. ' +
-          'If you wish to display some text, you can use &lt;Text text={string} /&gt; instead.'
-      )
-      callEvent('createTextInstance')
-    },
-
-    mountEventComponent() {
-      callEvent('mountEventComponent')
-      // noop
-    },
-
-    updateEventComponent() {
-      callEvent('updateEventComponent')
-      // noop
-    },
-
-    handleEventTarget() {
-      callEvent('handleEventTarget')
-      // noop
-    },
-
-    scheduleTimeout: (...args) => {
-      callEvent('scheduleTimeout')
-      return setTimeout.apply(null, args)
-    },
-
-    cancelTimeout: (...args) => {
-      callEvent('cancelTimeout')
-      return clearTimeout.apply(null, args)
-    },
-
-    noTimeout: -1,
-
-    warnsIfNotActing: false,
-
-    now: performanceNow,
-
-    isPrimaryRenderer: false,
-
-    supportsMutation: true,
-
-    supportsPersistence: false,
-
-    supportsHydration: false,
-
-    /**
-     * -------------------------------------------
-     * Mutation
-     * -------------------------------------------
-     */
-
-    appendChild(...args) {
-      callEvent('appendChild', ...args)
-      return appendChild.apply(null, args)
-    },
-
-    appendChildToContainer(...args) {
-      callEvent('appendChildToContainer', ...args)
-      return appendChild.apply(null, args)
-    },
-
-    removeChild(...args) {
-      callEvent('removeChild', ...args)
-      return removeChild.apply(null, args)
-    },
-
-    removeChildFromContainer(...args) {
-      callEvent('removeChildFromContainer', ...args)
-      return removeChild.apply(null, args)
-    },
-
-    insertBefore(...args) {
-      callEvent('insertBefore', ...args)
-      return insertBefore.apply(null, args)
-    },
-
-    insertInContainerBefore(...args) {
-      callEvent('insertInContainerBefore', ...args)
-      return insertBefore.apply(null, args)
-    },
-
-    commitUpdate(instance, updatePayload, type, oldProps, newProps) {
-      let applyProps = instance && instance.applyProps
-      if (typeof applyProps !== 'function') {
-        applyProps = applyDefaultProps
-      }
-      applyProps(instance, oldProps, newProps)
-      callEvent('commitUpdate')
-    },
-
-    commitMount(instance, updatePayload, type, oldProps, newProps) {
-      callEvent('commitMount')
-      // noop
-    },
-
-    commitTextUpdate(textInstance, oldText, newText) {
-      callEvent('commitTextUpdate')
-      // noop
-    },
-
-    resetTextContent(pixiElement) {
-      callEvent('resetTextContent', pixiElement)
-      // noop
-    },
-  }
+  resetTextContent(pixiElement) {
+    // noop
+  },
 }
 
 export default HostConfig

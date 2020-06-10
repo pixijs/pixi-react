@@ -3,7 +3,7 @@ import React from 'react'
 import Stage from '../src/stage'
 import { AppConsumer, AppProvider, Container, Text, withPixiApp } from '../src'
 import { render, roots } from '../src/render'
-import { PACKAGE_NAME, PixiFiber, REACT_DOM_VERSION } from '../src/reconciler'
+import { PixiFiber } from '../src/reconciler'
 
 const app = new PIXI.Application()
 const callback = jest.fn()
@@ -13,26 +13,24 @@ const element = () => (
   </Stage>
 )
 
-jest.mock('../src/reconciler')
+jest.mock('../src/reconciler', () => ({
+  ...jest.requireActual('../src/reconciler'),
+  PixiFiber: {
+    ...jest.requireActual('../src/reconciler').PixiFiber,
+    createContainer: jest.fn(),
+    updateContainer: jest.fn(),
+    getPublicInstance: jest.fn(),
+    injectIntoDevTools: jest.fn(),
+  },
+}))
 
 describe('render', () => {
-  let spies
-
   beforeEach(() => {
     roots.clear()
-    jest.resetAllMocks()
+    jest.clearAllMocks()
 
-    spies = {
-      createContainer: jest.fn(),
-      updateContainer: jest.fn(),
-      getPublicInstance: jest.fn(),
-      injectIntoDevTools: jest.fn(),
-    }
-
-    PixiFiber.mockImplementation(() => ({ ...jest.requireActual('../src/reconciler').PixiFiber(), ...spies }))
-
-    spies.createContainer.mockReturnValue({ current: { child: { tag: 'TEXT' } } })
-    spies.updateContainer.mockImplementation((element, root, _, c) => c())
+    PixiFiber.createContainer.mockReturnValue({ current: { child: { tag: 'TEXT' } } })
+    PixiFiber.updateContainer.mockImplementation((element, root, _, c) => c())
   })
 
   test('invariant container', () => {
@@ -43,23 +41,23 @@ describe('render', () => {
 
   test('call createContainer', () => {
     render(element, app.stage, callback)
-    expect(spies.createContainer).toHaveBeenCalledTimes(1)
-    expect(spies.createContainer).toHaveBeenLastCalledWith(app.stage)
+    expect(PixiFiber.createContainer).toHaveBeenCalledTimes(1)
+    expect(PixiFiber.createContainer).toHaveBeenLastCalledWith(app.stage)
   })
 
   test('call updateContainer', () => {
     render(element, app.stage, callback)
     const root = roots.values().next().value
 
-    expect(spies.updateContainer).toHaveBeenCalledTimes(1)
-    expect(spies.updateContainer).toHaveBeenLastCalledWith(element, root, undefined, callback)
+    expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1)
+    expect(PixiFiber.updateContainer).toHaveBeenLastCalledWith(element, root, undefined, callback)
   })
 
   test('call injectDevtools', () => {
     render(element, app.stage, callback)
 
-    expect(spies.injectIntoDevTools).toHaveBeenCalledTimes(1)
-    expect(spies.injectIntoDevTools.mock.calls).toMatchSnapshot()
+    expect(PixiFiber.injectIntoDevTools).toHaveBeenCalledTimes(1)
+    expect(PixiFiber.injectIntoDevTools.mock.calls).toMatchSnapshot()
   })
 
   test('invoke callback in updateContainer', () => {
@@ -77,14 +75,15 @@ describe('render', () => {
     roots.set(app.stage, root)
 
     render(element, app.stage, callback)
-    expect(spies.createContainer).toHaveBeenCalledTimes(0)
+    expect(PixiFiber.createContainer).toHaveBeenCalledTimes(0)
   })
 
   describe('passdown `PIXI.Application`', () => {
     beforeEach(() => {
-      const pf = jest.requireActual('../src/reconciler').PixiFiber()
-      spies.createContainer.mockImplementation(pf.createContainer)
-      spies.updateContainer.mockImplementation(pf.updateContainer)
+      const PF = jest.requireActual('../src/reconciler').PixiFiber
+
+      PixiFiber.createContainer.mockImplementation(PF.createContainer)
+      PixiFiber.updateContainer.mockImplementation(PF.updateContainer)
     })
 
     test('via `AppConsumer`', () => {

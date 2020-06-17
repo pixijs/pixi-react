@@ -96,6 +96,8 @@ const defaultProps = {
   renderOnComponentChange: true,
 }
 
+const hasAutoDensity = dens => dens !== false
+
 export function getCanvasProps(props) {
   const reserved = [...Object.keys(propTypes), ...Object.keys(PROPS_DISPLAY_OBJECT)]
 
@@ -130,7 +132,7 @@ class Stage extends React.Component {
 
     onMount(this.app)
 
-    if (options?.autoDensity && window.matchMedia && !options?.resolution) {
+    if (hasAutoDensity(options?.autoDensity) && window.matchMedia && !options?.resolution) {
       this._mediaQuery = window.matchMedia(`
         (-webkit-min-device-pixel-ratio: 1.3),
         (min-resolution: 120dpi)
@@ -194,7 +196,7 @@ class Stage extends React.Component {
 
     this.app.renderer.resize(width, height)
 
-    if (options?.autoDensity) {
+    if (hasAutoDensity(options?.autoDensity)) {
       this.app.view.style.width = width + 'px'
       this.app.view.style.height = height + 'px'
     }

@@ -2,7 +2,7 @@ import { AnimatedSprite as PixiAnimatedSprite } from 'pixi.js'
 import { getTextureFromProps, applyDefaultProps } from '../utils/props'
 
 const AnimatedSprite = (root, props) => {
-  const { textures, images, autoUpdate, isPlaying = true, initialFrame } = props
+  const { textures, images, isPlaying = true, initialFrame } = props
   const makeTexture = textures => textures.map(texture => getTextureFromProps('AnimatedSprite', { texture }))
 
   const animatedSprite = images ? PixiAnimatedSprite.fromImages(images) : new PixiAnimatedSprite(makeTexture(textures))

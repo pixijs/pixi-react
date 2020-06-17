@@ -15,15 +15,16 @@ const noop = () => {}
  *
  * @usage
  *
- *    const App = () => (
- *      <Stage width={500}
- *             height={500}
- *             options={ backgroundColor: 0xff0000 }
- *             onMount={( renderer, canvas ) => {
- *               console.log('PIXI renderer: ', renderer)
- *               console.log('Canvas element: ', canvas)
- *             }}>
- *    )
+ * const App = () => (
+ *   <Stage
+ *     width={500}
+ *     height={500}
+ *     options={ backgroundColor: 0xff0000 }
+ *     onMount={( renderer, canvas ) => {
+ *       console.log('PIXI renderer: ', renderer)
+ *       console.log('Canvas element: ', canvas)
+ *     }}>
+ * );
  *
  * -------------------------------------------
  */
@@ -228,8 +229,12 @@ class Stage extends React.Component {
     window.removeEventListener('__REACT_PIXI_REQUEST_RENDER__', this.renderStage)
 
     PixiFiber.updateContainer(null, this.mountNode, this)
-    this._mediaQuery?.removeListener(this.updateSize)
-    this._mediaQuery = null
+
+    if (this._mediaQuery) {
+      this._mediaQuery.removeListener(this.updateSize)
+      this._mediaQuery = null
+    }
+
     this.renderStage()
     this.app.destroy()
   }

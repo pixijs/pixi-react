@@ -1,6 +1,6 @@
 import invariant from 'fbjs/lib/invariant'
 import { Application } from 'pixi.js'
-import React, { useEffect, useContext, useRef } from 'react'
+import { useEffect, useContext, useRef } from 'react'
 import { Context } from '../stage/provider'
 
 function useTick(callback, enabled = true) {

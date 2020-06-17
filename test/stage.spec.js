@@ -425,8 +425,8 @@ describe('stage', () => {
       expect(el.getInstance().app.renderer.resolution).toEqual(3)
     })
 
-    test('styles on canvas should not exist if `autoDensity` is not set', () => {
-      const { unmount, container } = reactTest.render(<Stage width={800} height={600} />)
+    test('styles on canvas should not exist if `autoDensity` is false', () => {
+      const { unmount, container } = reactTest.render(<Stage width={800} height={600} options={{ autoDensity: false }} />)
       expect(container.firstChild.getAttribute('style')).toEqual(null)
       unmount()
     })

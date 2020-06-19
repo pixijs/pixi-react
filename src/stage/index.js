@@ -1,5 +1,5 @@
 import React from 'react'
-import { Application, interaction } from 'pixi.js'
+import { Application, InteractionManager } from 'pixi.js'
 import PropTypes from 'prop-types'
 import invariant from 'fbjs/lib/invariant'
 import { PROPS_DISPLAY_OBJECT } from '../utils/props'
@@ -211,7 +211,7 @@ class Stage extends React.Component {
 
   resetInteractionManager() {
     this.app.renderer.plugins.interaction.destroy()
-    this.app.renderer.plugins.interaction = new interaction.InteractionManager(this.app.renderer)
+    this.app.renderer.plugins.interaction = new InteractionManager(this.app.renderer)
   }
 
   getChildren() {

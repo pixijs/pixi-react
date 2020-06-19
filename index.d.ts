@@ -129,8 +129,8 @@ declare namespace _ReactPixi {
   }
 
   type InteractionEvents = {
-    [P in PIXI.interaction.InteractionEventTypes]?: (
-      event: PIXI.interaction.InteractionEvent
+    [P in PIXI.InteractionEventTypes]?: (
+      event: PIXI.InteractionEvent
     ) => void;
   };
 

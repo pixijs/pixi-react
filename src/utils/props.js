@@ -1,4 +1,3 @@
-import isNil from 'lodash.isnil'
 import invariant from 'fbjs/lib/invariant'
 import { Texture, DisplayObject } from 'pixi.js'
 import { eventHandlers, setValue } from './pixi'
@@ -157,10 +156,10 @@ export function applyDefaultProps(instance, oldProps, newProps) {
       changed = true
     }
 
-    if (!isNil(value)) {
+    if (value !== undefined) {
       // set value if defined
       setValue(instance, prop, value)
-    } else if (!isNil(instance[prop]) && prop in PROPS_DISPLAY_OBJECT) {
+    } else if (prop in PROPS_DISPLAY_OBJECT) {
       // is a default value, use that
       console.warn(`setting default value: ${prop}, from: ${instance[prop]} to: ${value} for`, instance)
       changed = true

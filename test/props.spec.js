@@ -164,7 +164,7 @@ describe('props', () => {
 
     test('set back to default value', () => {
       instance.alpha = 10
-      const changed = applyDefaultProps(instance, {}, { alpha: null })
+      const changed = applyDefaultProps(instance, {}, { alpha: undefined })
       expect(instance.alpha).toEqual(1)
       expect(changed).toBeTruthy()
     })

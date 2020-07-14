@@ -361,7 +361,7 @@ export class Stage extends React.Component<_ReactPixi.IStage> {}
 export const PixiComponent: <Props, PixiInstance extends PIXI.DisplayObject>(
   componentName: string,
   lifecycle: _ReactPixi.ICustomComponent<Props, PixiInstance>
-) => React.ComponentClass<Props>;
+) => React.FC<Props & { ref?: React.Ref<PixiInstance> }>;
 
 /**
  * Tap into the {PIXI.Application} ticker raf.

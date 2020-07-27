@@ -96,8 +96,6 @@ const defaultProps = {
   renderOnComponentChange: true,
 }
 
-const hasAutoDensity = dens => dens !== false
-
 export function getCanvasProps(props) {
   const reserved = [...Object.keys(propTypes), ...Object.keys(PROPS_DISPLAY_OBJECT)]
 
@@ -119,7 +117,6 @@ class Stage extends React.Component {
       height,
       view: this._canvas,
       ...options,
-      autoDensity: false,
     })
 
     this.app.ticker.autoStart = false
@@ -132,16 +129,15 @@ class Stage extends React.Component {
 
     onMount(this.app)
 
-    if (hasAutoDensity(options?.autoDensity) && window.matchMedia && !options?.resolution) {
-      this._mediaQuery = window.matchMedia(`
-        (-webkit-min-device-pixel-ratio: 1.3),
-        (min-resolution: 120dpi)
-      `)
+    // update size on media query resolution change?
+    // only if autoDensity = true
+    if (options?.autoDensity && window.matchMedia && options?.resolution === undefined) {
+      this._mediaQuery = window.matchMedia(`(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 120dpi)`)
       this._mediaQuery.addListener(this.updateSize)
     }
 
+    // listen for reconciler changes
     if (renderOnComponentChange && !raf) {
-      // listen for reconciler changes
       window.addEventListener('__REACT_PIXI_REQUEST_RENDER__', this.renderStage)
     }
 
@@ -153,7 +149,7 @@ class Stage extends React.Component {
     const { width, height, raf, renderOnComponentChange, options } = this.props
 
     // update resolution
-    if (options?.resolution && prevProps?.options.resolution !== options?.resolution) {
+    if (options?.resolution !== undefined && prevProps?.options.resolution !== options?.resolution) {
       this.app.renderer.resolution = options.resolution
       this.resetInteractionManager()
     }
@@ -195,11 +191,6 @@ class Stage extends React.Component {
     }
 
     this.app.renderer.resize(width, height)
-
-    if (hasAutoDensity(options?.autoDensity)) {
-      this.app.view.style.width = width + 'px'
-      this.app.view.style.height = height + 'px'
-    }
   }
 
   renderStage = () => {

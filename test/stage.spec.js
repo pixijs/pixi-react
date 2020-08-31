@@ -458,12 +458,11 @@ describe('stage', () => {
       let el = renderer.create(<Stage width={800} height={600} options={{ resolution: 1 }} />)
 
       const appRenderer = el.getInstance().app.renderer
-      const spyDestroy = jest.spyOn(appRenderer.plugins.interaction, 'destroy')
       const spyResize = jest.spyOn(appRenderer, 'resize')
 
       el = el.update(<Stage width={800} height={600} options={{ resolution: 2 }} />)
 
-      expect(spyDestroy).toHaveBeenCalled()
+      expect(appRenderer.plugins.interaction.resolution).toEqual(2)
       expect(spyResize).toHaveBeenCalledWith(800, 600)
       expect(appRenderer.resolution).toEqual(2)
     })

@@ -11,6 +11,6 @@ const host = createHost(primitives, {
     instance.applyProps(instance, {}, props)
   },
 })
-const animated = host.animated
 
+const animated = host.animated
 export { animated }

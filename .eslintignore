@@ -8,7 +8,7 @@ lib/
 test/
 examples/
 dist/
-react-spring/
+animated/
 docs/
 doczrc.js
 

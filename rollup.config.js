@@ -13,7 +13,7 @@ const format = process.env.FORMAT
 
 function getConfig(dest, format, merge = {}) {
   return {
-    input: 'src/index.js',
+    input: merge.input || 'src/index.js',
     output: {
       exports: 'named',
       file: dest,
@@ -71,7 +71,7 @@ if (format) {
   ;['cjs', 'umd', 'es'].forEach(format => {
     builds.push(
       getConfig(`dist/react-pixi.${format}${buildType}.js`, format, aliasReactSpring),
-      getConfig(`react-spring/react-pixi.${format}${buildType}.js`, format)
+      getConfig(`animated/react-pixi.${format}${buildType}.js`, format, { input: 'src/index-react-spring.js' })
     )
   })
 }

@@ -23,7 +23,7 @@
   },
   "files": [
     "dist/",
-    "animated/",
+    "react-spring/",
     "LICENSE",
     "index.d.ts",
     "index.js",

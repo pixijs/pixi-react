@@ -71,7 +71,7 @@ if (format) {
   ;['cjs', 'umd', 'es'].forEach(format => {
     builds.push(
       getConfig(`dist/react-pixi.${format}${buildType}.js`, format, aliasReactSpring),
-      getConfig(`animated/react-pixi.${format}${buildType}.js`, format)
+      getConfig(`react-spring/react-pixi.${format}${buildType}.js`, format)
     )
   })
 }

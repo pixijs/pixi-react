@@ -23,9 +23,7 @@ function getConfig(dest, format, merge = {}) {
       globals: {
         'pixi.js': 'PIXI',
         react: 'React',
-        '@react-spring/animated': 'Animated',
       },
-
       ...(merge.output || {}),
     },
     plugins: [
@@ -65,11 +63,17 @@ const aliasReactSpring = {
   ],
 }
 
-export default format
-  ? [
+let builds = []
+
+if (format) {
+  builds.push(getConfig(`dist/react-pixi.${format}${buildType}.js`, format, aliasReactSpring))
+} else {
+  ;['cjs', 'umd', 'es'].forEach(format => {
+    builds.push(
       getConfig(`dist/react-pixi.${format}${buildType}.js`, format, aliasReactSpring),
-      getConfig(`dist/react-pixi.react-spring.${format}${buildType}.js`, format),
-    ]
-  : ['cjs', 'umd', 'es']
-      .map(format => getConfig(`dist/react-pixi.${format}${buildType}.js`, format, aliasReactSpring))
-      .concat(getConfig(`dist/react-pixi.react-spring.umd${buildType}.js`, 'umd'))
+      getConfig(`animated/react-pixi.${format}${buildType}.js`, format)
+    )
+  })
+}
+
+export default builds

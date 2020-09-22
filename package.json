@@ -68,7 +68,6 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.0",
-    "idx": "^2.5.6",
     "if-env": "^1.0.4",
     "jest": "^26.0.1",
     "jest-webgl-canvas-mock": "^0.2.3",

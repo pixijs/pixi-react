@@ -1,7 +1,12 @@
 import * as index from '../src'
+import * as reactSpring from '../src/index-react-spring'
 
 describe('index', () => {
-  test('export modules', () => {
+  test('export modules for index', () => {
     expect(index).toMatchSnapshot()
+  })
+
+  test('export modules for react-spring', () => {
+    expect(reactSpring).toMatchSnapshot()
   })
 })

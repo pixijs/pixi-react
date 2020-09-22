@@ -1,7 +1,7 @@
 node_modules/
 lib/
 dist/
-react-spring/react-pixi*
+animated/react-pixi*
 examples/
 .docz/
 .yarn-error.log

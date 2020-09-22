@@ -1,12 +1,4 @@
-import { TYPES, PixiComponent } from './utils/element'
-import { render } from './render'
-import Stage from './stage'
-import { PixiFiber } from './reconciler'
-import { Context as AppContext, AppProvider, AppConsumer, withPixiApp } from './stage/provider'
-import { useTick, useApp } from './hooks'
-import { withFilters } from './hoc'
-import { eventHandlers } from './utils/pixi'
-import { applyDefaultProps } from './utils/props'
+import { TYPES } from './utils/element'
 
 /**
  * -------------------------------------------
@@ -14,12 +6,7 @@ import { applyDefaultProps } from './utils/props'
  * -------------------------------------------
  */
 
-export { render, Stage, withPixiApp, PixiComponent, PixiFiber }
-export { AppProvider, AppConsumer, AppContext }
-export { useTick, useApp }
-export { withFilters }
-export { applyDefaultProps }
-export { eventHandlers }
+export * from './exports'
 
 export const BitmapText = TYPES.BitmapText
 export const Container = TYPES.Container
@@ -32,5 +19,3 @@ export const Text = TYPES.Text
 export const TilingSprite = TYPES.TilingSprite
 export const SimpleMesh = TYPES.SimpleMesh
 export const SimpleRope = TYPES.SimpleRope
-
-export * from './react-spring'

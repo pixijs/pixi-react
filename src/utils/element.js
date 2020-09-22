@@ -1,5 +1,5 @@
-import invariant from 'fbjs/lib/invariant'
 import idx from 'idx'
+import invariant from '../utils/invariant'
 import { applyDefaultProps } from './props'
 import * as components from '../components'
 

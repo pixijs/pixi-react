@@ -1,7 +1,7 @@
 import React from 'react'
 import { Application, InteractionManager } from 'pixi.js'
 import PropTypes from 'prop-types'
-import invariant from 'fbjs/lib/invariant'
+import invariant from '../utils/invariant'
 import { PROPS_DISPLAY_OBJECT } from '../utils/props'
 import { PixiFiber } from '../reconciler'
 import { injectDevtools } from '../render'

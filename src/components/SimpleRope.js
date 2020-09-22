@@ -1,5 +1,5 @@
 import { SimpleRope as PixiSimpleRope } from 'pixi.js'
-import invariant from 'fbjs/lib/invariant'
+import invariant from '../utils/invariant'
 import { getTextureFromProps, applyDefaultProps } from '../utils/props'
 
 const SimpleRope = (root, props) => {

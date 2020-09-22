@@ -1,6 +1,6 @@
-import invariant from 'fbjs/lib/invariant'
 import { Texture, DisplayObject } from 'pixi.js'
 import { eventHandlers, setValue } from './pixi'
+import invariant from '../utils/invariant'
 import { not, hasKey } from '../helpers'
 
 export const CHILDREN = 'children'

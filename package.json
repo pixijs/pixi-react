@@ -99,7 +99,6 @@
     "react-dom": "^16.x.x"
   },
   "dependencies": {
-    "fbjs": "^1.0.0",
     "performance-now": "^2.1.0",
     "react-reconciler": "0.25.1"
   },

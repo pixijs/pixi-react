@@ -1,6 +1,6 @@
 import { Point, ObservablePoint } from 'pixi.js'
-import invariant from 'fbjs/lib/invariant'
 import idx from 'idx'
+import invariant from '../utils/invariant'
 import isNil from 'lodash.isnil'
 
 /**

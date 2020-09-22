@@ -1,7 +1,7 @@
 import React, { useMemo, useRef } from 'react'
 import PropTypes from 'prop-types'
+import invariant from '../utils/invariant'
 import { hasKey, isFunction, not } from '../helpers'
-import invariant from 'fbjs/lib/invariant'
 
 export const withFilters = (WrapperComponent, filters) => {
   invariant(typeof filters === 'object', 'Second argument needs to be an indexed object with { prop: Filter }')

@@ -45,7 +45,7 @@ function getConfig(dest, format) {
       prod && terser(),
       filesize(),
     ].filter(Boolean),
-    external: ['pixi.js', 'react', 'react-dom'],
+    external: ['pixi.js', 'react', 'react-dom', '@react-spring/animated'],
   }
 }
 

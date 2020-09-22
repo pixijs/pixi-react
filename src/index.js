@@ -32,3 +32,6 @@ export const Text = TYPES.Text
 export const TilingSprite = TYPES.TilingSprite
 export const SimpleMesh = TYPES.SimpleMesh
 export const SimpleRope = TYPES.SimpleRope
+
+
+export * from './react-spring';

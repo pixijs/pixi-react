@@ -97,6 +97,7 @@ Object {
   "Stage": [Function],
   "Text": "Text",
   "TilingSprite": "TilingSprite",
+  "animated": [Function],
   "applyDefaultProps": [Function],
   "eventHandlers": Array [
     "click",

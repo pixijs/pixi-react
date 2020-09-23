@@ -144,6 +144,7 @@
   },
   "jest": {
     "collectCoverage": false,
+    "roots": ["./test"],
     "setupFiles": [
       "jest-webgl-canvas-mock",
       "<rootDir>/test/bootstrap.js",

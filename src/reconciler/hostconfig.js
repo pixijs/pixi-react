@@ -8,9 +8,8 @@
  * -------------------------------------------
  */
 
-import invariant from 'fbjs/lib/invariant'
 import performanceNow from 'performance-now'
-
+import invariant from '../utils/invariant'
 import { createElement } from '../utils/element'
 import { CHILDREN, applyDefaultProps } from '../utils/props'
 

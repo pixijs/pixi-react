@@ -6,13 +6,14 @@ import json from 'rollup-plugin-json'
 import babel from 'rollup-plugin-babel'
 import replace from 'rollup-plugin-replace'
 import globals from 'rollup-plugin-node-globals'
+import alias from '@rollup/plugin-alias'
 
 const prod = process.env.NODE_ENV === 'production'
 const format = process.env.FORMAT
 
-function getConfig(dest, format) {
+function getConfig(dest, format, merge = {}) {
   return {
-    input: 'src/index.js',
+    input: merge.input || 'src/index.js',
     output: {
       exports: 'named',
       file: dest,
@@ -23,10 +24,12 @@ function getConfig(dest, format) {
         'pixi.js': 'PIXI',
         react: 'React',
       },
+      ...(merge.output || {}),
     },
     plugins: [
       json(),
       babel({ exclude: 'node_modules/**' }),
+      ...(merge.beforePlugins || []),
       resolve({
         browser: true,
         mainFields: ['main', 'jsnext'],
@@ -42,6 +45,7 @@ function getConfig(dest, format) {
         'process.env.NODE_ENV': prod ? '"production"' : '"development"',
       }),
       globals(),
+      ...(merge.afterPlugins || []),
       prod && terser(),
       filesize(),
     ].filter(Boolean),
@@ -51,10 +55,25 @@ function getConfig(dest, format) {
 
 const buildType = prod ? '' : '-dev'
 
-export default format
-  ? [getConfig(`dist/react-pixi.${format}${buildType}.js`, format)]
-  : [
-      getConfig(`dist/react-pixi.cjs${buildType}.js`, 'cjs'),
-      getConfig(`dist/react-pixi.umd${buildType}.js`, 'umd'),
-      getConfig(`dist/react-pixi.module${buildType}.js`, 'es'),
-    ]
+const aliasReactSpring = {
+  beforePlugins: [
+    alias({
+      entries: [{ find: '@react-spring/animated', replacement: './react-spring-create-host.js' }],
+    }),
+  ],
+}
+
+let builds = []
+
+if (format) {
+  builds.push(getConfig(`dist/react-pixi.${format}${buildType}.js`, format, aliasReactSpring))
+} else {
+  ;['cjs', 'umd', 'es'].forEach(format => {
+    builds.push(
+      getConfig(`dist/react-pixi.${format}${buildType}.js`, format, aliasReactSpring),
+      getConfig(`animated/react-pixi.${format}${buildType}.js`, format, { input: 'src/index-react-spring.js' })
+    )
+  })
+}
+
+export default builds

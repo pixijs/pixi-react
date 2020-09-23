@@ -1,5 +1,4 @@
-import invariant from 'fbjs/lib/invariant'
-import idx from 'idx'
+import invariant from '../utils/invariant'
 import { applyDefaultProps } from './props'
 import * as components from '../components'
 
@@ -38,7 +37,6 @@ export const TYPES_INJECTED = {}
  * @param {string} type Element type
  * @param {Object} props Component props
  * @param {Object} root Root instance
- * @returns {PIXI.*|undefined}
  */
 export function createElement(type, props = {}, root = null) {
   const fn = ELEMENTS[type]
@@ -63,10 +61,7 @@ export function createElement(type, props = {}, root = null) {
 
   // apply initial props!
   if (instance) {
-    applyProps = idx(instance, _ => _.applyProps)
-    if (typeof applyProps !== 'function') {
-      applyProps = applyDefaultProps
-    }
+    applyProps = typeof instance?.applyProps === 'function' ? instance.applyProps : applyDefaultProps
     applyProps(instance, {}, props)
   }
 

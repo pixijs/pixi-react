@@ -1,6 +1,5 @@
 import { Point, ObservablePoint } from 'pixi.js'
-import invariant from 'fbjs/lib/invariant'
-import idx from 'idx'
+import invariant from '../utils/invariant'
 import isNil from 'lodash.isnil'
 
 /**
@@ -21,8 +20,8 @@ export function parsePoint(value) {
   } else if (Array.isArray(value)) {
     arr = [...value]
   } else if (value !== null && typeof value === 'object') {
-    const x = idx(value, _ => _.x) || 0
-    const y = idx(value, _ => _.y) || 0
+    const x = (value && value?.x) || 0
+    const y = (value && value?.y) || 0
     arr = [x, y]
   } else {
     return arr

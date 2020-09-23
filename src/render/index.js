@@ -1,4 +1,4 @@
-import invariant from 'fbjs/lib/invariant'
+import invariant from '../utils/invariant'
 import { Container } from 'pixi.js'
 import { PixiFiber, PACKAGE_NAME, REACT_DOM_VERSION } from '../reconciler'
 

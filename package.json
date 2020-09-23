@@ -1,6 +1,6 @@
 {
   "name": "@inlet/react-pixi",
-  "version": "5.0.4",
+  "version": "5.1.2",
   "description": "Write PixiJS applications using React declarative style.",
   "main": "index.js",
   "umd:main": "umd.js",
@@ -19,10 +19,11 @@
     "build": "rimraf ./dist && npm run build:dev && npm run build:prod",
     "test": "jest --silent",
     "test:watch": "jest --silent --watch",
-    "prepare": "if-env CI=true && echo \"skip build\" || (npm run test && npm run eslint && npm run build)"
+    "prepack": "if-env CI=true && echo \"skip build\" || (npm run test && npm run eslint && npm run build)"
   },
   "files": [
     "dist/",
+    "animated/",
     "LICENSE",
     "index.d.ts",
     "index.js",
@@ -53,6 +54,7 @@
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
     "@babel/runtime": "7.10.2",
+    "@rollup/plugin-alias": "3.1.1",
     "@testing-library/react": "10.3.0",
     "@types/jest": "^26.0.0",
     "@types/react": "^16.9.38",
@@ -68,7 +70,6 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.0",
-    "idx": "^2.5.6",
     "if-env": "^1.0.4",
     "jest": "^26.0.1",
     "jest-webgl-canvas-mock": "^0.2.3",
@@ -79,6 +80,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-spring": "9.0.0-rc.3",
     "react-test-renderer": "^16.13.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.17.1",
@@ -96,10 +98,10 @@
     "pixi.js": "^5.3.x",
     "prop-types": "^15.x.x",
     "react": "^16.x.x",
-    "react-dom": "^16.x.x"
+    "react-dom": "^16.x.x",
+    "react-spring": "9.0.0-rc.3"
   },
   "dependencies": {
-    "fbjs": "^1.0.0",
     "performance-now": "^2.1.0",
     "react-reconciler": "0.25.1"
   },

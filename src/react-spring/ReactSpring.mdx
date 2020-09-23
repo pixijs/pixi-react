@@ -1,0 +1,76 @@
+---
+name: React-Spring
+route: /react-spring
+---
+
+import { Playground } from 'docz'
+import { Stage, Sprite } from '../../docz-rp-animated'
+import { Spring } from 'react-spring'
+import { Texture } from 'pixi.js'
+
+# React Spring
+
+Use `"@inlet/react-pixi/animated"` to import react-spring components.
+
+> Make sure to use react-spring v9+
+
+```jsx
+import React from 'react'
+import { Spring } from 'react-spring'
+import { Texture } from 'pixi.js';
+import { Stage, Sprite } from '@inlet/react-pixi/animated'
+
+const App = () => (
+  <Stage>
+    <Spring native from={{ x: 0, y: 0 }} to={{ x: 200, y: 200 }}>
+      {props => <Sprite texture={Texture.WHITE} tint={0xff0000} {...props} />}
+    </Spring>
+  </Stage>
+)
+```
+
+## Example
+
+<Playground>
+  {() => {
+    const width = 500;
+    const height = 300;
+    const springConfig = { mass: 3, tension: 100, friction: 20 };
+    const stageOptions = { transparent: true, antialias: true };
+    const Box = (props) => {
+      return (
+        <Spring native to={props} config={springConfig}>
+          {props => <Sprite texture={Texture.WHITE} tint={0xaddb67} {...props} />}
+        </Spring>
+      )
+    }
+    const Transform = ({ children }) => {
+      const [props, setProps] = React.useState({ x: 0, y: 0, rotation: 0, scale: 1 });
+      React.useEffect(() => {
+        const onClick = () => {
+          setProps({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            rotation: Math.random() * 10,
+            scale: Math.max(1, Math.random() * 10)
+          });
+        };
+        document.addEventListener("mouseup", onClick);
+        return () => {
+          document.removeEventListener("mouseup", onClick);
+        };
+      }, []);
+      return children(props);
+    };
+    return (
+      <>
+        <p style={{ userSelect: 'none' }}>Click anywhere to animate</p>
+        <Stage width={width} height={height} options={stageOptions}>
+          <Transform>
+            {transform => <Box {...transform} />}
+          </Transform>
+        </Stage>
+      </>
+    )
+}}
+</Playground>

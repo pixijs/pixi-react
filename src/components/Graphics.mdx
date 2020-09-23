@@ -10,18 +10,14 @@ import { Stage, Graphics } from '../../docz-rp'
 
 # Graphics
 
+https://pixijs.download/dev/docs/PIXI.Graphics.html
+
 ## Props
 
-http://pixijs.download/dev/docs/PIXI.Graphics.html
+| prop 	| description            	|
+|------	|------------------------	|
+| draw 	| Draw callback function 	|
 
-### draw
-
-Draw graphics inline using the imperative `PIXI.Graphics` API.
-
-> Use with caution, the `draw` method is costly. If the component needs to update frequently
-> it might be better to use a cached texture instead.
->
-> Make sure to call `g.clear()` if you'd like to redraw the graphics.
 
 ## Usage
 
@@ -55,6 +51,26 @@ Draw graphics inline using the imperative `PIXI.Graphics` API.
     )
   }}
 </Playground>
+
+### The `draw` prop
+Note that the `draw` callback gets called everytime the prop changes, make sure to memoize the callback
+with `React.useCallback`:
+
+```jsx
+import React, { useCallback } from 'react';
+import { Graphics } from '@inlet/react-pixi';
+
+function Rectangle(props) {
+  const draw = useCallback((g) => {
+    g.clear();
+    g.beginFill(props.color);
+    g.drawRect(props.x, props.y, props.width, props.height);
+    g.endFill();
+  }, [props]);
+
+  return <Graphics draw={draw} />;
+}
+```
 
 ## Example
 

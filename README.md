@@ -4,7 +4,7 @@
 ![downloads](https://img.shields.io/npm/dm/@inlet/react-pixi)
 [![CircleCI](https://img.shields.io/circleci/project/github/inlet/react-pixi/master.svg)](https://circleci.com/gh/inlet/react-pixi)
 ![license](https://img.shields.io/badge/license-MIT-green.svg)
-![react](https://img.shields.io/badge/react-v16.8+-ff69b4.svg)
+![react](https://img.shields.io/badge/react-latest-ff69b4.svg)
 ![pixi](https://img.shields.io/badge/pixi-v5+-ff69b4.svg)
 
 Write [PIXI](http://www.pixijs.com/) applications using React declarative style 👌

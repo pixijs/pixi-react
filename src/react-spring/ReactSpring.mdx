@@ -7,13 +7,14 @@ import { Playground } from 'docz'
 import { Stage, Sprite } from '../../docz-rp-animated'
 import { Spring } from 'react-spring'
 import { Texture } from 'pixi.js'
-import { TransformOnClick } from './_docz-helper'
 
 # React Spring
 
-Use `"@inlet/react-pixi/animated"` to import react-spring components.
+Use `"@inlet/react-pixi/animated"` to import react-spring animated components.
 
 > Make sure to use react-spring v9+
+
+## Usage
 
 ```jsx
 import React from 'react'
@@ -55,13 +56,15 @@ Click anywhere to animate
           )}
         </Spring>
       )
-    }
-    return (
-      <Stage {...config.size} options={config.stage}>
-        <TransformOnClick update={set}>
-          {transform => <Box {...transform} />}
-        </TransformOnClick>
-      </Stage>
-    )
+    };
+    const App = () => {
+      const [transform, setTransform] = React.useState(set);
+      return (
+        <Stage {...config.size} options={config.stage} onClick={() => setTransform(set)}>
+          <Box {...transform} />
+        </Stage>
+      )
+    };
+    return <App />;
 }}
 </Playground>

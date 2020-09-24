@@ -14,9 +14,18 @@ import { applyDefaultProps } from './utils/props'
  * -------------------------------------------
  */
 
-export { render, Stage, withPixiApp, PixiComponent, PixiFiber }
-export { AppProvider, AppConsumer, AppContext }
-export { useTick, useApp }
-export { withFilters }
-export { applyDefaultProps }
-export { eventHandlers }
+export {
+  render,
+  Stage,
+  withPixiApp,
+  PixiComponent,
+  PixiFiber,
+  AppProvider,
+  AppConsumer,
+  AppContext,
+  useTick,
+  useApp,
+  withFilters,
+  applyDefaultProps,
+  eventHandlers,
+}

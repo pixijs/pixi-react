@@ -1,14 +1,12 @@
 import React, { useState, useCallback } from 'react'
-import { Texture } from 'pixi.js'
-import { Sprite, Container, useApp } from '../../docz-rp'
+import { Container, Sprite } from '../../docz-rp'
+import { Texture } from 'pixi.js';
 
 export const TransformOnClick = ({ children, update }) => {
   const [props, setProps] = useState(update())
-
-  const app = useApp()
-
-  const { width, height } = app.renderer.view
   const click = useCallback(() => setProps(update()), [])
+  const [canvas] = useState(() => document.querySelector(`[data-testid="live-preview"] canvas`))
+  const { width, height } = canvas
 
   return (
     <Container interactive={true} pointerup={click}>

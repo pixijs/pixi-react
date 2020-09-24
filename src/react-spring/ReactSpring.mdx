@@ -7,6 +7,7 @@ import { Playground } from 'docz'
 import { Stage, Sprite } from '../../docz-rp-animated'
 import { Spring } from 'react-spring'
 import { Texture } from 'pixi.js'
+import { TransformOnClick } from './_docz-helper'
 
 # React Spring
 
@@ -17,7 +18,7 @@ Use `"@inlet/react-pixi/animated"` to import react-spring components.
 ```jsx
 import React from 'react'
 import { Spring } from 'react-spring'
-import { Texture } from 'pixi.js';
+import { Texture } from 'pixi.js'
 import { Stage, Sprite } from '@inlet/react-pixi/animated'
 
 const App = () => (
@@ -31,46 +32,36 @@ const App = () => (
 
 ## Example
 
+Click anywhere to animate
+
 <Playground>
   {() => {
-    const width = 500;
-    const height = 300;
-    const springConfig = { mass: 3, tension: 100, friction: 20 };
-    const stageOptions = { transparent: true, antialias: true };
+    const config = {
+      size: {width: 500, height: 300 },
+      spring: {mass: 3, tension: 100, friction: 20},
+      stage: {antialias: true}
+    };
+    const set = () => ({
+      x: Math.random() * config.size.width,
+      y: Math.random() * config.size.height,
+      rotation: Math.random() * 10,
+      scale: Math.max(1, Math.random() * 10),
+    });
     const Box = (props) => {
       return (
-        <Spring native to={props} config={springConfig}>
-          {props => <Sprite texture={Texture.WHITE} tint={0xaddb67} {...props} />}
+        <Spring native to={props} config={config.spring}>
+          {props => (
+            <Sprite texture={Texture.WHITE} tint={0xaddb67} anchor={0.5} {...props} />
+          )}
         </Spring>
       )
     }
-    const Transform = ({ children }) => {
-      const [props, setProps] = React.useState({ x: 0, y: 0, rotation: 0, scale: 1 });
-      React.useEffect(() => {
-        const onClick = () => {
-          setProps({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            rotation: Math.random() * 10,
-            scale: Math.max(1, Math.random() * 10)
-          });
-        };
-        document.addEventListener("mouseup", onClick);
-        return () => {
-          document.removeEventListener("mouseup", onClick);
-        };
-      }, []);
-      return children(props);
-    };
     return (
-      <>
-        <p style={{ userSelect: 'none' }}>Click anywhere to animate</p>
-        <Stage width={width} height={height} options={stageOptions}>
-          <Transform>
-            {transform => <Box {...transform} />}
-          </Transform>
-        </Stage>
-      </>
+      <Stage {...config.size} options={config.stage}>
+        <TransformOnClick update={set}>
+          {transform => <Box {...transform} />}
+        </TransformOnClick>
+      </Stage>
     )
 }}
 </Playground>

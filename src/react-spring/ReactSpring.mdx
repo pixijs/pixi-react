@@ -38,7 +38,7 @@ Click anywhere to animate
 <Playground>
   {() => {
     const config = {
-      size: {width: 500, height: 300 },
+      size: {width: 1200, height: 500 },
       spring: {mass: 10, tension: 1000, friction: 100},
       stage: {antialias: true, backgroundColor:0xff0ff0}
     };
@@ -58,7 +58,7 @@ Click anywhere to animate
     const App = () => {
       const [transform, setTransform] = React.useState(set);
       return (
-        <Stage {...config.size} options={config.stage} onClick={() => setTransform(set)}>
+        <Stage {...config.size} options={config.stage} onPointerUp={() => setTransform(set)}>
           <Box {...transform} />
         </Stage>
       )

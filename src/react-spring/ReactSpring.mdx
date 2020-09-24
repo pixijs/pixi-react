@@ -39,8 +39,8 @@ Click anywhere to animate
   {() => {
     const config = {
       size: {width: 500, height: 300 },
-      spring: {mass: 3, tension: 100, friction: 20},
-      stage: {antialias: true}
+      spring: {mass: 10, tension: 1000, friction: 100},
+      stage: {antialias: true, backgroundColor:0xff0ff0}
     };
     const set = () => ({
       x: Math.random() * config.size.width,
@@ -48,15 +48,13 @@ Click anywhere to animate
       rotation: Math.random() * 10,
       scale: Math.max(1, Math.random() * 10),
     });
-    const Box = (props) => {
-      return (
-        <Spring native to={props} config={config.spring}>
-          {props => (
-            <Sprite texture={Texture.WHITE} tint={0xaddb67} anchor={0.5} {...props} />
-          )}
-        </Spring>
-      )
-    };
+    const Box = (props) => (
+      <Spring native to={props} config={config.spring}>
+        {props => (
+          <Sprite texture={Texture.WHITE} tint={0xaddb67} anchor={0.5} {...props} />
+        )}
+      </Spring>
+    );
     const App = () => {
       const [transform, setTransform] = React.useState(set);
       return (

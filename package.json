@@ -1,6 +1,6 @@
 {
   "name": "@inlet/react-pixi",
-  "version": "5.1.3",
+  "version": "5.1.4",
   "description": "Write PixiJS applications using React declarative style.",
   "main": "index.js",
   "umd:main": "umd.js",
@@ -144,7 +144,9 @@
   },
   "jest": {
     "collectCoverage": false,
-    "roots": ["./test"],
+    "roots": [
+      "./test"
+    ],
     "setupFiles": [
       "jest-webgl-canvas-mock",
       "<rootDir>/test/bootstrap.js",

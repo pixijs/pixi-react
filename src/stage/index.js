@@ -68,7 +68,7 @@ const propTypes = {
     resizeTo: (props, propName, componentName) => {
       const el = props[propName]
       invariant(
-        el !== window && !(el instanceof HTMLElement),
+        el === window || el instanceof HTMLElement,
         `Invalid prop \`resizeTo\` of type ${typeof el}, expect \`window\` or an \`HTMLElement\`.`
       )
     },

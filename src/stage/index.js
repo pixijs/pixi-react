@@ -1,5 +1,5 @@
 import React from 'react'
-import { Application, InteractionManager } from 'pixi.js'
+import { Application } from 'pixi.js'
 import PropTypes from 'prop-types'
 import invariant from '../utils/invariant'
 import { PROPS_DISPLAY_OBJECT } from '../utils/props'
@@ -65,24 +65,23 @@ const propTypes = {
     sharedLoader: PropTypes.bool,
 
     // resizeTo needs to be a window or HTMLElement
-    resizeTo: (props, propName, componentName) => {
+    resizeTo: (props, propName) => {
       const el = props[propName]
-      invariant(
-        el === window || el instanceof HTMLElement,
-        `Invalid prop \`resizeTo\` of type ${typeof el}, expect \`window\` or an \`HTMLElement\`.`
-      )
+      el &&
+        invariant(
+          el === window || el instanceof HTMLElement,
+          `Invalid prop \`resizeTo\` of type ${typeof el}, expect \`window\` or an \`HTMLElement\`.`
+        )
     },
 
     // view is optional, use if provided
     view: (props, propName, componentName) => {
       const el = props[propName]
-      if (el === undefined) {
-        return
-      }
-      invariant(
-        el instanceof HTMLCanvasElement,
-        `Invalid prop \`view\` of type ${typeof el}, supplied to ${componentName}, expected \`<canvas> Element\``
-      )
+      el &&
+        invariant(
+          el instanceof HTMLCanvasElement,
+          `Invalid prop \`view\` of type ${typeof el}, supplied to ${componentName}, expected \`<canvas> Element\``
+        )
     },
   }),
 }

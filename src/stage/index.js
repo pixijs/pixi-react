@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import invariant from '../utils/invariant'
 import { PROPS_DISPLAY_OBJECT } from '../utils/props'
 import { PixiFiber } from '../reconciler'
-import { injectDevtools } from '../render'
 import { AppProvider } from './provider'
 
 const noop = () => {}
@@ -124,8 +123,6 @@ class Stage extends React.Component {
     this.mountNode = PixiFiber.createContainer(this.app.stage)
     PixiFiber.updateContainer(this.getChildren(), this.mountNode, this)
 
-    injectDevtools()
-
     onMount(this.app)
 
     // update size on media query resolution change?
@@ -226,7 +223,6 @@ class Stage extends React.Component {
       this._mediaQuery = null
     }
 
-    this.renderStage()
     this.app.destroy()
   }
 

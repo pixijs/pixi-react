@@ -1,18 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`stage call PixiFiber.injectIntoDevtools on componentDidMount 1`] = `
-Array [
-  Array [
-    Object {
-      "bundleType": 1,
-      "findHostInstanceByFiber": [MockFunction],
-      "rendererPackageName": "@inlet/react-pixi",
-      "version": "16.13.1",
-    },
-  ],
-]
-`;
-
 exports[`stage prop types 1`] = `
 Object {
   "children": [Function],

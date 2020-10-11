@@ -1,6 +1,6 @@
 import invariant from '../utils/invariant'
 import { Container } from 'pixi.js'
-import { PixiFiber, PACKAGE_NAME, REACT_DOM_VERSION } from '../reconciler'
+import { PixiFiber } from '../reconciler'
 
 // cache root containers
 export const roots = new Map()
@@ -30,21 +30,6 @@ export function render(element, container, callback = undefined) {
   // schedules a top level update
   PixiFiber.updateContainer(element, root, undefined, callback)
 
-  // inject into react devtools
-  injectDevtools()
-
   // return the root instance
   return PixiFiber.getPublicRootInstance(root)
-}
-
-/**
- * Inject into React Devtools
- */
-export function injectDevtools() {
-  PixiFiber.injectIntoDevTools({
-    bundleType: process.env.NODE_ENV !== 'production' ? 1 : 0,
-    version: REACT_DOM_VERSION,
-    rendererPackageName: PACKAGE_NAME,
-    findHostInstanceByFiber: PixiFiber.findHostInstance,
-  })
 }

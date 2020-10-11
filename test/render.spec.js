@@ -53,13 +53,6 @@ describe('render', () => {
     expect(PixiFiber.updateContainer).toHaveBeenLastCalledWith(element, root, undefined, callback)
   })
 
-  test('call injectDevtools', () => {
-    render(element, app.stage, callback)
-
-    expect(PixiFiber.injectIntoDevTools).toHaveBeenCalledTimes(1)
-    expect(PixiFiber.injectIntoDevTools.mock.calls).toMatchSnapshot()
-  })
-
   test('invoke callback in updateContainer', () => {
     render(element, app.stage, callback)
     expect(callback).toHaveBeenCalledTimes(1)

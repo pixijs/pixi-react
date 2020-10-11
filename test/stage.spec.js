@@ -169,14 +169,7 @@ describe('stage', () => {
       instance
     )
   })
-
-  test('call PixiFiber.injectIntoDevtools on componentDidMount', () => {
-    renderer.create(<Stage />)
-
-    expect(PixiFiber.injectIntoDevTools).toHaveBeenCalledTimes(1)
-    expect(PixiFiber.injectIntoDevTools.mock.calls).toMatchSnapshot()
-  })
-
+  
   test('call PixiFiber.updateContainer on componentDidUpdate', () => {
     const el = renderer.create(<Stage />)
 

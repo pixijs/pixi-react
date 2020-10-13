@@ -3,7 +3,7 @@ const empty = () => null
 let RP
 
 if (process.env.NODE_ENV === 'development') {
-  RP = require('./src/index-react-spring')
+  RP = require('./src/index-animated')
 } else {
   RP = require('./animated/react-pixi.umd')
 }

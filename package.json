@@ -24,6 +24,7 @@
   "files": [
     "dist/",
     "animated/",
+    "legacy/",
     "LICENSE",
     "index.d.ts",
     "index.js",

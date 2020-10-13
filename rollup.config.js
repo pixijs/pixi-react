@@ -22,6 +22,7 @@ function getConfig(dest, format, merge = {}) {
       sourcemap: !prod,
       globals: {
         'pixi.js': 'PIXI',
+        'pixi.js-legacy': 'PIXI',
         react: 'React',
       },
       ...(merge.output || {}),
@@ -49,29 +50,40 @@ function getConfig(dest, format, merge = {}) {
       prod && terser(),
       filesize(),
     ].filter(Boolean),
-    external: ['pixi.js', 'react', 'react-dom'],
+    external: ['pixi.js', 'pixi.js-legacy', 'react', 'react-dom'],
   }
 }
 
 const buildType = prod ? '' : '-dev'
 
-const aliasReactSpring = {
-  beforePlugins: [
-    alias({
-      entries: [{ find: '@react-spring/animated', replacement: './react-spring-create-host.js' }],
-    }),
-  ],
-}
-
 let builds = []
 
 if (format) {
-  builds.push(getConfig(`dist/react-pixi.${format}${buildType}.js`, format, aliasReactSpring))
+  builds.push(
+    getConfig(`dist/react-pixi.${format}${buildType}.js`, format, {
+      beforePlugins: [alias({ entries: { '@react-spring/animated': './react-spring-create-host.js' } })],
+    })
+  )
 } else {
   ;['cjs', 'umd', 'es'].forEach(format => {
     builds.push(
-      getConfig(`dist/react-pixi.${format}${buildType}.js`, format, aliasReactSpring),
-      getConfig(`animated/react-pixi.${format}${buildType}.js`, format, { input: 'src/index-react-spring.js' })
+      // default
+      getConfig(`dist/react-pixi.${format}${buildType}.js`, format, {
+        beforePlugins: [alias({ entries: { '@react-spring/animated': './react-spring-create-host.js' } })],
+      }),
+
+      // animated
+      getConfig(`animated/react-pixi.${format}${buildType}.js`, format, { input: 'src/index-animated.js' }),
+
+      // pixi legacy
+      getConfig(`legacy/react-pixi.${format}${buildType}.js`, format, {
+        beforePlugins: [
+          alias({ entries: { '@react-spring/animated': './react-spring-create-host.js' } }),
+          babel({
+            plugins: [['module-resolver', { alias: { 'pixi.js': 'pixi.js-legacy' } }]],
+          }),
+        ],
+      })
     )
   })
 }

@@ -1,5 +1,5 @@
 import * as index from '../src'
-import * as reactSpring from '../src/index-react-spring'
+import * as reactSpring from '../src/index-animated'
 
 describe('index', () => {
   test('export modules for index', () => {

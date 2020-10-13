@@ -1,0 +1,52 @@
+---
+name: Fallback to Canvas
+route: /pixi-legacy
+---
+
+# Fallback to Canvas
+
+By default the PixiJS renderer uses the power of hardware acceleration (WebGL), but sometimes you need fallback support for
+browsers that do not support WebGL or more modern JavaScript features.
+
+Luckily this is possible using a `legacy` pixi package.
+
+## Install
+
+Make sure to install the legacy package instead of `pixi.js`:
+
+```bash
+npm install pixi.js-legacy
+```
+
+## Usage
+
+Use "@inlet/react-pixi/legacy" to import pixi legacy components:
+
+```jsx
+import { Stage, Sprite } from '@inlet/react-pixi/legacy'
+
+const stageOptions = {
+  forceCanvas: true,
+}
+
+const App = () => (
+  <Stage options={stageOptions}>
+    <Sprite image="./image.png" />
+  </Stage>
+)
+```
+
+## Verify
+
+Check the PIXI welcome message in your console to make sure your application is actually running in Canvas, you should see
+something like:
+
+<img
+  src="https://user-images.githubusercontent.com/232559/95867441-72949780-0d69-11eb-9529-b029014e8802.png"
+  draggable={false}
+  width={448}
+  style={{
+    width: '100%',
+    maxWidth: 448,
+  }}
+/>

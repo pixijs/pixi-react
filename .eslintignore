@@ -8,7 +8,9 @@ lib/
 test/
 examples/
 dist/
+config/
 animated/
+legacy/
 docs/
 doczrc.js
 

@@ -2,6 +2,7 @@ node_modules/
 lib/
 dist/
 animated/react-pixi*
+legacy/react-pixi*
 examples/
 .docz/
 .yarn-error.log

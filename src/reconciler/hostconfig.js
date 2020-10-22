@@ -13,6 +13,8 @@ import invariant from '../utils/invariant'
 import { createElement } from '../utils/element'
 import { CHILDREN, applyDefaultProps } from '../utils/props'
 
+const NO_CONTEXT = {}
+
 function appendChild(parent, child) {
   if (parent.addChild) {
     parent.addChild(child)
@@ -87,12 +89,12 @@ function diffProperties(pixiElement, type, lastProps, nextProps, rootContainerEl
 let prepareChanged = null
 
 const HostConfig = {
-  getRootHostContext(rootContainerInstance) {
-    return rootContainerInstance
+  getRootHostContext() {
+    return NO_CONTEXT
   },
 
   getChildHostContext() {
-    return {}
+    return NO_CONTEXT
   },
 
   getChildHostContextForEventComponent(parentHostContext) {
@@ -105,6 +107,7 @@ const HostConfig = {
 
   prepareForCommit() {
     // noop
+    return null
   },
 
   resetAfterCommit() {
@@ -150,6 +153,10 @@ const HostConfig = {
         'To pass a string value to your component, use a property other than children. ' +
         'If you wish to display some text, you can use &lt;Text text={string} /&gt; instead.'
     )
+  },
+
+  unhideTextInstance(textInstance, text) {
+    // noop
   },
 
   mountEventComponent() {
@@ -247,6 +254,54 @@ const HostConfig = {
   },
 
   resetTextContent(pixiElement) {
+    // noop
+  },
+
+  clearContainer(container) {
+    // TODO implement this
+  },
+
+  getFundamentalComponentInstance(fundamentalInstance) {
+    throw new Error('Not yet implemented.')
+  },
+
+  mountFundamentalComponent(fundamentalInstance) {
+    throw new Error('Not yet implemented.')
+  },
+
+  shouldUpdateFundamentalComponent(fundamentalInstance) {
+    throw new Error('Not yet implemented.')
+  },
+
+  unmountFundamentalComponent(fundamentalInstance) {
+    throw new Error('Not yet implemented.')
+  },
+
+  getInstanceFromNode(node) {
+    throw new Error('Not yet implemented.')
+  },
+
+  isOpaqueHydratingObject(value) {
+    throw new Error('Not yet implemented')
+  },
+
+  makeOpaqueHydratingObject(attemptToReadValue) {
+    throw new Error('Not yet implemented.')
+  },
+
+  makeClientIdInDEV(warnOnAccessInDEV) {
+    throw new Error('Not yet implemented')
+  },
+
+  beforeActiveInstanceBlur(internalInstanceHandle) {
+    // noop
+  },
+
+  afterActiveInstanceBlur() {
+    // noop
+  },
+
+  preparePortalMount(portalInstance) {
     // noop
   },
 }

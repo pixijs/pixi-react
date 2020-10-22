@@ -169,7 +169,7 @@ describe('stage', () => {
       instance
     )
   })
-  
+
   test('call PixiFiber.updateContainer on componentDidUpdate', () => {
     const el = renderer.create(<Stage />)
 
@@ -280,6 +280,7 @@ describe('stage', () => {
 
     test('throw error no context found', () => {
       const Comp = () => {
+        console.log('mounted')
         useTick(() => {})
         return <Container />
       }
@@ -297,36 +298,46 @@ describe('stage', () => {
     })
 
     test('mount & unmount once', () => {
-      let app
-
       const Comp = () => {
         useTick(() => {})
-        return <Container />
+        return null
       }
 
-      const renderStage = Comp => (
-        <Stage
-          onMount={_app => {
-            app = _app
-          }}
-        >
-          <Container>{Comp}</Container>
+      const mount = () => (
+        <Stage>
+          <Container>
+            <Comp />
+          </Container>
         </Stage>
       )
 
-      const render = renderer.create(renderStage())
+      const unmount = () => (
+        <Stage>
+          <Container />
+        </Stage>
+      )
+
+      const render = renderer.create(unmount())
+      const app = render.getInstance().app
 
       jest.spyOn(app.ticker, 'add')
       jest.spyOn(app.ticker, 'remove')
 
-      render.update(renderStage(<Comp />))
-      render.update(renderStage(<Comp />))
+      jest.runAllTimers()
+      expect(app.ticker.add).toHaveBeenCalledTimes(0)
+      expect(app.ticker.remove).toHaveBeenCalledTimes(0)
 
+      render.update(mount())
+      render.update(mount())
+      render.update(mount())
+
+      jest.runAllTimers()
       expect(app.ticker.add).toHaveBeenCalledTimes(1)
       expect(app.ticker.remove).toHaveBeenCalledTimes(0)
 
-      render.update(renderStage())
+      render.update(unmount())
 
+      jest.runAllTimers()
       expect(app.ticker.remove).toHaveBeenCalledTimes(1)
     })
 
@@ -419,7 +430,9 @@ describe('stage', () => {
     })
 
     test('styles on canvas should not exist if `autoDensity` is false', () => {
-      const { unmount, container } = reactTest.render(<Stage width={800} height={600} options={{ autoDensity: false }} />)
+      const { unmount, container } = reactTest.render(
+        <Stage width={800} height={600} options={{ autoDensity: false }} />
+      )
       expect(container.firstChild.getAttribute('style')).toEqual(null)
       unmount()
     })

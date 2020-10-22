@@ -6,6 +6,7 @@ import { useApp } from './useApp'
 function useTick(callback, enabled = true) {
   const app = useApp()
 
+  invariant(typeof callback === 'function', '`useTick` needs a callback function.')
   invariant(
     app instanceof Application,
     'No Context found with `%s`. Make sure to wrap component with `%s`',

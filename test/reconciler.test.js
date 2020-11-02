@@ -117,11 +117,6 @@ describe('reconciler', () => {
         </Container>
       )
 
-      a.current.torem = 'a'
-      b.current.torem = 'b'
-      c.current.torem = 'c'
-      d.current.torem = 'd'
-
       // assign willUnmounts
       const spyA = (a.current['willUnmount'] = jest.fn())
       const spyB = (b.current['willUnmount'] = jest.fn())

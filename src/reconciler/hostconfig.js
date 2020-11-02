@@ -30,6 +30,13 @@ function removeChild(parent, child) {
     child.willUnmount.call(child, child, parent)
   }
 
+  // unmount potential children
+  if (child.children?.length) {
+    ;[...child.children].forEach(c => {
+      removeChild(child, c)
+    })
+  }
+
   parent.removeChild(child)
   child.destroy()
 }

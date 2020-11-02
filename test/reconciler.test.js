@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { createRef, Suspense } from 'react'
 import * as PIXI from 'pixi.js'
 import { render, roots } from '../src/render'
 import hostconfig from '../src/reconciler/hostconfig'
@@ -98,6 +98,42 @@ describe('reconciler', () => {
       const m = getCall(hostconfig.removeChild)
       expect(m.fn).toHaveBeenCalledTimes(2)
       expect(m.all.map(([_, ins]) => ins.text)).toEqual(['two', 'three'])
+    })
+
+    test('remove sub children', () => {
+      const a = createRef()
+      const b = createRef()
+      const c = createRef()
+      const d = createRef()
+
+      renderInContainer(
+        <Container>
+          <Container>
+            <Text ref={a} />
+            <Text ref={b} />
+            <Text ref={c} />
+            <Text ref={d} />
+          </Container>
+        </Container>
+      )
+
+      a.current.torem = 'a'
+      b.current.torem = 'b'
+      c.current.torem = 'c'
+      d.current.torem = 'd'
+
+      // assign willUnmounts
+      const spyA = (a.current['willUnmount'] = jest.fn())
+      const spyB = (b.current['willUnmount'] = jest.fn())
+      const spyC = (c.current['willUnmount'] = jest.fn())
+      const spyD = (d.current['willUnmount'] = jest.fn())
+
+      renderInContainer(<Container />)
+
+      expect(spyA).toHaveBeenCalled()
+      expect(spyB).toHaveBeenCalled()
+      expect(spyC).toHaveBeenCalled()
+      expect(spyD).toHaveBeenCalled()
     })
 
     test('insert before', () => {

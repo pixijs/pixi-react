@@ -19,7 +19,8 @@
     "build": "rimraf ./dist && npm run build:dev && npm run build:prod",
     "test": "jest --silent",
     "test:watch": "jest --silent --watch",
-    "prepack": "if-env CI=true && echo \"skip build\" || (npm run test && npm run eslint && npm run build)"
+    "prepack": "if-env CI=true && echo \"skip build\" || (npm run test && npm run eslint && npm run build)",
+    "postinstall": "node postinstall.js"
   },
   "files": [
     "dist/",
@@ -84,6 +85,7 @@
     "react-dom": "^17.0.1",
     "react-spring": "9.0.0-rc.3",
     "react-test-renderer": "^17.0.1",
+    "replace-in-file": "6.1.0",
     "rimraf": "^3.0.2",
     "rollup": "2.33.1",
     "rollup-plugin-babel": "^4.4.0",

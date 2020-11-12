@@ -1,10 +1,11 @@
 const replace = require('replace-in-file')
+const path = require('path')
 
 console.log('correct react-spring sideEffects. Remove this script once newer version of react-spring comes out.')
 const removeAllSideEffectsFalseFromReactSpringPackages = async () => {
   try {
     const results = await replace({
-      files: 'node_modules/@react-spring/*/package.json',
+      files: path.join(process.cwd(), 'node_modules/@react-spring/*/package.json'),
       from: `"sideEffects": false`,
       to: `"sideEffects": true`,
     })

@@ -26,7 +26,7 @@ function useTick(callback, enabled = true) {
       app.ticker.add(tick)
 
       return () => {
-        app.ticker.remove(tick)
+        app.ticker?.remove(tick)
       }
     }
   }, [enabled])

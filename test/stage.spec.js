@@ -1,11 +1,10 @@
-import React, { useCallback, useEffect, useRef } from 'react'
+import React from 'react'
 import * as PIXI from 'pixi.js'
 import renderer from 'react-test-renderer'
 import * as reactTest from '@testing-library/react'
-import { PixiFiber } from '../src/reconciler'
+import { PixiFiber } from '../src'
 import { Container, Stage, Text } from '../src'
 import { Context } from '../src/stage/provider'
-import { useTick } from '../src/hooks'
 import { getCanvasProps } from '../src/stage'
 import { mockToSpy } from './__utils__/mock'
 
@@ -263,161 +262,6 @@ describe('stage', () => {
       }
 
       expect(spy).toBeCalledTimes(11)
-    })
-  })
-
-  describe('hook `useTick`', function () {
-    const App = ({ children, cb }) => {
-      const app = useRef()
-      const setApp = useCallback(_ => (app.current = _), [])
-
-      useEffect(() => {
-        cb(app.current)
-      }, [app.current])
-
-      return <Stage onMount={setApp}>{children}</Stage>
-    }
-
-    test('throw error no context found', () => {
-      const Comp = () => {
-        console.log('mounted')
-        useTick(() => {})
-        return <Container />
-      }
-
-      const createApp = () =>
-        renderer.create(
-          <Container>
-            <Comp />
-          </Container>
-        )
-
-      expect(createApp).toThrow(
-        'No Context found with `PIXI.Application`. Make sure to wrap component with `AppProvider`'
-      )
-    })
-
-    test('mount & unmount once', () => {
-      const Comp = () => {
-        useTick(() => {})
-        return null
-      }
-
-      const mount = () => (
-        <Stage>
-          <Container>
-            <Comp />
-          </Container>
-        </Stage>
-      )
-
-      const unmount = () => (
-        <Stage>
-          <Container />
-        </Stage>
-      )
-
-      const render = renderer.create(unmount())
-      const app = render.getInstance().app
-
-      jest.spyOn(app.ticker, 'add')
-      jest.spyOn(app.ticker, 'remove')
-
-      jest.runAllTimers()
-      expect(app.ticker.add).toHaveBeenCalledTimes(0)
-      expect(app.ticker.remove).toHaveBeenCalledTimes(0)
-
-      render.update(mount())
-      render.update(mount())
-      render.update(mount())
-
-      jest.runAllTimers()
-      expect(app.ticker.add).toHaveBeenCalledTimes(1)
-      expect(app.ticker.remove).toHaveBeenCalledTimes(0)
-
-      render.update(unmount())
-
-      jest.runAllTimers()
-      expect(app.ticker.remove).toHaveBeenCalledTimes(1)
-    })
-
-    test('update state', () => {
-      const fn = jest.fn()
-
-      const Counter = () => {
-        const x = useRef(1)
-        useTick(() => fn(x.current++))
-        return <Container />
-      }
-
-      const render = () => (
-        <App
-          cb={app => {
-            for (let i = 0; i < 10; i++) {
-              app.ticker.update()
-            }
-          }}
-        >
-          <Counter />
-        </App>
-      )
-
-      const { rerender, unmount } = reactTest.render(render())
-      rerender(render())
-
-      unmount()
-      expect(fn.mock.calls.join(',')).toEqual('1,2,3,4,5,6,7,8,9,10')
-    })
-
-    test('enable/disable useTick', () => {
-      let fn = jest.fn()
-
-      const Counter = ({ enabled }) => {
-        const x = useRef(1)
-        useTick(() => fn(x.current++), enabled)
-        return null
-      }
-
-      const render = enabled => (
-        <App
-          cb={app => {
-            app.ticker.update()
-            app.ticker.update()
-            app.ticker.update()
-          }}
-        >
-          <Counter enabled={enabled} />
-        </App>
-      )
-
-      function testEnabled() {
-        fn.mockClear()
-        const { rerender, unmount } = reactTest.render(render(true))
-
-        reactTest.act(() => {
-          rerender(render(true))
-          rerender(render(true))
-        })
-
-        unmount()
-        expect(fn.mock.calls.join(',')).toEqual('1,2,3')
-      }
-
-      function testDisabled() {
-        fn.mockClear()
-        const { rerender, unmount } = reactTest.render(render(false))
-
-        reactTest.act(() => {
-          rerender(render(false))
-          rerender(render(false))
-        })
-
-        unmount()
-        expect(fn.mock.calls.join(',')).toEqual('')
-      }
-
-      testEnabled()
-      testDisabled()
     })
   })
 

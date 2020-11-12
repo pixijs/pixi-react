@@ -1,0 +1,178 @@
+import React, { useCallback, useEffect, useRef } from 'react'
+import renderer from 'react-test-renderer'
+import { Container, Stage, useTick, useApp } from '../src'
+import * as reactTest from '@testing-library/react'
+import { Application } from 'pixi.js'
+
+jest.useFakeTimers()
+
+describe('hooks', () => {
+  describe('useApp', () => {
+    test('throw `no context` error', () => {
+      const Comp = () => {
+        useApp()
+        return null
+      }
+
+      const createApp = () =>
+        renderer.create(
+          <Container>
+            <Comp />
+          </Container>
+        )
+
+      expect(createApp).toThrow(
+        'No Context found with `PIXI.Application`. Make sure to wrap component with `AppProvider`'
+      )
+    })
+
+    test('receive PIXI.Application', () => {
+      const Comp = () => {
+        const app = useApp()
+        expect(app).toBeInstanceOf(Application)
+        return null
+      }
+
+      renderer.create(
+        <Stage>
+          <Comp />
+        </Stage>
+      )
+    })
+  })
+
+  describe('useTick', () => {
+    const App = ({ children, cb }) => {
+      const app = useRef()
+      const setApp = useCallback(_ => (app.current = _), [])
+      useEffect(() => cb(app.current), [app.current])
+
+      return <Stage onMount={setApp}>{children}</Stage>
+    }
+
+    test('throw `no context` error', () => {
+      const Comp = () => {
+        useTick(() => {})
+        return null
+      }
+
+      const createApp = () =>
+        renderer.create(
+          <Container>
+            <Comp />
+          </Container>
+        )
+
+      expect(createApp).toThrow(
+        'No Context found with `PIXI.Application`. Make sure to wrap component with `AppProvider`'
+      )
+    })
+
+    test('mount & unmount', () => {
+      const Comp = () => {
+        useTick(() => {})
+        return null
+      }
+
+      const mount = () => (
+        <Stage>
+          <Container>
+            <Comp />
+          </Container>
+        </Stage>
+      )
+
+      const unmount = () => (
+        <Stage>
+          <Container />
+        </Stage>
+      )
+
+      const render = renderer.create(unmount())
+      const app = render.getInstance().app
+
+      jest.spyOn(app.ticker, 'add')
+      jest.spyOn(app.ticker, 'remove')
+
+      jest.runAllTimers()
+      expect(app.ticker.add).toHaveBeenCalledTimes(0)
+      expect(app.ticker.remove).toHaveBeenCalledTimes(0)
+
+      render.update(mount())
+      render.update(mount())
+      render.update(mount())
+
+      jest.runAllTimers()
+      expect(app.ticker.add).toHaveBeenCalledTimes(1)
+      expect(app.ticker.remove).toHaveBeenCalledTimes(0)
+
+      render.update(unmount())
+
+      jest.runAllTimers()
+      expect(app.ticker.remove).toHaveBeenCalledTimes(1)
+    })
+
+    test('update state', () => {
+      const fn = jest.fn()
+
+      const Counter = () => {
+        useTick(fn)
+        return null
+      }
+
+      const render = () => (
+        <App
+          cb={app => {
+            for (let i = 0; i < 10; i++) app.ticker.update()
+          }}
+        >
+          <Counter />
+        </App>
+      )
+
+      const { rerender, unmount } = reactTest.render(render())
+      rerender(render())
+
+      unmount()
+      expect(fn).toHaveBeenCalledTimes(10)
+    })
+
+    test('enable/disable', () => {
+      const fn = jest.fn()
+
+      const Counter = ({ enabled }) => {
+        useTick(fn, enabled)
+        return null
+      }
+
+      const render = enabled => (
+        <App
+          cb={app => {
+            app.ticker.update()
+            app.ticker.update()
+            app.ticker.update()
+          }}
+        >
+          <Counter enabled={enabled} />
+        </App>
+      )
+
+      const testState = (enabled, calledTimes) => {
+        fn.mockClear()
+
+        const { rerender, unmount } = reactTest.render(render(enabled))
+
+        reactTest.act(() => {
+          rerender(render(enabled))
+          rerender(render(enabled))
+        })
+
+        unmount()
+        expect(fn).toHaveBeenCalledTimes(calledTimes)
+      }
+
+      testState(true, 3)
+      testState(false, 0)
+    })
+  })
+})

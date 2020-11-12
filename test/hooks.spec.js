@@ -174,5 +174,71 @@ describe('hooks', () => {
       testState(true, 3)
       testState(false, 0)
     })
+
+    test('clean up after unmount', () => {
+      const fn = jest.fn()
+      let app
+      let add, remove
+
+      const Comp = () => {
+        useTick(fn)
+        return null
+      }
+
+      const render = (withStage, withComp) => (
+        <div>
+          {withStage && (
+            <App
+              cb={_app => {
+                if (!app) {
+                  app = _app
+                  add = jest.spyOn(app.ticker, 'add')
+                  remove = jest.spyOn(app.ticker, 'remove')
+                }
+
+                app.ticker.update()
+              }}
+            >
+              {withComp && <Comp />}
+            </App>
+          )}
+        </div>
+      )
+
+      const { rerender, unmount } = reactTest.render(null)
+      const updateRender = (stage, child) => {
+        if (add && remove) {
+          add.mockClear()
+          remove.mockClear()
+        }
+
+        rerender(render(stage, child))
+        jest.advanceTimersByTime(1000)
+      }
+
+      // add all
+      updateRender(true, true)
+      expect(add).toBeCalledTimes(1)
+      expect(remove).toBeCalledTimes(0)
+
+      // remove comp only
+      updateRender(true, false)
+      expect(add).toBeCalledTimes(0)
+      expect(remove).toBeCalledTimes(1)
+
+      // add all and remove all
+      updateRender(true, true)
+      expect(add).toBeCalledTimes(1)
+      expect(remove).toBeCalledTimes(0)
+
+      updateRender(false, false)
+      expect(add).toBeCalledTimes(0)
+      expect(remove).toBeCalledTimes(1)
+
+      // the call back should be called once
+      expect(fn).toBeCalledTimes(1)
+
+      unmount()
+    })
   })
 })

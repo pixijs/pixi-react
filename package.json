@@ -86,7 +86,6 @@
     "react-dom": "^17.0.1",
     "react-spring": "9.0.0-rc.3",
     "react-test-renderer": "^17.0.1",
-    "replace-in-file": "6.1.0",
     "rimraf": "^3.0.2",
     "rollup": "2.33.1",
     "rollup-plugin-babel": "^4.4.0",
@@ -108,7 +107,8 @@
   },
   "dependencies": {
     "performance-now": "2.1.0",
-    "react-reconciler": "0.26.1"
+    "react-reconciler": "0.26.1",
+    "replace-in-file": "6.1.0"
   },
   "eslintConfig": {
     "extends": [

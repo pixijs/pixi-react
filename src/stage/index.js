@@ -45,7 +45,7 @@ const propTypes = {
 
   children: PropTypes.node,
 
-  // PIXI options, see http://pixijs.download/dev/docs/PIXI.Application.html
+  // PIXI options, see https://pixijs.download/dev/docs/PIXI.Application.html
   options: PropTypes.shape({
     autoStart: PropTypes.bool,
     width: PropTypes.number,

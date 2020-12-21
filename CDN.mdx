@@ -1,0 +1,49 @@
+---
+name: CDN Links
+route: /cdn-links
+---
+
+# CDN Links
+
+Production:
+
+```html
+<script crossorigin src="https://unpkg.com/@inlet/react-pixi/dist/react-pixi.umd.js"></script>
+```
+
+Development:
+
+
+```html
+<script crossorigin src="https://unpkg.com/@inlet/react-pixi/dist/react-pixi.cjs-dev.js"></script>
+```
+
+Example with dependencies:
+
+
+```html
+<html>
+  <head>
+    <script crossorigin src="https://unpkg.com/react/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/pixi.js/dist/pixi.min.js"></script>
+    <script crossorigin src="https://unpkg.com/@inlet/react-pixi/dist/react-pixi.umd.js"></script>
+    <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { Stage, Sprite } = ReactPixi;
+
+      const App = () => (
+        <Stage>
+          <Sprite texture={PIXI.Texture.WHITE} tint={0x00ff00} />
+        </Stage>
+      );
+
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
+```

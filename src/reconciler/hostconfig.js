@@ -156,7 +156,8 @@ const HostConfig = {
   createTextInstance(text, rootContainerInstance, internalInstanceHandler) {
     invariant(
       false,
-      'react-pixi: PixiFiber does not support text nodes as children of a Pixi component. ' +
+      'react-pixi: Error trying to add text node "' + text + '"',
+      'PixiFiber does not support text nodes as children of a Pixi component. ' +
         'To pass a string value to your component, use a property other than children. ' +
         'If you wish to display some text, you can use &lt;Text text={string} /&gt; instead.'
     )

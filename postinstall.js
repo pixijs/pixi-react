@@ -9,9 +9,9 @@ const removeAllSideEffectsFalseFromReactSpringPackages = async () => {
       from: `"sideEffects": false`,
       to: `"sideEffects": true`,
     })
-  } catch () {
+  } catch (e) {
     console.log('skipped replacing `sideEffects` in react-spring as this package is not yet installed.')
-    console.log('If you\'re installing `react-spring@9x` later on, make sure to patch it for @inlet/react-pixi.')
+    console.log("If you're installing `react-spring@9x` later on, make sure to patch it for @inlet/react-pixi.")
     console.log('\tRun: `node ./node_modules/@inlet/react-pixi/postinstall.js` from your project root.')
   }
 }

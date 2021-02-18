@@ -326,6 +326,9 @@ export const render: (
   callback?: (...args: any) => void
 ) => any;
 
+// unmount component
+export const unmountComponentAtNode: (container: PIXI.Container) => void;
+
 // context
 export const AppContext: React.Context<PIXI.Application>;
 export const AppProvider: React.ComponentType<React.ProviderProps<PIXI.Application>>;

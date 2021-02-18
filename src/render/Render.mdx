@@ -1,0 +1,69 @@
+---
+name: Render
+route: /render
+---
+
+# Render
+
+You can either render your PIXI React components in the DOM or through a custom render call.
+
+## In ReactDOM
+
+This is the most common scenario
+
+
+```jsx
+import { Stage, Sprite } from '@inlet/react-pixi';
+import ReactDOM from 'react-dom';
+
+const App = () => (
+  <div>
+
+    {/* somewhere in your tree */}
+    <Stage>
+      <Sprite image="./bunny.png" x={100} y={100} />
+    </Stage>
+
+  </div>
+);
+
+ReactDOM.render(<App />, document.getElementById('root'));
+```
+
+## Custom render call
+
+You can also render a React Pixi component tree directly using the `render` call and bypass ReactDOM entirely:
+
+
+```jsx
+import { render, Text } from '@inlet/react-pixi';
+import { Application } from 'pixi.js';
+
+// Setup PIXI app
+const app = new Application({
+  width: 800,
+  height: 600,
+  backgroundColor: 0x10bb99,
+  view: document.getElementById('container'),
+});
+
+// Use the custom renderer to render a valid PIXI object into a PIXI container.
+render(<Text text="Hello World" x={200} y={200} />, app.stage);
+```
+
+Internally `react-pixi` keeps track of a `roots` list with containers, if you're removing/unmounting the container (or PIXI application),
+it's advisable to tear it down correctly. Simply call `unmountComponentAtNode`:
+
+
+```jsx
+import { render, unmountComponentAtNode, Text } from '@inlet/react-pixi';
+import { Application } from 'pixi.js';
+
+const app = new Application({...});
+
+render(<Text text="Hello World" />, app.stage);
+
+// clean up on unmount
+// this removes the container from roots list
+unmountComponentAtNode(app.stage);
+```

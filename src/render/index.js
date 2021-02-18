@@ -13,7 +13,7 @@ export const roots = new Map()
  * @param {PIXI.Container} container (i.e. the Stage)
  * @param {Function} callback
  */
-export function render(element, container, callback = undefined) {
+export function render(element, container, callback = () => {}) {
   invariant(
     Container.prototype.isPrototypeOf(container),
     'Invalid argument `container`, expected instance of `PIXI.Container`.'
@@ -32,4 +32,10 @@ export function render(element, container, callback = undefined) {
 
   // return the root instance
   return PixiFiber.getPublicRootInstance(root)
+}
+
+export function unmountComponentAtNode(container) {
+  if (roots.has(container)) {
+    roots.delete(container)
+  }
 }

@@ -2,6 +2,7 @@ import React from 'react'
 import { Application } from 'pixi.js'
 import PropTypes from 'prop-types'
 import invariant from '../utils/invariant'
+import { unmountComponentAtNode } from '../render'
 import { PROPS_DISPLAY_OBJECT } from '../utils/props'
 import { PixiFiber } from '../reconciler'
 import { AppProvider } from './provider'
@@ -223,6 +224,7 @@ class Stage extends React.Component {
       this._mediaQuery = null
     }
 
+    unmountComponentAtNode(this.app.stage)
     this.app.destroy()
   }
 

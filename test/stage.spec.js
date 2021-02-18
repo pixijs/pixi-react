@@ -185,6 +185,8 @@ describe('stage', () => {
     PixiFiber.updateContainer.mockClear()
     el.unmount()
 
+    jest.advanceTimersByTime(1000);
+
     expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1)
     expect(PixiFiber.updateContainer).toHaveBeenCalledWith(null, instance.mountNode, instance)
   })

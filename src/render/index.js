@@ -36,6 +36,9 @@ export function render(element, container, callback = () => {}) {
 
 export function unmountComponentAtNode(container) {
   if (roots.has(container)) {
-    roots.delete(container)
+    // unmount component
+    PixiFiber.updateContainer(null, roots.get(container), undefined, () => {
+      roots.delete(container)
+    })
   }
 }

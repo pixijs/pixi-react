@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js'
 import React from 'react'
 import Stage from '../src/stage'
 import { AppConsumer, AppProvider, Container, Text, withPixiApp } from '../src'
-import { render, roots } from '../src/render'
+import { render, roots, unmountComponentAtNode } from '../src/render'
 import { PixiFiber } from '../src/reconciler'
 
 const app = new PIXI.Application()
@@ -69,6 +69,18 @@ describe('render', () => {
 
     render(element, app.stage, callback)
     expect(PixiFiber.createContainer).toHaveBeenCalledTimes(0)
+  })
+
+  describe('unmountComponentAtNode', () => {
+    test('remove root', () => {
+      expect(roots.size).toBe(0);
+
+      render(element, app.stage);
+      expect(roots.size).toBe(1);
+
+      unmountComponentAtNode(app.stage);
+      expect(roots.size).toBe(0);
+    });
   })
 
   describe('passdown `PIXI.Application`', () => {

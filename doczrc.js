@@ -1,5 +1,5 @@
 export default {
-  title: '👌 React PIXI',
+  title: '👌 ReactPixi',
   description: 'Write PIXI apps using React declarative style',
   propsParser: false,
   dest: 'docs',

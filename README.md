@@ -1,25 +1,21 @@
 <h1 align="center">
   <img src="https://user-images.githubusercontent.com/232559/108500263-cd0da980-72af-11eb-8928-cf6a87bab28f.jpg" alt="react-pixi" width="295" />
 </h1>
-
 <p align="center">
   <strong>Simply the best way to write PIXI applications in React</strong>
-  <br>
+  <br />
   <sub>Write <a href="http://www.pixijs.com/">PIXI</a> applications using React declarative style 👌</sub>
 </p>
-
-<br>
-
+<br />
 <p align="center">
   <img src="https://img.shields.io/github/v/release/inlet/react-pixi" alt="release" />
   <img src="https://img.shields.io/npm/dm/@inlet/react-pixi" alt="downloads" />
   <img src="https://img.shields.io/circleci/project/github/inlet/react-pixi/master.svg" alt="ci tests" />
   <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="license" />
   <img src="https://img.shields.io/badge/react-latest-ff69b4.svg" alt="react version" />
-  <img src="https://img.shields.io/badge/pixi-v5+-ff69b4.svg" alt="pixi version">
+  <img src="https://img.shields.io/badge/pixi-v5+-ff69b4.svg" alt="pixi version" />
 </p>
-
-<br>
+<br />
 
 ReactPixi is an open-source, production-ready library to render high performant PIXI applications in React.
 

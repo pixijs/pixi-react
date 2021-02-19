@@ -1,0 +1,89 @@
+---
+name: Custom Components
+route: /custom-components
+---
+
+# Custom Components
+
+To tap into the React reconciliation you can create custom components with `PixiComponent`.
+
+ReactPixi covers a set of built-in components (like `Container`, `Sprite`, etc), but doesn't cover all [pixi.js](http://pixijs.github.io/docs/) components.
+However, you can easily create new components with `PixiComponent` that is automatically picked up by React's reconciler:
+
+## API
+
+```jsx
+export default PixiComponent('ComponentName', {
+  create: props => {
+    return new Graphics()
+  },
+  didMount: (instance, parent) => {
+    // apply custom logic on mount
+  },
+  willUnmount: (instance, parent) => {
+    // clean up before removal
+  },
+  applyProps: (instance, oldProps, newProps) => {
+    // props changed
+    // apply logic to the instance
+  },
+})
+```
+
+## Example
+
+```jsx
+import { Graphics } from 'pixi.js';
+import { PixiComponent, Stage } from '@inlet/react-pixi';
+
+const Rectangle = PixiComponent('Rectangle', {
+  create: props => new Graphics(),
+  applyProps: (instance, _, props) => {
+    const { x, y, width, height, fill } = props;
+
+    instance.clear();
+    instance.beginFill(fill);
+    instance.drawRect(x, y, width, height);
+    instance.endFill();
+  },
+});
+
+const App = () => (
+  <Stage>
+    <Rectangle x={100} y={100} width={500} height={300} fill={0xff0000} />
+  </Stage>
+);
+```
+
+Some use cases:
+
+- [Particle Emitter](https://codepen.io/inlet/pen/feddc8fa71e3b5afc6c3e4eda9cc83df)
+- [Pixi Viewport](https://roxgarage.medium.com/react-pixi-pt-2-viewport-5b7de9a1ea57)
+
+## Props helper
+
+ReactPixi comes with a handy utility method `applyDefaultProps` that can help you applying props directly to a PIXI
+primitive instance handling events, PIXI props and point-like values.
+
+Here's an example to pass through every other DisplayObject props and handle prop `count` separately:
+
+```jsx
+import { Text } from 'pixi.js'
+import { Stage, applyDefaultProps, PixiComponent } from '@inlet/react-pixi'
+
+export default PixiComponent('Counter', {
+  create: ({ count }) => {
+    return new Text(count.toString())
+  },
+  applyProps: (instance, oldProps, newProps) => {
+    const { count, ...oldP } = oldProps
+    const { count, ...newP } = newProps
+
+    // apply rest props to PIXI.Text
+    applyDefaultProps(instance, oldP, newP)
+
+    // set new count
+    instance.text = count.toString()
+  },
+})
+```

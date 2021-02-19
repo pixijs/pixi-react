@@ -90,7 +90,7 @@ render(<App />, document.getElementById('root'))
   }}
 </Playground>
 
-## Custom stage updates
+## Custom Updates
 
 By default the `<Stage>` component creates a `Pixi.Application` and updates the stage in a `requestAnimationFrame` loop.
 It tries to update and render the stage at the max browser rate (~60fps).
@@ -155,3 +155,38 @@ This might result in faster running cooling fans on your computer due the overhe
     )
   }}
 </Playground>
+
+## Accessing PIXI.Application
+
+To access the `PIXI.Application` in your child components you can use one of the following:
+
+#### AppConsumer
+
+```jsx
+import { AppConsumer } from '@inlet/react-pixi';
+
+const MyComponent = () => (
+  <AppConsumer>
+    {app => <OtherComponent app={app} />}
+  </AppConsumer>
+);
+```
+
+#### withPixiApp
+
+```jsx
+import { withPixiApp } from '@inlet/react-pixi';
+
+const MyComponent = withPixiApp(OtherComponent);
+```
+
+#### useApp
+
+```jsx
+import { useApp } from '@inlet/react-pixi';
+
+const MyComponent = () => {
+  const app = useApp();
+  // app => PIXI.Application
+};
+```

@@ -21,7 +21,7 @@ Write PIXI applications using React declarative style 👌
 npm install @inlet/react-pixi --save
 ```
 
-or [CDN](/cdn-links):
+or use [CDN](/cdn-links):
 
 ```html
 <script crossorigin src="https://unpkg.com/@inlet/react-pixi/dist/react-pixi.umd.js"></script>
@@ -40,42 +40,6 @@ const App = () => (
 ```
 
 [Codepen examples](https://codepen.io/collection/XPpGdb/)
-
-[API Docs on Github](https://github.com/inlet/react-pixi/)
-
-## Custom Components
-
-ReactPixi has a few built-in components (like `Container`, `Sprite`, etc), but doesn't cover all [pixi.js](http://pixijs.github.io/docs/) components.
-However, you can easily create new components with `PixiComponent` that is automatically picked up by React's reconciler:
-
-```jsx
-import { Graphics } from 'pixi.js';
-import { PixiComponent, Stage } from '@inlet/react-pixi';
-
-const Rectangle = PixiComponent('Rectangle', {
-  create: props => new Graphics(),
-  applyProps: (instance, _, props) => {
-    const { x, y, width, height, fill } = props;
-
-    instance.clear();
-    instance.beginFill(fill);
-    instance.drawRect(x, y, width, height);
-    instance.endFill();
-  },
-});
-
-const App = () => (
-  <Stage>
-    <Rectangle x={100} y={100} width={500} height={300} fill={0xff0000} />
-  </Stage>
-);
-```
-
-Codepen examples:
-
-- [Particle Emitter](https://codepen.io/inlet/pen/feddc8fa71e3b5afc6c3e4eda9cc83df)
-- [Animated Sprite](https://codepen.io/inlet/pen/5aaed9ddeadb4d7bb5ea435d77df397a)
-- [Display](https://codepen.io/inlet/pen/mvzzLb)
 
 ## Example
 
@@ -114,13 +78,32 @@ Codepen examples:
   }}
 </Playground>
 
-## ❤️ Support
+## Components
 
-If this project helps you reduce time to develop and/or you want to help the maintainer of this project. You can sponsor him. Thank you!
+Pass PIXI properties directly as component props, example:
 
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/donatepatrick)
+```jsx
+import { Sprite } from '@inlet/react-pixi'
 
-## We're on Slack
+const MyComponent = () => (
+  <Sprite
+    texture={myTexture}
+    anchor={0.5}
+    position={[100, 200]}
+    blendMode={PIXI.BLEND_MODES.ADD}
+    roundPixels={true}
+    filters={[blurFilter, matrixFilter]}
+  />;
+);
+```
+
+## Donate
+
+If you are enthusiast and this project helps reducing your development time, or you just want to show your gratitude to the creator and maintainer of the project, please buy me a coffee, thanks so much!
+
+[Make a donation](https://www.paypal.me/donatepatrick)
+
+## Join us
 
 You're missing an amazing feature? Or just want to get in touch with fellow developers
 and have a chat? Feel free to join our Slack channel.

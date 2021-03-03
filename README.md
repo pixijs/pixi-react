@@ -13,7 +13,7 @@
   <img src="https://img.shields.io/circleci/project/github/inlet/react-pixi/master.svg" alt="ci tests" />
   <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="license" />
   <img src="https://img.shields.io/badge/react-latest-ff69b4.svg" alt="react version" />
-  <img src="https://img.shields.io/badge/pixi-v5+-ff69b4.svg" alt="pixi version" />
+  <img src="https://img.shields.io/badge/pixi-v6+-ff69b4.svg" alt="pixi version" />
 </p>
 <br />
 

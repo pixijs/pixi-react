@@ -22,7 +22,7 @@ describe('createElement', () => {
     expect(element).toBeInstanceOf(PIXI.Text)
   })
 
-   test('create Text as a sprite', () => {
+  test('create Text as a sprite', () => {
     const element = createElement(TYPES.Text, { text: 'foobar', isSprite: true })
     expect(element).toBeInstanceOf(PIXI.Sprite)
   })
@@ -43,7 +43,10 @@ describe('createElement', () => {
   })
 
   test('create BitmapText', () => {
-    const element = createElement(TYPES.BitmapText, { text: 'foobar', style: { font: '35px Desyrel' } })
+    const element = createElement(TYPES.BitmapText, {
+      text: 'foobar',
+      style: { fontName: 'Desyrel', fontSize: 35, align: 'left' },
+    })
     expect(element).toBeInstanceOf(PIXI.BitmapText)
   })
 
@@ -68,16 +71,10 @@ describe('createElement', () => {
   })
 
   test('create SimpleRope', () => {
-    const element = createElement(
-      TYPES.SimpleRope,
-      {
-        texture: emptyTexture,
-        points: [
-          new PIXI.Point(0, 0),
-          new PIXI.Point(20, 20),
-        ],
-      },
-    )
+    const element = createElement(TYPES.SimpleRope, {
+      texture: emptyTexture,
+      points: [new PIXI.Point(0, 0), new PIXI.Point(20, 20)],
+    })
     expect(element).toBeInstanceOf(PIXI.SimpleRope)
   })
 
@@ -138,31 +135,19 @@ describe('element.applyProps', () => {
   })
 
   test('SimpleRope.applyProps exists', () => {
-    const element = createElement(
-      TYPES.SimpleRope,
-      {
-        image: './image.png',
-        points: [
-          new PIXI.Point(0, 0),
-          new PIXI.Point(20, 20),
-        ],
-      },
-    )
+    const element = createElement(TYPES.SimpleRope, {
+      image: './image.png',
+      points: [new PIXI.Point(0, 0), new PIXI.Point(20, 20)],
+    })
     expect(element).toHaveProperty('applyProps')
     expect(spy).toHaveBeenCalledWith('./image.png')
   })
 
   test('SimpleRope.applyProps image', () => {
-    const element = createElement(
-      TYPES.SimpleRope,
-      {
-        image: './image.png',
-        points: [
-          new PIXI.Point(0, 0),
-          new PIXI.Point(20, 20),
-        ],
-      },
-    )
+    const element = createElement(TYPES.SimpleRope, {
+      image: './image.png',
+      points: [new PIXI.Point(0, 0), new PIXI.Point(20, 20)],
+    })
     expect(spy).lastCalledWith('./image.png')
 
     element.applyProps(
@@ -170,11 +155,8 @@ describe('element.applyProps', () => {
       { image: './image.png' },
       {
         image: './new-image.png',
-        points: [
-          new PIXI.Point(0, 0),
-          new PIXI.Point(20, 20),
-        ],
-      },
+        points: [new PIXI.Point(0, 0), new PIXI.Point(20, 20)],
+      }
     )
     expect(spy).lastCalledWith('./new-image.png')
   })
@@ -238,8 +220,6 @@ describe('element.applyProps', () => {
     element.applyProps(element, nextProps, nextProps)
     expect(draw2).toHaveBeenCalledTimes(1)
   })
-
-
 })
 
 describe('PixiComponent', () => {
@@ -272,7 +252,7 @@ describe('PixiComponent', () => {
       create: jest.fn(() => new PIXI.Graphics()),
       didMount: jest.fn(),
       willUnmount: jest.fn(),
-      applyProps: jest.fn(function() {
+      applyProps: jest.fn(function () {
         scoped(this)
       }),
     }

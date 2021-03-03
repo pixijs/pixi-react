@@ -20,7 +20,7 @@ https://pixijs.download/dev/docs/PIXI.BitmapText.html
 
 <Playground>
   <Stage width={500} height={300} options={{ backgroundColor: 0xffffff }}>
-    <BitmapText anchor={0.5} x={250} y={150} text="Hello World!" style={{ font: '50px Desyrel' }}/>
+    <BitmapText anchor={0.5} x={250} y={150} text="Hello World!" style={{ fontName: 'Desyrel', fontSize: 50 }}/>
   </Stage>
 </Playground>
 
@@ -34,13 +34,13 @@ See https://pixijs.io/examples/#/demos/text-demo.js
 import { render } from 'react-dom'
 import { Stage, BitmapText } from '@inlet/react-pixi'
 
-PIXI.loader
+PIXI.Loader.shared
   .add('desyrel', './assets/desyrel.xml')
   .load(onAssetsLoaded)
 
 const App = () => (
   <Stage>
-    <BitmapText text="Hello World" style={{ font: '35px Desyrel' }}>
+    <BitmapText text="Hello World" style={{ fontName: 'Desyrel', fontSize: 35 }}>
   </Stage>
 )
 

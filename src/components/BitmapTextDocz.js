@@ -19,9 +19,9 @@ export default props => {
     }
   }, [])
 
-  if (loaded) {
-    return <BitmapText {...props} />
-  }
-
-  return <Text anchor={0.5} x={x} y={y} text="⌛ Loading font..." style={{ fontFamily: 'Arial', fontSize: 15 }} />
+  return loaded ? (
+    <BitmapText {...props} />
+  ) : (
+    <Text anchor={0.5} x={x} y={y} text="⌛ Loading font..." style={{ fontFamily: 'Arial', fontSize: 15 }} />
+  )
 }

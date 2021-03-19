@@ -66,7 +66,7 @@ render(<App />, document.getElementById('root'))
       height,
       width,
       options: {
-        transparent: true,
+        backgroundAlpha: 0,
         antialias: true
       }
     }
@@ -103,6 +103,8 @@ This might result in faster running cooling fans on your computer due the overhe
 
 <Playground>
   {() => {
+     // a simple incremental hook
+     // https://gist.github.com/inlet/3e80965127d16c056da247f66839f51d
      const i = useIteration(0.1)
      return (
        <Stage
@@ -110,7 +112,7 @@ This might result in faster running cooling fans on your computer due the overhe
          height={300}
          raf={false}
          renderOnComponentChange={true}
-         options={{ backgroundColor: 0xeef1f5, antialias: true }}
+         options={{ antialias: true, backgroundAlpha: 0 }}
        >
          <Sprite
            anchor={[-(2 + Math.sin(i/5) * 2), 0.5]}
@@ -123,26 +125,23 @@ This might result in faster running cooling fans on your computer due the overhe
   }}
 </Playground>
 
-> Note: The [useIteration()](https://gist.github.com/inlet/12b38a1cab2d14236692a2844d972290) hook is not part of `react-pixi`.
-> It simply updates the state with an incremental value.
-
 ### Update stage manually
 
 > Disable `raf` and `renderOnComponentChange`:
 
 <Playground>
   {() => {
-    const app = React.useRef();
+    const [app, setApp] = React.useState();
     const i = useIteration(0.1);
     return (
       <>
-        <button onClick={() => app.current.renderer.render(app.current.stage)}>Render</button>
+        <button onClick={() => app.renderer.render(app.stage)}>Render</button>
         <Stage
           width={300}
           height={300}
           raf={false}
           renderOnComponentChange={false}
-          onMount={_app => app.current = _app}
+          onMount={setApp}
           options={{ backgroundColor: 0xeef1f5, antialias: true }}>
           <Sprite
               anchor={0.5}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Application } from 'pixi.js'
+import { Application, Ticker } from 'pixi.js'
 import PropTypes from 'prop-types'
 import invariant from '../utils/invariant'
 import { PROPS_DISPLAY_OBJECT } from '../utils/props'
@@ -105,6 +105,8 @@ export function getCanvasProps(props) {
 class Stage extends React.Component {
   _canvas = null
   _mediaQuery = null
+  _ticker = null
+  _needsUpdate = true
   app = null
 
   componentDidMount() {
@@ -134,7 +136,10 @@ class Stage extends React.Component {
 
     // listen for reconciler changes
     if (renderOnComponentChange && !raf) {
-      window.addEventListener('__REACT_PIXI_REQUEST_RENDER__', this.renderStage)
+      this._ticker = new Ticker()
+      this._ticker.autoStart = true
+      this._ticker.add(this.renderStage)
+      window.addEventListener('__REACT_PIXI_REQUEST_RENDER__', this.needsRenderUpdate)
     }
 
     this.updateSize()
@@ -174,6 +179,7 @@ class Stage extends React.Component {
       prevProps.renderOnComponentChange !== renderOnComponentChange ||
       prevProps.options !== options
     ) {
+      this._needsUpdate = true;
       this.renderStage()
     }
   }
@@ -189,9 +195,14 @@ class Stage extends React.Component {
     this.app.renderer.resize(width, height)
   }
 
+  needsRenderUpdate = () => {
+    this._needsUpdate = true
+  }
+
   renderStage = () => {
     const { renderOnComponentChange, raf } = this.props
-    if (!raf && renderOnComponentChange) {
+    if (!raf && renderOnComponentChange && this._needsUpdate) {
+      this._needsUpdate = false
       this.app.renderer.render(this.app.stage)
     }
   }
@@ -214,7 +225,12 @@ class Stage extends React.Component {
   componentWillUnmount() {
     this.props.onUnmount(this.app)
 
-    window.removeEventListener('__REACT_PIXI_REQUEST_RENDER__', this.renderStage)
+    if (this._ticker) {
+      this._ticker.remove(this.renderStage)
+      this._ticker.destroy()
+    }
+
+    window.removeEventListener('__REACT_PIXI_REQUEST_RENDER__', this.needsRenderUpdate)
 
     PixiFiber.updateContainer(null, this.mountNode, this)
 

@@ -249,9 +249,8 @@ describe('stage', () => {
       )
 
       const app = el.getInstance().app
+      const ticker = el.getInstance()._ticker
       const spy = jest.spyOn(app.renderer, 'render')
-
-      console.log(spy.mock.calls.length)
 
       for (let i = 1; i <= 10; i++) {
         el.update(
@@ -260,10 +259,11 @@ describe('stage', () => {
               <Text text="hi world" />
             </Container>
           </Stage>
-        )
+        );
+        ticker.update()
       }
 
-      expect(spy).toBeCalledTimes(11)
+      expect(spy).toBeCalledTimes(10)
     })
   })
 

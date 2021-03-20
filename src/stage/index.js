@@ -179,7 +179,7 @@ class Stage extends React.Component {
       prevProps.renderOnComponentChange !== renderOnComponentChange ||
       prevProps.options !== options
     ) {
-      this._needsUpdate = true;
+      this._needsUpdate = true
       this.renderStage()
     }
   }

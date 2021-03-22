@@ -5,16 +5,17 @@ route: /custom-components
 
 # Custom Components
 
-To tap into the React reconciliation you can create custom components with `PixiComponent`.
+ReactPixi already covers a large set of PIXI components (like `<Container>`, `<Sprite>`, `<Graphics>` and many more), but in some use cases you'd like to add new "reconciler primitive" components.
 
-ReactPixi covers a set of built-in components (like `Container`, `Sprite`, etc), but doesn't cover all [pixi.js](http://pixijs.github.io/docs/) components.
-However, you can easily create new components with `PixiComponent` that is automatically picked up by React's reconciler:
+To tap into the React reconciliation you can create custom components with `PixiComponent`.
 
 ## API
 
 ```jsx
 export default PixiComponent('ComponentName', {
   create: props => {
+    // instantiate something and return it.
+    // for instance:
     return new Graphics()
   },
   didMount: (instance, parent) => {
@@ -29,36 +30,6 @@ export default PixiComponent('ComponentName', {
   },
 })
 ```
-
-## Example
-
-```jsx
-import { Graphics } from 'pixi.js';
-import { PixiComponent, Stage } from '@inlet/react-pixi';
-
-const Rectangle = PixiComponent('Rectangle', {
-  create: props => new Graphics(),
-  applyProps: (instance, _, props) => {
-    const { x, y, width, height, fill } = props;
-
-    instance.clear();
-    instance.beginFill(fill);
-    instance.drawRect(x, y, width, height);
-    instance.endFill();
-  },
-});
-
-const App = () => (
-  <Stage>
-    <Rectangle x={100} y={100} width={500} height={300} fill={0xff0000} />
-  </Stage>
-);
-```
-
-Some use cases:
-
-- [Particle Emitter](https://codepen.io/inlet/pen/feddc8fa71e3b5afc6c3e4eda9cc83df)
-- [Pixi Viewport](https://roxgarage.medium.com/react-pixi-pt-2-viewport-5b7de9a1ea57)
 
 ## Props helper
 
@@ -87,3 +58,46 @@ export default PixiComponent('Counter', {
   },
 })
 ```
+
+## Compose above Custom Components
+
+In most cases you can use simple React compositions. A rule of thumb is to use custom components for instances that are not present in ReactPixi components.
+
+Example, don't do:
+
+```jsx
+PixiComponent('Rectangle', {
+  create: () => new PIXI.Sprite(),
+  applyProps: () => {...}
+});
+```
+
+Instead use a simple React composition as `<Sprite>` is already present in ReactPixi:
+
+```jsx
+const Rectangle = (props) => <Sprite {...props}>;
+```
+
+## Example Viewport
+
+<iframe
+  height={650}
+  scrolling="no"
+  title="Rope"
+  src="//codepen.io/inlet/embed/yLVmPWv/?height=500&theme-id=33987&default-tab=result&embed-version=2"
+  frameBorder="no"
+  allowFullScreen={true}
+  style={{ width: '100%' }}
+/>
+
+## Example Particle Emitter
+
+<iframe
+  height={650}
+  scrolling="no"
+  title="Rope"
+  src="//codepen.io/inlet/embed/feddc8fa71e3b5afc6c3e4eda9cc83df/?height=500&theme-id=33987&default-tab=result&embed-version=2"
+  frameBorder="no"
+  allowFullScreen={true}
+  style={{ width: '100%' }}
+/>

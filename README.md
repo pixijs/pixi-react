@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://user-images.githubusercontent.com/232559/108500263-cd0da980-72af-11eb-8928-cf6a87bab28f.jpg" alt="react-pixi" width="295" />
+  <img src="https://user-images.githubusercontent.com/232559/112160431-72d37180-8bea-11eb-8137-17a45d4f3147.jpg" alt="react-pixi" width="838" />
 </h1>
 <p align="center">
   <strong>Simply the best way to write PIXI applications in React</strong>

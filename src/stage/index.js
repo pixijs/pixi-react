@@ -50,7 +50,8 @@ const propTypes = {
     autoStart: PropTypes.bool,
     width: PropTypes.number,
     height: PropTypes.number,
-    transparent: PropTypes.bool,
+    useContextAlpha: PropTypes.bool,
+    backgroundAlpha: PropTypes.number,
     autoDensity: PropTypes.bool,
     antialias: PropTypes.bool,
     preserveDrawingBuffer: PropTypes.bool,
@@ -59,7 +60,6 @@ const propTypes = {
     backgroundColor: PropTypes.number,
     clearBeforeRender: PropTypes.bool,
     powerPreference: PropTypes.string,
-    forceFXAA: PropTypes.bool,
     sharedTicker: PropTypes.bool,
     sharedLoader: PropTypes.bool,
 

@@ -117,6 +117,7 @@ class Stage extends React.Component {
       height,
       view: this._canvas,
       ...options,
+      autoDensity: options?.autoDensity !== false,
     })
 
     this.app.ticker.autoStart = false

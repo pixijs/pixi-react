@@ -49,6 +49,19 @@ describe('stage', () => {
     expect(tree).toBeNull()
   })
 
+  test('use autoDensity by default', () => {
+    const renderAutoDensity = options =>
+      renderer.create(
+        <Stage options={{
+          view: document.createElement('canvas'),
+          ...options,
+        }} />
+      ).getInstance().app.renderer.options.autoDensity
+
+    expect(renderAutoDensity({})).toBeTruthy()
+    expect(renderAutoDensity({ autoDensity: false })).toBeFalsy()
+  })
+
   test('validate options.view', () => {
     const options = { view: 123 }
     expect(() => renderer.create(<Stage options={options} />).toJSON()).toThrow(

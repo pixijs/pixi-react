@@ -1,9 +1,18 @@
-import { AnimatedSprite as PixiAnimatedSprite } from 'pixi.js'
-import { getTextureFromProps, applyDefaultProps } from '../utils/props'
+import { AnimatedSprite as PixiAnimatedSprite, Texture } from 'pixi.js'
+import { applyDefaultProps } from '../utils/props'
+import invariant from '../utils/invariant'
 
 const AnimatedSprite = (root, props) => {
   const { textures, images, isPlaying = true, initialFrame } = props
-  const makeTexture = textures => textures.map(texture => getTextureFromProps('AnimatedSprite', { texture }))
+
+  const makeTexture = textures =>
+    textures.map(texture => {
+      invariant(
+        texture instanceof Texture || texture?.texture,
+        `AnimationSprite texture needs to be an array of \`PIXI.Texture\` or \`{ texture: PIXI.Texture, time: number }\``
+      )
+      return texture
+    })
 
   const animatedSprite = images ? PixiAnimatedSprite.fromImages(images) : new PixiAnimatedSprite(makeTexture(textures))
   animatedSprite[isPlaying ? 'gotoAndPlay' : 'gotoAndStop'](initialFrame || 0)

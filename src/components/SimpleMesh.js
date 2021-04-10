@@ -9,11 +9,17 @@ const SimpleMesh = (root, props) => {
 
   simpleMesh.applyProps = (instance, oldProps, newProps) => {
     const { image, texture, ...props } = newProps
-    applyDefaultProps(instance, oldProps, props)
+    let changed = applyDefaultProps(instance, oldProps, props)
 
     if (image || texture) {
+      // change = true not required for image, getTextureFromProps will call update
+      if (texture !== oldProps.texture) {
+        changed = true
+      }
       instance.texture = getTextureFromProps('Mesh', newProps)
     }
+
+    return changed
   }
 
   return simpleMesh

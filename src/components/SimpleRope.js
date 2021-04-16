@@ -12,11 +12,16 @@ const SimpleRope = (root, props) => {
     const { image, texture, ...props } = newProps
 
     invariant(Array.isArray(newProps.points), 'SimpleRope points needs to be %s', 'Array<PIXI.Point>')
-    applyDefaultProps(instance, oldProps, props)
+    let changed = applyDefaultProps(instance, oldProps, props)
 
     if (image || texture) {
+      if (texture !== oldProps.texture) {
+        changed = true
+      }
       instance.texture = getTextureFromProps('SimpleRope', newProps)
     }
+
+    return changed
   }
 
   return rope

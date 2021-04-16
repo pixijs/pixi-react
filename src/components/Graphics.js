@@ -5,11 +5,14 @@ const Graphics = (root, props) => {
   const g = new PixiGraphics()
   g.applyProps = (instance, oldProps, newProps) => {
     const { draw, ...props } = newProps
-    applyDefaultProps(instance, oldProps, props)
+    let changed = applyDefaultProps(instance, oldProps, props)
 
     if (oldProps.draw !== draw && typeof draw === 'function') {
+      changed = true
       draw.call(g, g)
     }
+
+    return changed
   }
 
   return g

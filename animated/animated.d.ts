@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 import * as React from 'react';
-import { ElementType, ComponentPropsWithRef } from '@react-spring/shared';
+import { ElementType, ComponentPropsWithRef } from '@react-spring/types';
 import { AnimatedProps } from 'react-spring';
 
 type AnimatedComponent<T extends ElementType> = React.ForwardRefExoticComponent<AnimatedProps<ComponentPropsWithRef<T>>>;

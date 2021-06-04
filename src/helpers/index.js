@@ -21,7 +21,10 @@ export const hasKey = collection => {
   return key => typeof index[key] !== 'undefined'
 }
 
-export const not = boolFn => (...args) => !boolFn(...args)
+export const not =
+  boolFn =>
+  (...args) =>
+    !boolFn(...args)
 
 export const lcFirst = value => {
   return value.charAt(0).toLowerCase() + value.substring(1)

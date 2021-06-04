@@ -8,7 +8,10 @@
   "jsnext:main": "module.js",
   "author": "Patrick Brouwer",
   "license": "MIT",
-  "repository": "git+https://github.com/inlet/react-pixi.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inlet/react-pixi.git"
+  },
   "scripts": {
     "docz:dev": "rimraf ./docs && docz dev",
     "docz:build": "rimraf ./docs && yarn build:prod && docz build",

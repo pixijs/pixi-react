@@ -29,8 +29,7 @@
     "index.d.ts",
     "index.js",
     "umd.js",
-    "module.js",
-    "postinstall.js"
+    "module.js"
   ],
   "typings": "./index.d.ts",
   "devDependencies": {

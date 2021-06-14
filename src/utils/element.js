@@ -56,6 +56,7 @@ export function createElement(type, props = {}, root = null) {
       instance.didMount = injected.didMount ? injected.didMount.bind(instance) : undefined
       instance.willUnmount = injected.willUnmount ? injected.willUnmount.bind(instance) : undefined
       instance.applyProps = injected.applyProps ? injected.applyProps.bind(instance) : undefined
+      instance.config = injected.config
     }
   }
 

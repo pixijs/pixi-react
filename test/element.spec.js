@@ -295,6 +295,10 @@ describe('PixiComponent', () => {
 
   test('create injected component', () => {
     const scoped = jest.fn()
+    const config = {
+      destroyChildren: true,
+      destroy: true
+    }
 
     const lifecycle = {
       create: jest.fn(() => new PIXI.Graphics()),
@@ -303,6 +307,7 @@ describe('PixiComponent', () => {
       applyProps: jest.fn(function () {
         scoped(this)
       }),
+      config: config
     }
 
     new PixiComponent('Rectangle', lifecycle)
@@ -313,6 +318,7 @@ describe('PixiComponent', () => {
     expect(element.didMount).toBeDefined()
     expect(element.willUnmount).toBeDefined()
     expect(element.applyProps).toBeDefined()
+    expect(element.config).toBe(config)
     expect(element).toBeInstanceOf(PIXI.Graphics)
     expect(lifecycle.create).toHaveBeenCalledTimes(1)
     expect(lifecycle.create).toHaveBeenCalledWith(props)

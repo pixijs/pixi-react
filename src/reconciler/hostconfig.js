@@ -31,7 +31,7 @@ function removeChild(parent, child) {
   }
 
   // unmount potential children
-  if (child.children?.length) {
+  if (child?.config?.destroyChildren !== false && child.children?.length) {
     ;[...child.children].forEach(c => {
       removeChild(child, c)
     })
@@ -39,7 +39,7 @@ function removeChild(parent, child) {
 
   parent.removeChild(child)
 
-  if (!child?.preventAutoDestroy) {
+  if (child?.config?.destroy !== false) {
     child.destroy()
   }
 }

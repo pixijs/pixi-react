@@ -335,10 +335,21 @@ declare namespace _ReactPixi {
     ): void;
 
     /**
-     * Prevent auto destroy.
-     * If enabled, the instance doesn't get destroyed on cleanup.
+     * Reconcile config
      */
-    preventAutoDestroy?: boolean;
+    config?: {
+      /**
+       * Destroy instance on unmount?
+       * @default true
+       */
+      destroy?: boolean;
+
+      /**
+       * Destroy child instances?
+       * @default true
+       */
+      destroyChildren?: boolean
+    };
   }
 }
 

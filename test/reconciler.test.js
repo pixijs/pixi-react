@@ -290,36 +290,57 @@ describe('reconciler', () => {
       expect(m(0).args[2]).toEqual({ x: 100 })
     })
 
-    test('preventAutoDestroy', () => {
-      const createInstances = preventAutoDestroy => {
+    describe('config', () => {
+      const createInstances = config => {
         const instances = []
-
         hostconfig.createInstance.mockImplementation((...args) => {
           const ins = createElement(...args)
-
           ins.didMount = (...args) => didMount(...args)
           ins.willUnmount = (...args) => willUnmount(...args)
           ins.applyProps = (...args) => applyProps(...args)
-          ins.preventAutoDestroy = preventAutoDestroy
-
+          ins.config = config
           instances.push(ins)
           jest.spyOn(ins, 'destroy')
-
           return ins
         })
-
         return instances
       }
 
-      const enabled = createInstances(false)
-      renderInContainer(<Container />)
-      renderInContainer(<></>)
-      enabled.forEach(ins => expect(ins.destroy).toHaveBeenCalled())
+      test('destroy', () => {
+        const before = createInstances({ destroy: true })
+        renderInContainer(<Container />)
+        renderInContainer(<></>)
+        before.forEach(ins => expect(ins.destroy).toHaveBeenCalled())
 
-      const disabled = createInstances(true)
-      renderInContainer(<Container />)
-      renderInContainer(<></>)
-      disabled.forEach(ins => expect(ins.destroy).not.toHaveBeenCalled())
+        const after = createInstances({ destroy: false })
+        renderInContainer(<Container />)
+        renderInContainer(<></>)
+        after.forEach(ins => expect(ins.destroy).not.toHaveBeenCalled())
+      })
+
+      test('destroyChildren', () => {
+        const before = createInstances({ destroyChildren: true })
+        renderInContainer(
+          <Container>
+            <Text />
+          </Container>
+        )
+        const spyBefore = jest.spyOn(before[1].children[0], 'destroy')
+
+        renderInContainer(<></>)
+        expect(spyBefore).toHaveBeenCalled()
+
+        const after = createInstances({ destroyChildren: false })
+        renderInContainer(
+          <Container>
+            <Text />
+          </Container>
+        )
+        const spyAfter = jest.spyOn(after[1].children[0], 'destroy')
+
+        renderInContainer(<></>)
+        expect(spyAfter).not.toHaveBeenCalled()
+      })
     })
   })
 

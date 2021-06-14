@@ -38,7 +38,10 @@ function removeChild(parent, child) {
   }
 
   parent.removeChild(child)
-  child.destroy()
+
+  if (!child?.preventAutoDestroy) {
+    child.destroy()
+  }
 }
 
 function insertBefore(parent, child, beforeChild) {

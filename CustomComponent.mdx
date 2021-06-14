@@ -28,6 +28,8 @@ export default PixiComponent('ComponentName', {
     // props changed
     // apply logic to the instance
   },
+  // auto destroy instance on cleanup
+  preventAutoDestroy: false
 })
 ```
 
@@ -77,6 +79,10 @@ Instead use a simple React composition as `<Sprite>` is already present in React
 ```jsx
 const Rectangle = (props) => <Sprite {...props}>;
 ```
+
+## Clean up
+
+By default components are destroyed at clean up (during reconciliation). To prevent this you can set `preventAutoDestroy` to `true`.
 
 ## Example Viewport
 

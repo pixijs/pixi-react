@@ -333,6 +333,12 @@ declare namespace _ReactPixi {
       oldProps: Readonly<P>,
       newProps: Readonly<P>
     ): void;
+
+    /**
+     * Prevent auto destroy.
+     * If enabled, the instance doesn't get destroyed on cleanup.
+     */
+    preventAutoDestroy?: boolean;
   }
 }
 

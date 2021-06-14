@@ -289,6 +289,38 @@ describe('reconciler', () => {
       expect(m(0).args[1]).toEqual({})
       expect(m(0).args[2]).toEqual({ x: 100 })
     })
+
+    test('preventAutoDestroy', () => {
+      const createInstances = preventAutoDestroy => {
+        const instances = []
+
+        hostconfig.createInstance.mockImplementation((...args) => {
+          const ins = createElement(...args)
+
+          ins.didMount = (...args) => didMount(...args)
+          ins.willUnmount = (...args) => willUnmount(...args)
+          ins.applyProps = (...args) => applyProps(...args)
+          ins.preventAutoDestroy = preventAutoDestroy
+
+          instances.push(ins)
+          jest.spyOn(ins, 'destroy')
+
+          return ins
+        })
+
+        return instances
+      }
+
+      const enabled = createInstances(false)
+      renderInContainer(<Container />)
+      renderInContainer(<></>)
+      enabled.forEach(ins => expect(ins.destroy).toHaveBeenCalled())
+
+      const disabled = createInstances(true)
+      renderInContainer(<Container />)
+      renderInContainer(<></>)
+      disabled.forEach(ins => expect(ins.destroy).not.toHaveBeenCalled())
+    })
   })
 
   describe('suspense', () => {

@@ -103,12 +103,7 @@
     "pixi.js": "^6.0.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-spring": "^9.1.2"
-  },
-  "dependencies": {
-    "performance-now": "2.1.0",
-    "react-reconciler": "0.26.2"
+    "react-dom": "^17.0.1"
   },
   "eslintConfig": {
     "extends": [

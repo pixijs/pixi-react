@@ -22,7 +22,7 @@ function useTick(callback, enabled = true) {
 
   useEffect(() => {
     if (enabled) {
-      const tick = delta => savedRef.current(delta)
+      const tick = delta => savedRef.current.apply(app.ticker, [delta, app.ticker])
       app.ticker.add(tick)
 
       return () => {

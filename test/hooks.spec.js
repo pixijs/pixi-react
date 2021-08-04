@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef } from 'react'
 import renderer from 'react-test-renderer'
 import { Container, Stage, useTick, useApp } from '../src'
 import * as reactTest from '@testing-library/react'
-import { Application } from 'pixi.js'
+import { Application, Ticker } from 'pixi.js'
 
 jest.useFakeTimers()
 
@@ -173,6 +173,51 @@ describe('hooks', () => {
 
       testState(true, 3)
       testState(false, 0)
+    })
+
+    test('ticker fn.this should be ticker instance', () => {
+      const fn = jest.fn()
+
+      const Counter = () => {
+        useTick(function tick() {
+          fn(this)
+        })
+        return null
+      }
+
+      const render = () => (
+        <App cb={app => app.ticker.update()}>
+          <Counter />
+        </App>
+      )
+
+      const { rerender, unmount } = reactTest.render(render())
+      rerender(render())
+      unmount()
+
+      expect(fn.mock.calls[0][0]).toBeInstanceOf(Ticker)
+    });
+
+    test('ticker fn second argument as ticker instance', () => {
+      const fn = jest.fn()
+
+      const Counter = () => {
+        useTick(fn)
+        return null
+      }
+
+      const render = () => (
+        <App cb={app => app.ticker.update()}>
+          <Counter />
+        </App>
+      )
+
+      const { rerender, unmount } = reactTest.render(render())
+      rerender(render())
+      unmount()
+
+      expect(typeof fn.mock.calls[0][0]).toBe('number')
+      expect(fn.mock.calls[0][1]).toBeInstanceOf(Ticker)
     })
 
     test('clean up after unmount', () => {

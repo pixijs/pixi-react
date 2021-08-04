@@ -409,7 +409,10 @@ export const PixiComponent: <Props, PixiInstance extends PIXI.DisplayObject>(
  *   return <Sprite x={x} />
  * }
  */
-export const useTick: (tick: (delta?: number) => void, enabled?: boolean) => void;
+export const useTick: (
+  tick: (this: PIXI.Ticker, delta: number, ticker: PIXI.Ticker) => void,
+  enabled?: boolean
+) => void;
 
 /**
  * Get the {<Stage>} {PIXI.Application} instance.

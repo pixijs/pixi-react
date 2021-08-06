@@ -67,6 +67,42 @@ interface ReconcilerConfig {
   resetTextContent(...args: any[]): any;
 }
 
+export type InteractionEventTypes =
+  | 'click'
+  | 'mousedown'
+  | 'mousemove'
+  | 'mouseout'
+  | 'mouseover'
+  | 'mouseup'
+  | 'mouseupoutside'
+  | 'tap'
+  | 'touchstart'
+  | 'touchmove'
+  | 'touchend'
+  | 'touchendoutside'
+  | 'pointercancel'
+  | 'pointerout'
+  | 'pointerover'
+  | 'pointertap'
+  | 'pointerdown'
+  | 'pointerup'
+  | 'pointerupoutside'
+  | 'pointermove'
+  | 'rightclick'
+  | 'rightdown'
+  | 'rightup'
+  | 'rightupoutside'
+  | 'touchcancel'
+  | 'touchendoutside'
+  | 'touchmove'
+  | 'touchstart';
+
+export type InteractionEvents = {
+  [P in InteractionEventTypes]?: (
+    event: PIXI.InteractionEvent
+  ) => void;
+};
+
 // private
 declare namespace _ReactPixi {
   type FunctionTypes<T> = {
@@ -127,42 +163,6 @@ declare namespace _ReactPixi {
      */
     source?: AnySource;
   }
-
-  type InteractionEventTypes =
-    | 'click'
-    | 'mousedown'
-    | 'mousemove'
-    | 'mouseout'
-    | 'mouseover'
-    | 'mouseup'
-    | 'mouseupoutside'
-    | 'tap'
-    | 'touchstart'
-    | 'touchmove'
-    | 'touchend'
-    | 'touchendoutside'
-    | 'pointercancel'
-    | 'pointerout'
-    | 'pointerover'
-    | 'pointertap'
-    | 'pointerdown'
-    | 'pointerup'
-    | 'pointerupoutside'
-    | 'pointermove'
-    | 'rightclick'
-    | 'rightdown'
-    | 'rightup'
-    | 'rightupoutside'
-    | 'touchcancel'
-    | 'touchendoutside'
-    | 'touchmove'
-    | 'touchstart';
-
-  type InteractionEvents = {
-    [P in InteractionEventTypes]?: (
-      event: PIXI.InteractionEvent
-    ) => void;
-  };
 
   type P = 'position' | 'scale' | 'pivot' | 'anchor' | 'skew';
 

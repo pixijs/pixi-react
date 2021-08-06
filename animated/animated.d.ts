@@ -52,7 +52,7 @@ interface ReconcilerConfig {
   finalizeInitialChildren(doFinalize: boolean): boolean;
   prepareUpdate(...args: any): any;
   shouldSetTextContent(type: any, props: any): boolean;
-  shouldDeprioritizeSubtree(type: any, props: any):boolean;
+  shouldDeprioritizeSubtree(type: any, props: any): boolean;
   createTextInstance(): void;
   mountEventComponent(): void;
   updateEventComponent(): void;
@@ -71,15 +71,51 @@ interface ReconcilerConfig {
   resetTextContent(...args: any[]): any;
 }
 
+export type InteractionEventTypes =
+  | 'click'
+  | 'mousedown'
+  | 'mousemove'
+  | 'mouseout'
+  | 'mouseover'
+  | 'mouseup'
+  | 'mouseupoutside'
+  | 'tap'
+  | 'touchstart'
+  | 'touchmove'
+  | 'touchend'
+  | 'touchendoutside'
+  | 'pointercancel'
+  | 'pointerout'
+  | 'pointerover'
+  | 'pointertap'
+  | 'pointerdown'
+  | 'pointerup'
+  | 'pointerupoutside'
+  | 'pointermove'
+  | 'rightclick'
+  | 'rightdown'
+  | 'rightup'
+  | 'rightupoutside'
+  | 'touchcancel'
+  | 'touchendoutside'
+  | 'touchmove'
+  | 'touchstart';
+
+export type InteractionEvents = {
+  [P in InteractionEventTypes]?: (
+    event: PIXI.InteractionEvent
+  ) => void;
+};
+
 // private
 declare namespace _ReactPixi {
   type FunctionTypes<T> = {
     [P in keyof T]: ((...args: any) => any) extends T[P] ? P : never;
   }[keyof T];
 
-  type IfEquals<X, Y, A=X, B=never> =
+  type IfEquals<X, Y, A = X, B = never> =
     (<T>() => T extends X ? 1 : 2) extends
-      (<T>() => T extends Y ? 1 : 2) ? A : B;
+    (<T>() => T extends Y ? 1 : 2) ? A : B;
 
   type ReadonlyKeys<T> = {
     [P in keyof T]-?: IfEquals<{ [Q in P]: T[P] }, { -readonly [Q in P]: T[P] }, never, P>
@@ -132,48 +168,12 @@ declare namespace _ReactPixi {
     source?: AnySource;
   }
 
-  type InteractionEventTypes =
-    | 'click'
-    | 'mousedown'
-    | 'mousemove'
-    | 'mouseout'
-    | 'mouseover'
-    | 'mouseup'
-    | 'mouseupoutside'
-    | 'tap'
-    | 'touchstart'
-    | 'touchmove'
-    | 'touchend'
-    | 'touchendoutside'
-    | 'pointercancel'
-    | 'pointerout'
-    | 'pointerover'
-    | 'pointertap'
-    | 'pointerdown'
-    | 'pointerup'
-    | 'pointerupoutside'
-    | 'pointermove'
-    | 'rightclick'
-    | 'rightdown'
-    | 'rightup'
-    | 'rightupoutside'
-    | 'touchcancel'
-    | 'touchendoutside'
-    | 'touchmove'
-    | 'touchstart';
-
-  type InteractionEvents = {
-    [P in InteractionEventTypes]?: (
-      event: PIXI.InteractionEvent
-    ) => void;
-  };
-
   type P = 'position' | 'scale' | 'pivot' | 'anchor' | 'skew';
 
   type Container<T extends PIXI.DisplayObject, U = {}> = Partial<
     Omit<T, 'children' | P | ReadonlyKeys<T> | keyof U> &
     WithPointLike<P>
-    > & U & InteractionEvents & { ref?: React.Ref<T> };
+  > & U & InteractionEvents & { ref?: React.Ref<T> };
 
   type IContainer = Container<PIXI.Container>;
   type ISprite = Container<PIXI.Sprite, WithSource>;
@@ -206,7 +206,7 @@ declare namespace _ReactPixi {
        */
       style?: ConstructorParameters<typeof PIXI.BitmapText>[1];
     }
-    >;
+  >;
 
   type INineSlicePlane = Container<PIXI.NineSlicePlane, WithSource>;
   type IParticleContainer = Container<
@@ -217,33 +217,33 @@ declare namespace _ReactPixi {
       batchSize?: ConstructorParameters<typeof PIXI.ParticleContainer>[2];
       autoResize?: ConstructorParameters<typeof PIXI.ParticleContainer>[3];
     }
-    >;
+  >;
 
   type ITilingSprite = Container<
     PIXI.TilingSprite,
     WithSource & {
-    tileScale?: PointLike;
-    tilePosition: PointLike;
-  }
-    >;
+      tileScale?: PointLike;
+      tilePosition: PointLike;
+    }
+  >;
 
   type ISimpleRope = Container<PIXI.SimpleRope, WithSource>;
   type ISimpleMesh = Container<
     PIXI.SimpleMesh,
     WithSource & {
-    uvs?: ConstructorParameters<typeof PIXI.SimpleMesh>[2];
-    indices?: ConstructorParameters<typeof PIXI.SimpleMesh>[3];
-  }
-    >;
+      uvs?: ConstructorParameters<typeof PIXI.SimpleMesh>[2];
+      indices?: ConstructorParameters<typeof PIXI.SimpleMesh>[3];
+    }
+  >;
 
   type IAnimatedSprite = Container<
     PIXI.AnimatedSprite,
     WithSource & {
-    isPlaying: boolean;
-    images?: string[];
-    initialFrame?: number;
-  }
-    >;
+      isPlaying: boolean;
+      images?: string[];
+      initialFrame?: number;
+    }
+  >;
 
   type IStage = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
     /**
@@ -371,7 +371,7 @@ export const PixiFiber: (
 ) => Reconciler<any, any, any, any>;
 
 // stage
-export class Stage extends React.Component<_ReactPixi.IStage> {}
+export class Stage extends React.Component<_ReactPixi.IStage> { }
 
 /**
  * Create a Custom PIXI Component
@@ -489,7 +489,7 @@ export const applyDefaultProps: <P extends object>(
 export const withFilters: <
   Component extends React.ComponentType<
     _ReactPixi.Container<PIXI.DisplayObject, any>
-    >,
+  >,
   Filters extends { [filterKey: string]: any }
   >(
   WrapperComponent: Component,
@@ -497,7 +497,7 @@ export const withFilters: <
 ) => AnimatedComponent<React.ComponentType<
   React.ComponentProps<Component> & Partial<
     { [P in keyof Filters]: Partial<InstanceType<Filters[P]> & { construct: ConstructorParameters<Filters[P]> }> }>
-  >>;
+>>;
 
 /**
  * Get the component instance ref
@@ -513,6 +513,6 @@ export const withFilters: <
 export type PixiRef<T extends React.ComponentType<any>> = Extract<
   React.ComponentProps<T>['ref'],
   React.RefObject<any>
-  > extends React.Ref<infer R>
+> extends React.Ref<infer R>
   ? R
   : never;

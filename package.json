@@ -10,7 +10,7 @@
   "license": "MIT",
   "scripts": {
     "docz:dev": "rimraf ./docs && docz dev",
-    "docz:build": "rimraf ./docs && yarn build:prod && node ./docz-prepare && docz build",
+    "docz:build": "rimraf ./docs && yarn build:prod && docz build",
     "eslint": "eslint .",
     "build:watch": "cross-env FORMAT=umd NODE_ENV=development rollup -c --watch",
     "build:dev": "cross-env NODE_ENV=development rollup -c",

@@ -6,12 +6,8 @@
   "umd:main": "umd.js",
   "module": "module.js",
   "jsnext:main": "module.js",
-  "author": "Patrick Brouwer",
+  "author": "Patrick Brouwer <patrick@inlet.nl>",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/inlet/react-pixi.git"
-  },
   "scripts": {
     "docz:dev": "rimraf ./docs && docz dev",
     "docz:build": "rimraf ./docs && yarn build:prod && node ./docz-prepare && docz build",
@@ -23,6 +19,10 @@
     "test": "jest --silent",
     "test:watch": "jest --silent --watch",
     "prepack": "if-env CI=true && echo \"skip build\" || (npm run test && npm run eslint && npm run build)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inlet/react-pixi.git"
   },
   "files": [
     "dist/",

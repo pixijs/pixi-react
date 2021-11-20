@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/232559/113017759-1b9c4680-9180-11eb-8b2c-b41746bd7aac.png" alt="react-pixi" width="310" />
+  <img src="https://user-images.githubusercontent.com/232559/142733492-3c106f68-8b8e-459c-95f9-aca77561d438.png" alt="react-pixi" width="310" />
 </p>
 
 <h1 align="center">
@@ -36,7 +36,7 @@ npm install pixi.js @inlet/react-pixi
 ```
 
 ```jsx
-import { Stage, Container, Sprite } from '@inlet/react-pixi';
+import { Stage, Container, Sprite } from '@inlet/react-pixi'
 
 export const MyComponent = () => (
   <Stage>
@@ -46,7 +46,7 @@ export const MyComponent = () => (
       <Text text="Hello World" filter={[blurFilter]} />
     </Container>
   </Stage>
-);
+)
 ```
 
 ### Docs

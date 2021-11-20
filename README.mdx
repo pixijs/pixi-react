@@ -3,17 +3,30 @@ name: About
 route: /
 ---
 
-import { useReducer, useRef } from 'react';
+import { useReducer, useRef } from 'react'
 import { Playground } from 'docz'
-import { Stage, Sprite, Container, useTick } from './docz-rp';
+import { Stage, Sprite, Container, useTick } from './docz-rp'
 
-# React PIXI 🌈
+<p>
+  <h1 align="center" hidden>
+    React Pixi
+  </h1>
+  <img
+    src="https://user-images.githubusercontent.com/232559/142733492-3c106f68-8b8e-459c-95f9-aca77561d438.png"
+    alt="react-pixi"
+    width="310"
+  />
+</p>
+
+<p>
+  <strong>Simply the best way to write PIXI applications in React</strong>
+  <br />
+  <sub>
+    Write <a href="http://www.pixijs.com/">PIXI</a> applications using React declarative style 👌
+  </sub>
+</p>
 
 ![release](https://img.shields.io/github/v/release/inlet/react-pixi) &nbsp;&nbsp; ![downloads](https://img.shields.io/npm/dm/@inlet/react-pixi) &nbsp;&nbsp; [![CircleCI](https://img.shields.io/circleci/project/github/inlet/react-pixi/master.svg)](https://circleci.com/gh/inlet/react-pixi) &nbsp;&nbsp; ![license](https://img.shields.io/badge/license-MIT-green.svg) &nbsp;&nbsp; ![react](https://img.shields.io/badge/react-latest-ff69b4.svg) &nbsp;&nbsp; ![pixi](https://img.shields.io/badge/pixi-v6+-ff69b4.svg)
-
-Write PIXI applications using React declarative style 👌
-
-<img src="https://user-images.githubusercontent.com/232559/61308019-a17f2f00-a7ef-11e9-878d-5c7775c4eccd.png" style={{ maxWidth: '100%', width: 500 }}/>
 
 ## Install
 
@@ -30,13 +43,13 @@ or use [CDN](/cdn-links):
 ## Usage
 
 ```jsx
-import { Stage, Sprite } from '@inlet/react-pixi';
+import { Stage, Sprite } from '@inlet/react-pixi'
 
 const App = () => (
   <Stage>
     <Sprite image="./bunny.png" x={100} y={100} />
   </Stage>
-);
+)
 ```
 
 [Codepen examples](https://codepen.io/collection/XPpGdb/)
@@ -45,35 +58,30 @@ const App = () => (
 
 <Playground>
   {() => {
-    const reducer = (_, { data }) => data;
+    const reducer = (_, { data }) => data
     const Bunny = () => {
-    const [motion, update] = useReducer(reducer);
-    const iter = useRef(0);
-    useTick(delta => {
-      const i = iter.current += .05 * delta;
-      update({
-        type: 'update',
-        data: {
-          x: Math.sin(i) * 100,
-          y: Math.sin(i/1.5) * 100,
-          rotation: Math.sin(i) * Math.PI,
-          anchor: Math.sin(i/2),
-        }
+      const [motion, update] = useReducer(reducer)
+      const iter = useRef(0)
+      useTick(delta => {
+        const i = (iter.current += 0.05 * delta)
+        update({
+          type: 'update',
+          data: {
+            x: Math.sin(i) * 100,
+            y: Math.sin(i / 1.5) * 100,
+            rotation: Math.sin(i) * Math.PI,
+            anchor: Math.sin(i / 2),
+          },
+        })
       })
-    });
+      return <Sprite image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png" {...motion} />
+    }
     return (
-      <Sprite
-        image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
-        {...motion}
-      />
-    )
-    };
-    return (
-    <Stage width={300} height={300} options={{ backgroundAlpha: 0 }}>
-      <Container x={150} y={150}>
-        <Bunny />
-      </Container>
-    </Stage>
+      <Stage width={300} height={300} options={{ backgroundAlpha: 0 }}>
+        <Container x={150} y={150}>
+          <Bunny />
+        </Container>
+      </Stage>
     )
   }}
 </Playground>

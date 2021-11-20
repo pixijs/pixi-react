@@ -117,5 +117,9 @@
       "<rootDir>/test/bootstrap.js",
       "<rootDir>/test/__mocks__/matchMediaMock.js"
     ]
+  },
+  "resolutions": {
+    "get-pkg-repo": "4.1.1",
+    "hosted-git-info": "^2.1.4"
   }
 }

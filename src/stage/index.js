@@ -209,7 +209,9 @@ class Stage extends React.Component {
   }
 
   resetInteractionManager() {
-    this.app.renderer.plugins.interaction.resolution = this.app.renderer.resolution
+    if ('interaction' in this.app.renderer.plugins) {
+      this.app.renderer.plugins.interaction.resolution = this.app.renderer.resolution
+    }
   }
 
   getChildren() {

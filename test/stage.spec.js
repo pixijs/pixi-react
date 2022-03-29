@@ -332,6 +332,19 @@ describe('stage', () => {
       expect(appRenderer.resolution).toEqual(2)
     })
 
+    test('does not update resolution of interaction plugin if interaction plugin is removed', () => {
+      delete PIXI.Renderer.__plugins.interaction
+
+      let el = renderer.create(<Stage width={800} height={600} options={{ resolution: 1 }} />)
+
+      const appRenderer = el.getInstance().app.renderer
+      const spyResize = jest.spyOn(appRenderer, 'resize')
+
+      expect(() => el.update(<Stage width={800} height={600} options={{ resolution: 2 }} />)).not.toThrow()
+      expect(spyResize).toHaveBeenCalledWith(800, 600)
+      expect(appRenderer.resolution).toEqual(2)
+    })
+
     test('clean up media query on unmount', () => {
       let el = renderer.create(
         <div>

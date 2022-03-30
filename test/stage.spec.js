@@ -333,6 +333,7 @@ describe('stage', () => {
     })
 
     test('does not update resolution of interaction plugin if interaction plugin is removed', () => {
+      const interaction = PIXI.Renderer.__plugins.interaction
       delete PIXI.Renderer.__plugins.interaction
 
       let el = renderer.create(<Stage width={800} height={600} options={{ resolution: 1 }} />)
@@ -343,6 +344,8 @@ describe('stage', () => {
       expect(() => el.update(<Stage width={800} height={600} options={{ resolution: 2 }} />)).not.toThrow()
       expect(spyResize).toHaveBeenCalledWith(800, 600)
       expect(appRenderer.resolution).toEqual(2)
+
+      PIXI.Renderer.__plugins.interaction = interaction
     })
 
     test('clean up media query on unmount', () => {

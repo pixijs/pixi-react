@@ -209,7 +209,11 @@ class Stage extends React.Component {
   }
 
   resetInteractionManager() {
-    this.app.renderer.plugins.interaction.resolution = this.app.renderer.resolution
+    // `interaction` property could be absent if user has installed Federated Events API plugin.
+    // https://api.pixijs.io/@pixi/events.html
+    if ('interaction' in this.app.renderer.plugins) {
+      this.app.renderer.plugins.interaction.resolution = this.app.renderer.resolution
+    }
   }
 
   getChildren() {

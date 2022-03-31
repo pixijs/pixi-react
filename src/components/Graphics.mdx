@@ -14,9 +14,10 @@ https://pixijs.download/dev/docs/PIXI.Graphics.html
 
 ## Props
 
-| prop 	| description            	|
-|------	|------------------------	|
-| draw 	| Draw callback function 	|
+| prop 	   | description            	|
+|--------- |------------------------	|
+| draw 	   | Draw callback function 	|
+| geometry | Graphics object          |
 
 
 ## Usage
@@ -72,6 +73,43 @@ function Rectangle(props) {
 }
 ```
 
+### The `geometry` prop
+Provides another Graphics object as a template. Helps in reducing memory footprint if the same shapes are used repeatedly.
+
+```jsx
+import React, { useCallback } from 'react';
+import { Graphics } from '@inlet/react-pixi';
+
+function Rectangle(props) {
+  const draw = useCallback((g) => {
+    g.clear();
+    g.lineStyle(props.lineWidth, props.color);
+    g.drawRect(
+      props.lineWidth,
+      props.lineWidth,
+      props.width - 2 * props.lineWidth,
+      props.height - 2 * props.lineWidth
+    );
+  }, [props]);
+
+  return <Graphics draw={draw} />
+}
+
+function Grid(props) {
+
+  const geometry = <Rectangle {...props} />
+
+  return (
+    <>
+      <Graphics x={0} y={0} geometry={geometry} />
+      <Graphics x={props.width} y={0} geometry={geometry} />
+      <Graphics x={0} y={props.height} geometry={geometry} />
+      <Graphics x={props.width} y={props.height} geometry={geometry} />
+    </>
+  );
+}
+```
+
 ## Example
 
 <iframe
@@ -83,3 +121,4 @@ function Rectangle(props) {
   allowFullScreen={true}
   style={{ width: '100%' }}
 />
+

@@ -1,12 +1,13 @@
 import { Graphics as PixiGraphics } from 'pixi.js'
 import { applyDefaultProps } from '../utils/props'
+import invariant from '../utils/invariant'
 
-const Graphics = (root, props) => {
-  const g = new PixiGraphics()
+const Graphics = (root, { geometry }) => {
+  invariant(!geometry || geometry instanceof PixiGraphics, `Graphics geometry needs to be a \`PIXI.Graphics\``)
+  const g = geometry ? new PixiGraphics(geometry.geometry) : new PixiGraphics()
   g.applyProps = (instance, oldProps, newProps) => {
-    const { draw, ...props } = newProps
+    const { draw, geometry, ...props } = newProps
     let changed = applyDefaultProps(instance, oldProps, props)
-
     if (oldProps.draw !== draw && typeof draw === 'function') {
       changed = true
       draw.call(g, g)

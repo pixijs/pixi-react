@@ -140,7 +140,7 @@ class Stage extends React.Component {
       this._ticker = new Ticker()
       this._ticker.autoStart = true
       this._ticker.add(this.renderStage)
-      window.addEventListener('__REACT_PIXI_REQUEST_RENDER__', this.needsRenderUpdate)
+      this.app.stage.on('__REACT_PIXI_REQUEST_RENDER__', this.needsRenderUpdate)
     }
 
     this.updateSize()
@@ -235,7 +235,7 @@ class Stage extends React.Component {
       this._ticker.destroy()
     }
 
-    window.removeEventListener('__REACT_PIXI_REQUEST_RENDER__', this.needsRenderUpdate)
+    this.app.stage.off('__REACT_PIXI_REQUEST_RENDER__', this.needsRenderUpdate)
 
     PixiFiber.updateContainer(null, this.mountNode, this)
 

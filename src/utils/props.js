@@ -54,9 +54,9 @@ export const PROPS_DISPLAY_OBJECT = {
  * @returns {PIXI.Texture|null}
  */
 export const getTextureFromProps = (elementType, props = {}) => {
-  const emitChange = () =>
+  const emitChange = texture =>
     requestAnimationFrame(() => {
-      window.dispatchEvent(new CustomEvent('__REACT_PIXI_REQUEST_RENDER__'))
+      texture?.__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`)
     })
 
   const check = (inType, validator) => {
@@ -88,7 +88,7 @@ export const getTextureFromProps = (elementType, props = {}) => {
     texture.once('loaded', emitChange)
 
     if (texture.valid) {
-      emitChange()
+      emitChange(texture)
     }
 
     return texture

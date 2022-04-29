@@ -208,31 +208,31 @@ const HostConfig = {
 
   appendInitialChild(...args) {
     const res = appendChild.apply(null, args)
-    window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'appendInitialChild' }))
+    args[0].__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'appendInitialChild' })
     return res
   },
 
   appendChild(...args) {
     const res = appendChild.apply(null, args)
-    window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'appendChild' }))
+    args[0].__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'appendChild' })
     return res
   },
 
   appendChildToContainer(...args) {
     const res = appendChild.apply(null, args)
-    window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'appendChildToContainer' }))
+    args[0].__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'appendChildToContainer' })
     return res
   },
 
   removeChild(...args) {
     const res = removeChild.apply(null, args)
-    window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'removeChild' }))
+    args[0].__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'removeChild' })
     return res
   },
 
   removeChildFromContainer(...args) {
     const res = removeChild.apply(null, args)
-    window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'removeChildFromContainer' }))
+    args[0].__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'removeChildFromContainer' })
     return res
   },
 
@@ -240,7 +240,7 @@ const HostConfig = {
 
   insertInContainerBefore(...args) {
     const res = insertBefore.apply(null, args)
-    window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'insertInContainerBefore' }))
+    args[0].__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'insertInContainerBefore' })
     return res
   },
 
@@ -252,7 +252,7 @@ const HostConfig = {
 
     const changed = applyProps(instance, oldProps, newProps)
     if (changed || prepareChanged) {
-      window.dispatchEvent(new CustomEvent(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'commitUpdate' }))
+      instance.__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'commitUpdate' })
     }
   },
 

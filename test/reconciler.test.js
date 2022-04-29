@@ -428,11 +428,11 @@ describe('reconciler', () => {
 
     beforeEach(() => {
       spy.mockReset()
-      window.addEventListener('__REACT_PIXI_REQUEST_RENDER__', spy)
+      container.on('__REACT_PIXI_REQUEST_RENDER__', spy)
     })
 
     afterEach(() => {
-      window.removeEventListener('__REACT_PIXI_REQUEST_RENDER__', spy)
+      container.off('__REACT_PIXI_REQUEST_RENDER__', spy)
     })
 
     it('receives request events via `window` object', function () {

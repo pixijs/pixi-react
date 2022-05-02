@@ -424,25 +424,57 @@ describe('reconciler', () => {
   })
 
   describe('emits request render', () => {
-    let spy = jest.fn()
+    let spy1 = jest.fn()
+    let spy2 = jest.fn()
+
+    let container2 = new PIXI.Container()
+    container2.root = true
+    const renderInContainer2 = comp => render(comp, container2)
 
     beforeEach(() => {
-      spy.mockReset()
-      container.on('__REACT_PIXI_REQUEST_RENDER__', spy)
+      spy1.mockReset()
+      spy2.mockReset()
+      container.on('__REACT_PIXI_REQUEST_RENDER__', spy1)
+      container2.on('__REACT_PIXI_REQUEST_RENDER__', spy2)
+
     })
 
     afterEach(() => {
-      container.off('__REACT_PIXI_REQUEST_RENDER__', spy)
+      container.off('__REACT_PIXI_REQUEST_RENDER__', spy1)
+      container2.off('__REACT_PIXI_REQUEST_RENDER__', spy2)
     })
 
-    it('receives request events via `window` object', function () {
+    it('receives request events via root container', function () {
       renderInContainer(
         <Container>
           <Text text="one" />
         </Container>
       )
 
-      expect(spy).toHaveBeenCalled()
+      expect(spy1).toHaveBeenCalled()
+    })
+
+    it('receives different events in different containers', function () {
+      renderInContainer(
+        <Container>
+          <Text text="one" />
+        </Container>
+      )
+
+      renderInContainer2(
+        <Container>
+          <Text text="one" />
+        </Container>
+      )
+
+      renderInContainer2(
+        <Container>
+          <Text text="two" />
+        </Container>
+      )
+
+      expect(spy1).toHaveBeenCalledTimes(1)
+      expect(spy2).toHaveBeenCalledTimes(2)
     })
   })
 })

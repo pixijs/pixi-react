@@ -2,7 +2,7 @@ import { Sprite as PixiSprite } from 'pixi.js'
 import { getTextureFromProps, applyDefaultProps } from '../utils/props'
 
 const Sprite = (root, props) => {
-  const sprite = new PixiSprite(getTextureFromProps('Sprite', props))
+  const sprite = new PixiSprite(getTextureFromProps('Sprite', root, props))
 
   sprite.applyProps = (instance, oldProps, newProps) => {
     const { image, texture, ...props } = newProps
@@ -13,7 +13,7 @@ const Sprite = (root, props) => {
       if (oldProps.texture !== newProps.texture) {
         changed = true
       }
-      instance.texture = getTextureFromProps('Sprite', newProps)
+      instance.texture = getTextureFromProps('Sprite', root, newProps)
     }
 
     return changed

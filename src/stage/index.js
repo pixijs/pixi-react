@@ -123,6 +123,7 @@ class Stage extends React.Component {
     this.app.ticker.autoStart = false
     this.app.ticker[raf ? 'start' : 'stop']()
 
+    this.app.stage.__reactpixi = { root: this.app.stage }
     this.mountNode = PixiFiber.createContainer(this.app.stage)
     PixiFiber.updateContainer(this.getChildren(), this.mountNode, this)
 

@@ -1,44 +1,73 @@
-import React from 'react'
-import * as PIXI from 'pixi.js'
+import React, { useRef, useState, useEffect } from 'react'
 import renderer from 'react-test-renderer'
-import * as reactTest from '@testing-library/react'
-import { PixiFiber } from '../src'
-import { Container, Stage, Text, Graphics } from '../src'
-import { Context } from '../src/stage/provider'
-import { getCanvasProps } from '../src/stage'
-import { mockToSpy } from './__utils__/mock'
-
-jest.mock('../src/reconciler')
-jest.useFakeTimers()
+import { Graphics, Stage } from '../src'
 
 describe('graphics', () => {
-  beforeEach(() => {
-    window.matchMedia.mockClear()
-    jest.clearAllMocks()
-    mockToSpy('../src/reconciler')
+  beforeAll(() => {
+    jest.useFakeTimers()
   })
 
-  test.skip('renders a graphics component with draw prop', () => {
+  afterAll(() => {
+    jest.useRealTimers()
+  })
+
+  test('renders a graphics component with draw prop', () => {
     const spy = jest.fn()
-    const tree = renderer.create(
+    const tree = renderer
+      .create(
         <Stage>
-            <Graphics draw={spy} />
+          <Graphics draw={spy} />
         </Stage>
-    ).toJSON();
+      )
+      .toJSON()
     expect(tree).toMatchSnapshot()
     expect(spy).toHaveBeenCalledTimes(1)
   })
 
-  test.skip('renders a graphics component with geometry prop', () => {
-    const spy = jest.fn()
-    const geometry = <Graphics draw={spy} />
-    const tree = renderer.create(
+  test('renders a graphics component with geometry prop', () => {
+    const spyDraw = jest.fn()
+
+    let graphics
+    let g1, g2, g3
+
+    const App = () => {
+      const ref = useRef()
+      const [mounted, setMounted] = useState(false)
+
+      useEffect(() => {
+        setMounted(true)
+      }, [])
+
+      return (
+        <>
+          <Graphics ref={g => (ref.current = graphics = g)} draw={spyDraw} />
+
+          {mounted && (
+            <>
+              <Graphics geometry={ref.current} ref={g => (g1 = g)} />
+              <Graphics geometry={ref.current} ref={g => (g2 = g)} />
+              <Graphics geometry={ref.current} ref={g => (g3 = g)} />
+            </>
+          )}
+        </>
+      )
+    }
+
+    const tree = renderer
+      .create(
         <Stage>
-            <Graphics geometry={geometry} />
-            <Graphics geometry={geometry} />
+          <App />
         </Stage>
-    ).toJSON();
+      )
+      .toJSON()
+
+    jest.advanceTimersToNextTimer(10)
+
     expect(tree).toMatchSnapshot()
-    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spyDraw).toHaveBeenCalledTimes(1)
+
+    expect(graphics.geometry).toEqual(g1.geometry)
+    expect(graphics.geometry).toEqual(g2.geometry)
+    expect(graphics.geometry).toEqual(g3.geometry)
   })
 })

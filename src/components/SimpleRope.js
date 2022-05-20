@@ -3,7 +3,7 @@ import invariant from '../utils/invariant'
 import { getTextureFromProps, applyDefaultProps } from '../utils/props'
 
 const SimpleRope = (root, props) => {
-  const texture = getTextureFromProps('SimpleRope', props)
+  const texture = getTextureFromProps('SimpleRope', root, props)
   const { points } = props
 
   const rope = new PixiSimpleRope(texture, points)
@@ -18,7 +18,7 @@ const SimpleRope = (root, props) => {
       if (texture !== oldProps.texture) {
         changed = true
       }
-      instance.texture = getTextureFromProps('SimpleRope', newProps)
+      instance.texture = getTextureFromProps('SimpleRope', root, newProps)
     }
 
     return changed

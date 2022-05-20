@@ -2,7 +2,7 @@ import { SimpleMesh as PixiSimpleMesh, DRAW_MODES } from 'pixi.js'
 import { applyDefaultProps, getTextureFromProps } from '../utils/props'
 
 const SimpleMesh = (root, props) => {
-  const texture = getTextureFromProps('Mesh', props)
+  const texture = getTextureFromProps('Mesh', root, props)
   const { vertices, uvs, indices, drawMode = DRAW_MODES.TRIANGLES } = props
 
   const simpleMesh = new PixiSimpleMesh(texture, vertices, uvs, indices, drawMode)
@@ -16,7 +16,7 @@ const SimpleMesh = (root, props) => {
       if (texture !== oldProps.texture) {
         changed = true
       }
-      instance.texture = getTextureFromProps('Mesh', newProps)
+      instance.texture = getTextureFromProps('Mesh', root, newProps)
     }
 
     return changed

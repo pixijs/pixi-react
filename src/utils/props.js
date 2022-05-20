@@ -50,13 +50,14 @@ export const PROPS_DISPLAY_OBJECT = {
  * Can be either texture or image
  *
  * @param {string} elementType
+ * @param {PIXI.Container} root
  * @param {object} props
  * @returns {PIXI.Texture|null}
  */
-export const getTextureFromProps = (elementType, props = {}) => {
-  const emitChange = () =>
+export const getTextureFromProps = (elementType, root, props = {}) => {
+  const emitChange = texture =>
     requestAnimationFrame(() => {
-      window.dispatchEvent(new CustomEvent('__REACT_PIXI_REQUEST_RENDER__'))
+      texture?.__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`)
     })
 
   const check = (inType, validator) => {
@@ -84,11 +85,12 @@ export const getTextureFromProps = (elementType, props = {}) => {
     invariant(!!result, `${elementType} could not get texture from props`)
 
     const texture = Texture.from(result)
+    texture.__reactpixi = { root }
     texture.once('update', emitChange)
     texture.once('loaded', emitChange)
 
     if (texture.valid) {
-      emitChange()
+      emitChange(texture)
     }
 
     return texture

@@ -3,7 +3,7 @@ import { getTextureFromProps, applyDefaultProps } from '../utils/props'
 
 const NineSlicePlane = (root, props) => {
   const { leftWidth = 10, topHeight = 10, rightWidth = 10, bottomHeight = 10 } = props
-  const texture = getTextureFromProps('NineSlicePlane', props)
+  const texture = getTextureFromProps('NineSlicePlane', root, props)
 
   const nineSlicePlane = new PixiNineSlicePlane(texture, leftWidth, topHeight, rightWidth, bottomHeight)
 
@@ -16,7 +16,7 @@ const NineSlicePlane = (root, props) => {
       if (texture !== oldProps.texture) {
         changed = true
       }
-      instance.texture = getTextureFromProps('NineSlicePlane', newProps)
+      instance.texture = getTextureFromProps('NineSlicePlane', root, newProps)
     }
 
     return changed

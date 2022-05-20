@@ -4,7 +4,7 @@ import { parsePoint, pointsAreEqual } from '../utils/pixi'
 
 const TilingSprite = (root, props) => {
   const { width = 100, height = 100 } = props
-  const texture = getTextureFromProps('TilingSprite', props)
+  const texture = getTextureFromProps('TilingSprite', root, props)
 
   const ts = new PixiTilingSprite(texture, width, height)
 
@@ -30,7 +30,7 @@ const TilingSprite = (root, props) => {
         changed = true
       }
 
-      instance.texture = getTextureFromProps('Sprite', newProps)
+      instance.texture = getTextureFromProps('Sprite', root, newProps)
     }
 
     return changed

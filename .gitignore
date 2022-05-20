@@ -7,3 +7,4 @@ examples/
 .docz/
 .yarn-error.log
 docs/
+.idea

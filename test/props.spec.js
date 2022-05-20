@@ -22,55 +22,55 @@ describe('props', () => {
     })
 
     test('invariant image', () => {
-      expect(() => getTextureFromProps('Test', { image: 123 })).toThrow('Test image prop is invalid')
+      expect(() => getTextureFromProps('Test', undefined, { image: 123 })).toThrow('Test image prop is invalid')
     })
 
     test('invariant texture', () => {
-      expect(() => getTextureFromProps('Test', { texture: 'texture' })).toThrow(
+      expect(() => getTextureFromProps('Test', undefined, { texture: 'texture' })).toThrow(
         'Test texture needs to be typeof `PIXI.Texture`'
       )
     })
 
     test('invariant video', () => {
-      expect(() => getTextureFromProps('Test', { video: 123 })).toThrow('Test video prop is invalid')
+      expect(() => getTextureFromProps('Test', undefined, { video: 123 })).toThrow('Test video prop is invalid')
     })
 
     test('invariant source', () => {
-      expect(() => getTextureFromProps('Test', { source: null })).toThrow('Test source prop is invalid')
+      expect(() => getTextureFromProps('Test', undefined, { source: null })).toThrow('Test source prop is invalid')
     })
 
     test('get texture from image url', () => {
-      const texture = getTextureFromProps('Test', { image: './image.png' })
+      const texture = getTextureFromProps('Test', undefined, { image: './image.png' })
       expect(texture).toBeInstanceOf(PIXI.Texture)
       expect(spy).toBeCalledWith('./image.png')
     })
 
     test('get texture from image html element', () => {
       const image = document.createElement('img')
-      const texture = getTextureFromProps('Test', { image })
+      const texture = getTextureFromProps('Test', undefined, { image })
       expect(texture).toBeInstanceOf(PIXI.Texture)
       expect(spy).toBeCalledWith(image)
     })
 
     test('get texture from video url', () => {
-      const texture = getTextureFromProps('Test', { video: './video.mp4' })
+      const texture = getTextureFromProps('Test', undefined, { video: './video.mp4' })
       expect(texture).toBeInstanceOf(PIXI.Texture)
       expect(spy).toBeCalledWith('./video.mp4')
     })
 
     test('get texture from video html element', () => {
       const video = document.createElement('video')
-      const texture = getTextureFromProps('Test', { video })
+      const texture = getTextureFromProps('Test', undefined, { video })
       expect(texture).toBeInstanceOf(PIXI.Texture)
       expect(spy).toBeCalledWith(video)
     })
 
     test('get no texture', () => {
-      expect(() => getTextureFromProps('Test', {})).toThrow('Test could not get texture from props')
+      expect(() => getTextureFromProps('Test', undefined, {})).toThrow('Test could not get texture from props')
     })
 
     test('get texture from texture', () => {
-      const texture = getTextureFromProps('Test', { texture: emptyTexture })
+      const texture = getTextureFromProps('Test', undefined, { texture: emptyTexture })
       expect(texture).toBe(emptyTexture)
     })
   })

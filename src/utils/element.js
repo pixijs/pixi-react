@@ -64,6 +64,10 @@ export function createElement(type, props = {}, root = null) {
   if (instance) {
     applyProps = typeof instance?.applyProps === 'function' ? instance.applyProps : applyDefaultProps
     applyProps(instance, {}, props)
+
+    instance.__reactpixi = {
+      root,
+    }
   }
 
   return instance

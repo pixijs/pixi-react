@@ -121,5 +121,6 @@
   "resolutions": {
     "get-pkg-repo": "4.1.1",
     "hosted-git-info": "^2.1.4"
-  }
+  },
+  "dependencies": {}
 }

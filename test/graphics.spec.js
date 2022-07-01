@@ -2,6 +2,9 @@ import React, { useRef, useState, useEffect } from 'react'
 import renderer from 'react-test-renderer'
 import { Graphics, Stage } from '../src'
 
+jest.mock('../src/reconciler')
+jest.useFakeTimers()
+
 describe('graphics', () => {
   beforeAll(() => {
     jest.useFakeTimers()

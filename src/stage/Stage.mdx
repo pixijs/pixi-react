@@ -43,7 +43,7 @@ The Stage component renders a `PIXI.Application` onto a canvas element and makes
 ## Usage
 
 ```jsx
-import { render } from 'react-dom'
+import { createRoot } from 'react-dom'
 import { Stage, Container, Sprite } from '@inlet/react-pixi'
 
 const App = () => (
@@ -52,7 +52,9 @@ const App = () => (
   </Stage>
 )
 
-render(<App />, document.getElementById('root'))
+const container = document.getElementById('root')
+const root = createRoot(container)
+render(<App />)
 ```
 
 ## Example

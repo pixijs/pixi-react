@@ -1,1 +1,1 @@
-export * from './withFilters'
+export * from './withFilters.jsx'

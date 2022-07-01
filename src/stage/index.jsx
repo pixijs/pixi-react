@@ -1,10 +1,9 @@
 import React from 'react'
-import { Application, Ticker } from 'pixi.js'
+import { Ticker } from 'pixi.js'
 import PropTypes from 'prop-types'
 import invariant from '../utils/invariant'
 import { PROPS_DISPLAY_OBJECT } from '../utils/props'
-import { PixiFiber } from '../reconciler'
-import { AppProvider } from './provider'
+import { createRoot } from '../render/index.jsx'
 
 const noop = () => {}
 
@@ -107,10 +106,11 @@ class Stage extends React.Component {
   _mediaQuery = null
   _ticker = null
   _needsUpdate = true
+  root = null
   app = null
 
   componentDidMount() {
-    const { onMount, width, height, options, raf, renderOnComponentChange } = this.props
+    const { onMount, width, height, options, raf, renderOnComponentChange, children } = this.props
 
     this.app = new Application({
       width,
@@ -124,8 +124,8 @@ class Stage extends React.Component {
     this.app.ticker[raf ? 'start' : 'stop']()
 
     this.app.stage.__reactpixi = { root: this.app.stage }
-    this.mountNode = PixiFiber.createContainer(this.app.stage)
-    PixiFiber.updateContainer(this.getChildren(), this.mountNode, this)
+    this.root = createRoot(this.app.stage)
+    this.root.render(children)
 
     onMount(this.app)
 
@@ -149,7 +149,7 @@ class Stage extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, prevContext) {
-    const { width, height, raf, renderOnComponentChange, options } = this.props
+    const { width, height, raf, renderOnComponentChange, options, children } = this.props
 
     // update resolution
     if (options?.resolution !== undefined && prevProps?.options.resolution !== options?.resolution) {
@@ -166,13 +166,13 @@ class Stage extends React.Component {
       this.updateSize()
     }
 
-    // handle raf change
+    // // handle raf change
     if (prevProps.raf !== raf) {
       this.app.ticker[raf ? 'start' : 'stop']()
     }
 
     // flush fiber
-    PixiFiber.updateContainer(this.getChildren(), this.mountNode, this)
+    this.root.render(children)
 
     if (
       prevProps.width !== width ||
@@ -217,11 +217,6 @@ class Stage extends React.Component {
     }
   }
 
-  getChildren() {
-    const { children } = this.props
-    return <AppProvider value={this.app}>{children}</AppProvider>
-  }
-
   componentDidCatch(error, errorInfo) {
     console.error(`Error occurred in \`Stage\`.`)
     console.error(error)
@@ -238,7 +233,7 @@ class Stage extends React.Component {
 
     this.app.stage.off('__REACT_PIXI_REQUEST_RENDER__', this.needsRenderUpdate)
 
-    PixiFiber.updateContainer(null, this.mountNode, this)
+    this.root.unmount()
 
     if (this._mediaQuery) {
       this._mediaQuery.removeListener(this.updateSize)

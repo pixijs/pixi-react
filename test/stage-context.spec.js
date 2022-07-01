@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import renderer from 'react-test-renderer'
 import { Stage, AppConsumer, withPixiApp, Container } from '../src'
-import { Context } from '../src/stage/provider'
+import { Context } from '../src/provider'
 
 describe('stage-context', () => {
   test('pass down app to child component via render prop', () => {

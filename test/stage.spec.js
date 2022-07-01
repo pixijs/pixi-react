@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer'
 import * as reactTest from '@testing-library/react'
 import { PixiFiber } from '../src'
 import { Container, Stage, Text } from '../src'
-import { Context } from '../src/stage/provider'
+import { Context } from '../src/provider'
 import { getCanvasProps } from '../src/stage'
 import { mockToSpy } from './__utils__/mock'
 

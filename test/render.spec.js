@@ -1,15 +1,15 @@
-import * as PIXI from 'pixi.js'
 import React from 'react'
 import { roots } from '../src/render'
-import { PixiFiber, render, AppConsumer, AppProvider, Container, Text, withPixiApp, Stage } from '../src'
+import { PixiFiber, createRoot, AppConsumer, AppProvider, Container, Text, withPixiApp, Stage } from '../src'
+import { ConcurrentRoot } from 'react-reconciler/constants'
 
-const app = new PIXI.Application()
-const callback = jest.fn()
-const element = () => (
+const Element = () => <Text text="Hello Word!" />
+const stageElement = () => (
   <Stage>
     <Text text="Hello Word!" />
   </Stage>
 )
+const canvas = document.createElement('canvas')
 
 jest.mock('../src/reconciler', () => ({
   ...jest.requireActual('../src/reconciler'),
@@ -28,46 +28,42 @@ describe('render', () => {
     jest.clearAllMocks()
 
     PixiFiber.createContainer.mockReturnValue({ current: { child: { tag: 'TEXT' } } })
-    PixiFiber.updateContainer.mockImplementation((element, root, _, c) => c())
+    PixiFiber.updateContainer.mockImplementation((element, root, _) => {})
   })
 
   test('invariant container', () => {
-    expect(() => render('something', null)).toThrow(
-      'Invalid argument `container`, expected instance of `PIXI.Container`'
-    )
+    expect(() => createRoot(null)).toThrow('Invalid argument `container`, expected instance of `HTMLCanvasElement`')
   })
 
   test('call createContainer', () => {
-    render(element, app.stage, callback)
+    const root = createRoot(canvas)
+    const app = root.render(<Element />)
     expect(PixiFiber.createContainer).toHaveBeenCalledTimes(1)
-    expect(PixiFiber.createContainer).toHaveBeenLastCalledWith(app.stage)
+    expect(PixiFiber.createContainer).toHaveBeenLastCalledWith(app.stage, ConcurrentRoot, false, null)
   })
 
   test('call updateContainer', () => {
-    render(element, app.stage, callback)
-    const root = roots.values().next().value
+    const root = createRoot(canvas)
+    root.render(<Element />)
+    const fiber = roots.values().next().value
 
     expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1)
-    expect(PixiFiber.updateContainer).toHaveBeenLastCalledWith(element, root, undefined, callback)
-  })
-
-  test('invoke callback in updateContainer', () => {
-    render(element, app.stage, callback)
-    expect(callback).toHaveBeenCalledTimes(1)
+    expect(PixiFiber.updateContainer).toHaveBeenLastCalledWith(expect.anything(), fiber, undefined)
   })
 
   test('store root', () => {
-    render(element, app.stage, callback)
+    createRoot(canvas)
     expect(roots.values().next().value).toEqual({ current: { child: { tag: 'TEXT' } } })
   })
 
-  test('does not create root if it is already present', () => {
-    const root = { current: { child: { tag: 'CUSTOM' } } }
-    roots.set(app.stage, root)
+  // TODO Should we test without invariant?
+  // test('does not create root if it is already present', () => {
+  //   const root = { current: { child: { tag: 'CUSTOM' } } }
+  //   roots.set(canvas, root)
 
-    render(element, app.stage, callback)
-    expect(PixiFiber.createContainer).toHaveBeenCalledTimes(0)
-  })
+  //   const _root = createRoot(canvas)
+  //   expect(PixiFiber.createContainer).toHaveBeenCalledTimes(0)
+  // })
 
   describe('passdown `PIXI.Application`', () => {
     beforeEach(() => {
@@ -80,14 +76,11 @@ describe('render', () => {
     test('via `AppConsumer`', () => {
       const fn = jest.fn(() => <Text text="hi" />)
 
-      render(
-        <AppProvider value={app}>
-          <Container>
-            <AppConsumer>{fn}</AppConsumer>
-          </Container>
-        </AppProvider>,
-        app.stage,
-        callback
+      const root = createRoot(canvas)
+      const app = root.render(
+        <Container>
+          <AppConsumer>{fn}</AppConsumer>
+        </Container>
       )
 
       expect(fn).toHaveBeenCalledTimes(1)
@@ -95,21 +88,18 @@ describe('render', () => {
     })
 
     test('via `withPixiApp`', () => {
-      const fn = jest.fn(() => <Text text="hi" />)
-      const Comp = withPixiApp(({ app }) => fn(app))
+      const Fn = jest.fn(({ app: _ }) => <Text text="hi" />)
+      const Comp = withPixiApp(({ app }) => <Fn app={app} />)
 
-      render(
-        <AppProvider value={app}>
-          <Container>
-            <Comp />
-          </Container>
-        </AppProvider>,
-        app.stage,
-        callback
+      const root = createRoot(canvas)
+      const app = root.render(
+        <Container>
+          <Comp />
+        </Container>
       )
 
-      expect(fn).toHaveBeenCalledTimes(1)
-      expect(fn).toHaveBeenCalledWith(app)
+      expect(Fn).toHaveBeenCalledTimes(1)
+      expect(Fn).toHaveBeenCalledWith(expect.objectContaining({ app }))
     })
   })
 })

@@ -31,7 +31,7 @@ Make sure to load the bitmap font data before mounting.
 See https://pixijs.io/examples/#/demos/text-demo.js
 
 ```js
-import { render } from 'react-dom'
+import { createRoot } from 'react-dom'
 import { Stage, BitmapText } from '@inlet/react-pixi'
 
 PIXI.Loader.shared
@@ -44,7 +44,10 @@ const App = () => (
   </Stage>
 )
 
+const container = document.getElementById('root')
+const root = createRoot(container)
+
 function onAssetsLoaded() {
-  render(<App />, document.getElementById('root'))
+  root.render(<App />)
 }
 ```

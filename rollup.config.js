@@ -39,7 +39,13 @@ function getConfig(dest, format, merge = {}) {
         ignoreGlobal: false,
         namedExports: {
           'node_modules/scheduler/index.js': ['unstable_scheduleCallback', 'unstable_cancelCallback'],
-          '@react-spring/animated': ["createHost"]
+          '@react-spring/animated': ['createHost'],
+          'react-reconciler/constants': [
+            'DiscreteEventPriority',
+            'ContinuousEventPriority',
+            'DefaultEventPriority',
+            'ConcurrentRoot',
+          ],
         },
       }),
       replace({

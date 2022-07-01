@@ -12,6 +12,7 @@ import performanceNow from 'performance-now'
 import invariant from '../utils/invariant'
 import { createElement } from '../utils/element'
 import { CHILDREN, applyDefaultProps } from '../utils/props'
+import { ContinuousEventPriority, DiscreteEventPriority, DefaultEventPriority } from 'react-reconciler/constants'
 
 const NO_CONTEXT = {}
 
@@ -96,6 +97,28 @@ function diffProperties(pixiElement, type, lastProps, nextProps, rootContainerEl
   return updatePayload
 }
 
+export function getEventPriority() {
+  let name = window?.event?.type
+  switch (name) {
+    case 'click':
+    case 'contextmenu':
+    case 'dblclick':
+    case 'pointercancel':
+    case 'pointerdown':
+    case 'pointerup':
+      return DiscreteEventPriority
+    case 'pointermove':
+    case 'pointerout':
+    case 'pointerover':
+    case 'pointerenter':
+    case 'pointerleave':
+    case 'wheel':
+      return ContinuousEventPriority
+    default:
+      return DefaultEventPriority
+  }
+}
+
 let prepareChanged = null
 
 const HostConfig = {
@@ -148,13 +171,13 @@ const HostConfig = {
     return false
   },
 
-  shouldDeprioritizeSubtree(type, props) {
-    const isAlphaVisible = typeof props.alpha === 'undefined' || props.alpha > 0
-    const isRenderable = typeof props.renderable === 'undefined' || props.renderable === true
-    const isVisible = typeof props.visible === 'undefined' || props.visible === true
+  // shouldDeprioritizeSubtree(type, props) {
+  //   const isAlphaVisible = typeof props.alpha === 'undefined' || props.alpha > 0
+  //   const isRenderable = typeof props.renderable === 'undefined' || props.renderable === true
+  //   const isVisible = typeof props.visible === 'undefined' || props.visible === true
 
-    return !(isAlphaVisible && isRenderable && isVisible)
-  },
+  //   return !(isAlphaVisible && isRenderable && isVisible)
+  // },
 
   createTextInstance(text, rootContainerInstance, internalInstanceHandler) {
     invariant(
@@ -199,6 +222,8 @@ const HostConfig = {
   supportsPersistence: false,
 
   supportsHydration: false,
+
+  supportMicrotask: true,
 
   /**
    * -------------------------------------------
@@ -314,6 +339,15 @@ const HostConfig = {
 
   preparePortalMount(portalInstance) {
     // noop
+  },
+
+  detachDeletedInstance: () => {
+    // noop
+  },
+
+  // TODO Implement getCurrentEventPriority
+  getCurrentEventPriority() {
+    return getEventPriority()
   },
 }
 

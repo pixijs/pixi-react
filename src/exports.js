@@ -1,8 +1,8 @@
 import { PixiComponent } from './utils/element'
-import { render, unmountComponentAtNode } from './render'
-import Stage from './stage'
+import { render, unmountComponentAtNode, createRoot } from './render/index.jsx'
+import Stage from './stage/index.jsx'
 import { PixiFiber } from './reconciler'
-import { Context as AppContext, AppProvider, AppConsumer, withPixiApp } from './stage/provider'
+import { Context as AppContext, AppProvider, AppConsumer, withPixiApp } from './provider'
 import { useTick, useApp } from './hooks'
 import { withFilters } from './hoc'
 import { eventHandlers } from './utils/pixi'
@@ -15,6 +15,7 @@ import { applyDefaultProps } from './utils/props'
  */
 
 export {
+  createRoot,
   render,
   unmountComponentAtNode,
   Stage,

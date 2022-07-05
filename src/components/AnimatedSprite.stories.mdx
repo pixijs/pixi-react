@@ -1,13 +1,22 @@
----
-name: AnimatedSprite
-menu: Components
-route: /components/animated-sprite
----
-
-import { Playground } from 'docz'
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
 import * as PIXI from 'pixi.js'
 import { Stage, Container, AnimatedSprite } from '../../docz-rp'
 import textures from './AnimatedSpriteDocz'
+
+<Meta title="Components/AnimatedSprite" />
+
+export const Template = (args) => <Stage width={300} height={300} options={{ backgroundColor: 0xeef1f5 }}>
+  	<Container position={[150, 150]}>
+  	  <AnimatedSprite 
+  	    anchor={0.5}
+  	    textures={textures}
+  	    isPlaying={true}
+  	    initialFrame={0}
+  	    animationSpeed={0.1}
+  	  />
+  	</Container>
+  </Stage>
+
 
 # Container
 
@@ -26,19 +35,9 @@ https://pixijs.download/dev/docs/PIXI.AnimatedSprite.html
 
 ## Usage 
 
-<Playground>
-  <Stage width={300} height={300} options={{ backgroundColor: 0xeef1f5 }}>
-  	<Container position={[150, 150]}>
-  	  <AnimatedSprite 
-  	    anchor={0.5}
-  	    textures={textures}
-  	    isPlaying={true}
-  	    initialFrame={0}
-  	    animationSpeed={0.1}
-  	  />
-  	</Container>
-  </Stage>
-</Playground>
+<Canvas>
+  <Story name="default">{Template.bind({})}</Story>
+</Canvas>
 
 ## Example
 

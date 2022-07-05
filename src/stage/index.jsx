@@ -1,5 +1,5 @@
 import React from 'react'
-import { Ticker } from 'pixi.js'
+import { Ticker, Application } from 'pixi.js'
 import PropTypes from 'prop-types'
 import invariant from '../utils/invariant'
 import { PROPS_DISPLAY_OBJECT } from '../utils/props'

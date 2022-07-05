@@ -1,11 +1,15 @@
+import * as RP1 from './src'
+// import RP2 from './dist/react-pixi.umd'
+const RP2 = null
+
 const empty = () => null
 
 let RP
 
 if (process.env.NODE_ENV === 'development') {
-  RP = require('./src')
+  RP = RP1
 } else {
-  RP = require('./dist/react-pixi.umd')
+  RP = RP2
 }
 
 export const Stage = RP.Stage || empty

@@ -1,7 +1,8 @@
+import { Text, Texture, TextStyle } from 'pixi.js'
+
 let textures = []
 
 if (typeof window !== 'undefined') {
-  const { Text, Texture, TextStyle } = require('pixi.js')
   for (let i = 1; i <= 10; i++) {
     const style = new TextStyle({
       fontFamily: 'Arial',

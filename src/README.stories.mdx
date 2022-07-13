@@ -1,11 +1,38 @@
----
-name: About
-route: /
----
-
 import { useReducer, useRef } from 'react'
-import { Playground } from 'docz'
-import { Stage, Sprite, Container, useTick } from './docz-rp'
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+import { Stage, Sprite, Container, useTick } from '../docz-rp'
+
+<Meta title="About" />
+
+export const reducer = (_, { data }) => data
+
+export const Bunny = () => {
+  const [motion, update] = useReducer(reducer)
+  const iter = useRef(0)
+  useTick(delta => {
+    const i = (iter.current += 0.05 * delta)
+    update({
+      type: 'update',
+      data: {
+        x: Math.sin(i) * 100,
+        y: Math.sin(i / 1.5) * 100,
+        rotation: Math.sin(i) * Math.PI,
+        anchor: Math.sin(i / 2),
+      },
+    })
+  })
+  return <Sprite image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png" {...motion} />
+}
+
+export const Template = (args) => {
+  return (
+    <Stage width={300} height={300} options={{ backgroundAlpha: 0 }}>
+      <Container x={150} y={150}>
+        <Bunny />
+      </Container>
+    </Stage>
+  )
+}
 
 <p>
   <h1 align="center" hidden>
@@ -56,35 +83,9 @@ const App = () => (
 
 ## Example
 
-<Playground>
-  {() => {
-    const reducer = (_, { data }) => data
-    const Bunny = () => {
-      const [motion, update] = useReducer(reducer)
-      const iter = useRef(0)
-      useTick(delta => {
-        const i = (iter.current += 0.05 * delta)
-        update({
-          type: 'update',
-          data: {
-            x: Math.sin(i) * 100,
-            y: Math.sin(i / 1.5) * 100,
-            rotation: Math.sin(i) * Math.PI,
-            anchor: Math.sin(i / 2),
-          },
-        })
-      })
-      return <Sprite image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png" {...motion} />
-    }
-    return (
-      <Stage width={300} height={300} options={{ backgroundAlpha: 0 }}>
-        <Container x={150} y={150}>
-          <Bunny />
-        </Container>
-      </Stage>
-    )
-  }}
-</Playground>
+<Canvas>
+  <Story name="example">{Template.bind({})}</Story>
+</Canvas>
 
 ## Components
 

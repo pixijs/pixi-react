@@ -1,28 +1,27 @@
----
-name: BitmapText
-order: 10
-menu: Components
-route: /components/bitmap-text
----
-
-import { Playground } from 'docz'
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
 import * as PIXI from 'pixi.js'
-import { Stage } from '../../docz-rp'
+import { Stage, Container } from '../../docz-rp'
 import BitmapText from './BitmapTextDocz'
+
+<Meta title="Components/BitmapText" />
+
+export const Template = (args) => (
+  <Stage width={500} height={300} options={{ backgroundColor: 0xffffff }}>
+    <BitmapText anchor={0.5} x={250} y={150} text="Hello World!" style={{ fontName: 'Desyrel', fontSize: 50 }}/>
+  </Stage>
+)
 
 # BitmapText
 
 ## Props
 
-https://pixijs.download/dev/docs/PIXI.BitmapText.html
+[https://pixijs.download/dev/docs/PIXI.BitmapText.html](https://pixijs.download/dev/docs/PIXI.BitmapText.html)
 
 ## Usage
 
-<Playground>
-  <Stage width={500} height={300} options={{ backgroundColor: 0xffffff }}>
-    <BitmapText anchor={0.5} x={250} y={150} text="Hello World!" style={{ fontName: 'Desyrel', fontSize: 50 }}/>
-  </Stage>
-</Playground>
+<Canvas>
+  <Story name="default">{Template.bind({})}</Story>
+</Canvas>
 
 ## Example
 

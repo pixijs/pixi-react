@@ -1,22 +1,10 @@
----
-name: Container
-menu: Components
-route: /components/container
----
-
-import { Playground } from 'docz'
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
 import * as PIXI from 'pixi.js'
 import { Stage, Container, Sprite } from '../../docz-rp'
 
-# Container
+<Meta title="Components/Container" />
 
-## Props
-
-https://pixijs.download/dev/docs/PIXI.Container.html
-
-## Usage 
-
-<Playground>
+export const Template = (args) => (
   <Stage width={300} height={300} options={{ backgroundColor: 0xeef1f5 }}>
     <Container position={[150, 150]}>
       <Sprite anchor={0.5} x={-75} y={-75} image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png" />
@@ -24,7 +12,19 @@ https://pixijs.download/dev/docs/PIXI.Container.html
       <Sprite anchor={0.5} x={75} y={75} image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png" />
     </Container>
   </Stage>
-</Playground>
+)
+
+# Container
+
+## Props
+
+[https://pixijs.download/dev/docs/PIXI.Container.html](https://pixijs.download/dev/docs/PIXI.Container.html)
+
+## Usage 
+
+<Canvas>
+  <Story name="default">{Template.bind({})}</Story>
+</Canvas>
 
 ## Example
 

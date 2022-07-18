@@ -39,15 +39,9 @@ export function createRoot(container) {
   }
 
   return {
-    render(
-      element,
-    ) {
+    render(element) {
       // schedules a top level update
-      PixiFiber.updateContainer(
-        element,
-        root,
-        undefined
-      )
+      PixiFiber.updateContainer(element, root, undefined)
 
       return PixiFiber.getPublicRootInstance(root)
     },

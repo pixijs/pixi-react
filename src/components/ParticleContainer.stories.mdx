@@ -1,14 +1,34 @@
----
-name: ParticleContainer
-order: 2
-menu: Components
-route: /components/particle-container
----
-
-import { Playground } from 'docz'
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
 import * as PIXI from 'pixi.js'
 import { Stage, Sprite } from '../../docz-rp'
 import ParticleContainer from './ParticleContainerDocz'
+
+<Meta title="Components/ParticleContainer" />
+
+export const Template = (args) => (
+  <Stage width={300} height={300} options={{ backgroundColor: 0xeef1f5 }}>
+    <ParticleContainer position={[150, 150]} properties={{ position: true }}>
+      <Sprite
+        anchor={0.5}
+        x={-75}
+        y={-75}
+        image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
+      />
+      <Sprite
+        anchor={0.5}
+        x={0}
+        y={0}
+        image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
+      />
+      <Sprite
+        anchor={0.5}
+        x={75}
+        y={75}
+        image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
+      />
+    </ParticleContainer>
+  </Stage>
+)
 
 # ParticleContainer
 
@@ -19,7 +39,7 @@ The React reconciler needs to pass and validate props which can be costly when d
 
 ## Props
 
-https://pixijs.download/dev/docs/PIXI.ParticleContainer.html
+[https://pixijs.download/dev/docs/PIXI.ParticleContainer.html](https://pixijs.download/dev/docs/PIXI.ParticleContainer.html)
 
 ### maxSize
 
@@ -49,30 +69,9 @@ If true, container allocates more batches in case there are more than `maxSize` 
 
 ## Usage
 
-<Playground>
-  <Stage width={300} height={300} options={{ backgroundColor: 0xeef1f5 }}>
-    <ParticleContainer position={[150, 150]} properties={{ position: true }}>
-      <Sprite
-        anchor={0.5}
-        x={-75}
-        y={-75}
-        image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
-      />
-      <Sprite
-        anchor={0.5}
-        x={0}
-        y={0}
-        image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
-      />
-      <Sprite
-        anchor={0.5}
-        x={75}
-        y={75}
-        image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
-      />
-    </ParticleContainer>
-  </Stage>
-</Playground>
+<Canvas>
+  <Story name="default">{Template.bind({})}</Story>
+</Canvas>
 
 ## Example
 

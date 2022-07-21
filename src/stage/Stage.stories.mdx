@@ -1,12 +1,10 @@
----
-name: 'Stage'
-route: '/stage'
----
-
-import { Playground } from 'docz'
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
 import times from 'lodash.times'
 import * as PIXI from 'pixi.js'
 import { Stage, Container, Sprite } from '../../docz-rp'
+
+<Meta title="Stage" />
+
 
 export const useIteration = (inc = 0.1) => {
   const [i, setI] = React.useState(0);
@@ -23,6 +21,7 @@ export const useIteration = (inc = 0.1) => {
   }, []);
   return i;
 }
+
 
 # Stage
 
@@ -59,38 +58,44 @@ render(<App />)
 
 ## Example
 
-<Playground>
-  {() => {
-    const count = 10
-    const width = 300
-    const height = 300
-    const stageProps = {
-      height,
-      width,
-      options: {
-        backgroundAlpha: 0,
-        antialias: true
-      }
+export const Example = () => {
+  const count = 10
+  const width = 300
+  const height = 300
+  const stageProps = {
+    height,
+    width,
+    options: {
+      backgroundAlpha: 0,
+      antialias: true
     }
-    return (
-      <Stage
-        {...stageProps}
-      >
-        {
-          times(count, i => (
-            <Sprite key={i}
-                    image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/coin.png"
-                    scale={(360/count) * 0.004}
-                    anchor={0.5}
-                    rotation={(i * (360/count)) * (Math.PI / 180)}
-                    x={width/2 + Math.cos((i * (360/count)) * (Math.PI / 180)) * 100}
-                    y={height/2 + Math.sin((i * (360/count)) * (Math.PI / 180)) * 100}  />
-          ))
-        }
-      </Stage>
-    )
-  }}
-</Playground>
+  }
+  return (
+    <Stage
+      {...stageProps}
+    >
+      {
+        times(count, i => (
+          <Sprite key={i}
+                  image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/coin.png"
+                  scale={(360/count) * 0.004}
+                  anchor={0.5}
+                  rotation={(i * (360/count)) * (Math.PI / 180)}
+                  x={width/2 + Math.cos((i * (360/count)) * (Math.PI / 180)) * 100}
+                  y={height/2 + Math.sin((i * (360/count)) * (Math.PI / 180)) * 100}  />
+        ))
+      }
+    </Stage>
+  )
+}
+
+export const ExampleTemplate = (args) => (
+  <Example />
+)
+
+<Canvas>
+  <Story name="example">{ExampleTemplate.bind({})}</Story>
+</Canvas>
 
 ## Custom Updates
 
@@ -105,59 +110,76 @@ If you want to know when components have changed, you can listen to the `__REACT
 
 > Disable `raf` and enable `renderOnComponentChange`:
 
-<Playground>
-  {() => {
-     // a simple incremental hook
-     // https://gist.github.com/inlet/3e80965127d16c056da247f66839f51d
-     const i = useIteration(0.1)
-     return (
-       <Stage
-         width={300}
-         height={300}
-         raf={false}
-         renderOnComponentChange={true}
-         options={{ antialias: true, backgroundAlpha: 0 }}
-       >
-         <Sprite
-           anchor={[-(2 + Math.sin(i/5) * 2), 0.5]}
-           position={150}
-           rotation={(Math.PI/180) * 90 + -i}
-           image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
-         />
-       </Stage>
-    )
-  }}
-</Playground>
+export const RenderOnComponentChange = () => {
+   // a simple incremental hook
+   // https://gist.github.com/inlet/3e80965127d16c056da247f66839f51d
+   const i = useIteration(0.1)
+   return (
+     <Stage
+       width={300}
+       height={300}
+       raf={false}
+       renderOnComponentChange={true}
+       options={{ antialias: true, backgroundAlpha: 0 }}
+     >
+       <Sprite
+         anchor={[-(2 + Math.sin(i/5) * 2), 0.5]}
+         position={150}
+         rotation={(Math.PI/180) * 90 + -i}
+         image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
+       />
+     </Stage>
+  )
+}
+
+export const RenderOnComponentChangeTemplate = (args) => (
+  <RenderOnComponentChange />
+)
+
+<Canvas>
+  <Story name="renderOnComponentChange">
+    {RenderOnComponentChangeTemplate.bind({})}
+  </Story>
+</Canvas>
+
 
 ### Update stage manually
 
 > Disable `raf` and `renderOnComponentChange`:
 
-<Playground>
-  {() => {
-    const [app, setApp] = React.useState();
-    const i = useIteration(0.1);
-    return (
-      <>
-        <button onClick={() => app.renderer.render(app.stage)}>Render</button>
-        <Stage
-          width={300}
-          height={300}
-          raf={false}
-          renderOnComponentChange={false}
-          onMount={setApp}
-          options={{ backgroundColor: 0xeef1f5, antialias: true }}>
-          <Sprite
-              anchor={0.5}
-              position={[150 + Math.cos(i) * 50, 150]}
-              rotation={i}
-              image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
-          />
-        </Stage>
-      </>
-    )
-  }}
-</Playground>
+export const ManualUpdate = () => {
+  const [app, setApp] = React.useState();
+  const i = useIteration(0.1);
+  return (
+    <>
+      <button onClick={() => app.renderer.render(app.stage)}>Render</button>
+      <Stage
+        width={300}
+        height={300}
+        raf={false}
+        renderOnComponentChange={false}
+        onMount={setApp}
+        options={{ backgroundColor: 0xeef1f5, antialias: true }}>
+        <Sprite
+            anchor={0.5}
+            position={[150 + Math.cos(i) * 50, 150]}
+            rotation={i}
+            image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
+        />
+      </Stage>
+    </>
+  )
+}
+
+export const ManualUpdateTemplate = (args) => (
+  <ManualUpdate />
+)
+
+<Canvas>
+  <Story name="manualUpdate">
+    {ManualUpdateTemplate.bind({})}
+  </Story>
+</Canvas>
 
 ## Accessing PIXI.Application
 

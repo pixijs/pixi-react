@@ -5,6 +5,6 @@ animated/react-pixi*
 legacy/react-pixi*
 examples/
 .docz/
-.yarn-error.log
+yarn-error.log
 docs/
 .idea

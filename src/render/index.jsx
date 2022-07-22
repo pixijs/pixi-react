@@ -47,6 +47,7 @@ export function createRoot(container) {
     },
     unmount() {
       unmountComponentAtNode(container)
+      roots.delete(container)
     },
   }
 }

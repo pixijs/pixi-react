@@ -1,8 +1,9 @@
 import React from 'react'
-import { Ticker, Application } from 'pixi.js'
+import { Application, Ticker } from 'pixi.js'
 import PropTypes from 'prop-types'
 import invariant from '../utils/invariant'
 import { PROPS_DISPLAY_OBJECT } from '../utils/props'
+import { AppProvider } from '../provider'
 import { createRoot } from '../render/index.jsx'
 
 const noop = () => {}
@@ -125,7 +126,7 @@ class Stage extends React.Component {
 
     this.app.stage.__reactpixi = { root: this.app.stage }
     this.root = createRoot(this.app.stage)
-    this.root.render(children)
+    this.root.render(this.getChildren())
 
     onMount(this.app)
 
@@ -172,7 +173,7 @@ class Stage extends React.Component {
     }
 
     // flush fiber
-    this.root.render(children)
+    this.root.render(this.getChildren())
 
     if (
       prevProps.width !== width ||
@@ -215,6 +216,12 @@ class Stage extends React.Component {
     if ('interaction' in this.app.renderer.plugins) {
       this.app.renderer.plugins.interaction.resolution = this.app.renderer.resolution
     }
+  }
+
+  // TODO write it in docs
+  getChildren() {
+    const { children } = this.props
+    return <AppProvider value={this.app}>{children}</AppProvider>
   }
 
   componentDidCatch(error, errorInfo) {

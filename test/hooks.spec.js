@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react'
-import renderer from 'react-test-renderer'
+import renderer, { act } from 'react-test-renderer'
 import { Container, Stage, useTick, useApp } from '../src'
 import * as reactTest from '@testing-library/react'
 import { Application, Ticker } from 'pixi.js'
@@ -15,10 +15,12 @@ describe('hooks', () => {
       }
 
       const createApp = () =>
-        renderer.create(
-          <Container>
-            <Comp />
-          </Container>
+        act(() =>
+          renderer.create(
+            <Container>
+              <Comp />
+            </Container>
+          )
         )
 
       expect(createApp).toThrow(
@@ -33,10 +35,12 @@ describe('hooks', () => {
         return null
       }
 
-      renderer.create(
-        <Stage>
-          <Comp />
-        </Stage>
+      act(() =>
+        renderer.create(
+          <Stage>
+            <Comp />
+          </Stage>
+        )
       )
     })
   })
@@ -57,10 +61,12 @@ describe('hooks', () => {
       }
 
       const createApp = () =>
-        renderer.create(
-          <Container>
-            <Comp />
-          </Container>
+        act(() =>
+          renderer.create(
+            <Container>
+              <Comp />
+            </Container>
+          )
         )
 
       expect(createApp).toThrow(
@@ -88,7 +94,10 @@ describe('hooks', () => {
         </Stage>
       )
 
-      const render = renderer.create(unmount())
+      let render
+      act(() => {
+        render = renderer.create(unmount())
+      })
       const app = render.getInstance().app
 
       jest.spyOn(app.ticker, 'add')
@@ -98,15 +107,19 @@ describe('hooks', () => {
       expect(app.ticker.add).toHaveBeenCalledTimes(0)
       expect(app.ticker.remove).toHaveBeenCalledTimes(0)
 
-      render.update(mount())
-      render.update(mount())
-      render.update(mount())
+      act(() => {
+        render.update(mount())
+        render.update(mount())
+        render.update(mount())
+      })
 
       jest.runAllTimers()
       expect(app.ticker.add).toHaveBeenCalledTimes(1)
       expect(app.ticker.remove).toHaveBeenCalledTimes(0)
 
-      render.update(unmount())
+      act(() => {
+        render.update(unmount())
+      })
 
       jest.runAllTimers()
       expect(app.ticker.remove).toHaveBeenCalledTimes(1)
@@ -196,7 +209,7 @@ describe('hooks', () => {
       unmount()
 
       expect(fn.mock.calls[0][0]).toBeInstanceOf(Ticker)
-    });
+    })
 
     test('ticker fn second argument as ticker instance', () => {
       const fn = jest.fn()

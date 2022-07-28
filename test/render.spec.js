@@ -1,7 +1,10 @@
 import React from 'react'
-import { roots } from '../src/render'
-import { PixiFiber, createRoot, AppConsumer, AppProvider, Container, Text, withPixiApp, Stage } from '../src'
+import { roots, createRoot } from '../src/render'
+import { PixiFiber, AppConsumer, AppProvider, Container, Text, withPixiApp, Stage } from '../src'
 import { ConcurrentRoot } from 'react-reconciler/constants'
+import * as PIXI from 'pixi.js'
+
+const act = React.unstable_act
 
 const Element = () => <Text text="Hello Word!" />
 const stageElement = () => (
@@ -9,7 +12,6 @@ const stageElement = () => (
     <Text text="Hello Word!" />
   </Stage>
 )
-const canvas = document.createElement('canvas')
 
 jest.mock('../src/reconciler', () => ({
   ...jest.requireActual('../src/reconciler'),
@@ -23,6 +25,17 @@ jest.mock('../src/reconciler', () => ({
 }))
 
 describe('render', () => {
+  let app
+  let container
+  beforeAll(() => {
+    app = new PIXI.Application()
+    container = app.stage
+  })
+
+  afterAll(() => {
+    app.destroy()
+  })
+
   beforeEach(() => {
     roots.clear()
     jest.clearAllMocks()
@@ -32,19 +45,18 @@ describe('render', () => {
   })
 
   test('invariant container', () => {
-    expect(() => createRoot(null)).toThrow('Invalid argument `container`, expected instance of `HTMLCanvasElement`')
+    expect(() => createRoot(null)).toThrow('Invalid argument `container`, expected instance of `PIXI.Container`')
   })
 
   test('call createContainer', () => {
-    const root = createRoot(canvas)
-    const app = root.render(<Element />)
+    const root = createRoot(container)
     expect(PixiFiber.createContainer).toHaveBeenCalledTimes(1)
-    expect(PixiFiber.createContainer).toHaveBeenLastCalledWith(app.stage, ConcurrentRoot, false, null)
+    expect(PixiFiber.createContainer).toHaveBeenLastCalledWith(container, ConcurrentRoot, false, null)
   })
 
   test('call updateContainer', () => {
-    const root = createRoot(canvas)
-    root.render(<Element />)
+    const root = createRoot(container)
+    act(() => root.render(<Element />))
     const fiber = roots.values().next().value
 
     expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1)
@@ -52,7 +64,7 @@ describe('render', () => {
   })
 
   test('store root', () => {
-    createRoot(canvas)
+    createRoot(container)
     expect(roots.values().next().value).toEqual({ current: { child: { tag: 'TEXT' } } })
   })
 
@@ -61,7 +73,7 @@ describe('render', () => {
   //   const root = { current: { child: { tag: 'CUSTOM' } } }
   //   roots.set(canvas, root)
 
-  //   const _root = createRoot(canvas)
+  //   const _root = createRoot(container)
   //   expect(PixiFiber.createContainer).toHaveBeenCalledTimes(0)
   // })
 
@@ -76,11 +88,15 @@ describe('render', () => {
     test('via `AppConsumer`', () => {
       const fn = jest.fn(() => <Text text="hi" />)
 
-      const root = createRoot(canvas)
-      const app = root.render(
-        <Container>
-          <AppConsumer>{fn}</AppConsumer>
-        </Container>
+      const root = createRoot(container)
+      act(() =>
+        root.render(
+          <AppProvider value={app}>
+            <Container>
+              <AppConsumer>{fn}</AppConsumer>
+            </Container>
+          </AppProvider>
+        )
       )
 
       expect(fn).toHaveBeenCalledTimes(1)
@@ -91,15 +107,19 @@ describe('render', () => {
       const Fn = jest.fn(({ app: _ }) => <Text text="hi" />)
       const Comp = withPixiApp(({ app }) => <Fn app={app} />)
 
-      const root = createRoot(canvas)
-      const app = root.render(
-        <Container>
-          <Comp />
-        </Container>
+      const root = createRoot(container)
+      act(() =>
+        root.render(
+          <AppProvider value={app}>
+            <Container>
+              <Comp />
+            </Container>
+          </AppProvider>
+        )
       )
 
       expect(Fn).toHaveBeenCalledTimes(1)
-      expect(Fn).toHaveBeenCalledWith(expect.objectContaining({ app }))
+      expect(Fn).toHaveBeenCalledWith(expect.objectContaining({ app }), expect.anything())
     })
   })
 })

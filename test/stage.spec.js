@@ -3,10 +3,13 @@ import * as PIXI from 'pixi.js'
 import renderer from 'react-test-renderer'
 import * as reactTest from '@testing-library/react'
 import { PixiFiber } from '../src'
-import { Container, Stage, Text } from '../src'
+import { Container, Stage } from '../src'
 import { Context } from '../src/provider'
 import { getCanvasProps } from '../src/stage'
 import { mockToSpy } from './__utils__/mock'
+import { ConcurrentRoot } from 'react-reconciler/constants'
+
+const act = React.unstable_act
 
 jest.mock('../src/reconciler')
 jest.useFakeTimers()
@@ -51,12 +54,16 @@ describe('stage', () => {
 
   test('use autoDensity by default', () => {
     const renderAutoDensity = options =>
-      renderer.create(
-        <Stage options={{
-          view: document.createElement('canvas'),
-          ...options,
-        }} />
-      ).getInstance().app.renderer.options.autoDensity
+      renderer
+        .create(
+          <Stage
+            options={{
+              view: document.createElement('canvas'),
+              ...options,
+            }}
+          />
+        )
+        .getInstance().app.renderer.options.autoDensity
 
     expect(renderAutoDensity({})).toBeTruthy()
     expect(renderAutoDensity({ autoDensity: false })).toBeFalsy()
@@ -160,25 +167,23 @@ describe('stage', () => {
     const stage = el.getInstance().app.stage
 
     expect(PixiFiber.createContainer).toHaveBeenCalledTimes(1)
-    expect(PixiFiber.createContainer).toHaveBeenCalledWith(stage)
+    expect(PixiFiber.createContainer).toHaveBeenCalledWith(stage, ConcurrentRoot, null, false)
   })
 
   test('call PixiFiber.updateContainer on componentDidMount', () => {
     const el = renderer.create(
       <Stage>
-        <Text text="Hello World!" />
+        <Container width={10} />
       </Stage>
     )
-
     const instance = el.getInstance()
-
     expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1)
     expect(PixiFiber.updateContainer).toHaveBeenCalledWith(
       <Context.Provider value={instance.app}>
-        <Text text="Hello World!" />
+        <Container width={10} />
       </Context.Provider>,
-      instance.mountNode,
-      instance
+      expect.anything(),
+      undefined
     )
   })
 
@@ -198,10 +203,10 @@ describe('stage', () => {
     PixiFiber.updateContainer.mockClear()
     el.unmount()
 
-    jest.advanceTimersByTime(1000);
+    jest.advanceTimersByTime(1000)
 
     expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1)
-    expect(PixiFiber.updateContainer).toHaveBeenCalledWith(null, instance.mountNode, instance)
+    expect(PixiFiber.updateContainer).toHaveBeenCalledWith(null, expect.anything(), undefined, expect.anything())
   })
 
   describe('pixi application', () => {
@@ -255,9 +260,7 @@ describe('stage', () => {
     test('render stage on reconciliation `commitUpdate` using `renderOnComponentChange` to true', () => {
       const el = renderer.create(
         <Stage raf={false} renderOnComponentChange={true}>
-          <Container>
-            <Text text="hi" />
-          </Container>
+          <Container width={10} />
         </Stage>
       )
 
@@ -266,13 +269,13 @@ describe('stage', () => {
       const spy = jest.spyOn(app.renderer, 'render')
 
       for (let i = 1; i <= 10; i++) {
-        el.update(
-          <Stage raf={false} renderOnComponentChange={true}>
-            <Container x={i}>
-              <Text text="hi world" />
-            </Container>
-          </Stage>
-        );
+        act(() =>
+          el.update(
+            <Stage raf={false} renderOnComponentChange={true}>
+              <Container x={i} width={11} />
+            </Stage>
+          )
+        )
         ticker.update()
       }
 
@@ -288,104 +291,104 @@ describe('stage', () => {
       expect(el.getInstance().app.renderer.resolution).toEqual(3)
     })
 
-    test('styles on canvas should not exist if `autoDensity` is false', () => {
-      const { unmount, container } = reactTest.render(
-        <Stage width={800} height={600} options={{ autoDensity: false }} />
-      )
-      expect(container.firstChild.getAttribute('style')).toEqual(null)
-      unmount()
-    })
+      test('styles on canvas should not exist if `autoDensity` is false', () => {
+        const { unmount, container } = reactTest.render(
+          <Stage width={800} height={600} options={{ autoDensity: false }} />
+        )
+        expect(container.firstChild.getAttribute('style')).toEqual(null)
+        unmount()
+      })
 
-    test('set styles on canvas if `autoDensity` is set', () => {
-      const { unmount, container } = reactTest.render(
-        <Stage width={800} height={600} options={{ autoDensity: true }} />
-      )
-
-      expect(container.firstChild.getAttribute('style')).toEqual('width: 800px; height: 600px;')
-      unmount()
-    })
-
-    test('setup resolution media query', () => {
-      expect(window.matchMedia).not.toHaveBeenCalled()
-
-      const el = renderer.create(<Stage width={800} height={600} options={{ autoDensity: true }} />)
-
-      expect(el.getInstance()._mediaQuery.addListener).toHaveBeenCalled()
-      expect(window.matchMedia).toHaveBeenCalledTimes(1)
-    })
-
-    test('bypass resolution media query if `resolution` is set', () => {
-      const el = renderer.create(<Stage width={800} height={600} options={{ autoDensity: true, resolution: 1 }} />)
-      expect(el.getInstance()._mediaQuery).toEqual(null)
-    })
-
-    test('update renderer resolution on `options.resolution` change', () => {
-      let el = renderer.create(<Stage width={800} height={600} options={{ resolution: 1 }} />)
-
-      const appRenderer = el.getInstance().app.renderer
-      const spyResize = jest.spyOn(appRenderer, 'resize')
-
-      el = el.update(<Stage width={800} height={600} options={{ resolution: 2 }} />)
-
-      expect(appRenderer.plugins.interaction.resolution).toEqual(2)
-      expect(spyResize).toHaveBeenCalledWith(800, 600)
-      expect(appRenderer.resolution).toEqual(2)
-    })
-
-    test('does not update resolution of interaction plugin if interaction plugin is removed', () => {
-      const interaction = PIXI.Renderer.__plugins.interaction
-      delete PIXI.Renderer.__plugins.interaction
-
-      let el = renderer.create(<Stage width={800} height={600} options={{ resolution: 1 }} />)
-
-      const appRenderer = el.getInstance().app.renderer
-      const spyResize = jest.spyOn(appRenderer, 'resize')
-
-      expect(() => el.update(<Stage width={800} height={600} options={{ resolution: 2 }} />)).not.toThrow()
-      expect(spyResize).toHaveBeenCalledWith(800, 600)
-      expect(appRenderer.resolution).toEqual(2)
-
-      PIXI.Renderer.__plugins.interaction = interaction
-    })
-
-    test('clean up media query on unmount', () => {
-      let el = renderer.create(
-        <div>
+      test('set styles on canvas if `autoDensity` is set', () => {
+        const { unmount, container } = reactTest.render(
           <Stage width={800} height={600} options={{ autoDensity: true }} />
-        </div>
-      )
+        )
 
-      const app = el.toTree().rendered[0].instance
-      const spyDestroy = spyOn(app._mediaQuery, 'removeListener')
+        expect(container.firstChild.getAttribute('style')).toEqual('width: 800px; height: 600px;')
+        unmount()
+      })
 
-      expect(app._mediaQuery).not.toEqual(null)
+      test('setup resolution media query', () => {
+        expect(window.matchMedia).not.toHaveBeenCalled()
 
-      el = el.update(<div />)
+        const el = renderer.create(<Stage width={800} height={600} options={{ autoDensity: true }} />)
 
-      expect(spyDestroy).toHaveBeenCalled()
-      expect(app._mediaQuery).toEqual(null)
-    })
+        expect(el.getInstance()._mediaQuery.addListener).toHaveBeenCalled()
+        expect(window.matchMedia).toHaveBeenCalledTimes(1)
+      })
 
-    test('switch resolution if `autoDensity` is on without setting `resolution` specifically', () => {
-      let app
-      let mq
+      test('bypass resolution media query if `resolution` is set', () => {
+        const el = renderer.create(<Stage width={800} height={600} options={{ autoDensity: true, resolution: 1 }} />)
+        expect(el.getInstance()._mediaQuery).toEqual(null)
+      })
 
-      const validate = res => {
-        window.devicePixelRatio = res
-        mq()
-        expect(app.renderer.resolution).toEqual(res)
-        expect(app.view.getAttribute('style')).toEqual('width: 800px; height: 600px;')
-        expect(app.view.width).toEqual(800 * res)
-        expect(app.view.height).toEqual(600 * res)
-      }
+      test('update renderer resolution on `options.resolution` change', () => {
+        let el = renderer.create(<Stage width={800} height={600} options={{ resolution: 1 }} />)
 
-      const el = renderer.create(<Stage width={800} height={600} options={{ autoDensity: true }} />)
-      app = el.getInstance().app
-      mq = el.getInstance()._mediaQuery.addListener.mock.calls[0][0] //?
+        const appRenderer = el.getInstance().app.renderer
+        const spyResize = jest.spyOn(appRenderer, 'resize')
 
-      for (let i = 1; i <= 10; i++) {
-        validate(i)
-      }
-    })
+        el = el.update(<Stage width={800} height={600} options={{ resolution: 2 }} />)
+
+        expect(appRenderer.plugins.interaction.resolution).toEqual(2)
+        expect(spyResize).toHaveBeenCalledWith(800, 600)
+        expect(appRenderer.resolution).toEqual(2)
+      })
+
+      test('does not update resolution of interaction plugin if interaction plugin is removed', () => {
+        const interaction = PIXI.Renderer.__plugins.interaction
+        delete PIXI.Renderer.__plugins.interaction
+
+        let el = renderer.create(<Stage width={800} height={600} options={{ resolution: 1 }} />)
+
+        const appRenderer = el.getInstance().app.renderer
+        const spyResize = jest.spyOn(appRenderer, 'resize')
+
+        expect(() => el.update(<Stage width={800} height={600} options={{ resolution: 2 }} />)).not.toThrow()
+        expect(spyResize).toHaveBeenCalledWith(800, 600)
+        expect(appRenderer.resolution).toEqual(2)
+
+        PIXI.Renderer.__plugins.interaction = interaction
+      })
+
+      test('clean up media query on unmount', () => {
+        let el = renderer.create(
+          <div>
+            <Stage width={800} height={600} options={{ autoDensity: true }} />
+          </div>
+        )
+
+        const app = el.toTree().rendered[0].instance
+        const spyDestroy = spyOn(app._mediaQuery, 'removeListener')
+
+        expect(app._mediaQuery).not.toEqual(null)
+
+        el = el.update(<div />)
+
+        expect(spyDestroy).toHaveBeenCalled()
+        expect(app._mediaQuery).toEqual(null)
+      })
+
+      test('switch resolution if `autoDensity` is on without setting `resolution` specifically', () => {
+        let app
+        let mq
+
+        const validate = res => {
+          window.devicePixelRatio = res
+          mq()
+          expect(app.renderer.resolution).toEqual(res)
+          expect(app.view.getAttribute('style')).toEqual('width: 800px; height: 600px;')
+          expect(app.view.width).toEqual(800 * res)
+          expect(app.view.height).toEqual(600 * res)
+        }
+
+        const el = renderer.create(<Stage width={800} height={600} options={{ autoDensity: true }} />)
+        app = el.getInstance().app
+        mq = el.getInstance()._mediaQuery.addListener.mock.calls[0][0] //?
+
+        for (let i = 1; i <= 10; i++) {
+          validate(i)
+        }
+      })
   })
 })

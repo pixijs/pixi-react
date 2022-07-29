@@ -33,7 +33,7 @@ export function createRoot(container) {
   invariant(!root, 'pixi-react: createRoot should only be called once')
 
   if (!root) {
-    root = PixiFiber.createContainer(container, ConcurrentRoot, false, null)
+    root = PixiFiber.createContainer(container, ConcurrentRoot, null, false)
     roots.set(container, root)
     container.__reactpixi = { root: container }
   }

@@ -51,7 +51,7 @@ describe('render', () => {
   test('call createContainer', () => {
     const root = createRoot(container)
     expect(PixiFiber.createContainer).toHaveBeenCalledTimes(1)
-    expect(PixiFiber.createContainer).toHaveBeenLastCalledWith(container, ConcurrentRoot, false, null)
+    expect(PixiFiber.createContainer).toHaveBeenLastCalledWith(container, ConcurrentRoot, null, false)
   })
 
   test('call updateContainer', () => {

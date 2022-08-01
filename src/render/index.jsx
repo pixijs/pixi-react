@@ -7,6 +7,7 @@ import { Container } from 'pixi.js'
 /** @type {Map<Container, any>} */
 export const roots = new Map()
 
+/** @deprecated use root.unmoun() instead */
 export function unmountComponentAtNode(container) {
   if (roots.has(container)) {
     // unmount component

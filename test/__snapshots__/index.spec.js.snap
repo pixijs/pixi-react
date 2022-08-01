@@ -65,6 +65,7 @@ Object {
   "PixiComponent": [Function],
   "PixiFiber": Object {
     "attemptContinuousHydration": [Function],
+    "attemptDiscreteHydration": [Function],
     "attemptHydrationAtCurrentPriority": [Function],
     "attemptSynchronousHydration": [Function],
     "batchedUpdates": [Function],
@@ -229,6 +230,7 @@ Object {
   "PixiComponent": [Function],
   "PixiFiber": Object {
     "attemptContinuousHydration": [Function],
+    "attemptDiscreteHydration": [Function],
     "attemptHydrationAtCurrentPriority": [Function],
     "attemptSynchronousHydration": [Function],
     "batchedUpdates": [Function],

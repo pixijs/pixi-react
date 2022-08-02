@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from 'react'
 import renderer from 'react-test-renderer'
 import { Graphics, Stage } from '../src'
 
-jest.mock('../src/reconciler')
 jest.useFakeTimers()
 
 describe('graphics', () => {
@@ -16,14 +15,17 @@ describe('graphics', () => {
 
   test('renders a graphics component with draw prop', () => {
     const spy = jest.fn()
-    const tree = renderer
-      .create(
-        <Stage>
-          <Graphics draw={spy} />
-        </Stage>
-      )
-      .toJSON()
-    expect(tree).toMatchSnapshot()
+    let root
+
+    renderer.act(
+      () =>
+        (root = renderer.create(
+          <Stage>
+            <Graphics draw={spy} />
+          </Stage>
+        ))
+    )
+    expect(root.toJSON()).toMatchSnapshot()
     expect(spy).toHaveBeenCalledTimes(1)
   })
 
@@ -56,17 +58,19 @@ describe('graphics', () => {
       )
     }
 
-    const tree = renderer
-      .create(
-        <Stage>
-          <App />
-        </Stage>
-      )
-      .toJSON()
+    let root
+    renderer.act(
+      () =>
+        (root = renderer.create(
+          <Stage>
+            <App />
+          </Stage>
+        ))
+    )
 
     jest.advanceTimersToNextTimer(10)
 
-    expect(tree).toMatchSnapshot()
+    expect(root.toJSON()).toMatchSnapshot()
     expect(spyDraw).toHaveBeenCalledTimes(1)
 
     expect(graphics.geometry).toEqual(g1.geometry)

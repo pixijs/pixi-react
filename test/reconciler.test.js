@@ -281,7 +281,7 @@ describe('reconciler', () => {
       expect(container[1].root).toEqual(true)
     })
 
-    xtest('willUnmount', () => {
+    test('willUnmount', () => {
       act(() =>
         renderInContainer(
           <Container>
@@ -384,7 +384,7 @@ describe('reconciler', () => {
     })
   })
 
-  // TODO Suspence tests just doesn't wortk right now and I can't understand why
+  // TODO Suspence tests just doesn't wort right now and I can't understand why
   // Probably the async nature interferes somehow
   // Or implementation details of reconciler changed
   xdescribe('suspense', () => {

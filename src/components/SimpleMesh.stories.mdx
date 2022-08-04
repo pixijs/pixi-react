@@ -1,0 +1,42 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs'
+import * as PIXI from 'pixi.js'
+import { Stage, SimpleMesh } from '../../docz-rp'
+import { uvs, vertices, indices, DRAW_MODES } from './SimpleMeshDocz'
+
+<Meta title="Components/SimpleMesh" />
+
+export const Template = args => (
+  <Stage width={500} height={300} options={{ backgroundColor: 0xeef1f5 }}>
+    <SimpleMesh
+      image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/placeholder.png"
+      uvs={uvs}
+      vertices={vertices}
+      indices={indices}
+      drawMode={DRAW_MODES.TRIANGLES}
+    />
+  </Stage>
+)
+
+# SimpleMesh
+
+## Props
+
+https://pixijs.download/dev/docs/PIXI.SimpleMesh.html
+
+## Usage
+
+<Canvas>
+  <Story name="default">{Template.bind({})}</Story>
+</Canvas>
+
+## Example
+
+<iframe
+  height={500}
+  scrolling="no"
+  title="Mesh"
+  src="//codepen.io/inlet/embed/69e7153234c4e01232a7dbc50bbceb40/?height=300&theme-id=33987&default-tab=result&embed-version=2"
+  frameBorder="no"
+  allowFullScreen={true}
+  style={{ width: '100%' }}
+/>

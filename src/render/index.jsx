@@ -61,7 +61,7 @@ export function createRoot(container) {
  * @param {PIXI.Container} container (i.e. the Stage)
  * @param {Function} callback
  * @param {*} options
- * @deprecated
+ * @deprecated use createRoot instead
  */
 export function render(element, container, callback) {
   console.warn('pixi-react: render is deprecated, use createRoot instead')

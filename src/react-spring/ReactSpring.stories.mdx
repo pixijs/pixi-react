@@ -1,0 +1,73 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs'
+import { Stage, Sprite } from '../../docz-rp-animated'
+import { Spring } from 'react-spring'
+import { Texture } from 'pixi.js'
+
+<Meta title="React-Spring" />
+
+export const Box = props => (
+  <Spring native to={props} config={props.config.spring}>
+    {props => <Sprite texture={Texture.WHITE} tint={0xaddb67} anchor={0.5} {...props} />}
+  </Spring>
+)
+
+export const Template = args => {
+  const config = {
+    size: { width: 1200, height: 500 },
+    spring: { mass: 10, tension: 1000, friction: 100 },
+    stage: { antialias: true, backgroundColor: 0xff0ff0 },
+  }
+  const set = () => ({
+    x: Math.random() * config.size.width,
+    y: Math.random() * config.size.height,
+    rotation: Math.random() * 10,
+    scale: Math.max(1, Math.random() * 10),
+  })
+  const [transform, setTransform] = React.useState(set)
+  return (
+    <Stage {...config.size} options={config.stage} onPointerUp={() => setTransform(set)}>
+      <Box {...transform} config={config} />
+    </Stage>
+  )
+}
+
+# React Spring
+
+Use `"@inlet/react-pixi/animated"` to import react-spring animated components.
+
+## Usage
+
+```jsx
+import React from 'react'
+import { Spring } from 'react-spring'
+import { Texture } from 'pixi.js'
+import { Stage, Sprite } from '@inlet/react-pixi/animated'
+
+const App = () => (
+  <Stage>
+    <Spring native from={{ x: 0, y: 0 }} to={{ x: 200, y: 200 }}>
+      {props => <Sprite texture={Texture.WHITE} tint={0xff0000} {...props} />}
+    </Spring>
+  </Stage>
+)
+```
+
+## Example
+
+Click anywhere to animate
+
+<Canvas>
+  <Story name="default">{Template.bind({})}</Story>
+</Canvas>
+
+## Animating `tint` values
+
+<iframe
+  height={500}
+  scrolling="no"
+  title="ReactSpring - Animating Color Values"
+  src="//codepen.io/inlet/embed/jOrpLOR/?height=300&theme-id=33987&default-tab=result&embed-version=2"
+  frameBorder="no"
+  allowFullScreen={true}
+  style={{ width: '100%' }}
+/>

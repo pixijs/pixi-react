@@ -1,11 +1,15 @@
+import * as RP1 from './src/index-animated'
+// import RP2 from './animated/react-pixi.umd'
+const RP2 = null
+
 const empty = () => null
 
 let RP
 
 if (process.env.NODE_ENV === 'development') {
-  RP = require('./src/index-animated')
+  RP = RP1
 } else {
-  RP = require('./animated/react-pixi.umd')
+  RP = RP2
 }
 
 export const Stage = RP.Stage || empty

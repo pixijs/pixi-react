@@ -1,6 +1,5 @@
 import * as RP1 from './src'
-// import RP2 from './dist/react-pixi.umd'
-const RP2 = null
+import * as RP2 from './dist/react-pixi.umd'
 
 const empty = () => null
 

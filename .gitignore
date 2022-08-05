@@ -8,3 +8,4 @@ examples/
 yarn-error.log
 docs/
 .idea
+storybook-static/

@@ -1,7 +1,6 @@
----
-name: CDN Links
-route: /cdn-links
----
+import { Meta } from '@storybook/addon-docs'
+
+<Meta title="CDN Links" />
 
 # CDN Links
 
@@ -13,13 +12,11 @@ Production:
 
 Development:
 
-
 ```html
 <script crossorigin src="https://unpkg.com/@inlet/react-pixi/dist/react-pixi.cjs-dev.js"></script>
 ```
 
 Example with dependencies:
-
 
 ```html
 <html>
@@ -34,15 +31,15 @@ Example with dependencies:
     <div id="root"></div>
 
     <script type="text/babel">
-      const { Stage, Sprite } = ReactPixi;
+      const { Stage, Sprite } = ReactPixi
 
       const App = () => (
         <Stage>
           <Sprite texture={PIXI.Texture.WHITE} tint={0x00ff00} />
         </Stage>
-      );
+      )
 
-      ReactDOM.render(<App />, document.getElementById("root"));
+      ReactDOM.render(<App />, document.getElementById('root'))
     </script>
   </body>
 </html>

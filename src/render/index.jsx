@@ -7,14 +7,31 @@ import { Container } from 'pixi.js'
 /** @type {Map<Container, any>} */
 export const roots = new Map()
 
-/** @deprecated use root.unmoun() instead */
-export function unmountComponentAtNode(container) {
+/**
+ * @param {PIXI.Container} container
+ * @returns {void}
+ */
+function unmountComponent(container) {
+  invariant(
+    Container.prototype.isPrototypeOf(container),
+    'Invalid argument `container`, expected instance of `PIXI.Container`.'
+  )
+
   if (roots.has(container)) {
     // unmount component
     PixiFiber.updateContainer(null, roots.get(container), undefined, () => {
       roots.delete(container)
     })
   }
+}
+
+/**
+ * @deprecated use root.unmount() instead
+ * @param {Container} container
+ * @returns {void}
+ */
+export function unmountComponentAtNode(container) {
+  unmountComponent(container)
 }
 
 /**
@@ -47,7 +64,7 @@ export function createRoot(container) {
       return PixiFiber.getPublicRootInstance(root)
     },
     unmount() {
-      unmountComponentAtNode(container)
+      unmountComponent(container)
       roots.delete(container)
     },
   }
@@ -57,15 +74,15 @@ export function createRoot(container) {
  * Custom Renderer
  * Use this without React-DOM
  *
- * @param {*} element
- * @param {PIXI.Container} container (i.e. the Stage)
- * @param {Function} callback
- * @param {*} options
  * @deprecated use createRoot instead
+ *
+ * @param {React.ReactNode} element
+ * @param {Container} container (i.e. the Stage)
+ * @param {Function} callback
  */
 export function render(element, container, callback) {
   console.warn('pixi-react: render is deprecated, use createRoot instead')
-  if (callback == null) {
+  if (callback != null) {
     console.warn('pixi-react: render callback no longer exists in react 18 API')
   }
 

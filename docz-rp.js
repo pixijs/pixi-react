@@ -1,5 +1,5 @@
 import * as RP1 from './src'
-import * as RP2 from './dist/react-pixi.umd'
+import * as RP2 from './dist/react-pixi.es'
 
 const empty = () => null
 

@@ -1,5 +1,5 @@
 import * as RP1 from './src/index-animated'
-import * as RP2 from './animated/react-pixi.umd'
+import * as RP2 from './animated/react-pixi.es'
 
 const empty = () => null
 

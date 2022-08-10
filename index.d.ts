@@ -341,17 +341,17 @@ declare namespace _ReactPixi {
 }
 
 // components
-export const Text: React.FC<_ReactPixi.IText>
-export const Sprite: React.FC<_ReactPixi.ISprite>
-export const Container: React.FC<_ReactPixi.IContainer>
-export const Graphics: React.FC<_ReactPixi.IGraphics>
-export const BitmapText: React.FC<_ReactPixi.IBitmapText>
-export const NineSlicePlane: React.FC<_ReactPixi.INineSlicePlane>
-export const ParticleContainer: React.FC<_ReactPixi.IParticleContainer>
-export const TilingSprite: React.FC<_ReactPixi.ITilingSprite>
-export const SimpleRope: React.FC<_ReactPixi.ISimpleRope>
-export const SimpleMesh: React.FC<_ReactPixi.ISimpleMesh>
-export const AnimatedSprite: React.FC<_ReactPixi.IAnimatedSprite>
+export const Text: React.FC<React.PropsWithChildren<_ReactPixi.IText>>
+export const Sprite: React.FC<React.PropsWithChildren<_ReactPixi.ISprite>>
+export const Container: React.FC<React.PropsWithChildren<_ReactPixi.IContainer>>
+export const Graphics: React.FC<React.PropsWithChildren<_ReactPixi.IGraphics>>
+export const BitmapText: React.FC<React.PropsWithChildren<_ReactPixi.IBitmapText>>
+export const NineSlicePlane: React.FC<React.PropsWithChildren<_ReactPixi.INineSlicePlane>>
+export const ParticleContainer: React.FC<React.PropsWithChildren<_ReactPixi.IParticleContainer>>
+export const TilingSprite: React.FC<React.PropsWithChildren<_ReactPixi.ITilingSprite>>
+export const SimpleRope: React.FC<React.PropsWithChildren<_ReactPixi.ISimpleRope>>
+export const SimpleMesh: React.FC<React.PropsWithChildren<_ReactPixi.ISimpleMesh>>
+export const AnimatedSprite: React.FC<React.PropsWithChildren<_ReactPixi.IAnimatedSprite>>
 
 export interface ReactPixiRoot {
   render(element: React.ReactElement | React.ReactElement[] | React.Factory<any>): any

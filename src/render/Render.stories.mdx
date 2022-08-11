@@ -4,7 +4,7 @@ import { Meta } from '@storybook/addon-docs';
 
 # Render
 
-You can either render your PIXI React components in the DOM or through a custom render call.
+You can either render your PIXI React components in the DOM or through a custom createRoot call.
 
 ## In ReactDOM
 
@@ -13,7 +13,7 @@ This is the most common scenario
 
 ```jsx
 import { Stage, Sprite } from '@inlet/react-pixi';
-import { createRoot } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 const App = () => (
   <div>
@@ -26,14 +26,14 @@ const App = () => (
   </div>
 );
 
-const container = document.getElementById('root');
-const root = createRoot(container);
+const htmlRoot = document.getElementById('root');
+const root = createRoot(htmlRoot);
 root.render(<App />);
 ```
 
-## Custom render call
+## Custom createRoot call
 
-You can also render a React Pixi component tree directly using the `render` call and bypass ReactDOM entirely:
+You can also render a React Pixi component tree directly using the `createRoot` function from `@inlet/react-pixi` and bypass ReactDOM entirely:
 
 
 ```jsx
@@ -48,14 +48,13 @@ const app = new Application({
   view: document.getElementById('container'),
 });
 
-// Use the custom renderer to render a valid PIXI object into a PIXI container.
-
+// Use the createRoot to render a valid PIXI object into a PIXI container.
 const root = createRoot(app.stage);
 root.render(<Text text="Hello World" x={200} y={200} />);
 ```
 
 Internally `react-pixi` keeps track of a `roots` list with containers, if you're removing/unmounting the container (or PIXI application),
-it's advisable to tear it down correctly. Simply call `unmountComponentAtNode`:
+it's advisable to tear it down correctly. Simply call `unmount` on the `root`:
 
 
 ```jsx

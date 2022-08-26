@@ -341,17 +341,17 @@ declare namespace _ReactPixi {
 }
 
 // components
-export const Text: AnimatedComponent<React.FC<_ReactPixi.IText>>;
-export const Sprite: AnimatedComponent<React.FC<_ReactPixi.ISprite>>;
-export const Container: AnimatedComponent<React.FC<_ReactPixi.IContainer>>;
-export const Graphics: AnimatedComponent<React.FC<_ReactPixi.IGraphics>>;
-export const BitmapText: AnimatedComponent<React.FC<_ReactPixi.IBitmapText>>;
-export const NineSlicePlane: AnimatedComponent<React.FC<_ReactPixi.INineSlicePlane>>;
-export const ParticleContainer: AnimatedComponent<React.FC<_ReactPixi.IParticleContainer>>;
-export const TilingSprite: AnimatedComponent<React.FC<_ReactPixi.ITilingSprite>>;
-export const SimpleRope: AnimatedComponent<React.FC<_ReactPixi.ISimpleRope>>;
-export const SimpleMesh: AnimatedComponent<React.FC<_ReactPixi.ISimpleMesh>>;
-export const AnimatedSprite: AnimatedComponent<React.FC<_ReactPixi.IAnimatedSprite>>;
+export const Text: AnimatedComponent<React.FC<React.PropsWithChildren<_ReactPixi.IText>>>;
+export const Sprite: AnimatedComponent<React.FC<React.PropsWithChildren<_ReactPixi.ISprite>>>;
+export const Container: AnimatedComponent<React.FC<React.PropsWithChildren<_ReactPixi.IContainer>>>;
+export const Graphics: AnimatedComponent<React.FC<React.PropsWithChildren<_ReactPixi.IGraphics>>>;
+export const BitmapText: AnimatedComponent<React.FC<React.PropsWithChildren<_ReactPixi.IBitmapText>>>;
+export const NineSlicePlane: AnimatedComponent<React.FC<React.PropsWithChildren<_ReactPixi.INineSlicePlane>>>;
+export const ParticleContainer: AnimatedComponent<React.FC<React.PropsWithChildren<_ReactPixi.IParticleContainer>>>;
+export const TilingSprite: AnimatedComponent<React.FC<React.PropsWithChildren<_ReactPixi.ITilingSprite>>>;
+export const SimpleRope: AnimatedComponent<React.FC<React.PropsWithChildren<_ReactPixi.ISimpleRope>>>;
+export const SimpleMesh: AnimatedComponent<React.FC<React.PropsWithChildren<_ReactPixi.ISimpleMesh>>>;
+export const AnimatedSprite: AnimatedComponent<React.FC<React.PropsWithChildren<_ReactPixi.IAnimatedSprite>>>;
 
 // renderer
 export const render: (

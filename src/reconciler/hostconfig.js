@@ -98,6 +98,10 @@ function diffProperties(pixiElement, type, lastProps, nextProps, rootContainerEl
 }
 
 export function getEventPriority() {
+  if (typeof window === 'undefined') {
+    return DefaultEventPriority
+  }
+
   let name = window?.event?.type
   switch (name) {
     case 'click':

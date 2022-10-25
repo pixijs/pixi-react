@@ -369,7 +369,7 @@ export const render: (
 ) => any
 
 // unmount component
-/** @deprecated use root.unmoun() instead */
+/** @deprecated use root.unmount() instead */
 export const unmountComponentAtNode: (container: PIXI.Container) => void
 
 // context

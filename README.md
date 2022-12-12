@@ -27,6 +27,19 @@
 
 ReactPixi is an open-source, production-ready library to render high performant PIXI applications in React.
 
+## News!
+
+**ReactPixi will be a first-party React layer for PIXI and maintained by the core devs of PIXI!**
+
+Dear ReactPixi community,
+
+I am thrilled to announce that ReactPixi, the premier library for using Pixi.js with React, is being officially transferred to the Pixi team! This project started as a passion of mine, and it quickly grew into a beloved resource for the Pixi community thanks to all of your support.
+We are excited to be working closely with the team at Pixi, to continue improving and supporting the library. We want to extend a huge thank you to everyone who has supported ReactPixi over the years, and we especially want to thank Mat Groves for making this transfer possible.
+We can't wait to see what the future holds for the library under the stewardship of the Pixi team. Stay tuned for updates and new developments as we work together to take ReactPixi to the next level!
+
+Sincerely,
+Patrick Brouwer
+
 ## Get started
 
 ### Quick start

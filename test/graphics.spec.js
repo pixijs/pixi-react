@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
+import { act } from 'react-dom/test-utils'
 import renderer from 'react-test-renderer'
 import { Graphics, Stage } from '../src'
 
@@ -13,14 +14,19 @@ describe('graphics', () => {
 
   test('renders a graphics component with draw prop', () => {
     const spy = jest.fn()
-    const tree = renderer
-      .create(
-        <Stage>
-          <Graphics draw={spy} />
-        </Stage>
-      )
-      .toJSON()
-    expect(tree).toMatchSnapshot()
+    let el
+
+    act(
+      () => {
+        el = renderer
+          .create(
+            <Stage>
+              <Graphics draw={spy}/>
+            </Stage>
+          )
+      })
+
+    expect(el.toJSON()).toMatchSnapshot()
     expect(spy).toHaveBeenCalledTimes(1)
   })
 
@@ -53,17 +59,20 @@ describe('graphics', () => {
       )
     }
 
-    const tree = renderer
-      .create(
-        <Stage>
-          <App />
-        </Stage>
-      )
-      .toJSON()
+    let el
+
+    act(() => {
+      el = renderer
+        .create(
+          <Stage>
+            <App />
+          </Stage>
+        )
+    })
 
     jest.advanceTimersToNextTimer(10)
 
-    expect(tree).toMatchSnapshot()
+    expect(el.toJSON()).toMatchSnapshot()
     expect(spyDraw).toHaveBeenCalledTimes(1)
 
     expect(graphics.geometry).toEqual(g1.geometry)

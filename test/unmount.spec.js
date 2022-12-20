@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js'
 import React from 'react'
+import { act } from 'react-dom/test-utils'
 import { roots } from '../src/render'
 import { Text, render, unmountComponentAtNode, Stage } from '../src'
 
@@ -20,10 +21,14 @@ describe('unmount render', () => {
   test('remove root', () => {
     expect(roots.size).toBe(0)
 
-    render(element, app.stage)
+    act(() => {
+      render(element, app.stage)
+    })
     expect(roots.size).toBe(1)
 
-    unmountComponentAtNode(app.stage)
+    act(() => {
+      unmountComponentAtNode(app.stage)
+    })
     expect(roots.size).toBe(0)
   })
 
@@ -35,9 +40,13 @@ describe('unmount render', () => {
       return null
     }
 
-    render(<App />, app.stage)
+    act(() => {
+      render(<App />, app.stage)
+    })
 
-    unmountComponentAtNode(app.stage)
+    act(() => {
+      unmountComponentAtNode(app.stage)
+    })
     jest.advanceTimersByTime(1000)
 
     expect(unmount).toBeCalledTimes(1)

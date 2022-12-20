@@ -1,6 +1,6 @@
 import React from 'react'
 import * as PIXI from 'pixi.js'
-import renderer from 'react-test-renderer'
+import renderer, { act } from 'react-test-renderer'
 import * as reactTest from '@testing-library/react'
 import { PixiFiber } from '../src'
 import { Container, Stage, Text } from '../src'
@@ -51,12 +51,16 @@ describe('stage', () => {
 
   test('use autoDensity by default', () => {
     const renderAutoDensity = options =>
-      renderer.create(
-        <Stage options={{
-          view: document.createElement('canvas'),
-          ...options,
-        }} />
-      ).getInstance().app.renderer.options.autoDensity
+      renderer
+        .create(
+          <Stage
+            options={{
+              view: document.createElement('canvas'),
+              ...options,
+            }}
+          />
+        )
+        .getInstance().app.renderer.options.autoDensity
 
     expect(renderAutoDensity({})).toBeTruthy()
     expect(renderAutoDensity({ autoDensity: false })).toBeFalsy()
@@ -198,7 +202,7 @@ describe('stage', () => {
     PixiFiber.updateContainer.mockClear()
     el.unmount()
 
-    jest.advanceTimersByTime(1000);
+    jest.advanceTimersByTime(1000)
 
     expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1)
     expect(PixiFiber.updateContainer).toHaveBeenCalledWith(null, instance.mountNode, instance)
@@ -253,27 +257,33 @@ describe('stage', () => {
     })
 
     test('render stage on reconciliation `commitUpdate` using `renderOnComponentChange` to true', () => {
-      const el = renderer.create(
-        <Stage raf={false} renderOnComponentChange={true}>
-          <Container>
-            <Text text="hi" />
-          </Container>
-        </Stage>
-      )
+      let el
+
+      act(() => {
+        el = renderer.create(
+          <Stage raf={false} renderOnComponentChange={true}>
+            <Container>
+              <Text text="hi" />
+            </Container>
+          </Stage>
+        )
+      })
 
       const app = el.getInstance().app
       const ticker = el.getInstance()._ticker
       const spy = jest.spyOn(app.renderer, 'render')
 
       for (let i = 1; i <= 10; i++) {
-        el.update(
-          <Stage raf={false} renderOnComponentChange={true}>
-            <Container x={i}>
-              <Text text="hi world" />
-            </Container>
-          </Stage>
-        );
-        ticker.update()
+        act(() => {
+          el.update(
+            <Stage raf={false} renderOnComponentChange={true}>
+              <Container x={i}>
+                <Text text="hi world" />
+              </Container>
+            </Stage>
+          )
+          ticker.update()
+        })
       }
 
       expect(spy).toBeCalledTimes(10)

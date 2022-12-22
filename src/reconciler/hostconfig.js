@@ -103,8 +103,8 @@ const HostConfig = {
     return NO_CONTEXT
   },
 
-  getChildHostContext() {
-    return NO_CONTEXT
+  getChildHostContext(parentHostContext) {
+    return parentHostContext
   },
 
   getChildHostContextForEventComponent(parentHostContext) {
@@ -199,6 +199,10 @@ const HostConfig = {
   supportsPersistence: false,
 
   supportsHydration: false,
+
+  supportsMicrotasks: true,
+
+  scheduleMicrotask: queueMicrotask,
 
   /**
    * -------------------------------------------
@@ -309,6 +313,10 @@ const HostConfig = {
   },
 
   afterActiveInstanceBlur() {
+    // noop
+  },
+
+  detachDeletedInstance() {
     // noop
   },
 

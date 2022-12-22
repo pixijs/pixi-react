@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js'
 import React from 'react'
+import { act } from 'react-dom/test-utils'
 import { roots } from '../src/render'
 import { PixiFiber, render, AppConsumer, AppProvider, Container, Text, withPixiApp, Stage } from '../src'
 
@@ -10,6 +11,9 @@ const element = () => (
     <Text text="Hello Word!" />
   </Stage>
 )
+const renderElementToStage = () => act(() => {
+  render(element, app.stage, callback)
+});
 
 jest.mock('../src/reconciler', () => ({
   ...jest.requireActual('../src/reconciler'),
@@ -38,13 +42,13 @@ describe('render', () => {
   })
 
   test('call createContainer', () => {
-    render(element, app.stage, callback)
+    renderElementToStage()
     expect(PixiFiber.createContainer).toHaveBeenCalledTimes(1)
     expect(PixiFiber.createContainer).toHaveBeenLastCalledWith(app.stage)
   })
 
   test('call updateContainer', () => {
-    render(element, app.stage, callback)
+    renderElementToStage()
     const root = roots.values().next().value
 
     expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1)
@@ -52,12 +56,12 @@ describe('render', () => {
   })
 
   test('invoke callback in updateContainer', () => {
-    render(element, app.stage, callback)
+    renderElementToStage()
     expect(callback).toHaveBeenCalledTimes(1)
   })
 
   test('store root', () => {
-    render(element, app.stage, callback)
+    renderElementToStage()
     expect(roots.values().next().value).toEqual({ current: { child: { tag: 'TEXT' } } })
   })
 
@@ -65,7 +69,7 @@ describe('render', () => {
     const root = { current: { child: { tag: 'CUSTOM' } } }
     roots.set(app.stage, root)
 
-    render(element, app.stage, callback)
+    renderElementToStage()
     expect(PixiFiber.createContainer).toHaveBeenCalledTimes(0)
   })
 
@@ -80,15 +84,17 @@ describe('render', () => {
     test('via `AppConsumer`', () => {
       const fn = jest.fn(() => <Text text="hi" />)
 
-      render(
-        <AppProvider value={app}>
-          <Container>
-            <AppConsumer>{fn}</AppConsumer>
-          </Container>
-        </AppProvider>,
-        app.stage,
-        callback
-      )
+      act(() => {
+        render(
+          <AppProvider value={app}>
+            <Container>
+              <AppConsumer>{fn}</AppConsumer>
+            </Container>
+          </AppProvider>,
+          app.stage,
+          callback
+        )
+      })
 
       expect(fn).toHaveBeenCalledTimes(1)
       expect(fn).toHaveBeenCalledWith(app)
@@ -98,15 +104,17 @@ describe('render', () => {
       const fn = jest.fn(() => <Text text="hi" />)
       const Comp = withPixiApp(({ app }) => fn(app))
 
-      render(
-        <AppProvider value={app}>
-          <Container>
-            <Comp />
-          </Container>
-        </AppProvider>,
-        app.stage,
-        callback
-      )
+      act(() => {
+        render(
+          <AppProvider value={app}>
+            <Container>
+              <Comp />
+            </Container>
+          </AppProvider>,
+          app.stage,
+          callback
+        )
+      })
 
       expect(fn).toHaveBeenCalledTimes(1)
       expect(fn).toHaveBeenCalledWith(app)

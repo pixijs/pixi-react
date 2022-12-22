@@ -1,22 +1,26 @@
 import React, { useContext } from 'react'
-import renderer from 'react-test-renderer'
+import renderer, { act } from 'react-test-renderer'
 import { Stage, AppConsumer, withPixiApp, Container } from '../src'
 import { Context } from '../src/stage/provider'
 
 describe('stage-context', () => {
   test('pass down app to child component via render prop', () => {
     const fn = jest.fn(() => <Container />)
-    const el = renderer.create(
-      <Stage>
-        <Container>
+    let el
+
+    act(() => {
+      el = renderer.create(
+        <Stage>
           <Container>
             <Container>
-              <AppConsumer>{fn}</AppConsumer>
+              <Container>
+                <AppConsumer>{fn}</AppConsumer>
+              </Container>
             </Container>
           </Container>
-        </Container>
-      </Stage>
-    )
+        </Stage>
+      )
+    })
 
     const instance = el.getInstance()
 
@@ -28,13 +32,17 @@ describe('stage-context', () => {
     const fn = jest.fn(() => <Container />)
     const Comp = withPixiApp(({ app }) => fn(app))
 
-    const el = renderer.create(
-      <Stage>
-        <Container>
-          <Comp />
-        </Container>
-      </Stage>
-    )
+    let el
+
+    act(() => {
+      el = renderer.create(
+        <Stage>
+          <Container>
+            <Comp />
+          </Container>
+        </Stage>
+      )
+    })
 
     const instance = el.getInstance()
 
@@ -50,11 +58,15 @@ describe('stage-context', () => {
       return <Container />
     }
 
-    const el = renderer.create(
-      <Stage>
-        <Comp />
-      </Stage>
-    )
+    let el
+
+    act(() => {
+      el = renderer.create(
+        <Stage>
+          <Comp />
+        </Stage>
+      )
+    })
 
     const instance = el.getInstance()
 

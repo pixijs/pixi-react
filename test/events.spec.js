@@ -1,4 +1,5 @@
 import React from 'react'
+import { act } from 'react-dom/test-utils';
 import * as PIXI from 'pixi.js'
 
 import hostconfig from '../src/reconciler/hostconfig'
@@ -17,7 +18,9 @@ describe('react', () => {
   container.root = true
 
   // render in container
-  const renderInContainer = comp => render(comp, container)
+  const renderInContainer = comp => act(() => {
+    render(comp, container)
+  })
 
   // keep track of real PIXI instances created
   let instances = []

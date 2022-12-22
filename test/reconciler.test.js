@@ -1,4 +1,5 @@
 import React, { createRef, Suspense } from 'react'
+import { act } from 'react-dom/test-utils';
 import * as PIXI from 'pixi.js'
 import { render, roots } from '../src/render'
 import hostconfig from '../src/reconciler/hostconfig'
@@ -11,7 +12,9 @@ jest.mock('../src/reconciler/hostconfig')
 describe('reconciler', () => {
   let container = new PIXI.Container()
   container.root = true
-  const renderInContainer = comp => render(comp, container)
+  const renderInContainer = comp => act(() => {
+    render(comp, container)
+  });
 
   beforeEach(() => {
     jest.clearAllMocks()
@@ -31,7 +34,6 @@ describe('reconciler', () => {
       )
 
       const m = getCall(hostconfig.createInstance)
-
       expect(m.fn).toHaveBeenCalledTimes(2)
       expect(m.all.map(([ins]) => ins)).toEqual(['Text', 'Container'])
 
@@ -429,7 +431,9 @@ describe('reconciler', () => {
 
     let container2 = new PIXI.Container()
     container2.root = true
-    const renderInContainer2 = comp => render(comp, container2)
+    const renderInContainer2 = comp => act(() => {
+      render(comp, container2)
+    });
 
     beforeEach(() => {
       spy1.mockReset()

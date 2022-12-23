@@ -9,8 +9,6 @@
   "author": "Patrick Brouwer <patrick@inlet.nl>",
   "license": "MIT",
   "scripts": {
-    "docz:dev": "rimraf ./docs && docz dev",
-    "docz:build": "rimraf ./docs && yarn build:prod && docz build",
     "eslint": "eslint .",
     "build:watch": "cross-env FORMAT=umd NODE_ENV=development rollup -c --watch",
     "build:dev": "cross-env NODE_ENV=development rollup -c",
@@ -71,7 +69,6 @@
     "babel-plugin-module-resolver": "4.1.0",
     "canvas": "2.8.0",
     "cross-env": "7.0.3",
-    "docz": "2.3.1",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "3.4.0",

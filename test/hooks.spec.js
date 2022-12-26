@@ -1,303 +1,360 @@
-import React, { useCallback, useEffect, useRef } from 'react'
-import renderer, { act } from 'react-test-renderer'
-import { Container, Stage, useTick, useApp } from '../src'
-import * as reactTest from '@testing-library/react'
-import { Application, Ticker } from 'pixi.js'
+import React, { useCallback, useEffect, useRef } from 'react';
+import renderer, { act } from 'react-test-renderer';
+import { Container, Stage, useTick, useApp } from '../src';
+import * as reactTest from '@testing-library/react';
+import { Application, Ticker } from 'pixi.js';
 
-jest.useFakeTimers()
+jest.useFakeTimers({
+    doNotFake: ['performance']
+});
 
-describe('hooks', () => {
-  describe('useApp', () => {
-    test('throw `no context` error', () => {
-      const Comp = () => {
-        useApp()
-        return null
-      }
+describe('hooks', () =>
+{
+    describe('useApp', () =>
+    {
+        test('throw `no context` error', () =>
+        {
+            const Comp = () =>
+            {
+                useApp();
 
-      const createApp = () =>
-        act(() => {
-          renderer.create(
-            <Container>
-              <Comp />
-            </Container>
-          )
-        })
+                return null;
+            };
 
-      expect(createApp).toThrow(
-        'No Context found with `PIXI.Application`. Make sure to wrap component with `AppProvider`'
-      )
-    })
+            const createApp = () =>
+                act(() =>
+                {
+                    renderer.create(
+                        <Container>
+                            <Comp />
+                        </Container>
+                    );
+                });
 
-    test('receive PIXI.Application', () => {
-      const Comp = () => {
-        const app = useApp()
-        expect(app).toBeInstanceOf(Application)
-        return null
-      }
+            expect(createApp).toThrow(
+                'No Context found with `PIXI.Application`. Make sure to wrap component with `AppProvider`'
+            );
+        });
 
-      act(() => {
-        renderer.create(
-          <Stage>
-            <Comp />
-          </Stage>
-        )
-      })
-    })
-  })
+        test('receive PIXI.Application', () =>
+        {
+            const Comp = () =>
+            {
+                const app = useApp();
 
-  describe('useTick', () => {
-    const App = ({ children, cb }) => {
-      const app = useRef()
-      const setApp = useCallback(_ => (app.current = _), [])
-      useEffect(() => cb(app.current), [app.current])
+                expect(app).toBeInstanceOf(Application);
 
-      return <Stage onMount={setApp}>{children}</Stage>
-    }
+                return null;
+            };
 
-    test('throw `no context` error', () => {
-      const Comp = () => {
-        useTick(() => {})
-        return null
-      }
+            act(() =>
+            {
+                renderer.create(
+                    <Stage>
+                        <Comp />
+                    </Stage>
+                );
+            });
+        });
+    });
 
-      const createApp = () =>
-        act(() => {
-          renderer.create(
-            <Container>
-              <Comp />
-            </Container>
-          )
-        })
+    describe('useTick', () =>
+    {
+        const App = ({ children, cb }) =>
+        {
+            const app = useRef();
+            const setApp = useCallback((_) => (app.current = _), []);
 
-      expect(createApp).toThrow(
-        'No Context found with `PIXI.Application`. Make sure to wrap component with `AppProvider`'
-      )
-    })
+            useEffect(() => cb(app.current), [app.current]);
 
-    test('mount & unmount', () => {
-      const Comp = () => {
-        useTick(() => {})
-        return null
-      }
+            return <Stage onMount={setApp}>{children}</Stage>;
+        };
 
-      const mount = () => (
-        <Stage>
-          <Container>
-            <Comp />
-          </Container>
-        </Stage>
-      )
+        test('throw `no context` error', () =>
+        {
+            const Comp = () =>
+            {
+                useTick(() => {});
 
-      const unmount = () => (
-        <Stage>
-          <Container />
-        </Stage>
-      )
+                return null;
+            };
 
-      let render
+            const createApp = () =>
+                act(() =>
+                {
+                    renderer.create(
+                        <Container>
+                            <Comp />
+                        </Container>
+                    );
+                });
 
-      act(() => {
-        render = renderer.create(unmount())
-      })
-      const app = render.getInstance().app
+            expect(createApp).toThrow(
+                'No Context found with `PIXI.Application`. Make sure to wrap component with `AppProvider`'
+            );
+        });
 
-      jest.spyOn(app.ticker, 'add')
-      jest.spyOn(app.ticker, 'remove')
+        test('mount & unmount', () =>
+        {
+            const Comp = () =>
+            {
+                useTick(() => {});
 
-      jest.runAllTimers()
-      expect(app.ticker.add).toHaveBeenCalledTimes(0)
-      expect(app.ticker.remove).toHaveBeenCalledTimes(0)
+                return null;
+            };
 
-      act(() => {
-        render.update(mount())
-        render.update(mount())
-        render.update(mount())
-      })
+            const mount = () => (
+                <Stage>
+                    <Container>
+                        <Comp />
+                    </Container>
+                </Stage>
+            );
 
-      jest.runAllTimers()
-      expect(app.ticker.add).toHaveBeenCalledTimes(1)
-      expect(app.ticker.remove).toHaveBeenCalledTimes(0)
+            const unmount = () => (
+                <Stage>
+                    <Container />
+                </Stage>
+            );
 
-      act(() => {
-        render.update(unmount())
-      })
+            let render;
 
-      jest.runAllTimers()
-      expect(app.ticker.remove).toHaveBeenCalledTimes(1)
-    })
+            act(() =>
+            {
+                render = renderer.create(unmount());
+            });
+            const app = render.getInstance().app;
 
-    test('update state', () => {
-      const fn = jest.fn()
+            jest.spyOn(app.ticker, 'add');
+            jest.spyOn(app.ticker, 'remove');
 
-      const Counter = () => {
-        useTick(fn)
-        return null
-      }
+            jest.runOnlyPendingTimers();
+            expect(app.ticker.add).toHaveBeenCalledTimes(0);
+            expect(app.ticker.remove).toHaveBeenCalledTimes(0);
 
-      const render = () => (
-        <App
-          cb={app => {
-            for (let i = 0; i < 10; i++) app.ticker.update()
-          }}
-        >
-          <Counter />
-        </App>
-      )
+            act(() =>
+            {
+                render.update(mount());
+                render.update(mount());
+                render.update(mount());
+            });
 
-      const { rerender, unmount } = reactTest.render(render())
-      rerender(render())
+            jest.runOnlyPendingTimers();
+            expect(app.ticker.add).toHaveBeenCalledTimes(1);
+            expect(app.ticker.remove).toHaveBeenCalledTimes(0);
 
-      unmount()
-      expect(fn).toHaveBeenCalledTimes(10)
-    })
+            act(() =>
+            {
+                render.update(unmount());
+            });
 
-    test('enable/disable', () => {
-      const fn = jest.fn()
+            jest.runOnlyPendingTimers();
+            expect(app.ticker.remove).toHaveBeenCalledTimes(1);
+        });
 
-      const Counter = ({ enabled }) => {
-        useTick(fn, enabled)
-        return null
-      }
+        test('update state', () =>
+        {
+            const fn = jest.fn();
 
-      const render = enabled => (
-        <App
-          cb={app => {
-            app.ticker.update()
-            app.ticker.update()
-            app.ticker.update()
-          }}
-        >
-          <Counter enabled={enabled} />
-        </App>
-      )
+            const Counter = () =>
+            {
+                useTick(fn);
 
-      const testState = (enabled, calledTimes) => {
-        fn.mockClear()
+                return null;
+            };
 
-        const { rerender, unmount } = reactTest.render(render(enabled))
+            const render = () => (
+                <App
+                    cb={(app) =>
+                    {
+                        for (let i = 0; i < 10; i++) app.ticker.update();
+                    }}
+                >
+                    <Counter />
+                </App>
+            );
 
-        reactTest.act(() => {
-          rerender(render(enabled))
-          rerender(render(enabled))
-        })
+            const { rerender, unmount } = reactTest.render(render());
 
-        unmount()
-        expect(fn).toHaveBeenCalledTimes(calledTimes)
-      }
+            rerender(render());
 
-      testState(true, 3)
-      testState(false, 0)
-    })
+            unmount();
+            expect(fn).toHaveBeenCalledTimes(10);
+        });
 
-    test('ticker fn.this should be ticker instance', () => {
-      const fn = jest.fn()
+        test('enable/disable', () =>
+        {
+            const fn = jest.fn();
 
-      const Counter = () => {
-        useTick(function tick() {
-          fn(this)
-        })
-        return null
-      }
+            const Counter = ({ enabled }) =>
+            {
+                useTick(fn, enabled);
 
-      const render = () => (
-        <App cb={app => app.ticker.update()}>
-          <Counter />
-        </App>
-      )
+                return null;
+            };
 
-      const { rerender, unmount } = reactTest.render(render())
-      rerender(render())
-      unmount()
+            const render = (enabled) => (
+                <App
+                    cb={(app) =>
+                    {
+                        app.ticker.update();
+                        app.ticker.update();
+                        app.ticker.update();
+                    }}
+                >
+                    <Counter enabled={enabled} />
+                </App>
+            );
 
-      expect(fn.mock.calls[0][0]).toBeInstanceOf(Ticker)
-    })
+            const testState = (enabled, calledTimes) =>
+            {
+                fn.mockClear();
 
-    test('ticker fn second argument as ticker instance', () => {
-      const fn = jest.fn()
+                const { rerender, unmount } = reactTest.render(render(enabled));
 
-      const Counter = () => {
-        useTick(fn)
-        return null
-      }
+                reactTest.act(() =>
+                {
+                    rerender(render(enabled));
+                    rerender(render(enabled));
+                });
 
-      const render = () => (
-        <App cb={app => app.ticker.update()}>
-          <Counter />
-        </App>
-      )
+                unmount();
+                expect(fn).toHaveBeenCalledTimes(calledTimes);
+            };
 
-      const { rerender, unmount } = reactTest.render(render())
-      rerender(render())
-      unmount()
+            testState(true, 3);
+            testState(false, 0);
+        });
 
-      expect(typeof fn.mock.calls[0][0]).toBe('number')
-      expect(fn.mock.calls[0][1]).toBeInstanceOf(Ticker)
-    })
+        test('ticker fn.this should be ticker instance', () =>
+        {
+            const fn = jest.fn();
 
-    test('clean up after unmount', () => {
-      const fn = jest.fn()
-      let app
-      let add, remove
+            const Counter = () =>
+            {
+                useTick(function tick()
+                {
+                    fn(this);
+                });
 
-      const Comp = () => {
-        useTick(fn)
-        return null
-      }
+                return null;
+            };
 
-      const render = (withStage, withComp) => (
-        <div>
-          {withStage && (
-            <App
-              cb={_app => {
-                if (!app) {
-                  app = _app
-                  add = jest.spyOn(app.ticker, 'add')
-                  remove = jest.spyOn(app.ticker, 'remove')
+            const render = () => (
+                <App cb={(app) => app.ticker.update()}>
+                    <Counter />
+                </App>
+            );
+
+            const { rerender, unmount } = reactTest.render(render());
+
+            rerender(render());
+            unmount();
+
+            expect(fn.mock.calls[0][0]).toBeInstanceOf(Ticker);
+        });
+
+        test('ticker fn second argument as ticker instance', () =>
+        {
+            const fn = jest.fn();
+
+            const Counter = () =>
+            {
+                useTick(fn);
+
+                return null;
+            };
+
+            const render = () => (
+                <App cb={(app) => app.ticker.update()}>
+                    <Counter />
+                </App>
+            );
+
+            const { rerender, unmount } = reactTest.render(render());
+
+            rerender(render());
+            unmount();
+
+            expect(typeof fn.mock.calls[0][0]).toBe('number');
+            expect(fn.mock.calls[0][1]).toBeInstanceOf(Ticker);
+        });
+
+        test('clean up after unmount', () =>
+        {
+            const fn = jest.fn();
+            let app;
+            let add;
+            let remove;
+
+            const Comp = () =>
+            {
+                useTick(fn);
+
+                return null;
+            };
+
+            const render = (withStage, withComp) => (
+                <div>
+                    {withStage && (
+                        <App
+                            cb={(_app) =>
+                            {
+                                if (!app)
+                                {
+                                    app = _app;
+                                    add = jest.spyOn(app.ticker, 'add');
+                                    remove = jest.spyOn(app.ticker, 'remove');
+                                }
+
+                                app.ticker.update();
+                            }}
+                        >
+                            {withComp && <Comp />}
+                        </App>
+                    )}
+                </div>
+            );
+
+            const { rerender, unmount } = reactTest.render(null);
+            const updateRender = (stage, child) =>
+            {
+                if (add && remove)
+                {
+                    add.mockClear();
+                    remove.mockClear();
                 }
 
-                app.ticker.update()
-              }}
-            >
-              {withComp && <Comp />}
-            </App>
-          )}
-        </div>
-      )
+                rerender(render(stage, child));
 
-      const { rerender, unmount } = reactTest.render(null)
-      const updateRender = (stage, child) => {
-        if (add && remove) {
-          add.mockClear()
-          remove.mockClear()
-        }
+                // jest modern fake timers trigger RAF, old ones didn't - this line didn't do anything in old jest, but now
+                // triggers app.render
+                // jest.advanceTimersByTime(1000);
+            };
 
-        rerender(render(stage, child))
-        jest.advanceTimersByTime(1000)
-      }
+            // add all
+            updateRender(true, true);
+            expect(add).toBeCalledTimes(1);
+            expect(remove).toBeCalledTimes(0);
 
-      // add all
-      updateRender(true, true)
-      expect(add).toBeCalledTimes(1)
-      expect(remove).toBeCalledTimes(0)
+            // remove comp only
+            updateRender(true, false);
+            expect(add).toBeCalledTimes(0);
+            expect(remove).toBeCalledTimes(1);
 
-      // remove comp only
-      updateRender(true, false)
-      expect(add).toBeCalledTimes(0)
-      expect(remove).toBeCalledTimes(1)
+            // add all and remove all
+            updateRender(true, true);
+            expect(add).toBeCalledTimes(1);
+            expect(remove).toBeCalledTimes(0);
 
-      // add all and remove all
-      updateRender(true, true)
-      expect(add).toBeCalledTimes(1)
-      expect(remove).toBeCalledTimes(0)
+            updateRender(false, false);
+            expect(add).toBeCalledTimes(0);
+            expect(remove).toBeCalledTimes(1);
 
-      updateRender(false, false)
-      expect(add).toBeCalledTimes(0)
-      expect(remove).toBeCalledTimes(1)
+            // the call back should be called once
+            expect(fn).toBeCalledTimes(1);
 
-      // the call back should be called once
-      expect(fn).toBeCalledTimes(1)
-
-      unmount()
-    })
-  })
-})
+            unmount();
+        });
+    });
+});

@@ -1,340 +1,433 @@
-import * as PIXI from 'pixi.js'
-import { createElement, TYPES, TYPES_INJECTED, PixiComponent } from '../src/utils/element'
+import * as PIXI from 'pixi.js';
+import { createElement, TYPES, TYPES_INJECTED, PixiComponent } from '../src/utils/element';
 
-import { emptyTexture } from './__fixtures__/textures'
-import { desyrel } from './__fixtures__/bitmapfonts'
-import parseBitmapFont from './__utils__/parseBitmapFont'
+import { emptyTexture } from './__fixtures__/textures';
+import { desyrel } from './__fixtures__/bitmapfonts';
+import parseBitmapFont from './__utils__/parseBitmapFont';
 
-parseBitmapFont(desyrel)
+parseBitmapFont(desyrel);
 
-describe('createElement', () => {
-  test('types', () => {
-    expect(TYPES).toMatchSnapshot()
-  })
+describe('createElement', () =>
+{
+    test('types', () =>
+    {
+        expect(TYPES).toMatchSnapshot();
+    });
 
-  test('create Container', () => {
-    const element = createElement(TYPES.Container)
-    expect(element).toBeInstanceOf(PIXI.Container)
-  })
+    test('create Container', () =>
+    {
+        const element = createElement(TYPES.Container);
 
-  test('create Text', () => {
-    const element = createElement(TYPES.Text, { text: 'foobar' })
-    expect(element).toBeInstanceOf(PIXI.Text)
-  })
+        expect(element).toBeInstanceOf(PIXI.Container);
+    });
 
-  test('create Text as a sprite', () => {
-    const element = createElement(TYPES.Text, { text: 'foobar', isSprite: true })
-    expect(element).toBeInstanceOf(PIXI.Sprite)
-  })
+    test('create Text', () =>
+    {
+        const element = createElement(TYPES.Text, { text: 'foobar' });
 
-  test('create Sprite', () => {
-    const element = createElement(TYPES.Sprite, { texture: emptyTexture })
-    expect(element).toBeInstanceOf(PIXI.Sprite)
-  })
+        expect(element).toBeInstanceOf(PIXI.Text);
+    });
 
-  test('create AnimatedSprite', () => {
-    const element = createElement(TYPES.AnimatedSprite, { textures: [emptyTexture] })
-    expect(element).toBeInstanceOf(PIXI.AnimatedSprite)
-  })
+    test('create Text as a sprite', () =>
+    {
+        const element = createElement(TYPES.Text, { text: 'foobar', isSprite: true });
 
-  test('create ParticleContainer', () => {
-    const element = createElement(TYPES.ParticleContainer)
-    expect(element).toBeInstanceOf(PIXI.ParticleContainer)
-  })
+        expect(element).toBeInstanceOf(PIXI.Sprite);
+    });
 
-  test('create BitmapText', () => {
-    const element = createElement(TYPES.BitmapText, {
-      text: 'foobar',
-      style: { fontName: 'Desyrel', fontSize: 35, align: 'left' },
-    })
-    expect(element).toBeInstanceOf(PIXI.BitmapText)
-  })
+    test('create Sprite', () =>
+    {
+        const element = createElement(TYPES.Sprite, { texture: emptyTexture });
 
-  test('create TilingSprite', () => {
-    const element = createElement(TYPES.TilingSprite, { texture: emptyTexture })
-    expect(element).toBeInstanceOf(PIXI.TilingSprite)
-  })
+        expect(element).toBeInstanceOf(PIXI.Sprite);
+    });
 
-  test('create Graphics', () => {
-    const element = createElement(TYPES.Graphics)
-    expect(element).toBeInstanceOf(PIXI.Graphics)
-  })
+    test('create AnimatedSprite', () =>
+    {
+        const element = createElement(TYPES.AnimatedSprite, { textures: [emptyTexture] });
 
-  test('create NineSlicePlane', () => {
-    const element = createElement(TYPES.NineSlicePlane, { texture: emptyTexture })
-    expect(element).toBeInstanceOf(PIXI.NineSlicePlane)
-  })
+        expect(element).toBeInstanceOf(PIXI.AnimatedSprite);
+    });
 
-  test('create SimpleMesh', () => {
-    const element = createElement(TYPES.SimpleMesh, { texture: emptyTexture })
-    expect(element).toBeInstanceOf(PIXI.SimpleMesh)
-  })
+    test('create ParticleContainer', () =>
+    {
+        const element = createElement(TYPES.ParticleContainer);
 
-  test('create SimpleRope', () => {
-    const element = createElement(TYPES.SimpleRope, {
-      texture: emptyTexture,
-      points: [new PIXI.Point(0, 0), new PIXI.Point(20, 20)],
-    })
-    expect(element).toBeInstanceOf(PIXI.SimpleRope)
-  })
+        expect(element).toBeInstanceOf(PIXI.ParticleContainer);
+    });
 
-  test('get undefined', () => {
-    expect(createElement('INVALID')).toBeUndefined()
-  })
-})
+    test('create BitmapText', () =>
+    {
+        const element = createElement(TYPES.BitmapText, {
+            text: 'foobar',
+            style: { fontName: 'Desyrel', fontSize: 35, align: 'left' },
+        });
 
-describe('element.applyProps', () => {
-  let spy
+        expect(element).toBeInstanceOf(PIXI.BitmapText);
+    });
 
-  beforeAll(() => {
-    spy = jest.spyOn(PIXI.Texture, 'from').mockReturnValue(emptyTexture)
-  })
+    test('create TilingSprite', () =>
+    {
+        const element = createElement(TYPES.TilingSprite, { texture: emptyTexture });
 
-  afterAll(() => {
-    spy.mockRestore()
-  })
+        expect(element).toBeInstanceOf(PIXI.TilingSprite);
+    });
 
-  test('Sprite.applyProps exists', () => {
-    const element = createElement(TYPES.Sprite, { image: './image.png' })
-    expect(element).toHaveProperty('applyProps')
-    expect(spy).toHaveBeenCalledWith('./image.png')
-  })
+    test('create Graphics', () =>
+    {
+        const element = createElement(TYPES.Graphics);
 
-  test('AnimatedSprite.applyProps with images prop exists', () => {
-    const element = createElement(TYPES.AnimatedSprite, { images: ['./image.png'] })
-    expect(element).toHaveProperty('applyProps')
-    expect(spy).lastCalledWith('./image.png')
-  })
+        expect(element).toBeInstanceOf(PIXI.Graphics);
+    });
 
-  test('AnimatedSprite.applyProps with textures prop exists', () => {
-    const element = createElement(TYPES.AnimatedSprite, { textures: [PIXI.Texture.from('./image.png')] })
-    expect(element).toHaveProperty('applyProps')
-    expect(spy).lastCalledWith('./image.png')
-  })
+    test('create NineSlicePlane', () =>
+    {
+        const element = createElement(TYPES.NineSlicePlane, { texture: emptyTexture });
 
-  test('Sprite.applyProps image', () => {
-    const element = createElement(TYPES.Sprite, { image: './image.png' })
-    expect(spy).lastCalledWith('./image.png')
+        expect(element).toBeInstanceOf(PIXI.NineSlicePlane);
+    });
 
-    const changed = element.applyProps(element, { image: './image.png' }, { image: './new-image.png' })
-    expect(spy).lastCalledWith('./new-image.png')
-    expect(changed).toBeFalsy()
-  })
+    test('create SimpleMesh', () =>
+    {
+        const element = createElement(TYPES.SimpleMesh, { texture: emptyTexture });
 
-  test('Sprite.applyProps texture', () => {
-    const element = createElement(TYPES.Sprite, { texture: emptyTexture })
+        expect(element).toBeInstanceOf(PIXI.SimpleMesh);
+    });
 
-    const changed = element.applyProps(element, { texture: emptyTexture }, { image: './image.png' })
-    expect(changed).toBeTruthy()
-  })
+    test('create SimpleRope', () =>
+    {
+        const element = createElement(TYPES.SimpleRope, {
+            texture: emptyTexture,
+            points: [new PIXI.Point(0, 0), new PIXI.Point(20, 20)],
+        });
 
-  test('TilingSprite.applyProps exists', () => {
-    const element = createElement(TYPES.TilingSprite, { image: './image.png' })
-    expect(element).toHaveProperty('applyProps')
-    expect(spy).toHaveBeenCalledWith('./image.png')
-  })
+        expect(element).toBeInstanceOf(PIXI.SimpleRope);
+    });
 
-  test('TilingSprite.applyProps image', () => {
-    const element = createElement(TYPES.TilingSprite, { image: './image.png' })
-    expect(spy).lastCalledWith('./image.png')
+    test('get undefined', () =>
+    {
+        expect(createElement('INVALID')).toBeUndefined();
+    });
+});
 
-    const changed = element.applyProps(element, { image: './image.png' }, { image: './new-image.png' })
-    expect(changed).toBeFalsy()
-    expect(spy).lastCalledWith('./new-image.png')
-  })
+describe('element.applyProps', () =>
+{
+    let spy;
 
-  test('TilingSprite.applyProps texture', () => {
-    const element = createElement(TYPES.TilingSprite, { texture: emptyTexture })
+    beforeAll(() =>
+    {
+        spy = jest.spyOn(PIXI.Texture, 'from').mockReturnValue(emptyTexture);
+    });
 
-    const changed = element.applyProps(element, { texture: emptyTexture }, { image: './image.png' })
-    expect(changed).toBeTruthy()
-  })
+    afterAll(() =>
+    {
+        spy.mockRestore();
+    });
 
-  test('TilingSprite.applyProps tilePosition', () => {
-    const oldPosition = '1, 2'
-    const newPosition = {x: 12, y: 20}
-    const element = createElement(TYPES.TilingSprite, { tilePosition: oldPosition, image: './image.png' })
+    test('Sprite.applyProps exists', () =>
+    {
+        const element = createElement(TYPES.Sprite, { image: './image.png' });
 
-    const changed = element.applyProps(element, { tilePosition: oldPosition, image: './image.png' }, { tilePosition: newPosition, image: './image.png' })
-    expect(changed).toBeTruthy()
-  })
+        expect(element).toHaveProperty('applyProps');
+        expect(spy).toHaveBeenCalledWith('./image.png');
+    });
 
+    test('AnimatedSprite.applyProps with images prop exists', () =>
+    {
+        const element = createElement(TYPES.AnimatedSprite, { images: ['./image.png'] });
 
-  test('SimpleRope.applyProps exists', () => {
-    const element = createElement(TYPES.SimpleRope, {
-      image: './image.png',
-      points: [new PIXI.Point(0, 0), new PIXI.Point(20, 20)],
-    })
-    expect(element).toHaveProperty('applyProps')
-    expect(spy).toHaveBeenCalledWith('./image.png')
-  })
+        expect(element).toHaveProperty('applyProps');
+        expect(spy).lastCalledWith('./image.png');
+    });
 
-  test('SimpleRope.applyProps image', () => {
-    const element = createElement(TYPES.SimpleRope, {
-      image: './image.png',
-      points: [new PIXI.Point(0, 0), new PIXI.Point(20, 20)],
-    })
-    expect(spy).lastCalledWith('./image.png')
+    test('AnimatedSprite.applyProps with textures prop exists', () =>
+    {
+        const element = createElement(TYPES.AnimatedSprite, { textures: [PIXI.Texture.from('./image.png')] });
 
-    const changed = element.applyProps(
-      element,
-      { image: './image.png' },
-      {
-        image: './new-image.png',
-        points: [new PIXI.Point(0, 0), new PIXI.Point(20, 20)],
-      }
-    )
-    expect(spy).lastCalledWith('./new-image.png')
-    expect(changed).toBeTruthy()
-  })
+        expect(element).toHaveProperty('applyProps');
+        expect(spy).lastCalledWith('./image.png');
+    });
 
-  test('NineSlicePlane.applyProps exists', () => {
-    const element = createElement(TYPES.NineSlicePlane, { image: './image.png' })
-    expect(element).toHaveProperty('applyProps')
-    expect(spy).toHaveBeenCalledWith('./image.png')
-  })
+    test('Sprite.applyProps image', () =>
+    {
+        const element = createElement(TYPES.Sprite, { image: './image.png' });
 
-  test('NineSlicePlane.applyProps image', () => {
-    const element = createElement(TYPES.NineSlicePlane, { image: './image.png' })
-    expect(spy).lastCalledWith('./image.png')
+        expect(spy).lastCalledWith('./image.png');
 
-    const changed = element.applyProps(element, { image: './image.png' }, { image: './new-image.png' })
-    expect(spy).lastCalledWith('./new-image.png')
-    expect(changed).toBeFalsy()
-  })
+        const changed = element.applyProps(element, { image: './image.png' }, { image: './new-image.png' });
 
-  test('NineSlicePlane.applyProps texture', () => {
-    const element = createElement(TYPES.NineSlicePlane, { texture: emptyTexture })
-    const changed = element.applyProps(element, { texture: emptyTexture }, { image: './new-image.png' })
-    expect(changed).toBeTruthy()
-  })
+        expect(spy).lastCalledWith('./new-image.png');
+        expect(changed).toBeFalsy();
+    });
 
-  test('SimpleMesh.applyProps exists', () => {
-    const element = createElement(TYPES.SimpleMesh, { image: './image.png' })
-    expect(element).toHaveProperty('applyProps')
-    expect(spy).toHaveBeenCalledWith('./image.png')
-  })
+    test('Sprite.applyProps texture', () =>
+    {
+        const element = createElement(TYPES.Sprite, { texture: emptyTexture });
 
-  test('SimpleMesh.applyProps image', () => {
-    const element = createElement(TYPES.SimpleMesh, { image: './image.png' })
-    expect(spy).lastCalledWith('./image.png')
+        const changed = element.applyProps(element, { texture: emptyTexture }, { image: './image.png' });
 
-    let changed = element.applyProps(element, { image: './image.png' }, { image: './new-image.png' })
-    expect(spy).lastCalledWith('./new-image.png')
-    expect(changed).toBeFalsy()
-  })
+        expect(changed).toBeTruthy();
+    });
 
-  test('SimpleMesh.applyProps texture', () => {
-    const element = createElement(TYPES.SimpleMesh, { texture: emptyTexture })
+    test('TilingSprite.applyProps exists', () =>
+    {
+        const element = createElement(TYPES.TilingSprite, { image: './image.png' });
 
-    let changed = element.applyProps(element, { texture: emptyTexture }, { image: './new-image.png' })
-    expect(changed).toBeTruthy()
-  })
+        expect(element).toHaveProperty('applyProps');
+        expect(spy).toHaveBeenCalledWith('./image.png');
+    });
 
-  test('Graphics.applyProps exists', () => {
-    const spy = jest.fn()
+    test('TilingSprite.applyProps image', () =>
+    {
+        const element = createElement(TYPES.TilingSprite, { image: './image.png' });
 
-    const element = createElement(TYPES.Graphics, { draw: spy })
-    expect(element).toHaveProperty('applyProps')
-    expect(spy).toBeCalledWith(element)
-  })
+        expect(spy).lastCalledWith('./image.png');
 
-  test('Graphics.applyProps draw', () => {
-    const spy = jest.fn()
+        const changed = element.applyProps(element, { image: './image.png' }, { image: './new-image.png' });
 
-    const element = createElement(TYPES.Graphics, { draw: spy })
-    expect(spy).toHaveBeenCalledTimes(1)
+        expect(changed).toBeFalsy();
+        expect(spy).lastCalledWith('./new-image.png');
+    });
 
-    const applied = element.applyProps(element, { draw: spy }, { draw: spy })
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(applied).toBeFalsy()
-  })
+    test('TilingSprite.applyProps texture', () =>
+    {
+        const element = createElement(TYPES.TilingSprite, { texture: emptyTexture });
 
-  test('Graphics.applyProps draw prevented twice', () => {
-    const draw1 = jest.fn()
-    const draw2 = jest.fn()
-    const props = { draw: draw1 }
-    const nextProps = { draw: draw2 }
-    let applied = false;
-    const element = createElement(TYPES.Graphics, props)
-    applied = element.applyProps(element, props, props)
-    expect(applied).toBeFalsy()
-    applied = element.applyProps(element, props, props)
-    expect(applied).toBeFalsy()
-    expect(draw1).toHaveBeenCalledTimes(1)
-    applied = element.applyProps(element, props, nextProps)
-    expect(applied).toBeTruthy()
-    applied = element.applyProps(element, nextProps, nextProps)
-    expect(applied).toBeFalsy()
-    expect(draw2).toHaveBeenCalledTimes(1)
-  })
-})
+        const changed = element.applyProps(element, { texture: emptyTexture }, { image: './image.png' });
 
-describe('PixiComponent', () => {
-  afterEach(() => {
-    Object.keys(TYPES_INJECTED).forEach(k => {
-      delete TYPES_INJECTED[k]
-    })
-  })
+        expect(changed).toBeTruthy();
+    });
 
-  test('type must be defined', () => {
-    expect(() => new PixiComponent(null)).toThrow('Expect type to be defined, got `null`')
-  })
+    test('TilingSprite.applyProps tilePosition', () =>
+    {
+        const oldPosition = '1, 2';
+        const newPosition = { x: 12, y: 20 };
+        const element = createElement(TYPES.TilingSprite, { tilePosition: oldPosition, image: './image.png' });
 
-  test('cannot override existing component', () => {
-    expect(() => new PixiComponent('Text', {})).toThrow(
-      'Component `Text` could not be created, already exists in default components.'
-    )
-  })
+        const changed = element.applyProps(
+            element,
+            { tilePosition: oldPosition, image: './image.png' },
+            { tilePosition: newPosition, image: './image.png' }
+        );
 
-  test('inject custom component', () => {
-    let lifecycle = { create: props => {} }
-    new PixiComponent('Rectangle', lifecycle)
-    expect(TYPES_INJECTED).toHaveProperty('Rectangle', lifecycle)
-  })
+        expect(changed).toBeTruthy();
+    });
 
-  test('create injected component', () => {
-    const scoped = jest.fn()
-    const config = {
-      destroyChildren: true,
-      destroy: true
-    }
+    test('SimpleRope.applyProps exists', () =>
+    {
+        const element = createElement(TYPES.SimpleRope, {
+            image: './image.png',
+            points: [new PIXI.Point(0, 0), new PIXI.Point(20, 20)],
+        });
 
-    const lifecycle = {
-      create: jest.fn(() => new PIXI.Graphics()),
-      didMount: jest.fn(),
-      willUnmount: jest.fn(),
-      applyProps: jest.fn(function () {
-        scoped(this)
-      }),
-      config: config
-    }
+        expect(element).toHaveProperty('applyProps');
+        expect(spy).toHaveBeenCalledWith('./image.png');
+    });
 
-    new PixiComponent('Rectangle', lifecycle)
+    test('SimpleRope.applyProps image', () =>
+    {
+        const element = createElement(TYPES.SimpleRope, {
+            image: './image.png',
+            points: [new PIXI.Point(0, 0), new PIXI.Point(20, 20)],
+        });
 
-    const props = { x: 100, y: 200 }
-    const element = createElement('Rectangle', props)
+        expect(spy).lastCalledWith('./image.png');
 
-    expect(element.didMount).toBeDefined()
-    expect(element.willUnmount).toBeDefined()
-    expect(element.applyProps).toBeDefined()
-    expect(element.config).toBe(config)
-    expect(element).toBeInstanceOf(PIXI.Graphics)
-    expect(lifecycle.create).toHaveBeenCalledTimes(1)
-    expect(lifecycle.create).toHaveBeenCalledWith(props)
-    expect(lifecycle.applyProps).toHaveBeenCalledTimes(1)
-    expect(scoped).toHaveBeenCalledTimes(1)
-    expect(scoped).toHaveBeenCalledWith(element)
-  })
+        const changed = element.applyProps(
+            element,
+            { image: './image.png' },
+            {
+                image: './new-image.png',
+                points: [new PIXI.Point(0, 0), new PIXI.Point(20, 20)],
+            }
+        );
 
-  test('create injected component without lifecycle methods', () => {
-    new PixiComponent('Rectangle', {
-      create: () => new PIXI.Graphics(),
-    })
+        expect(spy).lastCalledWith('./new-image.png');
+        expect(changed).toBeTruthy();
+    });
 
-    const element = createElement('Rectangle')
-    expect(element.didMount).toBeUndefined()
-    expect(element.willUnmount).toBeUndefined()
-    expect(element.applyProps).toBeUndefined()
-  })
-})
+    test('NineSlicePlane.applyProps exists', () =>
+    {
+        const element = createElement(TYPES.NineSlicePlane, { image: './image.png' });
+
+        expect(element).toHaveProperty('applyProps');
+        expect(spy).toHaveBeenCalledWith('./image.png');
+    });
+
+    test('NineSlicePlane.applyProps image', () =>
+    {
+        const element = createElement(TYPES.NineSlicePlane, { image: './image.png' });
+
+        expect(spy).lastCalledWith('./image.png');
+
+        const changed = element.applyProps(element, { image: './image.png' }, { image: './new-image.png' });
+
+        expect(spy).lastCalledWith('./new-image.png');
+        expect(changed).toBeFalsy();
+    });
+
+    test('NineSlicePlane.applyProps texture', () =>
+    {
+        const element = createElement(TYPES.NineSlicePlane, { texture: emptyTexture });
+        const changed = element.applyProps(element, { texture: emptyTexture }, { image: './new-image.png' });
+
+        expect(changed).toBeTruthy();
+    });
+
+    test('SimpleMesh.applyProps exists', () =>
+    {
+        const element = createElement(TYPES.SimpleMesh, { image: './image.png' });
+
+        expect(element).toHaveProperty('applyProps');
+        expect(spy).toHaveBeenCalledWith('./image.png');
+    });
+
+    test('SimpleMesh.applyProps image', () =>
+    {
+        const element = createElement(TYPES.SimpleMesh, { image: './image.png' });
+
+        expect(spy).lastCalledWith('./image.png');
+
+        const changed = element.applyProps(element, { image: './image.png' }, { image: './new-image.png' });
+
+        expect(spy).lastCalledWith('./new-image.png');
+        expect(changed).toBeFalsy();
+    });
+
+    test('SimpleMesh.applyProps texture', () =>
+    {
+        const element = createElement(TYPES.SimpleMesh, { texture: emptyTexture });
+
+        const changed = element.applyProps(element, { texture: emptyTexture }, { image: './new-image.png' });
+
+        expect(changed).toBeTruthy();
+    });
+
+    test('Graphics.applyProps exists', () =>
+    {
+        const spy = jest.fn();
+
+        const element = createElement(TYPES.Graphics, { draw: spy });
+
+        expect(element).toHaveProperty('applyProps');
+        expect(spy).toBeCalledWith(element);
+    });
+
+    test('Graphics.applyProps draw', () =>
+    {
+        const spy = jest.fn();
+
+        const element = createElement(TYPES.Graphics, { draw: spy });
+
+        expect(spy).toHaveBeenCalledTimes(1);
+
+        const applied = element.applyProps(element, { draw: spy }, { draw: spy });
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(applied).toBeFalsy();
+    });
+
+    test('Graphics.applyProps draw prevented twice', () =>
+    {
+        const draw1 = jest.fn();
+        const draw2 = jest.fn();
+        const props = { draw: draw1 };
+        const nextProps = { draw: draw2 };
+        let applied = false;
+        const element = createElement(TYPES.Graphics, props);
+
+        applied = element.applyProps(element, props, props);
+        expect(applied).toBeFalsy();
+        applied = element.applyProps(element, props, props);
+        expect(applied).toBeFalsy();
+        expect(draw1).toHaveBeenCalledTimes(1);
+        applied = element.applyProps(element, props, nextProps);
+        expect(applied).toBeTruthy();
+        applied = element.applyProps(element, nextProps, nextProps);
+        expect(applied).toBeFalsy();
+        expect(draw2).toHaveBeenCalledTimes(1);
+    });
+});
+
+describe('PixiComponent', () =>
+{
+    afterEach(() =>
+    {
+        Object.keys(TYPES_INJECTED).forEach((k) =>
+        {
+            delete TYPES_INJECTED[k];
+        });
+    });
+
+    test('type must be defined', () =>
+    {
+        expect(() => new PixiComponent(null)).toThrow('Expect type to be defined, got `null`');
+    });
+
+    test('cannot override existing component', () =>
+    {
+        expect(() => new PixiComponent('Text', {})).toThrow(
+            'Component `Text` could not be created, already exists in default components.'
+        );
+    });
+
+    test('inject custom component', () =>
+    {
+        const lifecycle = { create: (props) => {} };
+
+        // eslint-disable-next-line no-new
+        new PixiComponent('Rectangle', lifecycle);
+        expect(TYPES_INJECTED).toHaveProperty('Rectangle', lifecycle);
+    });
+
+    test('create injected component', () =>
+    {
+        const scoped = jest.fn();
+        const config = {
+            destroyChildren: true,
+            destroy: true
+        };
+
+        const lifecycle = {
+            create: jest.fn(() => new PIXI.Graphics()),
+            didMount: jest.fn(),
+            willUnmount: jest.fn(),
+            applyProps: jest.fn(function applyProps()
+            {
+                scoped(this);
+            }),
+            config
+        };
+
+        // eslint-disable-next-line no-new
+        new PixiComponent('Rectangle', lifecycle);
+
+        const props = { x: 100, y: 200 };
+        const element = createElement('Rectangle', props);
+
+        expect(element.didMount).toBeDefined();
+        expect(element.willUnmount).toBeDefined();
+        expect(element.applyProps).toBeDefined();
+        expect(element.config).toBe(config);
+        expect(element).toBeInstanceOf(PIXI.Graphics);
+        expect(lifecycle.create).toHaveBeenCalledTimes(1);
+        expect(lifecycle.create).toHaveBeenCalledWith(props);
+        expect(lifecycle.applyProps).toHaveBeenCalledTimes(1);
+        expect(scoped).toHaveBeenCalledTimes(1);
+        expect(scoped).toHaveBeenCalledWith(element);
+    });
+
+    test('create injected component without lifecycle methods', () =>
+    {
+        // eslint-disable-next-line no-new
+        new PixiComponent('Rectangle', {
+            create: () => new PIXI.Graphics(),
+        });
+
+        const element = createElement('Rectangle');
+
+        expect(element.didMount).toBeUndefined();
+        expect(element.willUnmount).toBeUndefined();
+        expect(element.applyProps).toBeUndefined();
+    });
+});

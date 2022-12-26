@@ -1,54 +1,64 @@
-import * as PIXI from 'pixi.js'
-import React from 'react'
-import { act } from 'react-dom/test-utils'
-import { roots } from '../src/render'
-import { Text, render, unmountComponentAtNode, Stage } from '../src'
+import * as PIXI from 'pixi.js';
+import React from 'react';
+import { act } from 'react-dom/test-utils';
+import { roots } from '../src/render';
+import { Text, render, unmountComponentAtNode, Stage } from '../src';
 
-jest.useFakeTimers()
+jest.useFakeTimers();
 
-const app = new PIXI.Application()
+const app = new PIXI.Application();
 const element = () => (
-  <Stage>
-    <Text text="Hello Word!" />
-  </Stage>
-)
+    <Stage>
+        <Text text="Hello Word!" />
+    </Stage>
+);
 
-describe('unmount render', () => {
-  beforeEach(() => {
-    roots.clear()
-  })
+describe('unmount render', () =>
+{
+    beforeEach(() =>
+    {
+        roots.clear();
+    });
 
-  test('remove root', () => {
-    expect(roots.size).toBe(0)
+    test('remove root', () =>
+    {
+        expect(roots.size).toBe(0);
 
-    act(() => {
-      render(element, app.stage)
-    })
-    expect(roots.size).toBe(1)
+        act(() =>
+        {
+            render(element, app.stage);
+        });
+        expect(roots.size).toBe(1);
 
-    act(() => {
-      unmountComponentAtNode(app.stage)
-    })
-    expect(roots.size).toBe(0)
-  })
+        act(() =>
+        {
+            unmountComponentAtNode(app.stage);
+        });
+        expect(roots.size).toBe(0);
+    });
 
-  test('unmount component', () => {
-    const unmount = jest.fn()
+    test('unmount component', () =>
+    {
+        const unmount = jest.fn();
 
-    const App = () => {
-      React.useEffect(() => unmount)
-      return null
-    }
+        const App = () =>
+        {
+            React.useEffect(() => unmount);
 
-    act(() => {
-      render(<App />, app.stage)
-    })
+            return null;
+        };
 
-    act(() => {
-      unmountComponentAtNode(app.stage)
-    })
-    jest.advanceTimersByTime(1000)
+        act(() =>
+        {
+            render(<App />, app.stage);
+        });
 
-    expect(unmount).toBeCalledTimes(1)
-  })
-})
+        act(() =>
+        {
+            unmountComponentAtNode(app.stage);
+        });
+        jest.advanceTimersByTime(1000);
+
+        expect(unmount).toBeCalledTimes(1);
+    });
+});

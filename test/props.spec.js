@@ -1,172 +1,211 @@
-import * as PIXI from 'pixi.js'
-import { getTextureFromProps, applyDefaultProps, PROPS_DISPLAY_OBJECT, PROPS_RESERVED } from '../src/utils/props'
-import { emptyTexture } from './__fixtures__/textures'
+import * as PIXI from 'pixi.js';
+import { getTextureFromProps, applyDefaultProps, PROPS_DISPLAY_OBJECT, PROPS_RESERVED } from '../src/utils/props';
+import { emptyTexture } from './__fixtures__/textures';
 
-describe('props', () => {
-  test('reserved props', () => {
-    expect(PROPS_RESERVED).toMatchSnapshot()
-  })
-  test('display object props', () => {
-    expect(PROPS_DISPLAY_OBJECT).toMatchSnapshot()
-  })
+describe('props', () =>
+{
+    test('reserved props', () =>
+    {
+        expect(PROPS_RESERVED).toMatchSnapshot();
+    });
+    test('display object props', () =>
+    {
+        expect(PROPS_DISPLAY_OBJECT).toMatchSnapshot();
+    });
 
-  describe('getTextureFromProps', () => {
-    let spy
+    describe('getTextureFromProps', () =>
+    {
+        let spy;
 
-    beforeAll(() => {
-      spy = jest.spyOn(PIXI.Texture, 'from').mockReturnValue(emptyTexture)
-    })
+        beforeAll(() =>
+        {
+            spy = jest.spyOn(PIXI.Texture, 'from').mockReturnValue(emptyTexture);
+        });
 
-    afterAll(() => {
-      spy.mockRestore()
-    })
+        afterAll(() =>
+        {
+            spy.mockRestore();
+        });
 
-    test('invariant image', () => {
-      expect(() => getTextureFromProps('Test', undefined, { image: 123 })).toThrow('Test image prop is invalid')
-    })
+        test('invariant image', () =>
+        {
+            expect(() => getTextureFromProps('Test', undefined, { image: 123 })).toThrow('Test image prop is invalid');
+        });
 
-    test('invariant texture', () => {
-      expect(() => getTextureFromProps('Test', undefined, { texture: 'texture' })).toThrow(
-        'Test texture needs to be typeof `PIXI.Texture`'
-      )
-    })
+        test('invariant texture', () =>
+        {
+            expect(() => getTextureFromProps('Test', undefined, { texture: 'texture' })).toThrow(
+                'Test texture needs to be typeof `PIXI.Texture`'
+            );
+        });
 
-    test('invariant video', () => {
-      expect(() => getTextureFromProps('Test', undefined, { video: 123 })).toThrow('Test video prop is invalid')
-    })
+        test('invariant video', () =>
+        {
+            expect(() => getTextureFromProps('Test', undefined, { video: 123 })).toThrow('Test video prop is invalid');
+        });
 
-    test('invariant source', () => {
-      expect(() => getTextureFromProps('Test', undefined, { source: null })).toThrow('Test source prop is invalid')
-    })
+        test('invariant source', () =>
+        {
+            expect(() => getTextureFromProps('Test', undefined, { source: null })).toThrow('Test source prop is invalid');
+        });
 
-    test('get texture from image url', () => {
-      const texture = getTextureFromProps('Test', undefined, { image: './image.png' })
-      expect(texture).toBeInstanceOf(PIXI.Texture)
-      expect(spy).toBeCalledWith('./image.png')
-    })
+        test('get texture from image url', () =>
+        {
+            const texture = getTextureFromProps('Test', undefined, { image: './image.png' });
 
-    test('get texture from image html element', () => {
-      const image = document.createElement('img')
-      const texture = getTextureFromProps('Test', undefined, { image })
-      expect(texture).toBeInstanceOf(PIXI.Texture)
-      expect(spy).toBeCalledWith(image)
-    })
+            expect(texture).toBeInstanceOf(PIXI.Texture);
+            expect(spy).toBeCalledWith('./image.png');
+        });
 
-    test('get texture from video url', () => {
-      const texture = getTextureFromProps('Test', undefined, { video: './video.mp4' })
-      expect(texture).toBeInstanceOf(PIXI.Texture)
-      expect(spy).toBeCalledWith('./video.mp4')
-    })
+        test('get texture from image html element', () =>
+        {
+            const image = document.createElement('img');
+            const texture = getTextureFromProps('Test', undefined, { image });
 
-    test('get texture from video html element', () => {
-      const video = document.createElement('video')
-      const texture = getTextureFromProps('Test', undefined, { video })
-      expect(texture).toBeInstanceOf(PIXI.Texture)
-      expect(spy).toBeCalledWith(video)
-    })
+            expect(texture).toBeInstanceOf(PIXI.Texture);
+            expect(spy).toBeCalledWith(image);
+        });
 
-    test('get no texture', () => {
-      expect(() => getTextureFromProps('Test', undefined, {})).toThrow('Test could not get texture from props')
-    })
+        test('get texture from video url', () =>
+        {
+            const texture = getTextureFromProps('Test', undefined, { video: './video.mp4' });
 
-    test('get texture from texture', () => {
-      const texture = getTextureFromProps('Test', undefined, { texture: emptyTexture })
-      expect(texture).toBe(emptyTexture)
-    })
-  })
+            expect(texture).toBeInstanceOf(PIXI.Texture);
+            expect(spy).toBeCalledWith('./video.mp4');
+        });
 
-  describe('applyDefaultProps', () => {
-    let instance, fn
+        test('get texture from video html element', () =>
+        {
+            const video = document.createElement('video');
+            const texture = getTextureFromProps('Test', undefined, { video });
 
-    beforeEach(() => {
-      instance = new PIXI.Container()
-      fn = jest.fn()
-    })
+            expect(texture).toBeInstanceOf(PIXI.Texture);
+            expect(spy).toBeCalledWith(video);
+        });
 
-    test('call removeListener', () => {
-      const spy = jest.spyOn(instance, 'removeListener')
-      const changed = applyDefaultProps(instance, { click: fn }, {})
-      expect(spy).toHaveBeenCalledTimes(1)
-      expect(spy).toHaveBeenCalledWith('click', fn)
-      expect(changed).toBeTruthy()
-    })
+        test('get no texture', () =>
+        {
+            expect(() => getTextureFromProps('Test', undefined, {})).toThrow('Test could not get texture from props');
+        });
 
-    test('call on', () => {
-      const spy = jest.spyOn(instance, 'on')
-      const changed = applyDefaultProps(instance, {}, { click: fn })
-      expect(spy).toHaveBeenCalledTimes(1)
-      expect(spy).toHaveBeenCalledWith('click', fn)
-      expect(changed).toBeTruthy()
-    })
+        test('get texture from texture', () =>
+        {
+            const texture = getTextureFromProps('Test', undefined, { texture: emptyTexture });
 
-    test('should get change value', () => {
-      expect(applyDefaultProps(instance, { x: 0 }, { x: 1 })).toBeTruthy()
-      expect(applyDefaultProps(instance, { x: 0 }, { x: 0 })).toBeFalsy()
-    })
+            expect(texture).toBe(emptyTexture);
+        });
+    });
 
-    test('removes old and add new listener', () => {
-      let changed = applyDefaultProps(instance, {}, { click: fn })
+    describe('applyDefaultProps', () =>
+    {
+        let instance; let
+            fn;
 
-      instance.emit('click', instance)
-      instance.emit('click', instance)
-      expect(fn).toHaveBeenCalledTimes(2)
-      expect(fn).toHaveBeenCalledWith(instance)
-      expect(changed).toBeTruthy()
+        beforeEach(() =>
+        {
+            instance = new PIXI.Container();
+            fn = jest.fn();
+        });
 
-      const newFn = jest.fn()
-      fn.mockClear()
+        test('call removeListener', () =>
+        {
+            const spy = jest.spyOn(instance, 'removeListener');
+            const changed = applyDefaultProps(instance, { click: fn }, {});
 
-      changed = applyDefaultProps(instance, { click: fn }, { click: newFn })
-      instance.emit('click', instance)
-      expect(fn).toHaveBeenCalledTimes(0)
-      expect(newFn).toHaveBeenCalledTimes(1)
-      expect(newFn).toHaveBeenCalledWith(instance)
-      expect(changed).toBeTruthy()
-    })
+            expect(spy).toHaveBeenCalledTimes(1);
+            expect(spy).toHaveBeenCalledWith('click', fn);
+            expect(changed).toBeTruthy();
+        });
 
-    test('prevent teardown/setup on same values', () => {
-      const spyAdd = jest.spyOn(instance, 'on')
-      const spyRemove = jest.spyOn(instance, 'removeListener')
+        test('call on', () =>
+        {
+            const spy = jest.spyOn(instance, 'on');
+            const changed = applyDefaultProps(instance, {}, { click: fn });
 
-      applyDefaultProps(instance, {}, { click: fn })
+            expect(spy).toHaveBeenCalledTimes(1);
+            expect(spy).toHaveBeenCalledWith('click', fn);
+            expect(changed).toBeTruthy();
+        });
 
-      expect(spyRemove).toHaveBeenCalledTimes(0)
-      expect(spyAdd).toHaveBeenCalledTimes(1)
+        test('should get change value', () =>
+        {
+            expect(applyDefaultProps(instance, { x: 0 }, { x: 1 })).toBeTruthy();
+            expect(applyDefaultProps(instance, { x: 0 }, { x: 0 })).toBeFalsy();
+        });
 
-      applyDefaultProps(instance, { click: fn }, { click: fn })
+        test('removes old and add new listener', () =>
+        {
+            let changed = applyDefaultProps(instance, {}, { click: fn });
 
-      expect(spyRemove).toHaveBeenCalledTimes(0)
-      expect(spyAdd).toHaveBeenCalledTimes(1)
+            instance.emit('click', instance);
+            instance.emit('click', instance);
+            expect(fn).toHaveBeenCalledTimes(2);
+            expect(fn).toHaveBeenCalledWith(instance);
+            expect(changed).toBeTruthy();
 
-      applyDefaultProps(instance, { click: fn }, { click: () => {} })
+            const newFn = jest.fn();
 
-      expect(spyRemove).toHaveBeenCalledTimes(1)
-      expect(spyAdd).toHaveBeenCalledTimes(2)
-    })
+            fn.mockClear();
 
-    test('invalid instance', () => {
-      expect(() => applyDefaultProps()).toThrow('instance needs to be typeof `PIXI.DisplayObject`, got `undefined`')
-    })
+            changed = applyDefaultProps(instance, { click: fn }, { click: newFn });
+            instance.emit('click', instance);
+            expect(fn).toHaveBeenCalledTimes(0);
+            expect(newFn).toHaveBeenCalledTimes(1);
+            expect(newFn).toHaveBeenCalledWith(instance);
+            expect(changed).toBeTruthy();
+        });
 
-    test('skip reserved props', () => {
-      const changed = applyDefaultProps(instance, {}, { children: [1, 2, 3], worldAlpha: 0 })
-      expect(instance.children).toEqual([])
-      expect(instance.worldAlpha).toEqual(1)
-      expect(changed).toBeFalsy()
-    })
+        test('prevent teardown/setup on same values', () =>
+        {
+            const spyAdd = jest.spyOn(instance, 'on');
+            const spyRemove = jest.spyOn(instance, 'removeListener');
 
-    test('set prop on instance', () => {
-      const changed = applyDefaultProps(instance, {}, { foo: 'bar', alpha: 0.5 })
-      expect(instance.foo).toEqual('bar')
-      expect(instance.alpha).toEqual(0.5)
-      expect(changed).toBeTruthy()
-    })
+            applyDefaultProps(instance, {}, { click: fn });
 
-    test('set back to default value', () => {
-      instance.alpha = 10
-      const changed = applyDefaultProps(instance, {}, { alpha: undefined })
-      expect(instance.alpha).toEqual(1)
-      expect(changed).toBeTruthy()
-    })
-  })
-})
+            expect(spyRemove).toHaveBeenCalledTimes(0);
+            expect(spyAdd).toHaveBeenCalledTimes(1);
+
+            applyDefaultProps(instance, { click: fn }, { click: fn });
+
+            expect(spyRemove).toHaveBeenCalledTimes(0);
+            expect(spyAdd).toHaveBeenCalledTimes(1);
+
+            applyDefaultProps(instance, { click: fn }, { click: () => {} });
+
+            expect(spyRemove).toHaveBeenCalledTimes(1);
+            expect(spyAdd).toHaveBeenCalledTimes(2);
+        });
+
+        test('invalid instance', () =>
+        {
+            expect(() => applyDefaultProps()).toThrow('instance needs to be typeof `PIXI.DisplayObject`, got `undefined`');
+        });
+
+        test('skip reserved props', () =>
+        {
+            const changed = applyDefaultProps(instance, {}, { children: [1, 2, 3], worldAlpha: 0 });
+
+            expect(instance.children).toEqual([]);
+            expect(instance.worldAlpha).toEqual(1);
+            expect(changed).toBeFalsy();
+        });
+
+        test('set prop on instance', () =>
+        {
+            const changed = applyDefaultProps(instance, {}, { foo: 'bar', alpha: 0.5 });
+
+            expect(instance.foo).toEqual('bar');
+            expect(instance.alpha).toEqual(0.5);
+            expect(changed).toBeTruthy();
+        });
+
+        test('set back to default value', () =>
+        {
+            instance.alpha = 10;
+            const changed = applyDefaultProps(instance, {}, { alpha: undefined });
+
+            expect(instance.alpha).toEqual(1);
+            expect(changed).toBeTruthy();
+        });
+    });
+});

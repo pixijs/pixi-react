@@ -1,21 +1,16 @@
-.circleci/
-.docz/
-.github/
-.idea/
+# once repo is TS index.d.ts will be auto-generated
+index.d.ts
+index.js
+module.js
+*Docz.js
 
-node_modules/
-lib/
-test/
-examples/
-dist/
-config/
-animated/
-legacy/
-docs/
+.eslintrc.js
+docz-rp.js
+docz-rp-animated.js
 doczrc.js
-
-rollup.config.js
-*.ts
-
-BitmapTextDocz.js
-ParticleContainerDocz.js
+gatsby-node.js
+**/dist
+**/node_modules
+**/animated
+**/legacy
+test/__fixtures__/**

@@ -1,22 +1,27 @@
-import { Graphics as PixiGraphics } from 'pixi.js'
-import { applyDefaultProps } from '../utils/props'
-import invariant from '../utils/invariant'
+import { Graphics as PixiGraphics } from 'pixi.js';
+import { applyDefaultProps } from '../utils/props';
+import invariant from '../utils/invariant';
 
-const Graphics = (root, { geometry }) => {
-  invariant(!geometry || geometry instanceof PixiGraphics, `Graphics geometry needs to be a \`PIXI.Graphics\``)
-  const g = geometry ? new PixiGraphics(geometry.geometry) : new PixiGraphics()
-  g.applyProps = (instance, oldProps, newProps) => {
-    const { draw, geometry, ...props } = newProps
-    let changed = applyDefaultProps(instance, oldProps, props)
-    if (oldProps.draw !== draw && typeof draw === 'function') {
-      changed = true
-      draw.call(g, g)
-    }
+const Graphics = (root, { geometry }) =>
+{
+    invariant(!geometry || geometry instanceof PixiGraphics, `Graphics geometry needs to be a \`PIXI.Graphics\``);
+    const g = geometry ? new PixiGraphics(geometry.geometry) : new PixiGraphics();
 
-    return changed
-  }
+    g.applyProps = (instance, oldProps, newProps) =>
+    {
+        const { draw, geometry, ...props } = newProps;
+        let changed = applyDefaultProps(instance, oldProps, props);
 
-  return g
-}
+        if (oldProps.draw !== draw && typeof draw === 'function')
+        {
+            changed = true;
+            draw.call(g, g);
+        }
 
-export default Graphics
+        return changed;
+    };
+
+    return g;
+};
+
+export default Graphics;

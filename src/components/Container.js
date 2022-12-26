@@ -1,5 +1,5 @@
-import { Container as PixiContainer } from 'pixi.js'
+import { Container as PixiContainer } from 'pixi.js';
 
-const Container = () => new PixiContainer()
+const Container = () => new PixiContainer();
 
-export default Container
+export default Container;

@@ -1,31 +1,37 @@
-export const isFunction = (...args) => args.every(v => typeof v === 'function')
+export const isFunction = (...args) => args.every((v) => typeof v === 'function');
 
-export const isObject = obj => Object.prototype.toString.call(obj) === '[object Object]'
+export const isObject = (obj) => Object.prototype.toString.call(obj) === '[object Object]';
 
-export const hasKey = collection => {
-  let coll = collection
+export const hasKey = (collection) =>
+{
+    let coll = collection;
 
-  if (!Array.isArray(coll)) {
-    if (isObject(collection)) {
-      coll = Object.keys(collection)
-    } else {
-      throw new Error('collection needs to be an Array or Object')
+    if (!Array.isArray(coll))
+    {
+        if (isObject(collection))
+        {
+            coll = Object.keys(collection);
+        }
+        else
+        {
+            throw new Error('collection needs to be an Array or Object');
+        }
     }
-  }
 
-  const index = {}
-  coll.forEach(key => {
-    index[key] = true
-  })
+    const index = {};
 
-  return key => typeof index[key] !== 'undefined'
-}
+    coll.forEach((key) =>
+    {
+        index[key] = true;
+    });
 
-export const not =
-  boolFn =>
-  (...args) =>
-    !boolFn(...args)
+    return (key) => typeof index[key] !== 'undefined';
+};
 
-export const lcFirst = value => {
-  return value.charAt(0).toLowerCase() + value.substring(1)
-}
+export const not
+  = (boolFn) =>
+      (...args) =>
+          !boolFn(...args);
+
+export const lcFirst = (value) =>
+    value.charAt(0).toLowerCase() + value.substring(1);

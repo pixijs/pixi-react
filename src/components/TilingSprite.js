@@ -1,42 +1,50 @@
-import { TilingSprite as PixiTilingSprite } from 'pixi.js'
-import { getTextureFromProps, applyDefaultProps } from '../utils/props'
-import { parsePoint, pointsAreEqual } from '../utils/pixi'
+import { TilingSprite as PixiTilingSprite } from 'pixi.js';
+import { getTextureFromProps, applyDefaultProps } from '../utils/props';
+import { parsePoint, pointsAreEqual } from '../utils/pixi';
 
-const TilingSprite = (root, props) => {
-  const { width = 100, height = 100 } = props
-  const texture = getTextureFromProps('TilingSprite', root, props)
+const TilingSprite = (root, props) =>
+{
+    const { width = 100, height = 100 } = props;
+    const texture = getTextureFromProps('TilingSprite', root, props);
 
-  const ts = new PixiTilingSprite(texture, width, height)
+    const ts = new PixiTilingSprite(texture, width, height);
 
-  ts.applyProps = (instance, oldProps, newProps) => {
-    const { tileScale, tilePosition, image, texture, ...props } = newProps
-    let changed = applyDefaultProps(instance, oldProps, props)
+    ts.applyProps = (instance, oldProps, newProps) =>
+    {
+        const { tileScale, tilePosition, image, texture, ...props } = newProps;
+        let changed = applyDefaultProps(instance, oldProps, props);
 
-    if (tilePosition) {
-      const newTilePosition = parsePoint(tilePosition)
-      instance.tilePosition.set(...newTilePosition)
-      changed = !pointsAreEqual(parsePoint(oldProps.tilePosition), newTilePosition) || changed
-    }
+        if (tilePosition)
+        {
+            const newTilePosition = parsePoint(tilePosition);
 
-    if (tileScale) {
-      const newTileScale = parsePoint(tileScale)
-      instance.tileScale.set(...newTileScale)
-      changed = !pointsAreEqual(parsePoint(oldProps.tileScale), newTileScale) || changed
-    }
+            instance.tilePosition.set(...newTilePosition);
+            changed = !pointsAreEqual(parsePoint(oldProps.tilePosition), newTilePosition) || changed;
+        }
 
-    if (image || texture) {
-      // change = true not required for image, getTextureFromProps will call update
-      if (texture !== oldProps.texture) {
-        changed = true
-      }
+        if (tileScale)
+        {
+            const newTileScale = parsePoint(tileScale);
 
-      instance.texture = getTextureFromProps('Sprite', root, newProps)
-    }
+            instance.tileScale.set(...newTileScale);
+            changed = !pointsAreEqual(parsePoint(oldProps.tileScale), newTileScale) || changed;
+        }
 
-    return changed
-  }
+        if (image || texture)
+        {
+            // change = true not required for image, getTextureFromProps will call update
+            if (texture !== oldProps.texture)
+            {
+                changed = true;
+            }
 
-  return ts
-}
+            instance.texture = getTextureFromProps('Sprite', root, newProps);
+        }
 
-export default TilingSprite
+        return changed;
+    };
+
+    return ts;
+};
+
+export default TilingSprite;

@@ -1,8 +1,10 @@
-import { BitmapText as PixiBitmapText } from 'pixi.js'
+import { BitmapText as PixiBitmapText } from 'pixi.js';
 
-const BitmapText = (root, props) => {
-  const { text, style } = props
-  return new PixiBitmapText(text, style)
-}
+const BitmapText = (root, props) =>
+{
+    const { text, style } = props;
 
-export default BitmapText
+    return new PixiBitmapText(text, style);
+};
+
+export default BitmapText;

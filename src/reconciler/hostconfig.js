@@ -8,321 +8,402 @@
  * -------------------------------------------
  */
 
-import performanceNow from 'performance-now'
-import invariant from '../utils/invariant'
-import { createElement } from '../utils/element'
-import { CHILDREN, applyDefaultProps } from '../utils/props'
+import performanceNow from 'performance-now';
+import invariant from '../utils/invariant';
+import { createElement } from '../utils/element';
+import { CHILDREN, applyDefaultProps } from '../utils/props';
 
-const NO_CONTEXT = {}
+const NO_CONTEXT = {};
 
-function appendChild(parent, child) {
-  if (parent.addChild) {
-    parent.addChild(child)
+function appendChild(parent, child)
+{
+    if (parent.addChild)
+    {
+        parent.addChild(child);
 
-    if (typeof child.didMount === 'function') {
-      child.didMount.call(child, child, parent)
+        if (typeof child.didMount === 'function')
+        {
+            child.didMount(child, parent);
+        }
     }
-  }
 }
 
-function removeChild(parent, child) {
-  if (typeof child.willUnmount === 'function') {
-    child.willUnmount.call(child, child, parent)
-  }
+function removeChild(parent, child)
+{
+    if (typeof child.willUnmount === 'function')
+    {
+        child.willUnmount(child, parent);
+    }
 
-  // unmount potential children
-  if (child?.config?.destroyChildren !== false && child.children?.length) {
-    ;[...child.children].forEach(c => {
-      removeChild(child, c)
-    })
-  }
+    // unmount potential children
+    if (child?.config?.destroyChildren !== false && child.children?.length)
+    {
+        [...child.children].forEach((c) =>
+        {
+            removeChild(child, c);
+        });
+    }
 
-  parent.removeChild(child)
+    parent.removeChild(child);
 
-  if (child?.config?.destroy !== false) {
-    child.destroy()
-  }
+    if (child?.config?.destroy !== false)
+    {
+        child.destroy();
+    }
 }
 
-function insertBefore(parent, child, beforeChild) {
-  invariant(child !== beforeChild, 'react-pixi: PixiFiber cannot insert node before itself')
+function insertBefore(parent, child, beforeChild)
+{
+    invariant(child !== beforeChild, 'react-pixi: PixiFiber cannot insert node before itself');
 
-  const childExists = parent.children.indexOf(child) !== -1
-  const index = parent.getChildIndex(beforeChild)
+    const childExists = parent.children.indexOf(child) !== -1;
+    const index = parent.getChildIndex(beforeChild);
 
-  childExists ? parent.setChildIndex(child, index) : parent.addChildAt(child, index)
+    childExists ? parent.setChildIndex(child, index) : parent.addChildAt(child, index);
 }
 
 // get diff between 2 objects
 // https://github.com/facebook/react/blob/97e2911/packages/react-dom/src/client/ReactDOMFiberComponent.js#L546
-function diffProperties(pixiElement, type, lastProps, nextProps, rootContainerElement) {
-  let updatePayload = null
+function diffProperties(pixiElement, type, lastProps, nextProps)
+{
+    let updatePayload = null;
 
-  for (let propKey in lastProps) {
-    if (nextProps.hasOwnProperty(propKey) || !lastProps.hasOwnProperty(propKey) || lastProps[propKey] == null) {
-      continue
-    }
-    if (propKey === CHILDREN) {
-      // Noop. Text children not supported
-    } else {
-      // For all other deleted properties we add it to the queue. We use
-      // the whitelist in the commit phase instead.
-      if (!updatePayload) {
-        updatePayload = []
-      }
-      updatePayload.push(propKey, null)
-    }
-  }
-
-  for (let propKey in nextProps) {
-    const nextProp = nextProps[propKey]
-    const lastProp = lastProps != null ? lastProps[propKey] : undefined
-
-    if (!nextProps.hasOwnProperty(propKey) || nextProp === lastProp || (nextProp == null && lastProp == null)) {
-      continue
+    for (const propKey in lastProps)
+    {
+        if (nextProps.hasOwnProperty(propKey) || !lastProps.hasOwnProperty(propKey) || lastProps[propKey] === null)
+        {
+            continue;
+        }
+        if (propKey === CHILDREN)
+        {
+            // Noop. Text children not supported
+        }
+        else
+        {
+            // For all other deleted properties we add it to the queue. We use
+            // the whitelist in the commit phase instead.
+            if (!updatePayload)
+            {
+                updatePayload = [];
+            }
+            updatePayload.push(propKey, null);
+        }
     }
 
-    if (propKey === CHILDREN) {
-      // Noop. Text children not supported
-    } else {
-      // For any other property we always add it to the queue and then we
-      // filter it out using the whitelist during the commit.
-      if (!updatePayload) {
-        updatePayload = []
-      }
-      updatePayload.push(propKey, nextProp)
+    for (const propKey in nextProps)
+    {
+        const nextProp = nextProps[propKey];
+        const lastProp = lastProps !== null ? lastProps[propKey] : undefined;
+
+        if (!nextProps.hasOwnProperty(propKey) || nextProp === lastProp || (nextProp === null && lastProp === null))
+        {
+            continue;
+        }
+
+        if (propKey === CHILDREN)
+        {
+            // Noop. Text children not supported
+        }
+        else
+        {
+            // For any other property we always add it to the queue and then we
+            // filter it out using the whitelist during the commit.
+            if (!updatePayload)
+            {
+                updatePayload = [];
+            }
+            updatePayload.push(propKey, nextProp);
+        }
     }
-  }
-  return updatePayload
+
+    return updatePayload;
 }
 
-let prepareChanged = null
+let prepareChanged = null;
 
 const HostConfig = {
-  getRootHostContext() {
-    return NO_CONTEXT
-  },
+    getRootHostContext()
+    {
+        return NO_CONTEXT;
+    },
 
-  getChildHostContext(parentHostContext) {
-    return parentHostContext
-  },
+    getChildHostContext(parentHostContext)
+    {
+        return parentHostContext;
+    },
 
-  getChildHostContextForEventComponent(parentHostContext) {
-    return parentHostContext
-  },
+    getChildHostContextForEventComponent(parentHostContext)
+    {
+        return parentHostContext;
+    },
 
-  getPublicInstance(instance) {
-    return instance
-  },
+    getPublicInstance(instance)
+    {
+        return instance;
+    },
 
-  prepareForCommit() {
+    prepareForCommit()
+    {
     // noop
-    return null
-  },
+        return null;
+    },
 
-  resetAfterCommit() {
+    resetAfterCommit()
+    {
     // noop
-  },
+    },
 
-  createInstance: createElement,
+    createInstance: createElement,
 
-  hideInstance(instance) {
-    instance.visible = false
-  },
+    hideInstance(instance)
+    {
+        instance.visible = false;
+    },
 
-  unhideInstance(instance, props) {
-    const visible = props !== undefined && props !== null && props.hasOwnProperty('visible') ? props.visible : true
-    instance.visible = visible
-  },
+    unhideInstance(instance, props)
+    {
+        const visible = props !== undefined && props !== null && props.hasOwnProperty('visible') ? props.visible : true;
 
-  finalizeInitialChildren(wordElement, type, props) {
-    return false
-  },
+        instance.visible = visible;
+    },
 
-  prepareUpdate(pixiElement, type, oldProps, newProps, rootContainerInstance, hostContext) {
-    prepareChanged = diffProperties(pixiElement, type, oldProps, newProps, rootContainerInstance)
-    return prepareChanged
-  },
+    finalizeInitialChildren(wordElement, type, props)
+    {
+        return false;
+    },
 
-  shouldSetTextContent(type, props) {
-    return false
-  },
+    prepareUpdate(pixiElement, type, oldProps, newProps, rootContainerInstance, hostContext)
+    {
+        prepareChanged = diffProperties(pixiElement, type, oldProps, newProps);
 
-  shouldDeprioritizeSubtree(type, props) {
-    const isAlphaVisible = typeof props.alpha === 'undefined' || props.alpha > 0
-    const isRenderable = typeof props.renderable === 'undefined' || props.renderable === true
-    const isVisible = typeof props.visible === 'undefined' || props.visible === true
+        return prepareChanged;
+    },
 
-    return !(isAlphaVisible && isRenderable && isVisible)
-  },
+    shouldSetTextContent(type, props)
+    {
+        return false;
+    },
 
-  createTextInstance(text, rootContainerInstance, internalInstanceHandler) {
-    invariant(
-      false,
-      'react-pixi: Error trying to add text node "' + text + '"',
-      'PixiFiber does not support text nodes as children of a Pixi component. ' +
-        'To pass a string value to your component, use a property other than children. ' +
-        'If you wish to display some text, you can use &lt;Text text={string} /&gt; instead.'
-    )
-  },
+    shouldDeprioritizeSubtree(type, props)
+    {
+        const isAlphaVisible = typeof props.alpha === 'undefined' || props.alpha > 0;
+        const isRenderable = typeof props.renderable === 'undefined' || props.renderable === true;
+        const isVisible = typeof props.visible === 'undefined' || props.visible === true;
 
-  unhideTextInstance(textInstance, text) {
+        return !(isAlphaVisible && isRenderable && isVisible);
+    },
+
+    createTextInstance(text, rootContainerInstance, internalInstanceHandler)
+    {
+        invariant(
+            false,
+            `react-pixi: Error trying to add text node "${text}"`,
+            'PixiFiber does not support text nodes as children of a Pixi component. '
+        + 'To pass a string value to your component, use a property other than children. '
+        + 'If you wish to display some text, you can use &lt;Text text={string} /&gt; instead.'
+        );
+    },
+
+    unhideTextInstance(textInstance, text)
+    {
     // noop
-  },
+    },
 
-  mountEventComponent() {
+    mountEventComponent()
+    {
     // noop
-  },
+    },
 
-  updateEventComponent() {
+    updateEventComponent()
+    {
     // noop
-  },
+    },
 
-  handleEventTarget() {
+    handleEventTarget()
+    {
     // noop
-  },
+    },
 
-  scheduleTimeout: setTimeout,
+    scheduleTimeout: setTimeout,
 
-  cancelTimeout: clearTimeout,
+    cancelTimeout: clearTimeout,
 
-  noTimeout: -1,
+    noTimeout: -1,
 
-  warnsIfNotActing: false,
+    warnsIfNotActing: false,
 
-  now: performanceNow,
+    now: performanceNow,
 
-  isPrimaryRenderer: false,
+    isPrimaryRenderer: false,
 
-  supportsMutation: true,
+    supportsMutation: true,
 
-  supportsPersistence: false,
+    supportsPersistence: false,
 
-  supportsHydration: false,
+    supportsHydration: false,
 
-  supportsMicrotasks: true,
+    supportsMicrotasks: true,
 
-  scheduleMicrotask: queueMicrotask,
+    scheduleMicrotask: queueMicrotask,
 
-  /**
+    /**
    * -------------------------------------------
    * Mutation
    * -------------------------------------------
    */
 
-  appendInitialChild(...args) {
-    const res = appendChild.apply(null, args)
-    args[0].__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'appendInitialChild' })
-    return res
-  },
+    appendInitialChild(...args)
+    {
+        const res = appendChild.apply(null, args);
 
-  appendChild(...args) {
-    const res = appendChild.apply(null, args)
-    args[0].__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'appendChild' })
-    return res
-  },
+        args[0].__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'appendInitialChild' });
 
-  appendChildToContainer(...args) {
-    const res = appendChild.apply(null, args)
-    args[0].__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'appendChildToContainer' })
-    return res
-  },
+        return res;
+    },
 
-  removeChild(...args) {
-    const res = removeChild.apply(null, args)
-    args[0].__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'removeChild' })
-    return res
-  },
+    appendChild(...args)
+    {
+        const res = appendChild.apply(null, args);
 
-  removeChildFromContainer(...args) {
-    const res = removeChild.apply(null, args)
-    args[0].__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'removeChildFromContainer' })
-    return res
-  },
+        args[0].__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'appendChild' });
 
-  insertBefore,
+        return res;
+    },
 
-  insertInContainerBefore(...args) {
-    const res = insertBefore.apply(null, args)
-    args[0].__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'insertInContainerBefore' })
-    return res
-  },
+    appendChildToContainer(...args)
+    {
+        const res = appendChild.apply(null, args);
 
-  commitUpdate(instance, updatePayload, type, oldProps, newProps) {
-    let applyProps = instance && instance.applyProps
-    if (typeof applyProps !== 'function') {
-      applyProps = applyDefaultProps
-    }
+        args[0].__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'appendChildToContainer' });
 
-    const changed = applyProps(instance, oldProps, newProps)
-    if (changed || prepareChanged) {
-      instance.__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'commitUpdate' })
-    }
-  },
+        return res;
+    },
 
-  commitMount(instance, updatePayload, type, oldProps, newProps) {
+    removeChild(...args)
+    {
+        const res = removeChild.apply(null, args);
+
+        args[0].__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'removeChild' });
+
+        return res;
+    },
+
+    removeChildFromContainer(...args)
+    {
+        const res = removeChild.apply(null, args);
+
+        args[0].__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'removeChildFromContainer' });
+
+        return res;
+    },
+
+    insertBefore,
+
+    insertInContainerBefore(...args)
+    {
+        const res = insertBefore.apply(null, args);
+
+        args[0].__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'insertInContainerBefore' });
+
+        return res;
+    },
+
+    commitUpdate(instance, updatePayload, type, oldProps, newProps)
+    {
+        let applyProps = instance && instance.applyProps;
+
+        if (typeof applyProps !== 'function')
+        {
+            applyProps = applyDefaultProps;
+        }
+
+        const changed = applyProps(instance, oldProps, newProps);
+
+        if (changed || prepareChanged)
+        {
+            instance.__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'commitUpdate' });
+        }
+    },
+
+    commitMount(instance, updatePayload, type, oldProps, newProps)
+    {
     // noop
-  },
+    },
 
-  commitTextUpdate(textInstance, oldText, newText) {
+    commitTextUpdate(textInstance, oldText, newText)
+    {
     // noop
-  },
+    },
 
-  resetTextContent(pixiElement) {
+    resetTextContent(pixiElement)
+    {
     // noop
-  },
+    },
 
-  clearContainer(container) {
+    clearContainer(container)
+    {
     // TODO implement this
-  },
+    },
 
-  getFundamentalComponentInstance(fundamentalInstance) {
-    throw new Error('Not yet implemented.')
-  },
+    getFundamentalComponentInstance(fundamentalInstance)
+    {
+        throw new Error('Not yet implemented.');
+    },
 
-  mountFundamentalComponent(fundamentalInstance) {
-    throw new Error('Not yet implemented.')
-  },
+    mountFundamentalComponent(fundamentalInstance)
+    {
+        throw new Error('Not yet implemented.');
+    },
 
-  shouldUpdateFundamentalComponent(fundamentalInstance) {
-    throw new Error('Not yet implemented.')
-  },
+    shouldUpdateFundamentalComponent(fundamentalInstance)
+    {
+        throw new Error('Not yet implemented.');
+    },
 
-  unmountFundamentalComponent(fundamentalInstance) {
-    throw new Error('Not yet implemented.')
-  },
+    unmountFundamentalComponent(fundamentalInstance)
+    {
+        throw new Error('Not yet implemented.');
+    },
 
-  getInstanceFromNode(node) {
-    throw new Error('Not yet implemented.')
-  },
+    getInstanceFromNode(node)
+    {
+        throw new Error('Not yet implemented.');
+    },
 
-  isOpaqueHydratingObject(value) {
-    throw new Error('Not yet implemented')
-  },
+    isOpaqueHydratingObject(value)
+    {
+        throw new Error('Not yet implemented');
+    },
 
-  makeOpaqueHydratingObject(attemptToReadValue) {
-    throw new Error('Not yet implemented.')
-  },
+    makeOpaqueHydratingObject(attemptToReadValue)
+    {
+        throw new Error('Not yet implemented.');
+    },
 
-  makeClientIdInDEV(warnOnAccessInDEV) {
-    throw new Error('Not yet implemented')
-  },
+    makeClientIdInDEV(warnOnAccessInDEV)
+    {
+        throw new Error('Not yet implemented');
+    },
 
-  beforeActiveInstanceBlur(internalInstanceHandle) {
+    beforeActiveInstanceBlur(internalInstanceHandle)
+    {
     // noop
-  },
+    },
 
-  afterActiveInstanceBlur() {
+    afterActiveInstanceBlur()
+    {
     // noop
-  },
+    },
 
-  detachDeletedInstance() {
+    detachDeletedInstance()
+    {
     // noop
-  },
+    },
 
-  preparePortalMount(portalInstance) {
+    preparePortalMount(portalInstance)
+    {
     // noop
-  },
-}
+    },
+};
 
-export default HostConfig
+export default HostConfig;

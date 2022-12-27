@@ -9,12 +9,12 @@
     "hosted-git-info": "^2.1.4"
   },
   "scripts": {
-    "clean": "rimraf packages/*/{dist,.testInput,.testOutput,.assetpack}",
-    "lint": "eslint --cache packages scripts shared --ext .js,.ts,.mjs --max-warnings 0",
+    "clean": "rimraf packages/*/dist",
+    "lint": "nx run-many --target=build --all --parallel",
+    "lint:force": "nx run-many --target=build --all --parallel --skip-nx-cache",
     "plugin:release": "ts-node ./scripts/release.ts",
     "build": "nx run-many --target=build --all --parallel",
     "build:force": "nx run-many --target=build --all --parallel --skip-nx-cache",
-    "pretest": "npm run clean",
     "test": "nx run-many --target=test --all --parallel",
     "test:force": "nx run-many --target=test --all --parallel --skip-nx-cache",
     "test:types": "nx run-many --target=test:types --all --parallel",

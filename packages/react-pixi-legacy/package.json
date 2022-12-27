@@ -1,0 +1,69 @@
+{
+  "name": "@pixi/react-pixi-legacy",
+  "version": "7.0.0-alpha.0",
+  "description": "Write PixiJS applications using React declarative style.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inlet/react-pixi.git"
+  },
+  "license": "MIT",
+  "author": "Patrick Brouwer <patrick@inlet.nl>",
+  "main": "index.js",
+  "module": "module.js",
+  "jsnext:main": "module.js",
+  "typings": "./index.d.ts",
+  "files": [
+    "dist/",
+    "LICENSE",
+    "index.d.ts",
+    "index.js",
+    "module.js"
+  ],
+  "scripts": {
+    "build": "rimraf ./dist && npm run build:dev && npm run build:prod",
+    "build:dev": "cross-env NODE_ENV=development rollup -c",
+    "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "jest --silent",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.14.8",
+    "pixi.js-legacy": "^6.0.0",
+    "@pixi/react-pixi": "*"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.7",
+    "@babel/eslint-parser": "^7.19.1",
+    "@babel/plugin-transform-runtime": "^7.19.6",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-react": "^7.18.6",
+    "@testing-library/react": "^13.4.0",
+    "@types/jest": "^29.2.4",
+    "@types/react": "17.0.15",
+    "@types/react-dom": "17.0.9",
+    "@types/react-reconciler": "0.26.3",
+    "babel-jest": "^29.3.1",
+    "babel-plugin-module-resolver": "4.1.0",
+    "canvas": "^2.11.0",
+    "jest": "^29.3.1",
+    "jest-environment-jsdom": "^29.3.1",
+    "jest-extended": "^3.2.0",
+    "jest-watch-typeahead": "^2.2.1",
+    "jest-webgl-canvas-mock": "^0.2.3",
+    "react-test-renderer": "18.2.0",
+    "rollup": "^3.7.0",
+    "ts-jest": "^29.0.3",
+    "eslint-config-pixi-react": "*",
+    "tsconfig": "*"
+  },
+  "peerDependencies": {
+    "@babel/runtime": "^7.14.8",
+    "pixi.js-legacy": "^6.0.0",
+    "prop-types": "^15.8.1",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  }
+}

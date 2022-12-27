@@ -1,7 +1,0 @@
-{
-  "main": "index.js",
-  "umd:main": "umd.js",
-  "module": "module.js",
-  "jsnext:main": "module.js",
-  "typings": "../index.d.ts"
-}

@@ -1,0 +1,53 @@
+{
+  "name": "@pixi/react-pixi-animated",
+  "version": "7.0.0-alpha.0",
+  "description": "TODO: Write PixiJS applications using React declarative style.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pixijs/react-pixi.git"
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "module": "module.js",
+  "jsnext:main": "module.js",
+  "typings": "./index.d.ts",
+  "files": [
+    "dist/",
+    "LICENSE",
+    "index.d.ts",
+    "index.js",
+    "umd.js",
+    "module.js"
+  ],
+  "scripts": {
+    "build": "rimraf ./dist && npm run build:dev && npm run build:prod",
+    "build:dev": "cross-env NODE_ENV=development rollup -c",
+    "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "jest --silent",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.14.8",
+    "@react-spring/animated": "^9.6.1",
+    "@react-spring/types": "^9.6.1",
+    "pixi.js": "^6.0.0",
+    "react": "^18.0.0",
+    "react-spring": "^9.6.1",
+    "@pixi/react-pixi": "*"
+  },
+  "devDependencies": {
+    "eslint-config-pixi-react": "*",
+    "tsconfig": "*"
+  },
+  "peerDependencies": {
+    "@babel/runtime": "^7.14.8",
+    "@pixi/react-pixi": "*",
+    "pixi.js": ">=6.0.0",
+    "prop-types": "^15.8.1",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  }
+}
+

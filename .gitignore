@@ -1,6 +1,6 @@
 node_modules/
 lib/
-dist/
+**/dist/
 animated/react-pixi*
 legacy/react-pixi*
 examples/

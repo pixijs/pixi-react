@@ -3,5 +3,6 @@
   "umd:main": "umd.js",
   "module": "module.js",
   "jsnext:main": "module.js",
-  "typings": "./animated.d.ts"
+  "typings": "./animated.d.ts",
+  "sideEffects": false
 }

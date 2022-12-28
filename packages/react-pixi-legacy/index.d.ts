@@ -358,9 +358,6 @@ declare namespace _ReactPixi
   }
 }
 
-// tag types
-export const TYPES: Record<string, string>;
-
 // components
 export const Text: React.FC<_ReactPixi.IText>;
 export const Sprite: React.FC<_ReactPixi.ISprite>;

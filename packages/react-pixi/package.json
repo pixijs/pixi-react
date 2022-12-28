@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.14.8",
+    "@pixi/react-pixi-tag-types": "*",
     "lodash.isnil": "4.0.0",
     "lodash.times": "4.3.2",
     "performance-now": "2.1.0",

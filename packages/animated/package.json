@@ -33,6 +33,7 @@
   "dependencies": {
     "@babel/runtime": "^7.14.8",
     "@pixi/react-pixi": "*",
+    "@pixi/react-pixi-tag-types": "*",
     "@react-spring/animated": "^9.6.1",
     "@react-spring/types": "^9.6.1",
     "pixi.js": "^6.0.0",

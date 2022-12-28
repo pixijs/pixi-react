@@ -1,5 +1,7 @@
 import * as PIXI from 'pixi.js';
-import { createElement, TYPES, TYPES_INJECTED, PixiComponent } from '../src/utils/element';
+import TYPES from '@pixi/react-pixi-tag-types';
+
+import { createElement, TYPES_INJECTED, PixiComponent } from '../src/utils/element';
 
 import { emptyTexture } from './__fixtures__/textures';
 import { desyrel } from './__fixtures__/bitmapfonts';

@@ -1,4 +1,5 @@
-import { TYPES } from '@pixi/react-pixi';
+import TYPES from '@pixi/react-pixi-tag-types';
+
 import { animated } from './react-spring';
 
 export const BitmapText = animated[TYPES.BitmapText];

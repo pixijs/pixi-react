@@ -1,12 +1,10 @@
-import { TYPES } from './utils/element';
+import TYPES from '@pixi/react-pixi-tag-types';
 
 /**
  * -------------------------------------------
  * Public API
  * -------------------------------------------
  */
-
-export { TYPES };
 
 export * from './exports';
 

@@ -1,25 +1,8 @@
+import TYPES from '@pixi/react-pixi-tag-types';
+
 import invariant from '../utils/invariant';
 import { applyDefaultProps } from './props';
 import * as components from '../components';
-
-/**
- * Available tag types
- *
- * @type {Object}
- */
-export const TYPES = {
-    BitmapText: 'BitmapText',
-    Container: 'Container',
-    Graphics: 'Graphics',
-    NineSlicePlane: 'NineSlicePlane',
-    ParticleContainer: 'ParticleContainer',
-    Sprite: 'Sprite',
-    AnimatedSprite: 'AnimatedSprite',
-    Text: 'Text',
-    TilingSprite: 'TilingSprite',
-    SimpleMesh: 'SimpleMesh',
-    SimpleRope: 'SimpleRope',
-};
 
 const ELEMENTS = Object.keys(TYPES).reduce((elements, type) => ({ ...elements, [type]: components[type] }), {});
 

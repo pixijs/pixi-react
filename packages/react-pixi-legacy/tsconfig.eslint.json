@@ -1,9 +1,12 @@
 {
   "extends": "tsconfig/tsconfig.json",
-  "include": [
+  "files": [
     ".eslintrc.js",
-    "rollup.config.mjs",
-    "src",
-    "test"
+    "jest.config.mjs",
+    "rollup.config.mjs"
+  ],
+  "include": [
+    "src/**/*",
+    "test/**/*"
   ]
 }

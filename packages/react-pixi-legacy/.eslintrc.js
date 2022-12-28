@@ -6,10 +6,9 @@ module.exports = {
         tsconfigRootDir: __dirname
     },
     ignorePatterns: [
-        'index.d.ts',
-        'index.js',
-        'module.js',
-        'dist',
-        'node_modules',
+        '/index.d.ts',
+        '/index.js',
+        '/module.js',
+        '/dist',
     ]
 };

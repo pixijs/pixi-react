@@ -1,5 +1,6 @@
 {
   "name": "eslint-config-pixi-react",
+  "private": true,
   "main": "index.js",
   "devDependencies": {
     "@pixi/eslint-config": "^4.0.1",

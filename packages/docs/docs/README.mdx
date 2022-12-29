@@ -13,7 +13,8 @@
   <strong>Simply the best way to write PIXI applications in React</strong>
   <br />
   <sub>
-    Write <a href="http://www.pixijs.com/">PIXI</a> applications using React declarative style 👌
+    Write <a href="http://www.pixijs.com/">PIXI</a> applications using React
+    declarative style 👌
   </sub>
 </p>
 
@@ -41,19 +42,22 @@ npm install @pixi/react-pixi --save
 or use [CDN](/cdn-links):
 
 ```html
-<script crossorigin src="https://unpkg.com/@pixi/react-pixi/dist/react-pixi.umd.js"></script>
+<script
+  crossorigin
+  src="https://unpkg.com/@pixi/react-pixi/dist/react-pixi.umd.js"
+></script>
 ```
 
 ## Usage
 
 ```jsx
-import { Stage, Sprite } from '@pixi/react-pixi'
+import { Stage, Sprite } from '@pixi/react-pixi';
 
 const App = () => (
   <Stage>
     <Sprite image="./bunny.png" x={100} y={100} />
   </Stage>
-)
+);
 ```
 
 [Codepen examples](https://codepen.io/collection/XPpGdb/)
@@ -63,40 +67,38 @@ const App = () => (
 ```jsx live noInline
 const reducer = (_, { data }) => data;
 
-const Bunny = () =>
-{
-    const [motion, update] = useReducer(reducer);
-    const iter = useRef(0);
+const Bunny = () => {
+  const [motion, update] = useReducer(reducer);
+  const iter = useRef(0);
 
-    useTick((delta) =>
-    {
-        const i = (iter.current += 0.05 * delta);
+  useTick((delta) => {
+    const i = (iter.current += 0.05 * delta);
 
-        update({
-            type: 'update',
-            data: {
-                x: Math.sin(i) * 100,
-                y: Math.sin(i / 1.5) * 100,
-                rotation: Math.sin(i) * Math.PI,
-                anchor: Math.sin(i / 2),
-            },
-        });
+    update({
+      type: 'update',
+      data: {
+        x: Math.sin(i) * 100,
+        y: Math.sin(i / 1.5) * 100,
+        rotation: Math.sin(i) * Math.PI,
+        anchor: Math.sin(i / 2),
+      },
     });
+  });
 
-    return (
-      <Sprite
-        image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
-        {...motion}
-      />
-    );
+  return (
+    <Sprite
+      image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
+      {...motion}
+    />
+  );
 };
 
 render(
-    <Stage width={300} height={300} options={{ backgroundAlpha: 0 }}>
-        <Container x={150} y={150}>
-            <Bunny />
-        </Container>
-    </Stage>
+  <Stage width={300} height={300} options={{ backgroundAlpha: 0 }}>
+    <Container x={150} y={150}>
+      <Bunny />
+    </Container>
+  </Stage>,
 );
 ```
 

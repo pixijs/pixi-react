@@ -7,10 +7,6 @@
     "sidebars.js",
   ],
   "include": [
-    "docs/**/*.md",
-    "docs/**/*.mdx",
-    "src/**/*.md",
-    "src/**/*.mdx",
     "docs",
     "src"
   ]

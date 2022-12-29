@@ -18,14 +18,13 @@ This will only affect the component once and will be applied during creation.
 
 The properties of children that should be uploaded to the gpu and applied.
 
-| Prop | Default Value | Description |
-| ---- | ------------- | ----------- |
-| vertices `boolean` | false | When true, vertices be uploaded and applied. if sprite's `scale/anchor/trim/frame/orig` is dynamic, please set true. |
-| position `boolean` | true | When true, position be uploaded and applied. |
-| rotation `boolean` | false | When true, rotation be uploaded and applied. |
-| uvs `boolean` | false | When true, uvs be uploaded and applied. |
-| tint `boolean` | false | When true, alpha and tint be uploaded and applied. |
-
+| Prop               | Default Value | Description                                                                                                          |
+| ------------------ | ------------- | -------------------------------------------------------------------------------------------------------------------- |
+| vertices `boolean` | false         | When true, vertices be uploaded and applied. if sprite's `scale/anchor/trim/frame/orig` is dynamic, please set true. |
+| position `boolean` | true          | When true, position be uploaded and applied.                                                                         |
+| rotation `boolean` | false         | When true, rotation be uploaded and applied.                                                                         |
+| uvs `boolean`      | false         | When true, uvs be uploaded and applied.                                                                              |
+| tint `boolean`     | false         | When true, alpha and tint be uploaded and applied.                                                                   |
 
 ### batchSize
 
@@ -38,29 +37,17 @@ If true, container allocates more batches in case there are more than `maxSize` 
 ## Usage
 
 ```jsx live
-<PIXILoader name="bunny" url="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png">
-    <Stage width={300} height={300} options={{ backgroundColor: 0xffffff }}>
-        <ParticleContainer position={[150, 150]} properties={{ position: true }}>
-            <Sprite
-                anchor={0.5}
-                x={-75}
-                y={-75}
-                image="bunny"
-            />
-            <Sprite
-                anchor={0.5}
-                x={0}
-                y={0}
-                image="bunny"
-            />
-            <Sprite
-                anchor={0.5}
-                x={75}
-                y={75}
-                image="bunny"
-            />
-        </ParticleContainer>
-    </Stage>
+<PIXILoader
+  name="bunny"
+  url="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
+>
+  <Stage width={300} height={300} options={{ backgroundColor: 0xffffff }}>
+    <ParticleContainer position={[150, 150]} properties={{ position: true }}>
+      <Sprite anchor={0.5} x={-75} y={-75} image="bunny" />
+      <Sprite anchor={0.5} x={0} y={0} image="bunny" />
+      <Sprite anchor={0.5} x={75} y={75} image="bunny" />
+    </ParticleContainer>
+  </Stage>
 </PIXILoader>
 ```
 
@@ -73,4 +60,5 @@ If true, container allocates more batches in case there are more than `maxSize` 
   src="//codepen.io/inlet/embed/db5dc6ecfb42bbf8dd5322a1015dff70/?height=600&theme-id=33987&default-tab=result&embed-version=2"
   frameBorder="no"
   allowFullScreen={true}
-  style={{ width: '100%' }} />
+  style={{ width: '100%' }}
+/>

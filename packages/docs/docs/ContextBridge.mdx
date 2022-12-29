@@ -14,29 +14,34 @@ Example:
 const ContextBridge = ({ children, Context, render }) => {
   return (
     <Context.Consumer>
-      {value => render(<Context.Provider value={value}>{children}</Context.Provider>)}
+      {(value) =>
+        render(<Context.Provider value={value}>{children}</Context.Provider>)
+      }
     </Context.Consumer>
-  )
-}
+  );
+};
 
 // your Stage:
-import { Stage as PixiStage } from '@pixi/react-pixi'
-import { ReactReduxContext } from 'react-redux'
+import { Stage as PixiStage } from '@pixi/react-pixi';
+import { ReactReduxContext } from 'react-redux';
 
 export const Stage = ({ children, ...props }) => {
   return (
-    <ContextBridge Context={ReactReduxContext} render={children => <PixiStage {...props}>{children}</PixiStage>}>
+    <ContextBridge
+      Context={ReactReduxContext}
+      render={(children) => <PixiStage {...props}>{children}</PixiStage>}
+    >
       {children}
     </ContextBridge>
-  )
-}
+  );
+};
 
 // your App
 const App = (
   <Stage>
     <SomeComponentUsingRedux />
   </Stage>
-)
+);
 ```
 
 Also see [Context Bridge Concept](https://standard.ai/blog/introducing-standard-view-and-react-three-fiber-context-bridge/)

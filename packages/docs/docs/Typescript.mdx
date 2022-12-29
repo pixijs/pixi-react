@@ -13,7 +13,13 @@ ReactPixi gives you full type support.
 The props `position`, `scale`, `pivot`, `anchor` and `skew` are PointLike types.
 
 ```ts
-type PointLike = { x: number; y: number } | PIXI.Point | PIXI.ObservablePoint | number | [number] | [number, number]
+type PointLike =
+  | { x: number; y: number }
+  | PIXI.Point
+  | PIXI.ObservablePoint
+  | number
+  | [number]
+  | [number, number];
 ```
 
 Example:
@@ -41,10 +47,15 @@ Source types are available for:
 
 ```ts
 type Source = {
-  image?: ImageSource
-  video?: VideoSource
-  source?: number | ImageSource | VideoSource | HTMLCanvasElement | PIXI.Texture
-}
+  image?: ImageSource;
+  video?: VideoSource;
+  source?:
+    | number
+    | ImageSource
+    | VideoSource
+    | HTMLCanvasElement
+    | PIXI.Texture;
+};
 ```
 
 Example:
@@ -59,32 +70,32 @@ Example:
 Example:
 
 ```tsx
-import { PixiComponent } from '@pixi/react-pixi'
-import { Graphics } from 'pixi.js'
+import { PixiComponent } from '@pixi/react-pixi';
+import { Graphics } from 'pixi.js';
 
 interface RectangleProps {
-  x: number
-  y: number
-  width: number
-  height: number
-  color: number
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  color: number;
 }
 
 const Rectangle = PixiComponent<RectangleProps, Graphics>('Rectangle', {
   create: () => new Graphics(),
   applyProps: (ins, _, props) => {
-    ins.x = props.x
-    ins.beginFill(props.color)
-    ins.drawRect(props.x, props.y, props.width, props.height)
-    ins.endFill()
+    ins.x = props.x;
+    ins.beginFill(props.color);
+    ins.drawRect(props.x, props.y, props.width, props.height);
+    ins.endFill();
   },
-})
+});
 
 const App = () => (
   <Stage>
     <Rectangle x={100} y={100} width={100} height={100} color={0xff0000} />
   </Stage>
-)
+);
 ```
 
 <img
@@ -106,7 +117,7 @@ type IContainer = PixiRef<typeof Container>; // PIXI.Container
 
 const App = () => {
   const containerRef = React.useRef<IContainer>(null);
-  return <Container ref={containerRef} />
+  return <Container ref={containerRef} />;
 };
 ```
 
@@ -121,8 +132,8 @@ import { Graphics } from '@pixi/react-pixi';
 type Draw = ComponentProps<typeof Graphics>['draw'];
 
 const App = () => {
-  const draw = useCallback<Draw>(g => {
-    g // PIXI.Graphics
+  const draw = useCallback<Draw>((g) => {
+    g; // PIXI.Graphics
 
     g.clear();
     g.beginFill(props.color);
@@ -131,5 +142,5 @@ const App = () => {
   });
 
   return <Graphics draw={draw} />;
-}
+};
 ```

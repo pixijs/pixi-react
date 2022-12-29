@@ -4,15 +4,15 @@ The Stage component renders a `PIXI.Application` onto a canvas element and makes
 
 ## Props
 
-| Prop  | Description | Default value |
-| ------------- | ------------- | ------------- |
-| `width`  | the width of the renderers view  | `800` |
-| `height`  | the height of the renderers view  | `600` |
-| `onMount`  | callback function for the created app instance  | |
-| `onUnMount`  | callback function when the Stage gets unmounted  | |
-| `raf`  | use the internal PIXI ticker (requestAnimationFrame)  | `true` |
-| `renderOnComponentChange` |  render stage on component changes. Only useful in combination with `raf` disabled | `true` |
-| `options` | see [PIXI.Application options](https://pixijs.download/release/docs/PIXI.Application.html) | |
+| Prop                      | Description                                                                                | Default value |
+| ------------------------- | ------------------------------------------------------------------------------------------ | ------------- |
+| `width`                   | the width of the renderers view                                                            | `800`         |
+| `height`                  | the height of the renderers view                                                           | `600`         |
+| `onMount`                 | callback function for the created app instance                                             |               |
+| `onUnMount`               | callback function when the Stage gets unmounted                                            |               |
+| `raf`                     | use the internal PIXI ticker (requestAnimationFrame)                                       | `true`        |
+| `renderOnComponentChange` | render stage on component changes. Only useful in combination with `raf` disabled          | `true`        |
+| `options`                 | see [PIXI.Application options](https://pixijs.download/release/docs/PIXI.Application.html) |               |
 
 ## Usage
 
@@ -36,31 +36,28 @@ const count = 10;
 const width = 300;
 const height = 300;
 const stageProps = {
-    height,
-    width,
-    options: {
-        backgroundAlpha: 0,
-        antialias: true
-    }
+  height,
+  width,
+  options: {
+    backgroundAlpha: 0,
+    antialias: true,
+  },
 };
 
 render(
-    <Stage
-        {...stageProps}
-    >
-        {
-            lodash.times(count, (i) => (
-                <Sprite key={i}
-                    image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/coin.png"
-                    scale={(360 / count) * 0.004}
-                    anchor={0.5}
-                    rotation={(i * (360 / count)) * (Math.PI / 180)}
-                    x={(width / 2) + (Math.cos((i * (360 / count)) * (Math.PI / 180)) * 100)}
-                    y={(height / 2) + (Math.sin((i * (360 / count)) * (Math.PI / 180)) * 100)}
-                />
-            ))
-        }
-    </Stage>
+  <Stage {...stageProps}>
+    {lodash.times(count, (i) => (
+      <Sprite
+        key={i}
+        image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/coin.png"
+        scale={(360 / count) * 0.004}
+        anchor={0.5}
+        rotation={i * (360 / count) * (Math.PI / 180)}
+        x={width / 2 + Math.cos(i * (360 / count) * (Math.PI / 180)) * 100}
+        y={height / 2 + Math.sin(i * (360 / count) * (Math.PI / 180)) * 100}
+      />
+    ))}
+  </Stage>,
 );
 ```
 
@@ -78,29 +75,28 @@ If you want to know when components have changed, you can listen to the `__REACT
 > Disable `raf` and enable `renderOnComponentChange`:
 
 ```jsx live
-() =>
-{
-    // a simple incremental hook
-    // https://gist.github.com/inlet/3e80965127d16c056da247f66839f51d
-    const i = useIteration(0.1);
+() => {
+  // a simple incremental hook
+  // https://gist.github.com/inlet/3e80965127d16c056da247f66839f51d
+  const i = useIteration(0.1);
 
-    return (
-        <Stage
-            width={300}
-            height={300}
-            raf={false}
-            renderOnComponentChange={true}
-            options={{ antialias: true, backgroundAlpha: 0 }}
-        >
-            <Sprite
-                anchor={[-(2 + (Math.sin(i / 5) * 2)), 0.5]}
-                position={150}
-                rotation={((Math.PI / 180) * 90) + -i}
-                image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
-            />
-        </Stage>
-    );
-}
+  return (
+    <Stage
+      width={300}
+      height={300}
+      raf={false}
+      renderOnComponentChange={true}
+      options={{ antialias: true, backgroundAlpha: 0 }}
+    >
+      <Sprite
+        anchor={[-(2 + Math.sin(i / 5) * 2), 0.5]}
+        position={150}
+        rotation={(Math.PI / 180) * 90 + -i}
+        image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
+      />
+    </Stage>
+  );
+};
 ```
 
 ### Update stage manually
@@ -108,31 +104,36 @@ If you want to know when components have changed, you can listen to the `__REACT
 > Disable `raf` and `renderOnComponentChange`:
 
 ```jsx live
-() =>
-{
-    const [app, setApp] = useState();
-    const i = useIteration(0.1);
+() => {
+  const [app, setApp] = useState();
+  const i = useIteration(0.1);
 
-    return (
-        <div style={{display: 'flex', flexDirection: 'column'}}>
-            <Stage
-                width={300}
-                height={300}
-                raf={false}
-                renderOnComponentChange={false}
-                onMount={setApp}
-                options={{ backgroundColor: 0xeef1f5, antialias: true }}>
-                <Sprite
-                    anchor={0.5}
-                    position={[150 + (Math.cos(i) * 50), 150]}
-                    rotation={i}
-                    image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
-                />
-            </Stage>
-            <button style={{margin: '20px auto 0 0'}} onClick={() => app.renderer.render(app.stage)}>Render</button>
-        </div>
-    );
-}
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <Stage
+        width={300}
+        height={300}
+        raf={false}
+        renderOnComponentChange={false}
+        onMount={setApp}
+        options={{ backgroundColor: 0xeef1f5, antialias: true }}
+      >
+        <Sprite
+          anchor={0.5}
+          position={[150 + Math.cos(i) * 50, 150]}
+          rotation={i}
+          image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
+        />
+      </Stage>
+      <button
+        style={{ margin: '20px auto 0 0' }}
+        onClick={() => app.renderer.render(app.stage)}
+      >
+        Render
+      </button>
+    </div>
+  );
+};
 ```
 
 ## Accessing PIXI.Application
@@ -145,9 +146,7 @@ To access the `PIXI.Application` in your child components you can use one of the
 import { AppConsumer } from '@pixi/react-pixi';
 
 const MyComponent = () => (
-  <AppConsumer>
-    {app => <OtherComponent app={app} />}
-  </AppConsumer>
+  <AppConsumer>{(app) => <OtherComponent app={app} />}</AppConsumer>
 );
 ```
 

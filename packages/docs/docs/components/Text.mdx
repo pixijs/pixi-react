@@ -1,11 +1,11 @@
-import { Stage, Text } from '@pixi/react-pixi'
+import { Stage, Text } from '@pixi/react-pixi';
 
 export const TextStyle = (() => {
   if (typeof window !== 'undefined') {
-    return require('pixi.js').TextStyle
+    return require('pixi.js').TextStyle;
   }
-  return {}
-})()
+  return {};
+})();
 
 # Text
 
@@ -19,23 +19,23 @@ https://pixijs.download/dev/docs/PIXI.TextStyle.html
 
 ### Additional Props
 
-| Prop | Default Value | Description |
-| ---- | ------------- | ----------- |
-| isSprite `boolean` | false | renders the text as a textured objects and returns it as sprite (much better performances if the text doesn't change often)|
-
+| Prop               | Default Value | Description                                                                                                                 |
+| ------------------ | ------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| isSprite `boolean` | false         | renders the text as a textured objects and returns it as sprite (much better performances if the text doesn't change often) |
 
 Note: isSprite establishes how the Text is rendered during its whole lifecycle after it's been mounted, therefore any change to the property later on won't have effect
 
 ## Usage
 
 ```jsx live
-  <Stage width={300} height={300} options={{ backgroundColor: 0xeef1f5 }}>
-    <Text
-      text="Hello World"
-      anchor={0.5}
-      x={150}
-      y={150}
-      style={new PIXI.TextStyle({
+<Stage width={300} height={300} options={{ backgroundColor: 0xeef1f5 }}>
+  <Text
+    text="Hello World"
+    anchor={0.5}
+    x={150}
+    y={150}
+    style={
+      new PIXI.TextStyle({
         align: 'center',
         fontFamily: '"Source Sans Pro", Helvetica, sans-serif',
         fontSize: 50,
@@ -51,9 +51,10 @@ Note: isSprite establishes how the Text is rendered during its whole lifecycle a
         dropShadowDistance: 6,
         wordWrap: true,
         wordWrapWidth: 440,
-      })}
-    />
-  </Stage>
+      })
+    }
+  />
+</Stage>
 ```
 
 ## Example
@@ -65,4 +66,5 @@ Note: isSprite establishes how the Text is rendered during its whole lifecycle a
   src="//codepen.io/inlet/embed/ec46cd42dc7fed3c383fc934a0dcf6b4/?height=600&theme-id=33987&default-tab=result&embed-version=2"
   frameBorder="no"
   allowFullScreen={true}
-  style={{ width: '100%' }} />
+  style={{ width: '100%' }}
+/>

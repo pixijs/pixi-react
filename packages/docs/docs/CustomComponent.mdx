@@ -8,10 +8,10 @@ To tap into the React reconciliation you can create custom components with `Pixi
 
 ```jsx
 export default PixiComponent('ComponentName', {
-  create: props => {
+  create: (props) => {
     // instantiate something and return it.
     // for instance:
-    return new Graphics()
+    return new Graphics();
   },
   didMount: (instance, parent) => {
     // apply custom logic on mount
@@ -32,7 +32,7 @@ export default PixiComponent('ComponentName', {
     // default true
     destroyChildren: true,
   },
-})
+});
 ```
 
 ## Props helper
@@ -43,24 +43,24 @@ primitive instance handling events, PIXI props and point-like values.
 Here's an example to pass through every other DisplayObject props and handle prop `count` separately:
 
 ```jsx
-import { Text } from 'pixi.js'
-import { Stage, applyDefaultProps, PixiComponent } from '@pixi/react-pixi'
+import { Text } from 'pixi.js';
+import { Stage, applyDefaultProps, PixiComponent } from '@pixi/react-pixi';
 
 export default PixiComponent('Counter', {
   create: ({ count }) => {
-    return new Text(count.toString())
+    return new Text(count.toString());
   },
   applyProps: (instance, oldProps, newProps) => {
-    const { count, ...oldP } = oldProps
-    const { count, ...newP } = newProps
+    const { count, ...oldP } = oldProps;
+    const { count, ...newP } = newProps;
 
     // apply rest props to PIXI.Text
-    applyDefaultProps(instance, oldP, newP)
+    applyDefaultProps(instance, oldP, newP);
 
     // set new count
-    instance.text = count.toString()
+    instance.text = count.toString();
   },
-})
+});
 ```
 
 ## Compose above Custom Components

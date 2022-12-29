@@ -8,7 +8,7 @@ import { Container } from '@pixi/react-pixi';
 
 const Filters = withFilters(Container, {
   blur: PIXI.filters.BlurFilter,
-  adjust: AdjustmentFilter
+  adjust: AdjustmentFilter,
 });
 
 const App = () => (
@@ -27,11 +27,16 @@ For filters that expose methods, you can use the `apply` prop that is called wit
 ```jsx
 import { Container } from '@pixi/react-pixi';
 
-const Filters = withFilters(Container, { matrix: PIXI.filters.ColorMatrixFilter })
+const Filters = withFilters(Container, {
+  matrix: PIXI.filters.ColorMatrixFilter,
+});
 
 const App = () => (
   <Stage>
-    <Filters matrix={{ enabled: true }} apply={ ({ matrix }) => matrix.greyscale() }>
+    <Filters
+      matrix={{ enabled: true }}
+      apply={({ matrix }) => matrix.greyscale()}
+    >
       <Sprite image="./image.png" />
     </Filters>
   </Stage>
@@ -47,7 +52,8 @@ const App = () => (
   src="//codepen.io/inlet/embed/qBEGXvv/?height=300&theme-id=33987&default-tab=result&embed-version=2"
   frameBorder="no"
   allowFullScreen={true}
-  style={{ width: '100%' }} />
+  style={{ width: '100%' }}
+/>
 
 <iframe
   height={500}
@@ -56,6 +62,5 @@ const App = () => (
   src="//codepen.io/inlet/embed/37ab46cc29a225ec30cd1511285abbc5/?height=300&theme-id=33987&default-tab=result&embed-version=2"
   frameBorder="no"
   allowFullScreen={true}
-  style={{ width: '100%' }} />
-
-
+  style={{ width: '100%' }}
+/>

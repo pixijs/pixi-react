@@ -6,9 +6,9 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-    title: 'My Site',
-    tagline: 'Dinosaurs are cool',
-    url: 'https://your-docusaurus-test-site.com',
+    title: 'ReactPixi',
+    tagline: 'Write PixiJS applications using React declarative style.',
+    url: 'https://reactpixi.org/',
     baseUrl: '/',
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
@@ -16,8 +16,8 @@ const config = {
 
     // GitHub pages deployment config.
     // If you aren't using GitHub pages, you don't need these.
-    organizationName: 'facebook', // Usually your GitHub org/user name.
-    projectName: 'docusaurus', // Usually your repo name.
+    organizationName: 'pixi', // Usually your GitHub org/user name.
+    projectName: 'react-pixi', // Usually your repo name.
 
     // Even if you don't use internalization, you can use this field to set useful
     // metadata like html lang. For example, if your site is Chinese, you may want
@@ -52,7 +52,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
         navbar: {
-            title: 'My Site',
+            title: 'ReactPixi',
             logo: {
                 alt: 'My Site Logo',
                 src: 'img/logo.svg',
@@ -60,7 +60,7 @@ const config = {
             items: [
                 {
                     type: 'doc',
-                    docId: 'intro',
+                    docId: 'about',
                     position: 'left',
                     label: 'Docs',
                 },
@@ -74,7 +74,7 @@ const config = {
                     items: [
                         {
                             label: 'Docs',
-                            to: '/docs/intro',
+                            to: '/docs/about',
                         },
                     ],
                 },

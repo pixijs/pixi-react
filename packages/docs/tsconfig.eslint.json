@@ -1,0 +1,17 @@
+{
+  "extends": "tsconfig/tsconfig.json",
+  "files": [
+    ".eslintrc.js",
+    "babel.config.js",
+    "docusaurus.config.js",
+    "sidebars.js",
+  ],
+  "include": [
+    "docs/**/*.md",
+    "docs/**/*.mdx",
+    "src/**/*.md",
+    "src/**/*.mdx",
+    "docs",
+    "src"
+  ]
+}

@@ -6,11 +6,11 @@ module.exports = {
         tsconfigRootDir: __dirname
     },
     ignorePatterns: [
-        '/**/*Docz.js',
         '/index.d.ts',
         '/index.js',
         '/module.js',
         '/dist',
         '/test/__fixtures__',
+        'node_modules',
     ]
 };

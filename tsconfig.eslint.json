@@ -2,10 +2,15 @@
   "extends": "tsconfig/tsconfig.json",
   "files": [
     ".eslintrc.js",
-    "wallaby.js"
+    "wallaby.js",
+    "packages/docs/docs/components/AnimatedSprite.mdx",
   ],
   "include": [
     "packages/*/.eslintrc.js",
+    "packages/docs/docs/**/*.md",
+    "packages/docs/docs/**/*.mdx",
+    "packages/docs/src/**/*.md",
+    "packages/docs/src/**/*.mdx",
     "packages/**/*",
     "scripts/**/*",
     "shared/**/*",

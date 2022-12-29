@@ -13,7 +13,7 @@ Thank you very much for helping improving this library
 
 ### Additional info
 
-- `@inlet/react-pixi` version: 
+- `@pixi/react-pixi` version:
 - `React` version:
 - `ReactDOM` version:
 - `PIXI` version:

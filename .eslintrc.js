@@ -37,14 +37,18 @@ catch (err)
 
 module.exports = {
     root: true,
-    extends: ['pixi-react'],
+    extends: ['plugin:mdx/recommended', 'pixi-react'],
     parserOptions: {
         project: ['tsconfig.eslint.json'],
-        tsconfigRootDir: __dirname
+        tsconfigRootDir: __dirname,
+        extraFileExtensions: ['.md', '.mdx']
     },
     ignorePatterns: [
         ...ignorePatterns,
         'dist',
-        'node_modules'
-    ]
+        'node_modules',
+    ],
+    settings: {
+        'mdx/code-blocks': true,
+    }
 };

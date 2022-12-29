@@ -10,5 +10,6 @@ module.exports = {
         '/index.js',
         '/module.js',
         '/dist',
+        'node_modules',
     ]
 };

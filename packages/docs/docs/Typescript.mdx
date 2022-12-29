@@ -1,0 +1,135 @@
+# TypeScript Support
+
+ReactPixi gives you full type support.
+
+<img
+  src="https://user-images.githubusercontent.com/232559/84883493-dd221900-b090-11ea-9e82-33032fec57a0.png"
+  alt="Type Support"
+  width="653"
+/>
+
+## PointLike types
+
+The props `position`, `scale`, `pivot`, `anchor` and `skew` are PointLike types.
+
+```ts
+type PointLike = { x: number; y: number } | PIXI.Point | PIXI.ObservablePoint | number | [number] | [number, number]
+```
+
+Example:
+
+```jsx
+<Sprite anchor={{ x: 0.5, y: 0.5 }} />
+<Sprite anchor={new PIXI.Point(0.5, 0.5)} />
+<Sprite anchor={0.5} />
+<Sprite anchor={[0.5]} />
+<Sprite anchor={[0.5, 0.5]} />
+```
+
+## Source types
+
+Apply source directly to a component.
+Source types are available for:
+
+- `<Sprite>`
+- `<Text>`
+- `<NineSlicePlane>`
+- `<TilingSprite>`
+- `<SimpleRope>`
+- `<SimpleMesh>`
+- `<AnimatedSprite>`
+
+```ts
+type Source = {
+  image?: ImageSource
+  video?: VideoSource
+  source?: number | ImageSource | VideoSource | HTMLCanvasElement | PIXI.Texture
+}
+```
+
+Example:
+
+```jsx
+<Sprite image="./my-image.png" />
+<Sprite video={document.querySelector('#video')} />
+```
+
+## Custom Components
+
+Example:
+
+```tsx
+import { PixiComponent } from '@pixi/react-pixi'
+import { Graphics } from 'pixi.js'
+
+interface RectangleProps {
+  x: number
+  y: number
+  width: number
+  height: number
+  color: number
+}
+
+const Rectangle = PixiComponent<RectangleProps, Graphics>('Rectangle', {
+  create: () => new Graphics(),
+  applyProps: (ins, _, props) => {
+    ins.x = props.x
+    ins.beginFill(props.color)
+    ins.drawRect(props.x, props.y, props.width, props.height)
+    ins.endFill()
+  },
+})
+
+const App = () => (
+  <Stage>
+    <Rectangle x={100} y={100} width={100} height={100} color={0xff0000} />
+  </Stage>
+)
+```
+
+<img
+  src="https://user-images.githubusercontent.com/232559/84884891-92090580-b092-11ea-9cc5-f3cafc9b88bf.png"
+  alt="Type Custom Components"
+  width="502"
+/>
+
+## PixiRef
+
+Get the PIXI instance type for a ReactPixi component:
+
+Example:
+
+```tsx
+import { Container, PixiRef } from '@pixi/react-pixi';
+
+type IContainer = PixiRef<typeof Container>; // PIXI.Container
+
+const App = () => {
+  const containerRef = React.useRef<IContainer>(null);
+  return <Container ref={containerRef} />
+};
+```
+
+## Type component props
+
+Extract a component prop type as follow:
+
+```tsx
+import { useCallback, ComponentProps } from 'react';
+import { Graphics } from '@pixi/react-pixi';
+
+type Draw = ComponentProps<typeof Graphics>['draw'];
+
+const App = () => {
+  const draw = useCallback<Draw>(g => {
+    g // PIXI.Graphics
+
+    g.clear();
+    g.beginFill(props.color);
+    g.drawRect(0, 0, 100, 100);
+    g.endFill();
+  });
+
+  return <Graphics draw={draw} />;
+}
+```

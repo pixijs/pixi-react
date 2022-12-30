@@ -75,7 +75,7 @@ If you want to know when components have changed, you can listen to the `__REACT
 > Disable `raf` and enable `renderOnComponentChange`:
 
 ```jsx live
-() => {
+function DisableRAFExample() {
   // a simple incremental hook
   // https://gist.github.com/inlet/3e80965127d16c056da247f66839f51d
   const i = useIteration(0.1);
@@ -96,7 +96,7 @@ If you want to know when components have changed, you can listen to the `__REACT
       />
     </Stage>
   );
-};
+}
 ```
 
 ### Update stage manually
@@ -104,7 +104,7 @@ If you want to know when components have changed, you can listen to the `__REACT
 > Disable `raf` and `renderOnComponentChange`:
 
 ```jsx live
-() => {
+function DisableRAFWithManualRenderExample() {
   const [app, setApp] = useState();
   const i = useIteration(0.1);
 
@@ -133,7 +133,7 @@ If you want to know when components have changed, you can listen to the `__REACT
       </button>
     </div>
   );
-};
+}
 ```
 
 ## Accessing PIXI.Application

@@ -1,5 +1,6 @@
-export function createHost() {
-  return {
-    animated: null,
-  }
+export function createHost()
+{
+    return {
+        animated: null,
+    };
 }

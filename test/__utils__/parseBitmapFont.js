@@ -1,15 +1,17 @@
-import { BitmapFont } from 'pixi.js'
-import { emptyTexture } from '../__fixtures__/textures'
+import { BitmapFont } from 'pixi.js';
+import { emptyTexture } from '../__fixtures__/textures';
 
-const parseBitmapFontData = (data, type = 'text/xml', texture = emptyTexture) => {
-  const parsed = new window.DOMParser().parseFromString(data, type)
+const parseBitmapFontData = (data, type = 'text/xml', texture = emptyTexture) =>
+{
+    const parsed = new window.DOMParser().parseFromString(data, type);
 
-  // broken in jsdom!
-  if (!(parsed instanceof XMLDocument)) {
-    parsed.__proto__ = XMLDocument.prototype
-  }
+    // broken in jsdom!
+    if (!(parsed instanceof XMLDocument))
+    {
+        Object.setPrototypeOf(parsed, XMLDocument.prototype);
+    }
 
-  BitmapFont.install(parsed, texture)
-}
+    BitmapFont.install(parsed, texture);
+};
 
-export default parseBitmapFontData
+export default parseBitmapFontData;

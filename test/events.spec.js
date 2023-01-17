@@ -1,103 +1,116 @@
-import React from 'react'
+import React from 'react';
 import { act } from 'react-dom/test-utils';
-import * as PIXI from 'pixi.js'
+import * as PIXI from 'pixi.js';
 
-import hostconfig from '../src/reconciler/hostconfig'
-import { createElement } from '../src/utils/element'
-import { Text, Container, render, eventHandlers } from '../src'
-import { roots } from '../src/render'
-import { mockToSpy } from './__utils__/mock'
+import hostconfig from '../src/reconciler/hostconfig';
+import { createElement } from '../src/utils/element';
+import { Text, Container, render, eventHandlers } from '../src';
+import { roots } from '../src/render';
+import { mockToSpy } from './__utils__/mock';
 
-const CUSTOM_EVENT = 'customEvent'
-const NOT_CUSTOM_EVENT = 'notCustomEvent'
+const CUSTOM_EVENT = 'customEvent';
+const NOT_CUSTOM_EVENT = 'notCustomEvent';
 
-jest.mock('../src/reconciler/hostconfig')
+jest.mock('../src/reconciler/hostconfig');
 
-describe('react', () => {
-  let container = new PIXI.Container()
-  container.root = true
+describe('react', () =>
+{
+    const container = new PIXI.Container();
 
-  // render in container
-  const renderInContainer = comp => act(() => {
-    render(comp, container)
-  })
+    container.root = true;
 
-  // keep track of real PIXI instances created
-  let instances = []
+    // render in container
+    const renderInContainer = (comp) => act(() =>
+    {
+        render(comp, container);
+    });
 
-  beforeEach(() => {
-    instances = []
-    jest.clearAllMocks()
-    mockToSpy('../src/reconciler/hostconfig')
+    // keep track of real PIXI instances created
+    let instances = [];
 
-    hostconfig.createInstance.mockImplementation((...args) => {
-      const ins = createElement(...args)
-      instances.push(ins)
-      return ins
-    })
-  })
+    beforeEach(() =>
+    {
+        instances = [];
+        jest.clearAllMocks();
+        mockToSpy('../src/reconciler/hostconfig');
 
-  afterEach(() => {
-    roots.clear()
-    const index = eventHandlers.indexOf(CUSTOM_EVENT)
-    if (index >= 0) eventHandlers.splice(index, 1)
-  })
+        hostconfig.createInstance.mockImplementation((...args) =>
+        {
+            const ins = createElement(...args);
 
-  describe('events', () => {
-    test('trigger click event', () => {
-      let onClick = jest.fn()
-      let text
+            instances.push(ins);
 
-      renderInContainer(
-        <Container>
-          <Text ref={c => (text = c)} click={onClick} />
-        </Container>
-      )
+            return ins;
+        });
+    });
 
-      text.emit('click', { type: 'click', data: 123 })
+    afterEach(() =>
+    {
+        roots.clear();
+        const index = eventHandlers.indexOf(CUSTOM_EVENT);
 
-      expect(text).toBeInstanceOf(PIXI.Text)
-      expect(text._eventsCount).toEqual(1)
-      expect(onClick).toHaveBeenCalledTimes(1)
-      expect(onClick.mock.calls[0][0]).toEqual({ type: 'click', data: 123 })
-    })
+        if (index >= 0) eventHandlers.splice(index, 1);
+    });
 
-    test('dispose old event and assign new', () => {
-      let onClick = jest.fn()
+    describe('events', () =>
+    {
+        test('trigger click event', () =>
+        {
+            const onClick = jest.fn();
+            let text;
 
-      renderInContainer(<Text click={onClick} />)
-      renderInContainer(<Text click={onClick} />)
-      renderInContainer(<Text click={onClick} />)
+            renderInContainer(
+                <Container>
+                    <Text ref={(c) => (text = c)} click={onClick} />
+                </Container>
+            );
 
-      instances[0].emit('click', { type: 'click', data: 123 })
+            text.emit('click', { type: 'click', data: 123 });
 
-      expect(instances).toHaveLength(1)
-      expect(instances[0]._eventsCount).toEqual(1)
-      expect(onClick).toHaveBeenCalledTimes(1)
-    })
+            expect(text).toBeInstanceOf(PIXI.Text);
+            expect(text._eventsCount).toEqual(1);
+            expect(onClick).toHaveBeenCalledTimes(1);
+            expect(onClick.mock.calls[0][0]).toEqual({ type: 'click', data: 123 });
+        });
 
-    test('custom events', () => {
-      let text
-      let onCustomEvent = jest.fn()
-      let onNotCustomEvent = jest.fn()
+        test('dispose old event and assign new', () =>
+        {
+            const onClick = jest.fn();
 
-      eventHandlers.push(CUSTOM_EVENT)
+            renderInContainer(<Text click={onClick} />);
+            renderInContainer(<Text click={onClick} />);
+            renderInContainer(<Text click={onClick} />);
 
-      renderInContainer(<Text ref={c => (text = c)} {...{ [CUSTOM_EVENT]: onCustomEvent }} />)
+            instances[0].emit('click', { type: 'click', data: 123 });
 
-      const customEvent = { type: CUSTOM_EVENT, data: 456 }
+            expect(instances).toHaveLength(1);
+            expect(instances[0]._eventsCount).toEqual(1);
+            expect(onClick).toHaveBeenCalledTimes(1);
+        });
 
-      text.emit(CUSTOM_EVENT, customEvent)
+        test('custom events', () =>
+        {
+            let text;
+            const onCustomEvent = jest.fn();
+            const onNotCustomEvent = jest.fn();
 
-      expect(text._eventsCount).toEqual(1)
-      expect(onCustomEvent).toHaveBeenCalledTimes(1)
-      expect(onCustomEvent).toHaveBeenCalledWith(customEvent)
+            eventHandlers.push(CUSTOM_EVENT);
 
-      renderInContainer(<Text ref={c => (text = c)} {...{ [NOT_CUSTOM_EVENT]: onNotCustomEvent }} />)
+            renderInContainer(<Text ref={(c) => (text = c)} {...{ [CUSTOM_EVENT]: onCustomEvent }} />);
 
-      text.emit(NOT_CUSTOM_EVENT, { type: NOT_CUSTOM_EVENT, data: 789 })
+            const customEvent = { type: CUSTOM_EVENT, data: 456 };
 
-      expect(onNotCustomEvent).toHaveBeenCalledTimes(0)
-    })
-  })
-})
+            text.emit(CUSTOM_EVENT, customEvent);
+
+            expect(text._eventsCount).toEqual(1);
+            expect(onCustomEvent).toHaveBeenCalledTimes(1);
+            expect(onCustomEvent).toHaveBeenCalledWith(customEvent);
+
+            renderInContainer(<Text ref={(c) => (text = c)} {...{ [NOT_CUSTOM_EVENT]: onNotCustomEvent }} />);
+
+            text.emit(NOT_CUSTOM_EVENT, { type: NOT_CUSTOM_EVENT, data: 789 });
+
+            expect(onNotCustomEvent).toHaveBeenCalledTimes(0);
+        });
+    });
+});

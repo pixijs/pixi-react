@@ -1,0 +1,11 @@
+{
+    "extends": "./tsconfig.json",
+    "include": [
+      "src",
+      "test",
+      "jest.config.js",
+      "react-spring-create-host.js",
+      "rollup.config.mjs",
+      "wallaby.js"
+    ],
+}

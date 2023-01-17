@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`pixi eventHandlers available event handlers 1`] = `
-Array [
+[
   "click",
   "mousedown",
   "mousemove",

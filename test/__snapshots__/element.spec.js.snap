@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`createElement types 1`] = `
-Object {
+{
   "AnimatedSprite": "AnimatedSprite",
   "BitmapText": "BitmapText",
   "Container": "Container",

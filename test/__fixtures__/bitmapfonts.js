@@ -1921,4 +1921,4 @@ export const desyrel = `
         <kerning first="45" second="45" amount="-5"/>
     </kernings>
 </font>
-`
+`;

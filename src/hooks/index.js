@@ -1,2 +1,2 @@
-export * from './useTick'
-export * from './useApp'
+export * from './useTick';
+export * from './useApp';

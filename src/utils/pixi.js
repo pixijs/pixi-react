@@ -1,6 +1,6 @@
-import { Point, ObservablePoint } from 'pixi.js'
-import invariant from '../utils/invariant'
-import isNil from 'lodash.isnil'
+import { Point, ObservablePoint } from 'pixi.js';
+import invariant from '../utils/invariant';
+import isNil from 'lodash.isnil';
 
 /**
  * Parse PIXI point value to array of coordinates
@@ -8,26 +8,39 @@ import isNil from 'lodash.isnil'
  * @param {*} value
  * @returns {Array}
  */
-export function parsePoint(value) {
-  let arr = []
+export function parsePoint(value)
+{
+    let arr = [];
 
-  if (typeof value === 'undefined') {
-    return arr
-  } else if (typeof value === 'string') {
-    arr = value.split(',')
-  } else if (typeof value === 'number') {
-    arr = [value]
-  } else if (Array.isArray(value)) {
-    arr = [...value]
-  } else if (value !== null && typeof value === 'object') {
-    const x = (value && value?.x) || 0
-    const y = (value && value?.y) || 0
-    arr = [x, y]
-  } else {
-    return arr
-  }
+    if (typeof value === 'undefined')
+    {
+        return arr;
+    }
+    else if (typeof value === 'string')
+    {
+        arr = value.split(',');
+    }
+    else if (typeof value === 'number')
+    {
+        arr = [value];
+    }
+    else if (Array.isArray(value))
+    {
+        arr = [...value];
+    }
+    else if (value !== null && typeof value === 'object')
+    {
+        const x = (value && value?.x) || 0;
+        const y = (value && value?.y) || 0;
 
-  return arr.filter(p => !isNil(p) && !isNaN(p)).map(Number)
+        arr = [x, y];
+    }
+    else
+    {
+        return arr;
+    }
+
+    return arr.filter((p) => !isNil(p) && !isNaN(p)).map(Number);
 }
 
 /**
@@ -37,18 +50,22 @@ export function parsePoint(value) {
  * @param {*} newValue
  * @returns {boolean}
  */
-export function pointsAreEqual(oldValue, newValue) {
-  if (oldValue.length !== newValue.length) {
-    return false
-  }
-
-  for (let i = 0; i < oldValue.length; i++) {
-    if (oldValue[i] !== newValue[i]) {
-      return false
+export function pointsAreEqual(oldValue, newValue)
+{
+    if (oldValue.length !== newValue.length)
+    {
+        return false;
     }
-  }
 
-  return true
+    for (let i = 0; i < oldValue.length; i++)
+    {
+        if (oldValue[i] !== newValue[i])
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 /**
@@ -58,8 +75,9 @@ export function pointsAreEqual(oldValue, newValue) {
  * @param {*} value
  * @returns {boolean}
  */
-export function isPointType(value) {
-  return value instanceof Point || value instanceof ObservablePoint
+export function isPointType(value)
+{
+    return value instanceof Point || value instanceof ObservablePoint;
 }
 
 /**
@@ -68,35 +86,35 @@ export function isPointType(value) {
  * @type {string[]}
  */
 export const eventHandlers = [
-  'click',
-  'mousedown',
-  'mousemove',
-  'mouseout',
-  'mouseover',
-  'mouseup',
-  'mouseupoutside',
-  'tap',
-  'touchstart',
-  'touchmove',
-  'touchend',
-  'touchendoutside',
-  'pointercancel',
-  'pointerout',
-  'pointerover',
-  'pointertap',
-  'pointerdown',
-  'pointerup',
-  'pointerupoutside',
-  'pointermove',
-  'rightclick',
-  'rightdown',
-  'rightup',
-  'rightupoutside',
-  'touchcancel',
-  'touchendoutside',
-  'touchmove',
-  'touchstart',
-]
+    'click',
+    'mousedown',
+    'mousemove',
+    'mouseout',
+    'mouseover',
+    'mouseup',
+    'mouseupoutside',
+    'tap',
+    'touchstart',
+    'touchmove',
+    'touchend',
+    'touchendoutside',
+    'pointercancel',
+    'pointerout',
+    'pointerover',
+    'pointertap',
+    'pointerdown',
+    'pointerup',
+    'pointerupoutside',
+    'pointermove',
+    'rightclick',
+    'rightdown',
+    'rightup',
+    'rightupoutside',
+    'touchcancel',
+    'touchendoutside',
+    'touchmove',
+    'touchstart',
+];
 
 /**
  * Set value on a PIXI.DisplayObject
@@ -106,27 +124,33 @@ export const eventHandlers = [
  * @param {string} prop
  * @param {*} value
  */
-export function setValue(instance, prop, value) {
-  if (isPointType(instance[prop]) && isPointType(value)) {
+export function setValue(instance, prop, value)
+{
+    if (isPointType(instance[prop]) && isPointType(value))
+    {
     // copy value
-    instance[prop].copyFrom(value)
-  } else if (isPointType(instance[prop])) {
+        instance[prop].copyFrom(value);
+    }
+    else if (isPointType(instance[prop]))
+    {
     // parse value if a non-Point type is being assigned to a Point type
-    const coordinates = parsePoint(value)
+        const coordinates = parsePoint(value);
 
-    invariant(
-      typeof coordinates !== 'undefined' && coordinates.length > 0 && coordinates.length < 3,
-      'The property `%s` is a `PIXI.Point` or `PIXI.ObservablePoint` and must be set to a comma-separated string of ' +
-        'either 1 or 2 coordinates, a 1 or 2 element array containing coordinates, or a PIXI Point/ObservablePoint. ' +
-        'If only one coordinate is given then X and Y will be set to the provided value. Received: `%s` of type `%s`.',
-      prop,
-      JSON.stringify(value),
-      typeof value
-    )
+        invariant(
+            typeof coordinates !== 'undefined' && coordinates.length > 0 && coordinates.length < 3,
+            'The property `%s` is a `PIXI.Point` or `PIXI.ObservablePoint` and must be set to a comma-separated string of '
+        + 'either 1 or 2 coordinates, a 1 or 2 element array containing coordinates, or a PIXI Point/ObservablePoint. '
+        + 'If only one coordinate is given then X and Y will be set to the provided value. Received: `%s` of type `%s`.',
+            prop,
+            JSON.stringify(value),
+            typeof value
+        );
 
-    instance[prop].set(coordinates.shift(), coordinates.shift())
-  } else {
+        instance[prop].set(coordinates.shift(), coordinates.shift());
+    }
+    else
+    {
     // just hard assign value
-    instance[prop] = value
-  }
+        instance[prop] = value;
+    }
 }

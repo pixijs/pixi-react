@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`index export modules for index 1`] = `
-Object {
+{
   "AnimatedSprite": "AnimatedSprite",
-  "AppConsumer": Object {
+  "AppConsumer": {
     "$$typeof": Symbol(react.context),
-    "_context": Object {
+    "_context": {
       "$$typeof": Symbol(react.context),
       "Consumer": [Circular],
-      "Provider": Object {
+      "Provider": {
         "$$typeof": Symbol(react.provider),
         "_context": [Circular],
       },
@@ -21,13 +21,13 @@ Object {
       "_threadCount": 0,
     },
   },
-  "AppContext": Object {
+  "AppContext": {
     "$$typeof": Symbol(react.context),
-    "Consumer": Object {
+    "Consumer": {
       "$$typeof": Symbol(react.context),
       "_context": [Circular],
     },
-    "Provider": Object {
+    "Provider": {
       "$$typeof": Symbol(react.provider),
       "_context": [Circular],
     },
@@ -39,11 +39,11 @@ Object {
     "_globalName": null,
     "_threadCount": 0,
   },
-  "AppProvider": Object {
+  "AppProvider": {
     "$$typeof": Symbol(react.provider),
-    "_context": Object {
+    "_context": {
       "$$typeof": Symbol(react.context),
-      "Consumer": Object {
+      "Consumer": {
         "$$typeof": Symbol(react.context),
         "_context": [Circular],
       },
@@ -63,7 +63,7 @@ Object {
   "NineSlicePlane": "NineSlicePlane",
   "ParticleContainer": "ParticleContainer",
   "PixiComponent": [Function],
-  "PixiFiber": Object {
+  "PixiFiber": {
     "attemptContinuousHydration": [Function],
     "attemptDiscreteHydration": [Function],
     "attemptHydrationAtCurrentPriority": [Function],
@@ -107,7 +107,7 @@ Object {
   "Text": "Text",
   "TilingSprite": "TilingSprite",
   "applyDefaultProps": [Function],
-  "eventHandlers": Array [
+  "eventHandlers": [
     "click",
     "mousedown",
     "mousemove",
@@ -147,17 +147,17 @@ Object {
 `;
 
 exports[`index export modules for react-spring 1`] = `
-Object {
-  "AnimatedSprite": Object {
+{
+  "AnimatedSprite": {
     "$$typeof": Symbol(react.forward_ref),
     "render": [Function],
   },
-  "AppConsumer": Object {
+  "AppConsumer": {
     "$$typeof": Symbol(react.context),
-    "_context": Object {
+    "_context": {
       "$$typeof": Symbol(react.context),
       "Consumer": [Circular],
-      "Provider": Object {
+      "Provider": {
         "$$typeof": Symbol(react.provider),
         "_context": [Circular],
       },
@@ -170,13 +170,13 @@ Object {
       "_threadCount": 0,
     },
   },
-  "AppContext": Object {
+  "AppContext": {
     "$$typeof": Symbol(react.context),
-    "Consumer": Object {
+    "Consumer": {
       "$$typeof": Symbol(react.context),
       "_context": [Circular],
     },
-    "Provider": Object {
+    "Provider": {
       "$$typeof": Symbol(react.provider),
       "_context": [Circular],
     },
@@ -188,11 +188,11 @@ Object {
     "_globalName": null,
     "_threadCount": 0,
   },
-  "AppProvider": Object {
+  "AppProvider": {
     "$$typeof": Symbol(react.provider),
-    "_context": Object {
+    "_context": {
       "$$typeof": Symbol(react.context),
-      "Consumer": Object {
+      "Consumer": {
         "$$typeof": Symbol(react.context),
         "_context": [Circular],
       },
@@ -206,28 +206,28 @@ Object {
       "_threadCount": 0,
     },
   },
-  "BitmapText": Object {
+  "BitmapText": {
     "$$typeof": Symbol(react.forward_ref),
     "render": [Function],
   },
-  "Container": Object {
+  "Container": {
     "$$typeof": Symbol(react.forward_ref),
     "render": [Function],
   },
-  "Graphics": Object {
+  "Graphics": {
     "$$typeof": Symbol(react.forward_ref),
     "render": [Function],
   },
-  "NineSlicePlane": Object {
+  "NineSlicePlane": {
     "$$typeof": Symbol(react.forward_ref),
     "render": [Function],
   },
-  "ParticleContainer": Object {
+  "ParticleContainer": {
     "$$typeof": Symbol(react.forward_ref),
     "render": [Function],
   },
   "PixiComponent": [Function],
-  "PixiFiber": Object {
+  "PixiFiber": {
     "attemptContinuousHydration": [Function],
     "attemptDiscreteHydration": [Function],
     "attemptHydrationAtCurrentPriority": [Function],
@@ -264,29 +264,29 @@ Object {
     "shouldSuspend": [Function],
     "updateContainer": [Function],
   },
-  "SimpleMesh": Object {
+  "SimpleMesh": {
     "$$typeof": Symbol(react.forward_ref),
     "render": [Function],
   },
-  "SimpleRope": Object {
+  "SimpleRope": {
     "$$typeof": Symbol(react.forward_ref),
     "render": [Function],
   },
-  "Sprite": Object {
+  "Sprite": {
     "$$typeof": Symbol(react.forward_ref),
     "render": [Function],
   },
   "Stage": [Function],
-  "Text": Object {
+  "Text": {
     "$$typeof": Symbol(react.forward_ref),
     "render": [Function],
   },
-  "TilingSprite": Object {
+  "TilingSprite": {
     "$$typeof": Symbol(react.forward_ref),
     "render": [Function],
   },
   "applyDefaultProps": [Function],
-  "eventHandlers": Array [
+  "eventHandlers": [
     "click",
     "mousedown",
     "mousemove",

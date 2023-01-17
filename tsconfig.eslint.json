@@ -1,11 +1,13 @@
 {
-    "extends": "./tsconfig.json",
-    "include": [
-      "src",
-      "test",
-      "jest.config.js",
-      "react-spring-create-host.js",
-      "rollup.config.mjs",
-      "wallaby.js"
-    ],
+  "extends": "tsconfig/tsconfig.json",
+  "files": [
+    ".eslintrc.js",
+    "wallaby.js"
+  ],
+  "include": [
+    "packages/*/.eslintrc.js",
+    "packages/**/*",
+    "scripts/**/*",
+    "shared/**/*",
+  ]
 }

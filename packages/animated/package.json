@@ -16,7 +16,6 @@
     "LICENSE",
     "index.d.ts",
     "index.js",
-    "umd.js",
     "module.js"
   ],
   "scripts": {
@@ -25,8 +24,6 @@
     "build": "npm run build:dev && npm run build:prod",
     "build:dev": "cross-env NODE_ENV=development rollup -c",
     "build:prod": "cross-env NODE_ENV=production rollup -c",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
     "test": "jest --silent",
     "test:watch": "jest --watch"
   },
@@ -41,7 +38,6 @@
     "react-spring": "^9.6.1"
   },
   "devDependencies": {
-    "eslint-config-pixi-react": "*",
     "tsconfig": "*"
   },
   "peerDependencies": {
@@ -49,8 +45,8 @@
     "@pixi/react-pixi": "*",
     "pixi.js": ">=6.0.0",
     "prop-types": "^15.8.1",
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
   }
 }
 

@@ -2,7 +2,7 @@
   "extends": "tsconfig/tsconfig.json",
   "files": [
     ".eslintrc.js",
-    "wallaby.js"
+    "wallaby.js",
   ],
   "include": [
     "packages/*/.eslintrc.js",

@@ -30,6 +30,17 @@
     "get-pkg-repo": "4.1.1",
     "hosted-git-info": "^2.1.4"
   },
+  "dependencies": {
+    "@babel/runtime": "^7.14.8",
+    "@react-spring/animated": "^9.6.1",
+    "@react-spring/types": "^9.6.1",
+    "pixi.js": "^7.0.0",
+    "pixi.js-legacy": "^7.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-reconciler": "0.29.0",
+    "react-spring": "^9.6.1"
+  },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
     "@babel/core": "^7.20.7",
@@ -48,6 +59,9 @@
     "@rollup/plugin-terser": "^0.2.1",
     "@rollup/plugin-typescript": "^10.0.1",
     "@types/jest": "^29.2.4",
+    "@types/react": "17.0.15",
+    "@types/react-dom": "17.0.9",
+    "@types/react-reconciler": "0.28.2",
     "babel-jest": "^29.3.1",
     "babel-plugin-module-resolver": "4.1.0",
     "cross-env": "^7.0.3",

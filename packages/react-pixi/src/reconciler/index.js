@@ -1,5 +1,5 @@
 import Reconciler from 'react-reconciler';
-import pkg from '../../package.json';
+import pkg from '../../../../package.json';
 import hostconfig from './hostconfig';
 
 export const PixiFiber = Reconciler(hostconfig);

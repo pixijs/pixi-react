@@ -163,6 +163,7 @@ class Stage extends React.Component
         if (options?.resolution !== undefined && prevProps?.options.resolution !== options?.resolution)
         {
             this.app.renderer.resolution = options.resolution;
+            this.resetInteractionManager();
         }
 
         // update size
@@ -204,6 +205,7 @@ class Stage extends React.Component
         if (!options?.resolution)
         {
             this.app.renderer.resolution = window.devicePixelRatio;
+            this.resetInteractionManager();
         }
 
         this.app.renderer.resize(width, height);
@@ -224,6 +226,17 @@ class Stage extends React.Component
             this.app.renderer.render(this.app.stage);
         }
     };
+
+    // provide support for Pixi v6 still
+    resetInteractionManager()
+    {
+        // `interaction` property is absent in Pixi v7 and in v6 if user has installed Federated Events API plugin.
+        // https://api.pixijs.io/@pixi/events.html
+        if ('interaction' in this.app.renderer.plugins)
+        {
+            this.app.renderer.plugins.interaction.resolution = this.app.renderer.resolution;
+        }
+    }
 
     getChildren()
     {

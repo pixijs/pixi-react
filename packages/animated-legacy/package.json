@@ -36,10 +36,10 @@
   "peerDependencies": {
     "@babel/runtime": "^7.14.8",
     "@pixi/react-pixi-legacy": "*",
-    "pixi.js-legacy": ">=7.0.0",
+    "pixi.js-legacy": ">=6.0.0",
     "prop-types": "^15.8.1",
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
   }
 }
 

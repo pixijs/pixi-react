@@ -76,6 +76,8 @@ Want to contribute to ReactPixi? Our [contributing guide](CONTRIBUTING.md) has y
 
 ReactPixi is MIT licensed.
 
+This projects codebase was originaly forked from [michalochman's](https://github.com/michalochman) [react-pixi-fiber](https://github.com/michalochman/react-pixi-fiber).
+
 ## Meet fellow developers
 
 You have an amazing feature in mind or just want to get in touch with other developers? Feel free to join our Slack channel.

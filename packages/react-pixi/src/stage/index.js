@@ -68,11 +68,10 @@ const propTypes = {
         {
             const el = props[propName];
 
-            el
-        && invariant(
-            el === window || el instanceof HTMLElement,
-            `Invalid prop \`resizeTo\` of type ${typeof el}, expect \`window\` or an \`HTMLElement\`.`
-        );
+            el && invariant(
+                el === window || el instanceof HTMLElement,
+                `Invalid prop \`resizeTo\` of type ${typeof el}, expect \`window\` or an \`HTMLElement\`.`
+            );
         },
 
         // view is optional, use if provided
@@ -80,11 +79,10 @@ const propTypes = {
         {
             const el = props[propName];
 
-            el
-        && invariant(
-            el instanceof HTMLCanvasElement,
-            `Invalid prop \`view\` of type ${typeof el}, supplied to ${componentName}, expected \`<canvas> Element\``
-        );
+            el && invariant(
+                el instanceof HTMLCanvasElement,
+                `Invalid prop \`view\` of type ${typeof el}, supplied to ${componentName}, expected \`<canvas> Element\``
+            );
         },
     }),
 };
@@ -165,14 +163,13 @@ class Stage extends React.Component
         if (options?.resolution !== undefined && prevProps?.options.resolution !== options?.resolution)
         {
             this.app.renderer.resolution = options.resolution;
-            this.resetInteractionManager();
         }
 
         // update size
         if (
             prevProps.height !== height
-      || prevProps.width !== width
-      || prevProps.options?.resolution !== options?.resolution
+            || prevProps.width !== width
+            || prevProps.options?.resolution !== options?.resolution
         )
         {
             this.updateSize();
@@ -189,10 +186,10 @@ class Stage extends React.Component
 
         if (
             prevProps.width !== width
-      || prevProps.height !== height
-      || prevProps.raf !== raf
-      || prevProps.renderOnComponentChange !== renderOnComponentChange
-      || prevProps.options !== options
+            || prevProps.height !== height
+            || prevProps.raf !== raf
+            || prevProps.renderOnComponentChange !== renderOnComponentChange
+            || prevProps.options !== options
         )
         {
             this._needsUpdate = true;
@@ -207,7 +204,6 @@ class Stage extends React.Component
         if (!options?.resolution)
         {
             this.app.renderer.resolution = window.devicePixelRatio;
-            this.resetInteractionManager();
         }
 
         this.app.renderer.resize(width, height);
@@ -228,16 +224,6 @@ class Stage extends React.Component
             this.app.renderer.render(this.app.stage);
         }
     };
-
-    resetInteractionManager()
-    {
-    // `interaction` property could be absent if user has installed Federated Events API plugin.
-    // https://api.pixijs.io/@pixi/events.html
-        if ('interaction' in this.app.renderer.plugins)
-        {
-            this.app.renderer.plugins.interaction.resolution = this.app.renderer.resolution;
-        }
-    }
 
     getChildren()
     {

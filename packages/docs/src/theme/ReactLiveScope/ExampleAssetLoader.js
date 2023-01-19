@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Assets } from 'pixi.js';
 
-const PIXIAsset = ({ name, url, loader, children }) =>
+// Helper Component to ensure assets are loaded for docusaurus live examples
+const ExampleAssetLoader = ({ name, url, loader, children }) =>
 {
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -21,4 +22,4 @@ const PIXIAsset = ({ name, url, loader, children }) =>
     return isLoaded ? children : loader;
 };
 
-export default PIXIAsset;
+export default ExampleAssetLoader;

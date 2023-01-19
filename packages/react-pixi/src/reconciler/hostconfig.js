@@ -28,27 +28,43 @@ function appendChild(parent, child)
     }
 }
 
-function removeChild(parent, child)
+function willUnmountRecursive(child, parent)
 {
-    if (typeof child.willUnmount === 'function')
-    {
-        child.willUnmount(child, parent);
-    }
+    child.willUnmount?.(child, parent);
 
-    // unmount potential children
-    if (child?.config?.destroyChildren !== false && child.children?.length)
+    // ensure willUnmount is called on children, but don't actually destroy them
+    if (child.config?.destroyChildren !== false && child.children?.length)
     {
         [...child.children].forEach((c) =>
         {
-            removeChild(child, c);
+            // TODO: should we call willUnmount anyway irrespective of whether destroyChildren is true?
+            willUnmountRecursive(c, child);
         });
     }
+}
+
+function removeChild(parent, child)
+{
+    // call willUnmount on child and iteratively on its descendants
+    willUnmountRecursive(child, parent);
 
     parent.removeChild(child);
 
-    if (child?.config?.destroy !== false)
+    const {
+        destroy = true,
+        destroyChildren = true,
+        destroyTexture = false,
+        destroyBaseTexture = false
+    } = child.config ?? {};
+
+    if (destroy)
     {
-        child.destroy();
+        // defer to PIXI to actually destroy children
+        child.destroy({
+            children: destroyChildren,
+            texture: destroyTexture,
+            baseTexture: destroyBaseTexture
+        });
     }
 }
 

@@ -7,7 +7,7 @@ import times from 'lodash.times';
 
 import makeAnimatedSpriteTextures from './makeAnimatedSpriteTextures';
 import makeSimpleMeshData from './makeSimpleMeshData';
-import PIXILoader from './PIXILoader';
+import ExampleAssetLoader from './ExampleAssetLoader';
 import useIteration from './useIteration';
 
 const ReactLiveScope = {
@@ -17,7 +17,7 @@ const ReactLiveScope = {
     ReactPixiAnimated,
     Spring,
     PIXI,
-    PIXILoader,
+    ExampleAssetLoader,
     makeAnimatedSpriteTextures,
     makeSimpleMeshData,
     lodash: {

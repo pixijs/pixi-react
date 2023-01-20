@@ -15,9 +15,9 @@ const position = {
 
 render(
   <Stage width={500} height={300} options={{ backgroundColor: 0xffffff }}>
-    <PIXILoader
+    <ExampleAssetLoader
       name="desyrel"
-      url="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/bitmapfont.xml"
+      url="/font/desyrel.xml"
       loader={
         <Text
           {...position}
@@ -31,7 +31,7 @@ render(
         text="Hello World!"
         style={{ fontName: 'Desyrel', fontSize: 50 }}
       />
-    </PIXILoader>
+    </ExampleAssetLoader>
   </Stage>,
 );
 ```

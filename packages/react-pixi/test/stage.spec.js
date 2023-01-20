@@ -383,34 +383,21 @@ describe('stage', () =>
 
         test('update renderer resolution on `options.resolution` change', () =>
         {
-            let el = renderer.create(<Stage width={800} height={600} options={{ resolution: 1 }} />);
-
-            const appRenderer = el.getInstance().app.renderer;
-            const spyResize = jest.spyOn(appRenderer, 'resize');
-
-            el = el.update(<Stage width={800} height={600} options={{ resolution: 2 }} />);
-
-            expect(appRenderer.plugins.interaction.resolution).toEqual(2);
-            expect(spyResize).toHaveBeenCalledWith(800, 600);
-            expect(appRenderer.resolution).toEqual(2);
-        });
-
-        test('does not update resolution of interaction plugin if interaction plugin is removed', () =>
-        {
-            const interaction = PIXI.Renderer.__plugins.interaction;
-
-            delete PIXI.Renderer.__plugins.interaction;
-
             const el = renderer.create(<Stage width={800} height={600} options={{ resolution: 1 }} />);
 
             const appRenderer = el.getInstance().app.renderer;
             const spyResize = jest.spyOn(appRenderer, 'resize');
+            const spyEventsResolutionChange = jest.spyOn(appRenderer.events, 'resolutionChange');
 
-            expect(() => el.update(<Stage width={800} height={600} options={{ resolution: 2 }} />)).not.toThrow();
+            el.update(<Stage width={800} height={600} options={{ resolution: 2 }} />);
+
+            expect(spyEventsResolutionChange).toHaveBeenCalledTimes(1);
+            expect(spyEventsResolutionChange.mock.calls[0][0]).toEqual(2);
+            expect(appRenderer.events.resolution).toEqual(2);
+
+            expect(spyResize).toHaveBeenCalledTimes(1);
             expect(spyResize).toHaveBeenCalledWith(800, 600);
             expect(appRenderer.resolution).toEqual(2);
-
-            PIXI.Renderer.__plugins.interaction = interaction;
         });
 
         test('clean up media query on unmount', () =>

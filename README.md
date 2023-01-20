@@ -78,6 +78,6 @@ ReactPixi is MIT licensed.
 
 ## Meet fellow developers
 
-You have an amazing feature in mind or just want to get in touch with other developers? Feel free to join our Slack channel.
+You have an amazing feature in mind or just want to get in touch with other developers? Feel free to join our Discord channel.
 
-[Join us on Slack](https://join.slack.com/t/reactpixi/shared_invite/enQtODk5NjQ2ODQ4MTI5LWVjNzlkZTJjYmI4NDcxYzljNDM4MmYwMzZkYWFlM2VkNmFhNDBmYzg3OGE5YzBiY2NmZTIwZDY0MTA4ZjA4OGM)
+[Join us on Discord](https://discord.com/channels/734147990985375826/968068526566965279)

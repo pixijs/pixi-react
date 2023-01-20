@@ -70,7 +70,7 @@ Example:
 Example:
 
 ```tsx
-import { PixiComponent } from '@pixi/react-pixi';
+import { PixiComponent } from '@pixi/react';
 import { Graphics } from 'pixi.js';
 
 interface RectangleProps {
@@ -111,7 +111,7 @@ Get the PIXI instance type for a ReactPixi component:
 Example:
 
 ```tsx
-import { Container, PixiRef } from '@pixi/react-pixi';
+import { Container, PixiRef } from '@pixi/react';
 
 type IContainer = PixiRef<typeof Container>; // PIXI.Container
 
@@ -127,7 +127,7 @@ Extract a component prop type as follow:
 
 ```tsx
 import { useCallback, ComponentProps } from 'react';
-import { Graphics } from '@pixi/react-pixi';
+import { Graphics } from '@pixi/react';
 
 type Draw = ComponentProps<typeof Graphics>['draw'];
 

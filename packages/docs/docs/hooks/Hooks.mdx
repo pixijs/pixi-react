@@ -7,7 +7,7 @@ React Pixi now support [React hooks](https://reactjs.org/docs/hooks-reference.ht
 Access the `PIXI.Application` in your component
 
 ```jsx
-import { useApp } from '@pixi/react-pixi'
+import { useApp } from '@pixi/react'
 
 function MyComponent () {
   const app = useApp()
@@ -24,7 +24,7 @@ function MyComponent () {
 Bind listener to the `PIXI.Application` ticker event
 
 ```jsx
-import { useTick } from '@pixi/react-pixi'
+import { useTick } from '@pixi/react'
 
 function MyComponent () {
   useTick(delta => {

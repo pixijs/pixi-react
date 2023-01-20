@@ -16,7 +16,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/github/v/release/inlet/react-pixi" alt="release" />
-  <img src="https://img.shields.io/npm/dm/@pixi/react-pixi" alt="downloads" />
+  <img src="https://img.shields.io/npm/dm/@pixi/react" alt="downloads" />
   <img src="https://img.shields.io/circleci/project/github/inlet/react-pixi/master.svg" alt="ci tests" />
   <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="license" />
   <img src="https://img.shields.io/badge/react-latest-ff69b4.svg" alt="react version" />
@@ -45,11 +45,11 @@ Patrick Brouwer
 ### Quick start
 
 ```
-npm install pixi.js @pixi/react-pixi
+npm install pixi.js @pixi/react
 ```
 
 ```jsx
-import { Stage, Container, Sprite } from '@pixi/react-pixi'
+import { Stage, Container, Sprite } from '@pixi/react'
 
 export const MyComponent = () => (
   <Stage>

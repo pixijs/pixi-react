@@ -1,4 +1,4 @@
-import TYPES from '@pixi/react-pixi-tag-types';
+import TYPES from '@pixi/react-tag-types';
 
 import invariant from '../utils/invariant';
 import { applyDefaultProps } from './props';

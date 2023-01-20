@@ -3,11 +3,11 @@ import { getRollupConfig, isProductionBuild } from '../../shared/getRollupConfig
 const buildType = isProductionBuild() ? '' : '-dev';
 
 const builds = ['cjs', 'es'].map(
-    format => getRollupConfig(
+    (format) => getRollupConfig(
         `dist/index.${format}${buildType}.js`,
         format,
         {
-            external: ['@pixi/react-pixi']
+            external: ['@pixi/react']
         }
     )
 );

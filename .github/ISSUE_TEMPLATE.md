@@ -13,7 +13,7 @@ Thank you very much for helping improving this library
 
 ### Additional info
 
-- `@pixi/react-pixi` version:
+- `@pixi/react` version:
 - `React` version:
 - `ReactDOM` version:
 - `PIXI` version:

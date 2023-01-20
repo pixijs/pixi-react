@@ -2,7 +2,7 @@
 
 ## Open Development
 
-All work on React Pixi happens directly on [GitHub](https://github.com/inlet/react-pixi). Contributors send pull requests which go through the same review process.
+All work on Pixi React happens directly on [GitHub](https://github.com/inlet/react-pixi). Contributors send pull requests which go through the same review process.
 
 
 ## Branch Organization
@@ -14,7 +14,7 @@ If you send a pull request, please do it against the `master` branch.
 
 ## Semantic Versioning
 
-React Pixi follows [semantic versioning](http://semver.org/). We release patch versions for bugfixes, minor versions for new features, and major versions for any breaking changes. When we make breaking changes, we also introduce deprecation warnings in a minor version so that our users learn about the upcoming changes and migrate their code in advance.
+Pixi React follows [semantic versioning](http://semver.org/). We release patch versions for bugfixes, minor versions for new features, and major versions for any breaking changes. When we make breaking changes, we also introduce deprecation warnings in a minor version so that our users learn about the upcoming changes and migrate their code in advance.
 
 
 ## Bugs
@@ -54,4 +54,4 @@ However, there are still some styles that the linter cannot pick up. If you are 
 
 ## License
 
-By contributing to React Pixi, you agree that your contributions will be licensed under its MIT license.
+By contributing to Pixi React, you agree that your contributions will be licensed under its MIT license.

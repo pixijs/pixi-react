@@ -3,7 +3,7 @@
 </p>
 
 <h1 align="center">
-  React Pixi
+  Pixi React
 </h1>
 
 <p align="center">

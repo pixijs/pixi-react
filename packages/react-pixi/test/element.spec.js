@@ -1,7 +1,10 @@
 import * as PIXI from 'pixi.js';
+import React from 'react';
 import TYPES from '@pixi/react-pixi-tag-types';
+import { render } from '@testing-library/react';
 
 import { createElement, TYPES_INJECTED, PixiComponent } from '../src/utils/element';
+import Stage from '../src/stage';
 
 import { emptyTexture } from './__fixtures__/textures';
 import { desyrel } from './__fixtures__/bitmapfonts';
@@ -417,6 +420,83 @@ describe('PixiComponent', () =>
         expect(lifecycle.applyProps).toHaveBeenCalledTimes(1);
         expect(scoped).toHaveBeenCalledTimes(1);
         expect(scoped).toHaveBeenCalledWith(element);
+    });
+
+    test.each`
+        destroyChildren
+        ${true}
+        ${false}
+    `('unmount and destroy component when destroyChildren is $destroyChildren', ({ destroyChildren }) =>
+    {
+        const scoped = jest.fn();
+        const config = {
+            destroyChildren,
+            destroy: true
+        };
+
+        const makeLifecycle = (pixiInstance) => ({
+            create: jest.fn(() => pixiInstance),
+            didMount: jest.fn(),
+            willUnmount: jest.fn(),
+            applyProps: jest.fn(function applyProps()
+            {
+                scoped(this);
+            }),
+            config
+        });
+
+        const parentPixiInstance = new PIXI.Container();
+        const childPixiInstance = new PIXI.Container();
+
+        const parentDestroySpy = jest.spyOn(parentPixiInstance, 'destroy');
+        const childDestroySpy = jest.spyOn(childPixiInstance, 'destroy');
+
+        const parentLifecycle = makeLifecycle(parentPixiInstance);
+        const childLifecycle = makeLifecycle(childPixiInstance);
+
+        const Parent = PixiComponent('Parent', parentLifecycle);
+        const Child = PixiComponent('Child', childLifecycle);
+
+        const { unmount } = render(
+            <Stage width={800} height={600}>
+                <Parent>
+                    <Child />
+                </Parent>
+            </Stage>
+        );
+
+        expect(parentLifecycle.create).toHaveBeenCalledTimes(1);
+        expect(parentLifecycle.didMount).toHaveBeenCalledTimes(1);
+        expect(parentLifecycle.applyProps).toHaveBeenCalledTimes(1);
+        expect(childLifecycle.create).toHaveBeenCalledTimes(1);
+        expect(childLifecycle.didMount).toHaveBeenCalledTimes(1);
+        expect(childLifecycle.applyProps).toHaveBeenCalledTimes(1);
+
+        unmount();
+
+        expect(parentLifecycle.willUnmount).toHaveBeenCalledTimes(1);
+        expect(parentDestroySpy).toHaveBeenCalledTimes(1);
+        expect(parentDestroySpy).toHaveBeenCalledWith({
+            children: destroyChildren,
+            texture: false,
+            baseTexture: false
+        });
+
+        if (destroyChildren)
+        {
+            expect(childLifecycle.willUnmount).toHaveBeenCalledTimes(1);
+            expect(childDestroySpy).toHaveBeenCalledTimes(1);
+            expect(childDestroySpy).toHaveBeenCalledWith({
+                children: destroyChildren,
+                texture: false,
+                baseTexture: false
+            });
+        }
+        else
+        {
+            expect(childLifecycle.willUnmount).not.toHaveBeenCalled();
+            expect(childDestroySpy).not.toHaveBeenCalled();
+        }
     });
 
     test('create injected component without lifecycle methods', () =>

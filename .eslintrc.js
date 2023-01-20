@@ -20,6 +20,8 @@ module.exports = {
     ignorePatterns: [
         'dist',
         'node_modules',
+        'packages/docs/build',
+        'packages/docs/docs',
         'packages/*/index.d.ts',
         '**/test/__fixtures__',
     ],

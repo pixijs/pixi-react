@@ -10,7 +10,8 @@ export const isProductionBuild = () => process.env.NODE_ENV === 'production';
 
 export const getBuildFormat = () => process.env.FORMAT;
 
-export function getRollupConfig(dest, format, merge = {}) {
+export function getRollupConfig(dest, format, merge = {})
+{
     const prod = isProductionBuild();
 
     return {
@@ -19,7 +20,6 @@ export function getRollupConfig(dest, format, merge = {}) {
             exports: 'named',
             file: dest,
             format,
-            name: 'ReactPixi',
             sourcemap: !prod,
             globals: {
                 'pixi.js': 'PIXI',

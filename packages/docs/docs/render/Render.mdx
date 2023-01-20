@@ -42,7 +42,7 @@ const app = new Application({
 render(<Text text="Hello World" x={200} y={200} />, app.stage);
 ```
 
-Internally `react-pixi` keeps track of a `roots` list with containers, if you're removing/unmounting the container (or PIXI application),
+Internally `pixi-react` keeps track of a `roots` list with containers, if you're removing/unmounting the container (or PIXI application),
 it's advisable to tear it down correctly. Simply call `unmountComponentAtNode`:
 
 ```jsx

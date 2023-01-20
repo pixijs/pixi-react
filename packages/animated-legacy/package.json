@@ -4,7 +4,8 @@
   "description": "TODO: Write PixiJS applications using React declarative style.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pixijs/react-pixi.git"
+    "url": "git+https://github.com/pixijs/pixi-react.git",
+    "directory": "packages/animated-legacy"
   },
   "license": "MIT",
   "main": "index.js",

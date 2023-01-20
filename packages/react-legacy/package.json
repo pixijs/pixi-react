@@ -4,7 +4,8 @@
   "description": "Write PixiJS applications using React declarative style.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/inlet/react-pixi.git"
+    "url": "git+https://github.com/pixijs/pixi-react.git",
+    "directory": "packages/react-legacy"
   },
   "license": "MIT",
   "author": "Patrick Brouwer <patrick@inlet.nl>",

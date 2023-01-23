@@ -12,11 +12,11 @@ const config = {
     baseUrl: '/',
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
-    favicon: 'img/favicon.ico',
+    favicon: 'img/favicon.png',
 
     // GitHub pages deployment config.
     // If you aren't using GitHub pages, you don't need these.
-    organizationName: 'pixi', // Usually your GitHub org/user name.
+    organizationName: 'pixijs', // Usually your GitHub org/user name.
     projectName: 'pixi-react', // Usually your repo name.
 
     // Even if you don't use internalization, you can use this field to set useful
@@ -33,11 +33,12 @@ const config = {
             /** @type {import('@docusaurus/preset-classic').Options} */
             ({
                 docs: {
+                    routeBasePath: '/',
                     sidebarPath: require.resolve('./sidebars.js'),
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
                     editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/pixijs/pixi-react/tree/master/packages/docs/',
                 },
                 theme: {
                     customCss: require.resolve('./src/css/custom.css'),
@@ -52,60 +53,26 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
         navbar: {
-            title: 'ReactPixi',
-            logo: {
-                alt: 'My Site Logo',
-                src: 'img/logo.svg',
-            },
-            items: [
-                {
-                    type: 'doc',
-                    docId: 'about',
-                    position: 'left',
-                    label: 'Docs',
-                },
-            ],
+            title: 'React Pixi',
         },
         footer: {
             style: 'dark',
             links: [
                 {
-                    title: 'Docs',
-                    items: [
-                        {
-                            label: 'Docs',
-                            to: '/docs/about',
-                        },
-                    ],
-                },
-                {
                     title: 'Community',
                     items: [
                         {
-                            label: 'Stack Overflow',
-                            href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                            label: 'GitHub',
+                            href: 'https://github.com/pixijs/pixi-react',
                         },
                         {
                             label: 'Discord',
-                            href: 'https://discordapp.com/invite/docusaurus',
-                        },
-                        {
-                            label: 'Twitter',
-                            href: 'https://twitter.com/docusaurus',
-                        },
-                    ],
-                },
-                {
-                    title: 'More',
-                    items: [
-                        {
-                            label: 'GitHub',
-                            href: 'https://github.com/facebook/docusaurus',
+                            href: 'https://discord.com/channels/734147990985375826/968068526566965279',
                         },
                     ],
                 },
             ],
-            copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+            copyright: `Copyright © ${new Date().getFullYear()} PixiJS`,
         },
         prism: {
             theme: lightCodeTheme,

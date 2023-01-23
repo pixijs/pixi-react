@@ -4,6 +4,7 @@
   "workspaces": [
     "packages/*"
   ],
+  "sideEffects": false,
   "scripts": {
     "build": "nx run-many --target=build --all --parallel",
     "build:force": "nx run-many --target=build --all --parallel --skip-nx-cache",

@@ -95,13 +95,10 @@ export type InteractionEventTypes =
   | 'rightup'
   | 'rightupoutside'
   | 'touchcancel'
-  | 'touchendoutside'
-  | 'touchmove'
-  | 'touchstart';
 
 export type InteractionEvents = {
     [P in InteractionEventTypes]?: (
-        event: PIXI.InteractionEvent
+        event: PIXI.FederatedPointerEvent
     ) => void;
 };
 

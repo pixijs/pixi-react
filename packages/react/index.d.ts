@@ -98,7 +98,7 @@ export type InteractionEventTypes =
 
 export type InteractionEvents = {
     [P in InteractionEventTypes]?: (
-        event: PIXI.FederatedPointerEvent
+        event: any
     ) => void;
 };
 

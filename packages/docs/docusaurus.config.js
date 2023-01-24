@@ -8,8 +8,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
     title: 'ReactPixi',
     tagline: 'Write PixiJS applications using React declarative style.',
-    url: 'https://reactpixi.org/',
-    baseUrl: '/',
+    url: 'http://pixijs.io/',
+    baseUrl: '/pixi-react/',
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
     favicon: 'img/favicon.png',

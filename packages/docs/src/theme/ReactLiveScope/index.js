@@ -1,7 +1,7 @@
 import React from 'react';
 import * as PIXI from 'pixi.js';
-import * as ReactPixi from '@pixi/react-pixi';
-import * as ReactPixiAnimated from '@pixi/react-pixi-animated';
+import * as ReactPixi from '@pixi/react';
+import * as ReactPixiAnimated from '@pixi/react-animated';
 import { Spring } from 'react-spring';
 import times from 'lodash.times';
 

@@ -6,7 +6,7 @@ jobs:
   build-and-deploy:
     concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
     runs-on: ubuntu-latest
-    if: contains(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/docs'  || github.ref == 'refs/heads/master'
+    if: contains(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/docs'  || github.ref == 'refs/heads/main'
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
@@ -19,8 +19,9 @@ jobs:
       - name: Install and Build 🔧
         run: |
           npm ci
-          npx nx run @pixi/react-pixi-docs:build
+          npm run build:docs
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: packages/docs/build
+

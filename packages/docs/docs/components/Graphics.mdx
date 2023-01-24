@@ -50,7 +50,7 @@ with `React.useCallback`:
 
 ```jsx
 import React, { useCallback } from 'react';
-import { Graphics } from '@pixi/react-pixi';
+import { Graphics } from '@pixi/react';
 
 function Rectangle(props) {
   const draw = useCallback(
@@ -73,7 +73,7 @@ Provides another Graphics object as a template. Helps in reducing memory footpri
 
 ```jsx
 import React, { useCallback } from 'react';
-import { Graphics } from '@pixi/react-pixi';
+import { Graphics } from '@pixi/react';
 
 function Rectangle(props) {
   const draw = useCallback((g) => {

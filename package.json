@@ -4,13 +4,16 @@
   "workspaces": [
     "packages/*"
   ],
+  "sideEffects": false,
   "scripts": {
     "build": "nx run-many --target=build --all --parallel",
     "build:force": "nx run-many --target=build --all --parallel --skip-nx-cache",
+    "build:docs": "nx run @pixi/react-docs:build",
     "clean": "rimraf packages/*/dist",
     "lint": "eslint .",
-    "plugin:release": "ts-node ./scripts/release.ts",
     "prepare": "husky install",
+    "prerelease": "npm lint && npm run test:force && npm run build:force",
+    "release": "lerna publish --no-private",
     "test": "nx run-many --target=test --all --parallel",
     "test:force": "nx run-many --target=test --all --parallel --skip-nx-cache",
     "test:types": "nx run-many --target=test:types --all --parallel",
@@ -72,6 +75,7 @@
     "jest-environment-jsdom": "^29.3.1",
     "jest-extended": "^3.2.0",
     "jest-watch-typeahead": "^2.2.1",
+    "lerna": "^6.0.3",
     "lint-staged": "^13.1.0",
     "nx": "15.3.0",
     "rimraf": "^3.0.2",

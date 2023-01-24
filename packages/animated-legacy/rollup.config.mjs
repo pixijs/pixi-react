@@ -3,13 +3,13 @@ import { getRollupConfig, isProductionBuild } from '../../shared/getRollupConfig
 const buildType = isProductionBuild() ? '' : '-dev';
 
 const builds = ['cjs', 'es'].map(
-    format => getRollupConfig(
+    (format) => getRollupConfig(
         `dist/index.${format}${buildType}.js`,
         format,
         {
-            external: ['@pixi/react-pixi-legacy'],
+            external: ['@pixi/react-legacy'],
             babelOptions: {
-                plugins: [['module-resolver', { alias: { '@pixi/react-pixi': '@pixi/react-pixi-legacy' } }]]
+                plugins: [['module-resolver', { alias: { '@pixi/react': '@pixi/react-legacy' } }]]
             }
         }
     )

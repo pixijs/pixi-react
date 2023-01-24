@@ -1,1 +1,1 @@
-export * from '@pixi/react-pixi-animated/src/index';
+export * from '@pixi/react-animated/src/index';

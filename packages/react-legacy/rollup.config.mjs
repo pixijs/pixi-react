@@ -5,7 +5,7 @@ import { getRollupConfig, isProductionBuild } from '../../shared/getRollupConfig
 const buildType = isProductionBuild() ? '' : '-dev';
 
 const builds = ['cjs', 'es'].map(
-    format => getRollupConfig(`dist/index.${format}${buildType}.js`, format, {
+    (format) => getRollupConfig(`dist/index.${format}${buildType}.js`, format, {
         beforePlugins: [
             alias({ entries: { '@react-spring/animated': '../../shared/react-spring-create-host.js' } })
         ],

@@ -1,5 +1,5 @@
-import TYPES from '@pixi/react-pixi-tag-types';
-import { applyDefaultProps } from '@pixi/react-pixi';
+import TYPES from '@pixi/react-tag-types';
+import { applyDefaultProps } from '@pixi/react';
 import { createHost } from '@react-spring/animated';
 const primitives = Object.keys(TYPES);
 

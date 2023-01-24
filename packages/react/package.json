@@ -1,10 +1,11 @@
 {
-  "name": "@pixi/react-pixi-legacy",
+  "name": "@pixi/react",
   "version": "7.0.0-alpha.0",
   "description": "Write PixiJS applications using React declarative style.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/inlet/react-pixi.git"
+    "url": "git+https://github.com/pixijs/pixi-react.git",
+    "directory": "packages/react"
   },
   "license": "MIT",
   "author": "Patrick Brouwer <patrick@inlet.nl>",
@@ -29,14 +30,22 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "@pixi/react-pixi": "*"
+    "@pixi/react-tag-types": "*",
+    "lodash.isnil": "4.0.0",
+    "lodash.times": "4.3.2",
+    "performance-now": "2.1.0",
+    "prop-types": "^15.8.1"
   },
   "devDependencies": {
+    "@testing-library/react": "^13.4.0",
+    "canvas": "^2.11.0",
+    "jest-webgl-canvas-mock": "^0.2.3",
+    "react-test-renderer": "18.2.0",
     "tsconfig": "*"
   },
   "peerDependencies": {
     "@babel/runtime": "^7.14.8",
-    "pixi.js-legacy": ">=6.0.0",
+    "pixi.js": ">=6.0.0",
     "prop-types": "^15.8.1",
     "react": ">=17.0.0",
     "react-dom": ">=17.0.0"

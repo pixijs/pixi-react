@@ -1,10 +1,11 @@
 {
-  "name": "@pixi/react-pixi-animated",
+  "name": "@pixi/react-animated",
   "version": "7.0.0-alpha.0",
   "description": "TODO: Write PixiJS applications using React declarative style.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pixijs/react-pixi.git"
+    "url": "git+https://github.com/pixijs/pixi-react.git",
+    "directory": "packages/animated"
   },
   "license": "MIT",
   "main": "index.js",
@@ -28,15 +29,15 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "@pixi/react-pixi": "*",
-    "@pixi/react-pixi-tag-types": "*"
+    "@pixi/react": "*",
+    "@pixi/react-tag-types": "*"
   },
   "devDependencies": {
     "tsconfig": "*"
   },
   "peerDependencies": {
     "@babel/runtime": "^7.14.8",
-    "@pixi/react-pixi": "*",
+    "@pixi/react": "*",
     "pixi.js": ">=6.0.0",
     "prop-types": "^15.8.1",
     "react": ">=17.0.0",

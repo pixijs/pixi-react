@@ -7,7 +7,7 @@ You can either render your PIXI React components in the DOM or through a custom 
 This is the most common scenario
 
 ```jsx
-import { Stage, Sprite } from '@pixi/react-pixi';
+import { Stage, Sprite } from '@pixi/react';
 import ReactDOM from 'react-dom';
 
 const App = () => (
@@ -24,10 +24,10 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 ## Custom render call
 
-You can also render a React Pixi component tree directly using the `render` call and bypass ReactDOM entirely:
+You can also render a Pixi React component tree directly using the `render` call and bypass ReactDOM entirely:
 
 ```jsx
-import { render, Text } from '@pixi/react-pixi';
+import { render, Text } from '@pixi/react';
 import { Application } from 'pixi.js';
 
 // Setup PIXI app
@@ -42,11 +42,11 @@ const app = new Application({
 render(<Text text="Hello World" x={200} y={200} />, app.stage);
 ```
 
-Internally `react-pixi` keeps track of a `roots` list with containers, if you're removing/unmounting the container (or PIXI application),
+Internally `pixi-react` keeps track of a `roots` list with containers, if you're removing/unmounting the container (or PIXI application),
 it's advisable to tear it down correctly. Simply call `unmountComponentAtNode`:
 
 ```jsx
-import { render, unmountComponentAtNode, Text } from '@pixi/react-pixi';
+import { render, unmountComponentAtNode, Text } from '@pixi/react';
 import { Application } from 'pixi.js';
 
 const app = new Application({...});

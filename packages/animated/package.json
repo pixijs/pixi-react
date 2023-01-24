@@ -1,6 +1,6 @@
 {
   "name": "@pixi/react-animated",
-  "version": "7.0.0-alpha.1",
+  "version": "7.0.0-alpha.0",
   "description": "TODO: Write PixiJS applications using React declarative style.",
   "repository": {
     "type": "git",
@@ -42,3 +42,4 @@
   },
   "gitHead": "54d8d51a413ac784e56f660eeeb99ad01067ccfa"
 }
+

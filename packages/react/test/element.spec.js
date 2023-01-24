@@ -1,9 +1,8 @@
 import * as PIXI from 'pixi.js';
 import React from 'react';
-import TYPES from '@pixi/react-tag-types';
 import { render } from '@testing-library/react';
 
-import { createElement, TYPES_INJECTED, PixiComponent } from '../src/utils/element';
+import { createElement, TYPES, TYPES_INJECTED, PixiComponent } from '../src/utils/element';
 import Stage from '../src/stage';
 
 import { emptyTexture } from './__fixtures__/textures';

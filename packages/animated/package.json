@@ -29,8 +29,7 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "@pixi/react": "*",
-    "@pixi/react-tag-types": "*"
+    "@pixi/react": "*"
   },
   "devDependencies": {
     "tsconfig": "*"

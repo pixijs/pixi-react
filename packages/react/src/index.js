@@ -1,4 +1,4 @@
-import TYPES from '@pixi/react-tag-types';
+import TYPES from './utils/element';
 
 /**
  * -------------------------------------------

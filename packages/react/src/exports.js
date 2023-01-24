@@ -1,4 +1,4 @@
-import { PixiComponent } from './utils/element';
+import { PixiComponent, TYPES } from './utils/element';
 import { render, unmountComponentAtNode } from './render';
 import Stage from './stage';
 import { PixiFiber } from './reconciler';
@@ -29,4 +29,5 @@ export {
     withFilters,
     applyDefaultProps,
     eventHandlers,
+    TYPES,
 };

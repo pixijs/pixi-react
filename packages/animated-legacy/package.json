@@ -40,6 +40,9 @@
     "react": ">=17.0.0",
     "react-dom": ">=17.0.0"
   },
-  "gitHead": "54d8d51a413ac784e56f660eeeb99ad01067ccfa"
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "6d5b98bc6d7eafd1b0016e60a725b2b6c9f46a33"
 }
 

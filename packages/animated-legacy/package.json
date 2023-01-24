@@ -1,6 +1,6 @@
 {
   "name": "@pixi/react-animated-legacy",
-  "version": "7.0.0-alpha.0",
+  "version": "7.0.0-alpha.1",
   "description": "TODO: Write PixiJS applications using React declarative style.",
   "repository": {
     "type": "git",
@@ -45,4 +45,3 @@
   },
   "gitHead": "6d5b98bc6d7eafd1b0016e60a725b2b6c9f46a33"
 }
-

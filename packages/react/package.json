@@ -39,8 +39,7 @@
     "@testing-library/react": "^13.4.0",
     "canvas": "^2.11.0",
     "jest-webgl-canvas-mock": "^0.2.3",
-    "react-test-renderer": "18.2.0",
-    "tsconfig": "*"
+    "react-test-renderer": "18.2.0"
   },
   "peerDependencies": {
     "@babel/runtime": "^7.14.8",
@@ -48,5 +47,6 @@
     "prop-types": "^15.8.1",
     "react": ">=17.0.0",
     "react-dom": ">=17.0.0"
-  }
+  },
+  "gitHead": "54d8d51a413ac784e56f660eeeb99ad01067ccfa"
 }

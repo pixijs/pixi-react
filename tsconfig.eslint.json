@@ -1,5 +1,5 @@
 {
-  "extends": "tsconfig/tsconfig.json",
+  "extends": "./tsconfig.json",
   "files": [
     ".eslintrc.js",
     "wallaby.js",

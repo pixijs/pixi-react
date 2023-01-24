@@ -28,6 +28,7 @@
     "test": "jest --silent",
     "test:watch": "jest --watch"
   },
+  "sideEffects": false,
   "dependencies": {
     "@pixi/react-legacy": "*"
   },

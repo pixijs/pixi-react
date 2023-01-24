@@ -29,6 +29,7 @@
     "test": "jest --silent",
     "test:watch": "jest --watch"
   },
+  "sideEffects": false,
   "dependencies": {
     "lodash.isnil": "4.0.0",
     "lodash.times": "4.3.2",

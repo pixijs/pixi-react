@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_pixi_react_pixi_docs=self.webpackChunk_pixi_react_pixi_docs||[]).push([[38],{3769:e=>{e.exports=JSON.parse('{"name":"docusaurus-plugin-content-docs","id":"default"}')}}]);

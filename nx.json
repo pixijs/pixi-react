@@ -19,6 +19,9 @@
     "build": {
       "dependsOn": ["^build"]
     },
+    "deploy": {
+      "dependsOn": ["^build"]
+    },
     "test": {
       "dependsOn": ["^build"]
     }

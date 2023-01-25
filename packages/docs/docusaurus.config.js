@@ -8,16 +8,20 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
     title: 'ReactPixi',
     tagline: 'Write PixiJS applications using React declarative style.',
-    url: 'http://pixijs.io/',
+    url: 'https://pixijs.io',
     baseUrl: '/pixi-react/',
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
     favicon: 'img/favicon.png',
 
+    staticDirectories: ['static'],
+
     // GitHub pages deployment config.
     // If you aren't using GitHub pages, you don't need these.
     organizationName: 'pixijs', // Usually your GitHub org/user name.
     projectName: 'pixi-react', // Usually your repo name.
+    deploymentBranch: 'gh-pages', // Branch that GitHub pages will deploy to.
+    trailingSlash: true,
 
     // Even if you don't use internalization, you can use this field to set useful
     // metadata like html lang. For example, if your site is Chinese, you may want

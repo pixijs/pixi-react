@@ -1,4 +1,4 @@
-import { ParticleContainer as PixiParticleContainer } from 'pixi.js';
+import { ParticleContainer as PixiParticleContainer } from '@pixi/particle-container';
 
 const ParticleContainer = (root, props) =>
 {

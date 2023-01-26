@@ -1,4 +1,5 @@
-import { Texture, DisplayObject } from 'pixi.js';
+import { Texture } from '@pixi/core';
+import { DisplayObject } from '@pixi/display';
 import { eventHandlers, setValue } from './pixi';
 import invariant from '../utils/invariant';
 import { not, hasKey } from '../helpers';
@@ -79,7 +80,7 @@ export const getTextureFromProps = (elementType, root, props = {}) =>
 
     if (props.texture)
     {
-        invariant(props.texture instanceof Texture, `${elementType} texture needs to be typeof \`PIXI.Texture\``);
+        invariant(props.texture instanceof Texture, `${elementType} texture needs to be typeof \`Texture\``);
 
         return props.texture;
     }
@@ -122,7 +123,7 @@ export function applyDefaultProps(instance, oldProps, newProps)
 
     invariant(
         DisplayObject.prototype.isPrototypeOf(instance),
-        'instance needs to be typeof `PIXI.DisplayObject`, got `%s`',
+        'instance needs to be typeof `DisplayObject`, got `%s`',
         typeof instance
     );
 

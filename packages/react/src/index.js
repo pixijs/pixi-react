@@ -1,4 +1,4 @@
-import TYPES from './utils/element';
+import { TYPES } from './utils/element';
 
 /**
  * -------------------------------------------

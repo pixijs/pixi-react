@@ -21,34 +21,30 @@ export function getRollupConfig(dest, format, merge = {})
             file: dest,
             format,
             sourcemap: !prod,
-            globals: {
-                'pixi.js': 'PIXI',
-                'pixi.js-legacy': 'PIXI',
-                react: 'React'
-            },
-            ...(merge.output || {})
+            ...(merge.output || {}),
         },
         plugins: [
             json(),
             resolve({
                 browser: true,
-                mainFields: ['main', 'jsnext']
+                mainFields: ['main', 'jsnext'],
             }),
             babel({
                 rootMode: 'upward',
-                babelHelpers: 'runtime', exclude: '**/node_modules/**',
-                ...merge.babelOptions || {}
+                babelHelpers: 'runtime',
+                exclude: '**/node_modules/**',
+                ...(merge.babelOptions || {}),
             }),
             ...(merge.beforePlugins || []),
             commonjs(),
             replace({
                 __DEV__: prod ? 'false' : 'true',
                 'process.env.NODE_ENV': prod ? '"production"' : '"development"',
-                preventAssignment: true
+                preventAssignment: true,
             }),
             prod && terser(),
-            filesize()
+            filesize(),
         ].filter(Boolean),
-        external: ['pixi.js', 'pixi.js-legacy', 'react', 'react-dom', ...merge.external || []]
+        external: merge.external,
     };
 }

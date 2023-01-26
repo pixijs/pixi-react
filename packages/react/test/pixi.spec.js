@@ -1,4 +1,5 @@
-import * as PIXI from 'pixi.js';
+import { Point, ObservablePoint } from '@pixi/math';
+import { DisplayObject } from '@pixi/display';
 import { parsePoint, isPointType, eventHandlers, setValue } from '../src/utils/pixi';
 
 const noop = () => {};
@@ -60,12 +61,12 @@ describe('pixi', () =>
         {
             test('point', () =>
             {
-                expect(isPointType(new PIXI.Point(100, 200))).toBeTruthy();
+                expect(isPointType(new Point(100, 200))).toBeTruthy();
             });
 
             test('observablepoint', () =>
             {
-                expect(isPointType(new PIXI.ObservablePoint(noop, this, 100, 200))).toBeTruthy();
+                expect(isPointType(new ObservablePoint(noop, this, 100, 200))).toBeTruthy();
             });
         });
 
@@ -107,12 +108,12 @@ describe('pixi', () =>
 
         beforeEach(() =>
         {
-            instance = new PIXI.DisplayObject();
+            instance = new DisplayObject();
         });
 
         test('copy point data', () =>
         {
-            setValue(instance, 'pivot', new PIXI.Point(100, 200));
+            setValue(instance, 'pivot', new Point(100, 200));
             expect(instance.pivot.x).toEqual(100);
             expect(instance.pivot.y).toEqual(200);
         });

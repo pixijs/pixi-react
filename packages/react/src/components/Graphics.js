@@ -1,4 +1,4 @@
-import { Graphics as PixiGraphics } from 'pixi.js';
+import { Graphics as PixiGraphics } from '@pixi/graphics';
 import { applyDefaultProps } from '../utils/props';
 import invariant from '../utils/invariant';
 

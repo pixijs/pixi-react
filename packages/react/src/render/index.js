@@ -1,5 +1,5 @@
+import { Container } from '@pixi/display';
 import invariant from '../utils/invariant';
-import { Container } from 'pixi.js';
 import { PixiFiber } from '../reconciler';
 
 // cache root containers

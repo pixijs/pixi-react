@@ -5,6 +5,7 @@ import terser from '@rollup/plugin-terser';
 import json from '@rollup/plugin-json';
 import babel from '@rollup/plugin-babel';
 import replace from '@rollup/plugin-replace';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 export const isProductionBuild = () => process.env.NODE_ENV === 'production';
 
@@ -44,6 +45,7 @@ export function getRollupConfig(dest, format, merge = {})
             }),
             prod && terser(),
             filesize(),
+            visualizer(),
         ].filter(Boolean),
         external: merge.external,
     };

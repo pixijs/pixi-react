@@ -120,6 +120,7 @@ exports[`index export modules for index 1`] = `
   "Text": "Text",
   "TilingSprite": "TilingSprite",
   "applyDefaultProps": [Function],
+  "createRoot": [Function],
   "eventHandlers": [
     "click",
     "mousedown",

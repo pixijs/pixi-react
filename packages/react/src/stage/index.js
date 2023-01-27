@@ -1,5 +1,6 @@
 import React from 'react';
-import { Application, Ticker } from 'pixi.js';
+import { Application } from '@pixi/app';
+import { Ticker } from '@pixi/ticker';
 import PropTypes from 'prop-types';
 import invariant from '../utils/invariant';
 import { PROPS_DISPLAY_OBJECT } from '../utils/props';
@@ -68,10 +69,11 @@ const propTypes = {
         {
             const el = props[propName];
 
-            el && invariant(
-                el === window || el instanceof HTMLElement,
-                `Invalid prop \`resizeTo\` of type ${typeof el}, expect \`window\` or an \`HTMLElement\`.`
-            );
+            el
+                && invariant(
+                    el === window || el instanceof HTMLElement,
+                    `Invalid prop \`resizeTo\` of type ${typeof el}, expect \`window\` or an \`HTMLElement\`.`
+                );
         },
 
         // view is optional, use if provided
@@ -79,10 +81,11 @@ const propTypes = {
         {
             const el = props[propName];
 
-            el && invariant(
-                el instanceof HTMLCanvasElement,
-                `Invalid prop \`view\` of type ${typeof el}, supplied to ${componentName}, expected \`<canvas> Element\``
-            );
+            el
+                && invariant(
+                    el instanceof HTMLCanvasElement,
+                    `Invalid prop \`view\` of type ${typeof el}, supplied to ${componentName}, expected \`<canvas> Element\``
+                );
         },
     }),
 };
@@ -98,7 +101,10 @@ const defaultProps = {
 
 export function getCanvasProps(props)
 {
-    const reserved = [...Object.keys(propTypes), ...Object.keys(PROPS_DISPLAY_OBJECT)];
+    const reserved = [
+        ...Object.keys(propTypes),
+        ...Object.keys(PROPS_DISPLAY_OBJECT),
+    ];
 
     return Object.keys(props)
         .filter((p) => !reserved.includes(p))
@@ -115,7 +121,14 @@ class Stage extends React.Component
 
     componentDidMount()
     {
-        const { onMount, width, height, options, raf, renderOnComponentChange } = this.props;
+        const {
+            onMount,
+            width,
+            height,
+            options,
+            raf,
+            renderOnComponentChange,
+        } = this.props;
 
         this.app = new Application({
             width,
@@ -136,9 +149,15 @@ class Stage extends React.Component
 
         // update size on media query resolution change?
         // only if autoDensity = true
-        if (options?.autoDensity && window.matchMedia && options?.resolution === undefined)
+        if (
+            options?.autoDensity
+            && window.matchMedia
+            && options?.resolution === undefined
+        )
         {
-            this._mediaQuery = window.matchMedia(`(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 120dpi)`);
+            this._mediaQuery = window.matchMedia(
+                `(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 120dpi)`
+            );
             this._mediaQuery.addListener(this.updateSize);
         }
 
@@ -148,7 +167,10 @@ class Stage extends React.Component
             this._ticker = new Ticker();
             this._ticker.autoStart = true;
             this._ticker.add(this.renderStage);
-            this.app.stage.on('__REACT_PIXI_REQUEST_RENDER__', this.needsRenderUpdate);
+            this.app.stage.on(
+                '__REACT_PIXI_REQUEST_RENDER__',
+                this.needsRenderUpdate
+            );
         }
 
         this.updateSize();
@@ -157,10 +179,14 @@ class Stage extends React.Component
 
     componentDidUpdate(prevProps, prevState, prevContext)
     {
-        const { width, height, raf, renderOnComponentChange, options } = this.props;
+        const { width, height, raf, renderOnComponentChange, options }
+            = this.props;
 
         // update resolution
-        if (options?.resolution !== undefined && prevProps?.options.resolution !== options?.resolution)
+        if (
+            options?.resolution !== undefined
+            && prevProps?.options.resolution !== options?.resolution
+        )
         {
             this.app.renderer.resolution = options.resolution;
             this.resetInteractionManager();
@@ -232,9 +258,12 @@ class Stage extends React.Component
     {
         // `interaction` property is absent in Pixi v7 and in v6 if user has installed Federated Events API plugin.
         // https://api.pixijs.io/@pixi/events.html
-        if ('interaction' in this.app.renderer.plugins)
+        // in v7 however, there's a stub object which displays a deprecation warning, so also check the resolution property:
+        const { interaction: maybeInteraction } = this.app.renderer.plugins;
+
+        if (maybeInteraction?.resolution)
         {
-            this.app.renderer.plugins.interaction.resolution = this.app.renderer.resolution;
+            maybeInteraction.resolution = this.app.renderer.resolution;
         }
     }
 
@@ -262,7 +291,10 @@ class Stage extends React.Component
             this._ticker.destroy();
         }
 
-        this.app.stage.off('__REACT_PIXI_REQUEST_RENDER__', this.needsRenderUpdate);
+        this.app.stage.off(
+            '__REACT_PIXI_REQUEST_RENDER__',
+            this.needsRenderUpdate
+        );
 
         PixiFiber.updateContainer(null, this.mountNode, this);
 
@@ -281,12 +313,20 @@ class Stage extends React.Component
 
         if (options && options.view)
         {
-            invariant(options.view instanceof HTMLCanvasElement, 'options.view needs to be a `HTMLCanvasElement`');
+            invariant(
+                options.view instanceof HTMLCanvasElement,
+                'options.view needs to be a `HTMLCanvasElement`'
+            );
 
             return null;
         }
 
-        return <canvas {...getCanvasProps(this.props)} ref={(c) => (this._canvas = c)} />;
+        return (
+            <canvas
+                {...getCanvasProps(this.props)}
+                ref={(c) => (this._canvas = c)}
+            />
+        );
     }
 }
 

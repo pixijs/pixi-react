@@ -1,4 +1,4 @@
-import { BitmapText as PixiBitmapText } from 'pixi.js';
+import { BitmapText as PixiBitmapText } from '@pixi/text-bitmap';
 
 const BitmapText = (root, props) =>
 {

@@ -1,6 +1,6 @@
-import invariant from '../utils/invariant';
 import { applyDefaultProps } from './props';
 import * as components from '../components';
+import invariant from '../utils/invariant';
 
 /**
  * Available tag types
@@ -20,8 +20,6 @@ export const TYPES = {
     SimpleMesh: 'SimpleMesh',
     SimpleRope: 'SimpleRope',
 };
-
-export default TYPES;
 
 const ELEMENTS = Object.keys(TYPES).reduce((elements, type) => ({ ...elements, [type]: components[type] }), {});
 

@@ -1,4 +1,5 @@
-import { SimpleMesh as PixiSimpleMesh, DRAW_MODES } from 'pixi.js';
+import { DRAW_MODES } from '@pixi/constants';
+import { SimpleMesh as PixiSimpleMesh } from '@pixi/mesh-extras';
 import { applyDefaultProps, getTextureFromProps } from '../utils/props';
 
 const SimpleMesh = (root, props) =>

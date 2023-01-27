@@ -1,5 +1,6 @@
 import React from 'react';
-import * as PIXI from 'pixi.js';
+import { Application } from '@pixi/app';
+import { Container as PixiContainer } from '@pixi/display';
 import renderer, { act } from 'react-test-renderer';
 import * as reactTest from '@testing-library/react';
 import { PixiFiber } from '../src';
@@ -7,6 +8,9 @@ import { Container, Stage, Text } from '../src';
 import { Context } from '../src/stage/provider';
 import { getCanvasProps } from '../src/stage';
 import { mockToSpy } from './__utils__/mock';
+
+// add events extension
+import '@pixi/events';
 
 jest.mock('../src/reconciler');
 jest.useFakeTimers({
@@ -87,7 +91,7 @@ describe('stage', () =>
         );
     });
 
-    test('passes options.view to PIXI.Application', () =>
+    test('passes options.view to Application', () =>
     {
         const view = document.createElement('canvas');
         const el = renderer.create(<Stage options={{ view }} />);
@@ -116,13 +120,13 @@ describe('stage', () =>
         expect(tree.props).toEqual({});
     });
 
-    test('creates a PIXI.Application with passed options', () =>
+    test('creates a Application with passed options', () =>
     {
         const el = renderer.create(<Stage width={100} height={50} options={{ backgroundColor: 0xff0000 }} />);
         const app = el.getInstance().app;
 
-        expect(app.stage).toBeInstanceOf(PIXI.Container);
-        expect(app).toBeInstanceOf(PIXI.Application);
+        expect(app.stage).toBeInstanceOf(PixiContainer);
+        expect(app).toBeInstanceOf(Application);
         expect(app.renderer.options).toMatchObject({
             backgroundColor: 0xff0000,
             width: 100,
@@ -159,7 +163,7 @@ describe('stage', () =>
 
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy.mock.calls[0]).toHaveLength(1);
-        expect(spy.mock.calls[0][0]).toBeInstanceOf(PIXI.Application);
+        expect(spy.mock.calls[0][0]).toBeInstanceOf(Application);
     });
 
     test('can be unmounted', () =>
@@ -381,6 +385,8 @@ describe('stage', () =>
             expect(el.getInstance()._mediaQuery).toEqual(null);
         });
 
+        // TODO: when separate packages are added for v6/v7 make sure there are appropriate
+        // separate tests for events/interaction manager
         test('update renderer resolution on `options.resolution` change', () =>
         {
             const el = renderer.create(<Stage width={800} height={600} options={{ resolution: 1 }} />);

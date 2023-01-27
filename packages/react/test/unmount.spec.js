@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js';
+import { Application } from '@pixi/app';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { roots } from '../src/render';
@@ -6,7 +6,7 @@ import { Text, render, unmountComponentAtNode, Stage } from '../src';
 
 jest.useFakeTimers();
 
-const app = new PIXI.Application();
+const app = new Application();
 const element = () => (
     <Stage>
         <Text text="Hello Word!" />

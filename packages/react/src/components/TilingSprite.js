@@ -1,4 +1,4 @@
-import { TilingSprite as PixiTilingSprite } from 'pixi.js';
+import { TilingSprite as PixiTilingSprite } from '@pixi/sprite-tiling';
 import { getTextureFromProps, applyDefaultProps } from '../utils/props';
 import { parsePoint, pointsAreEqual } from '../utils/pixi';
 
@@ -19,7 +19,11 @@ const TilingSprite = (root, props) =>
             const newTilePosition = parsePoint(tilePosition);
 
             instance.tilePosition.set(...newTilePosition);
-            changed = !pointsAreEqual(parsePoint(oldProps.tilePosition), newTilePosition) || changed;
+            changed
+                = !pointsAreEqual(
+                    parsePoint(oldProps.tilePosition),
+                    newTilePosition
+                ) || changed;
         }
 
         if (tileScale)
@@ -27,7 +31,9 @@ const TilingSprite = (root, props) =>
             const newTileScale = parsePoint(tileScale);
 
             instance.tileScale.set(...newTileScale);
-            changed = !pointsAreEqual(parsePoint(oldProps.tileScale), newTileScale) || changed;
+            changed
+                = !pointsAreEqual(parsePoint(oldProps.tileScale), newTileScale)
+                || changed;
         }
 
         if (image || texture)

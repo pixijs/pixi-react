@@ -1,4 +1,5 @@
-import * as PIXI from 'pixi.js';
+import { Container } from '@pixi/display';
+import { Texture } from '@pixi/core';
 import { getTextureFromProps, applyDefaultProps, PROPS_DISPLAY_OBJECT, PROPS_RESERVED } from '../src/utils/props';
 import { emptyTexture } from './__fixtures__/textures';
 
@@ -19,7 +20,7 @@ describe('props', () =>
 
         beforeAll(() =>
         {
-            spy = jest.spyOn(PIXI.Texture, 'from').mockReturnValue(emptyTexture);
+            spy = jest.spyOn(Texture, 'from').mockReturnValue(emptyTexture);
         });
 
         afterAll(() =>
@@ -35,7 +36,7 @@ describe('props', () =>
         test('invariant texture', () =>
         {
             expect(() => getTextureFromProps('Test', undefined, { texture: 'texture' })).toThrow(
-                'Test texture needs to be typeof `PIXI.Texture`'
+                'Test texture needs to be typeof `Texture`'
             );
         });
 
@@ -53,7 +54,7 @@ describe('props', () =>
         {
             const texture = getTextureFromProps('Test', undefined, { image: './image.png' });
 
-            expect(texture).toBeInstanceOf(PIXI.Texture);
+            expect(texture).toBeInstanceOf(Texture);
             expect(spy).toBeCalledWith('./image.png');
         });
 
@@ -62,7 +63,7 @@ describe('props', () =>
             const image = document.createElement('img');
             const texture = getTextureFromProps('Test', undefined, { image });
 
-            expect(texture).toBeInstanceOf(PIXI.Texture);
+            expect(texture).toBeInstanceOf(Texture);
             expect(spy).toBeCalledWith(image);
         });
 
@@ -70,7 +71,7 @@ describe('props', () =>
         {
             const texture = getTextureFromProps('Test', undefined, { video: './video.mp4' });
 
-            expect(texture).toBeInstanceOf(PIXI.Texture);
+            expect(texture).toBeInstanceOf(Texture);
             expect(spy).toBeCalledWith('./video.mp4');
         });
 
@@ -79,7 +80,7 @@ describe('props', () =>
             const video = document.createElement('video');
             const texture = getTextureFromProps('Test', undefined, { video });
 
-            expect(texture).toBeInstanceOf(PIXI.Texture);
+            expect(texture).toBeInstanceOf(Texture);
             expect(spy).toBeCalledWith(video);
         });
 
@@ -98,12 +99,12 @@ describe('props', () =>
 
     describe('applyDefaultProps', () =>
     {
-        let instance; let
-            fn;
+        let instance;
+        let fn;
 
         beforeEach(() =>
         {
-            instance = new PIXI.Container();
+            instance = new Container();
             fn = jest.fn();
         });
 
@@ -178,7 +179,7 @@ describe('props', () =>
 
         test('invalid instance', () =>
         {
-            expect(() => applyDefaultProps()).toThrow('instance needs to be typeof `PIXI.DisplayObject`, got `undefined`');
+            expect(() => applyDefaultProps()).toThrow('instance needs to be typeof `DisplayObject`, got `undefined`');
         });
 
         test('skip reserved props', () =>

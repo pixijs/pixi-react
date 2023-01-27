@@ -1,6 +1,7 @@
 import React, { createRef, Suspense } from 'react';
 import { act } from 'react-dom/test-utils';
-import * as PIXI from 'pixi.js';
+import { Container as PixiContainer } from '@pixi/display';
+import { Text as PixiText } from '@pixi/text';
 import { render, roots } from '../src/render';
 import hostconfig from '../src/reconciler/hostconfig';
 import { createElement } from '../src/utils/element';
@@ -11,7 +12,7 @@ jest.mock('../src/reconciler/hostconfig');
 
 describe('reconciler', () =>
 {
-    const container = new PIXI.Container();
+    const container = new PixiContainer();
 
     container.root = true;
     const renderInContainer = (comp) => act(() =>
@@ -48,7 +49,7 @@ describe('reconciler', () =>
             const text = m(0);
 
             expect(text.args[1]).toEqual({ text: 'foo' });
-            expect(text.args[2]).toBeInstanceOf(PIXI.Container);
+            expect(text.args[2]).toBeInstanceOf(PixiContainer);
 
             const container = m(1).args[1];
 
@@ -69,8 +70,8 @@ describe('reconciler', () =>
             const m = getCall(hostconfig.appendInitialChild);
 
             expect(m.fn).toHaveBeenCalledTimes(1);
-            expect(m(0).args[0]).toBeInstanceOf(PIXI.Container);
-            expect(m(0).args[1]).toBeInstanceOf(PIXI.Text);
+            expect(m(0).args[0]).toBeInstanceOf(PixiContainer);
+            expect(m(0).args[1]).toBeInstanceOf(PixiText);
         });
 
         test('PIXI elements', () =>
@@ -171,7 +172,7 @@ describe('reconciler', () =>
 
             const m = getCall(hostconfig.insertBefore)(0);
 
-            expect(m.args[0]).toBeInstanceOf(PIXI.Container); // parent
+            expect(m.args[0]).toBeInstanceOf(PixiContainer); // parent
             expect(m.args[1].text).toEqual('two'); // child
             expect(m.args[2].text).toEqual('three'); // beforeChild
         });
@@ -220,7 +221,7 @@ describe('reconciler', () =>
 
             const args = m(0).args;
 
-            expect(args[0]).toBeInstanceOf(PIXI.Text);
+            expect(args[0]).toBeInstanceOf(PixiText);
             expect(args[1]).toEqual(['x', null]);
             expect(args[2]).toEqual('Text');
             expect(args[3]).toEqual({ x: 100 });
@@ -238,7 +239,7 @@ describe('reconciler', () =>
 
             const args = m(0).args;
 
-            expect(args[0]).toBeInstanceOf(PIXI.Text);
+            expect(args[0]).toBeInstanceOf(PixiText);
             expect(args[1]).toEqual(['x', 105]);
             expect(args[2]).toEqual('Text');
             expect(args[3]).toEqual({ x: 100 });
@@ -278,15 +279,15 @@ describe('reconciler', () =>
 
             const text = getCall(didMount)(0).args;
 
-            expect(text[0]).toBeInstanceOf(PIXI.Text);
-            expect(text[1]).toBeInstanceOf(PIXI.Container);
+            expect(text[0]).toBeInstanceOf(PixiText);
+            expect(text[1]).toBeInstanceOf(PixiContainer);
             expect(text[1].root).toBeUndefined();
 
             const container = getCall(didMount)(1).args;
 
-            expect(container[0]).toBeInstanceOf(PIXI.Container);
+            expect(container[0]).toBeInstanceOf(PixiContainer);
             expect(container[0].root).toBeUndefined();
-            expect(container[1]).toBeInstanceOf(PIXI.Container);
+            expect(container[1]).toBeInstanceOf(PixiContainer);
             expect(container[1].root).toEqual(true);
         });
 
@@ -304,8 +305,8 @@ describe('reconciler', () =>
 
             const m = getCall(willUnmount)(0).args;
 
-            expect(m[0]).toBeInstanceOf(PIXI.Text);
-            expect(m[1]).toBeInstanceOf(PIXI.Container);
+            expect(m[0]).toBeInstanceOf(PixiText);
+            expect(m[1]).toBeInstanceOf(PixiContainer);
             expect(m[1].root).toBeUndefined();
         });
 
@@ -327,7 +328,7 @@ describe('reconciler', () =>
 
             const m = getCall(applyProps);
 
-            expect(m(0).args[0]).toBeInstanceOf(PIXI.Text);
+            expect(m(0).args[0]).toBeInstanceOf(PixiText);
             expect(m(0).args[1]).toEqual({});
             expect(m(0).args[2]).toEqual({ x: 100 });
         });
@@ -495,7 +496,7 @@ describe('reconciler', () =>
         const spy1 = jest.fn();
         const spy2 = jest.fn();
 
-        const container2 = new PIXI.Container();
+        const container2 = new PixiContainer();
 
         container2.root = true;
         const renderInContainer2 = (comp) => act(() =>

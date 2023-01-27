@@ -1,4 +1,5 @@
-import { AnimatedSprite as PixiAnimatedSprite, Texture } from 'pixi.js';
+import { Texture } from '@pixi/core';
+import { AnimatedSprite as PixiAnimatedSprite } from '@pixi/sprite-animated';
 import { applyDefaultProps } from '../utils/props';
 import invariant from '../utils/invariant';
 

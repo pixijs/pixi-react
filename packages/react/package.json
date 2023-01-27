@@ -9,6 +9,7 @@
   },
   "license": "MIT",
   "author": "Patrick Brouwer <patrick@inlet.nl>",
+  "sideEffects": false,
   "main": "index.js",
   "module": "module.js",
   "jsnext:main": "module.js",
@@ -21,15 +22,14 @@
     "module.js"
   ],
   "scripts": {
-    "clean": "rimraf ./dist",
     "prebuild": "npm run clean",
     "build": "npm run build:dev && npm run build:prod",
     "build:dev": "cross-env NODE_ENV=development rollup -c",
     "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "clean": "rimraf ./dist",
     "test": "jest --silent",
     "test:watch": "jest --watch"
   },
-  "sideEffects": false,
   "dependencies": {
     "lodash.isnil": "4.0.0",
     "lodash.times": "4.3.2",
@@ -37,6 +37,7 @@
     "prop-types": "^15.8.1"
   },
   "devDependencies": {
+    "@pixi/events": "^7.1.1",
     "@testing-library/react": "^13.4.0",
     "canvas": "^2.11.0",
     "jest-webgl-canvas-mock": "^0.2.3",
@@ -44,7 +45,22 @@
   },
   "peerDependencies": {
     "@babel/runtime": "^7.14.8",
-    "pixi.js": ">=6.0.0",
+    "@pixi/app": ">=6.0.0",
+    "@pixi/constants": ">=6.0.0",
+    "@pixi/core": ">=6.0.0",
+    "@pixi/display": ">=6.0.0",
+    "@pixi/extensions": ">=6.0.0",
+    "@pixi/graphics": ">=6.0.0",
+    "@pixi/math": ">=6.0.0",
+    "@pixi/mesh": ">=6.0.0",
+    "@pixi/mesh-extras": ">=6.0.0",
+    "@pixi/particle-container": ">=6.0.0",
+    "@pixi/sprite": ">=6.0.0",
+    "@pixi/sprite-animated": ">=6.0.0",
+    "@pixi/sprite-tiling": ">=6.0.0",
+    "@pixi/text": ">=6.0.0",
+    "@pixi/text-bitmap": ">=6.0.0",
+    "@pixi/ticker": ">=6.0.0",
     "prop-types": "^15.8.1",
     "react": ">=17.0.0",
     "react-dom": ">=17.0.0"

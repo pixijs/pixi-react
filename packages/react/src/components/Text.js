@@ -1,4 +1,5 @@
-import { Text as PixiText, Sprite as PixiSprite } from 'pixi.js';
+import { Text as PixiText } from '@pixi/text';
+import { Sprite as PixiSprite } from '@pixi/sprite';
 
 const Text = (root, props) =>
 {

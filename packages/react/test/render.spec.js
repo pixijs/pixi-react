@@ -1,10 +1,10 @@
-import * as PIXI from 'pixi.js';
+import { Application } from '@pixi/app';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { roots } from '../src/render';
 import { PixiFiber, render, AppConsumer, AppProvider, Container, Text, withPixiApp, Stage } from '../src';
 
-const app = new PIXI.Application();
+const app = new Application();
 const callback = jest.fn();
 const element = () => (
     <Stage>

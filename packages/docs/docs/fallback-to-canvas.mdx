@@ -7,30 +7,34 @@ Luckily this is possible using a `legacy` pixi package.
 
 ## Install
 
-Make sure to install the legacy package instead of `pixi.js`:
+If using the entire pixi package, make sure to install the legacy package instead of `pixi.js`:
 
 ```bash
 npm install pixi.js-legacy
 ```
 
+For advanced users using `@pixi` scoped modules, make sure to use the `canvas-` prefixed packages in place of the standard ones:
+
+- `@pixi/display` - `@pixi/canvas-display`
+- `@pixi/extract` - `@pixi/canvas-extract`
+- `@pixi/graphics` - `@pixi/canvas-graphics`
+- `@pixi/mesh` - `@pixi/canvas-mesh`
+- `@pixi/particle-container` - `@pixi/canvas-particle-container`
+- `@pixi/prepare` - `@pixi/canvas-prepare`
+- `@pixi/renderer` - `@pixi/canvas-renderer`
+- `@pixi/sprite-tiling` - `@pixi/canvas-sprite-tiling`
+- `@pixi/sprite` - `@pixi/canvas-sprite`
+- `@pixi/text` - `@pixi/canvas-text`
+
+```bash
+npm install @pixi/canvas-display
+```
+
 ## Usage
 
-Use "@pixi/react-legacy" to import pixi legacy components:
-If you want to use `"react-spring"` make sure to combine with `"@pixi/react-animated-legacy"`.
-
-```jsx
-import { Stage, Sprite } from '@pixi/react-legacy';
-
-const stageOptions = {
-  forceCanvas: true,
-};
-
-const App = () => (
-  <Stage options={stageOptions}>
-    <Sprite image="./image.png" />
-  </Stage>
-);
-```
+Unlike in previous versions (`<=6.x`), `pixi-react` will automatically defer to the user installed `pixi` package(s) for
+rendering, so you can continue to use the `@pixi/react` and `@pixi/react-animated` packages as normal. There's no need to
+replace these with different legacy builds.
 
 ## Verify
 
@@ -46,3 +50,10 @@ something like:
     maxWidth: 448,
   }}
 />
+
+In PixiJS v7 upwards, this welcome message is disabled by default, to enable it pass through `hello: true` in your
+application options:
+
+```jsx
+<Stage options={{ hello: true }} />
+```

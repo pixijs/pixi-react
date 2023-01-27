@@ -16,17 +16,17 @@ npm install pixi.js-legacy
 For advanced users using `@pixi` scoped modules, make sure to properly import pixi's canvas packages:
 
 ```ts
-`import "@pixi/canvas-display"`
-`import "@pixi/canvas-extract"`
-`import "@pixi/canvas-graphics"`
-`import "@pixi/canvas-mesh"`
-`import "@pixi/canvas-particle-container"`
-`import "@pixi/canvas-prepare"`
-`import "@pixi/canvas-renderer"`
-`import "@pixi/canvas-sprite-tiling"`
-`import "@pixi/canvas-sprite"`
-`import "@pixi/canvas-text"`
-```ts
+import '@pixi/canvas-display';
+import '@pixi/canvas-extract';
+import '@pixi/canvas-graphics';
+import '@pixi/canvas-mesh';
+import '@pixi/canvas-particle-container';
+import '@pixi/canvas-prepare';
+import '@pixi/canvas-renderer';
+import '@pixi/canvas-sprite-tiling';
+import '@pixi/canvas-sprite';
+import '@pixi/canvas-text';
+```
 
 Also note that these will not be installed for you. You will need to install them yourself
 
@@ -56,7 +56,7 @@ something like:
 />
 
 In PixiJS v7 upwards, this welcome message is disabled by default, to enable it pass through `hello: true` in your
-application options, if for some reason you specifically want to force canvas rendering in an environment that supports WebGL
+application options. If for some reason you specifically want to force canvas rendering in an environment that supports WebGL
 then you also need to pass `forceCanvas: true`:
 
 ```jsx

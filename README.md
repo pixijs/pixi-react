@@ -64,7 +64,7 @@ export const MyComponent = () => (
 
 ### Docs
 
-Check out [our documentation](https://Pixi React.org) for guides and a full API reference.
+Check out [our documentation](https://pixijs.io/pixi-react/) for guides and a full API reference.
 
 Or checkout [our examples](https://codepen.io/collection/XPpGdb) on codepen for inspiration.
 

@@ -15,16 +15,20 @@ npm install pixi.js-legacy
 
 For advanced users using `@pixi` scoped modules, make sure to properly import pixi's canvas packages:
 
-- `@pixi/display` - `@pixi/canvas-display`
-- `@pixi/extract` - `@pixi/canvas-extract`
-- `@pixi/graphics` - `@pixi/canvas-graphics`
-- `@pixi/mesh` - `@pixi/canvas-mesh`
-- `@pixi/particle-container` - `@pixi/canvas-particle-container`
-- `@pixi/prepare` - `@pixi/canvas-prepare`
-- `@pixi/renderer` - `@pixi/canvas-renderer`
-- `@pixi/sprite-tiling` - `@pixi/canvas-sprite-tiling`
-- `@pixi/sprite` - `@pixi/canvas-sprite`
-- `@pixi/text` - `@pixi/canvas-text`
+```ts
+`import "@pixi/canvas-display"`
+`import "@pixi/canvas-extract"`
+`import "@pixi/canvas-graphics"`
+`import "@pixi/canvas-mesh"`
+`import "@pixi/canvas-particle-container"`
+`import "@pixi/canvas-prepare"`
+`import "@pixi/canvas-renderer"`
+`import "@pixi/canvas-sprite-tiling"`
+`import "@pixi/canvas-sprite"`
+`import "@pixi/canvas-text"`
+```ts
+
+Also note that these will not be installed for you. You will need to install them yourself
 
 ```bash
 npm install @pixi/canvas-display

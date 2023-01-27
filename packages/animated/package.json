@@ -30,7 +30,9 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@pixi/react": "*",
+    "@pixi/react": "*"
+  },
+  "devDependencies": {
     "@pixi/app": "^7.1.1",
     "@pixi/core": "^7.1.1",
     "@pixi/display": "^7.1.1",

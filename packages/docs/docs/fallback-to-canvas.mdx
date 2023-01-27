@@ -46,7 +46,7 @@ Check the PIXI welcome message in your console to make sure your application is 
 something like:
 
 <img
-  src="img/pixi-legacy-banner.png"
+  src="/pixi-react/img/pixi-legacy-banner.png"
   draggable={false}
   width={448}
   style={{
@@ -56,8 +56,19 @@ something like:
 />
 
 In PixiJS v7 upwards, this welcome message is disabled by default, to enable it pass through `hello: true` in your
-application options:
+application options, if for some reason you specifically want to force canvas rendering in an environment that supports WebGL
+then you also need to pass `forceCanvas: true`:
 
 ```jsx
-<Stage options={{ hello: true }} />
+<Stage options={{ hello: true, forceCanvas: true }} />
 ```
+
+<img
+  src="/pixi-react/img/pixi-v7-canvas-hello.png"
+  draggable={false}
+  width={553}
+  style={{
+    width: '100%',
+    maxWidth: 553,
+  }}
+/>

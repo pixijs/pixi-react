@@ -44,22 +44,36 @@ Patrick Brouwer
 
 ### Quick start
 
+To add to an existing React application:
+
 ```
 npm install pixi.js @pixi/react
 ```
 
 ```jsx
-import { Stage, Container, Sprite } from '@pixi/react'
+import { BlurFilter } from 'pixi.js';
+import { Stage, Container, Sprite, Text } from '@pixi/react';
+import { useMemo } from 'react';
 
-export const MyComponent = () => (
-  <Stage>
-    <Sprite image="./my-image.png" x={100} y={100} />
+export const MyComponent = () =>
+{
+  const blurFilter = useMemo(() => new BlurFilter(4), []);
 
-    <Container x={500}>
-      <Text text="Hello World" filter={[blurFilter]} />
-    </Container>
-  </Stage>
-)
+  return (
+    <Stage>
+      <Sprite
+        image="https://pixijs.io/pixi-react/img/bunny.png"
+        x={400}
+        y={270}
+        anchor={{ x: 0.5, y: 0.5 }}
+      />
+
+      <Container x={400} y={330}>
+        <Text text="Hello World" anchor={{ x: 0.5, y: 0.5 }} filters={[blurFilter]} />
+      </Container>
+    </Stage>
+  );
+};
 ```
 
 ### Docs

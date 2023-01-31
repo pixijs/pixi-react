@@ -76,6 +76,8 @@ Want to contribute to Pixi React? Our [contributing guide](CONTRIBUTING.md) has 
 
 Pixi React is MIT licensed.
 
+This projects codebase was originally forked from @michalochman 's [react-pixi-fiber](https://github.com/michalochman/react-pixi-fiber).
+
 ## Meet fellow developers
 
 You have an amazing feature in mind or just want to get in touch with other developers? Feel free to join our Discord channel.

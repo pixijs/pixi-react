@@ -2,7 +2,7 @@ import React, { createRef, Suspense } from 'react';
 import { act } from 'react-dom/test-utils';
 import { Container as PixiContainer } from '@pixi/display';
 import { Text as PixiText } from '@pixi/text';
-import { render, roots } from '../src/render';
+import { createRoot, roots } from '../src/render';
 import hostconfig from '../src/reconciler/hostconfig';
 import { createElement } from '../src/utils/element';
 import { Container, Text } from '../src';
@@ -12,13 +12,22 @@ jest.mock('../src/reconciler/hostconfig');
 
 describe('reconciler', () =>
 {
-    const container = new PixiContainer();
-
-    container.root = true;
-    const renderInContainer = (comp) => act(() =>
+    const prepareRender = () =>
     {
-        render(comp, container);
-    });
+        const container = new PixiContainer();
+
+        container.root = true;
+
+        const root = createRoot(container);
+
+        const renderToStage = (component) =>
+            act(() =>
+            {
+                root.render(component);
+            });
+
+        return { container, renderToStage };
+    };
 
     beforeEach(() =>
     {
@@ -35,7 +44,9 @@ describe('reconciler', () =>
     {
         test('create instances', () =>
         {
-            renderInContainer(
+            const { renderToStage } = prepareRender();
+
+            renderToStage(
                 <Container x={0} y={0}>
                     <Text text="foo" />
                 </Container>
@@ -61,7 +72,9 @@ describe('reconciler', () =>
 
         test('append children', () =>
         {
-            renderInContainer(
+            const { renderToStage } = prepareRender();
+
+            renderToStage(
                 <Container>
                     <Text text="bar" />
                 </Container>
@@ -76,7 +89,9 @@ describe('reconciler', () =>
 
         test('PIXI elements', () =>
         {
-            renderInContainer(
+            const { renderToStage } = prepareRender();
+
+            renderToStage(
                 <Container x={10} y={100} pivot={'0.5,0.5'}>
                     <Text text="foobar" />
                 </Container>
@@ -101,7 +116,9 @@ describe('reconciler', () =>
     {
         test('remove children', () =>
         {
-            renderInContainer(
+            const { renderToStage } = prepareRender();
+
+            renderToStage(
                 <Container>
                     <Text text="one" />
                     <Text text="two" />
@@ -109,7 +126,7 @@ describe('reconciler', () =>
                 </Container>
             );
 
-            renderInContainer(
+            renderToStage(
                 <Container>
                     <Text text="one" />
                 </Container>
@@ -128,7 +145,9 @@ describe('reconciler', () =>
             const c = createRef();
             const d = createRef();
 
-            renderInContainer(
+            const { renderToStage } = prepareRender();
+
+            renderToStage(
                 <Container>
                     <Container>
                         <Text ref={a} />
@@ -145,7 +164,7 @@ describe('reconciler', () =>
             const spyC = (c.current.willUnmount = jest.fn());
             const spyD = (d.current.willUnmount = jest.fn());
 
-            renderInContainer(<Container />);
+            renderToStage(<Container />);
 
             expect(spyA).toHaveBeenCalled();
             expect(spyB).toHaveBeenCalled();
@@ -155,14 +174,16 @@ describe('reconciler', () =>
 
         test('insert before', () =>
         {
-            renderInContainer(
+            const { renderToStage } = prepareRender();
+
+            renderToStage(
                 <Container>
                     <Text key={1} text="one" />
                     <Text key={3} text="three" />
                 </Container>
             );
 
-            renderInContainer(
+            renderToStage(
                 <Container>
                     <Text key={1} text="one" />
                     <Text key={2} text="two" />
@@ -179,13 +200,15 @@ describe('reconciler', () =>
 
         test('update elements', () =>
         {
-            renderInContainer(
+            const { renderToStage } = prepareRender();
+
+            renderToStage(
                 <Container>
                     <Text text="a" />
                 </Container>
             );
 
-            renderInContainer(
+            renderToStage(
                 <Container>
                     <Text text="b" />
                 </Container>
@@ -204,16 +227,20 @@ describe('reconciler', () =>
     {
         test('prevent commitUpdate when prop is not changed, ', () =>
         {
-            renderInContainer(<Text x={100} />);
-            renderInContainer(<Text x={100} />);
+            const { renderToStage } = prepareRender();
+
+            renderToStage(<Text x={100} />);
+            renderToStage(<Text x={100} />);
 
             expect(hostconfig.commitUpdate).not.toBeCalled();
         });
 
         test('commitUpdate for prop removal', () =>
         {
-            renderInContainer(<Text x={100} />);
-            renderInContainer(<Text />);
+            const { renderToStage } = prepareRender();
+
+            renderToStage(<Text x={100} />);
+            renderToStage(<Text />);
 
             const m = getCall(hostconfig.commitUpdate);
 
@@ -230,8 +257,10 @@ describe('reconciler', () =>
 
         test('commitUpdate for prop change', () =>
         {
-            renderInContainer(<Text x={100} />);
-            renderInContainer(<Text x={105} />);
+            const { renderToStage } = prepareRender();
+
+            renderToStage(<Text x={100} />);
+            renderToStage(<Text x={105} />);
 
             const m = getCall(hostconfig.commitUpdate);
 
@@ -269,7 +298,9 @@ describe('reconciler', () =>
 
         test('didMount', () =>
         {
-            renderInContainer(
+            const { renderToStage } = prepareRender();
+
+            renderToStage(
                 <Container>
                     <Text />
                 </Container>
@@ -293,13 +324,15 @@ describe('reconciler', () =>
 
         test('willUnmount', () =>
         {
-            renderInContainer(
+            const { renderToStage } = prepareRender();
+
+            renderToStage(
                 <Container>
                     <Text />
                 </Container>
             );
 
-            renderInContainer(<Container />);
+            renderToStage(<Container />);
 
             expect(willUnmount).toHaveBeenCalledTimes(1);
 
@@ -312,13 +345,15 @@ describe('reconciler', () =>
 
         test('applyProps', () =>
         {
-            renderInContainer(
+            const { renderToStage } = prepareRender();
+
+            renderToStage(
                 <Container>
                     <Text />
                 </Container>
             );
 
-            renderInContainer(
+            renderToStage(
                 <Container>
                     <Text x={100} />
                 </Container>
@@ -358,43 +393,47 @@ describe('reconciler', () =>
 
             test('destroy', () =>
             {
+                const { renderToStage } = prepareRender();
                 const before = createInstances({ destroy: true });
 
-                renderInContainer(<Container />);
-                renderInContainer(<></>);
+                renderToStage(<Container />);
+                renderToStage(<></>);
                 before.forEach((ins) => expect(ins.destroy).toHaveBeenCalled());
 
                 const after = createInstances({ destroy: false });
 
-                renderInContainer(<Container />);
-                renderInContainer(<></>);
-                after.forEach((ins) => expect(ins.destroy).not.toHaveBeenCalled());
+                renderToStage(<Container />);
+                renderToStage(<></>);
+                after.forEach((ins) =>
+                    expect(ins.destroy).not.toHaveBeenCalled()
+                );
             });
 
             test('destroyChildren', () =>
             {
+                const { renderToStage } = prepareRender();
                 const before = createInstances({ destroyChildren: true });
 
-                renderInContainer(
+                renderToStage(
                     <Container>
                         <Text />
                     </Container>
                 );
                 const spyBefore = jest.spyOn(before[1].children[0], 'destroy');
 
-                renderInContainer(<></>);
+                renderToStage(<></>);
                 expect(spyBefore).toHaveBeenCalled();
 
                 const after = createInstances({ destroyChildren: false });
 
-                renderInContainer(
+                renderToStage(
                     <Container>
                         <Text />
                     </Container>
                 );
                 const spyAfter = jest.spyOn(after[1].children[0], 'destroy');
 
-                renderInContainer(<></>);
+                renderToStage(<></>);
                 expect(spyAfter).not.toHaveBeenCalled();
             });
         });
@@ -409,40 +448,80 @@ describe('reconciler', () =>
             asyncLoaded = false;
         });
 
-        function AsyncText({ ms, text })
+        // fake Suspense API from https://codesandbox.io/s/frosty-hermann-bztrp?file=/src/fakeApi.js:395-857
+        function wrapPromise(promise)
         {
-            if (!asyncLoaded)
-            {
-                const promise = new Promise((res) =>
+            let status = 'pending';
+            let result;
+            const suspender = promise.then(
+                (r) =>
                 {
-                    setTimeout(() =>
-                    {
-                        asyncLoaded = true;
-                        res();
-                    }, ms);
-                });
+                    status = 'success';
+                    result = r;
+                },
+                (e) =>
+                {
+                    status = 'error';
+                    result = e;
+                }
+            );
 
-                throw promise;
-            }
+            return {
+                read()
+                {
+                    if (status === 'pending')
+                    {
+                        throw suspender;
+                    }
+                    else if (status === 'error')
+                    {
+                        throw result;
+                    }
+                    else if (status === 'success')
+                    {
+                        return result;
+                    }
+                },
+            };
+        }
+
+        function getResolvableSuspenseAPI()
+        {
+            let resolve;
+
+            const suspense = wrapPromise(
+                new Promise((res) =>
+                {
+                    resolve = res;
+                })
+            );
+
+            return { suspense, resolve };
+        }
+
+        function AsyncText({ suspense })
+        {
+            const text = suspense.read();
 
             return <Text text={text} />;
         }
 
-        test('renders suspense fallback', () =>
+        test('renders suspense fallback and content', async () =>
         {
-            jest.useFakeTimers();
+            const { renderToStage } = prepareRender();
+            const { suspense, resolve } = getResolvableSuspenseAPI();
 
             const loadingTextRef = React.createRef(null);
             const siblingTextRef = React.createRef(null);
 
-            renderInContainer(
-                <Suspense fallback={<Text text="loading" ref={loadingTextRef} />}>
+            renderToStage(
+                <Suspense
+                    fallback={<Text text="loading" ref={loadingTextRef} />}
+                >
                     <Text text="hidden" ref={siblingTextRef} />
-                    <AsyncText ms={500} text="content" />
+                    <AsyncText suspense={suspense} />
                 </Suspense>
             );
-
-            jest.runAllTimers();
 
             // loading Text should be rendered
             expect(loadingTextRef.current).toBeDefined();
@@ -452,29 +531,11 @@ describe('reconciler', () =>
 
             expect(hideInstanceMock.fn).toHaveBeenCalledTimes(1);
             expect(siblingTextRef.current.visible).toEqual(false);
-        });
 
-        test('renders suspense content', () =>
-        {
-            jest.useFakeTimers();
-
-            const siblingTextRef = React.createRef(null);
-
-            renderInContainer(
-                <Suspense fallback={<Text text="loading" />}>
-                    <Text text="A" ref={siblingTextRef} />
-                    <AsyncText ms={500} text={'content'} />
-                </Suspense>
-            );
-
-            jest.runAllTimers();
-
-            renderInContainer(
-                <Suspense fallback={<Text text="loading" />}>
-                    <Text text="A" ref={siblingTextRef} />
-                    <AsyncText ms={500} text={'content'} />
-                </Suspense>
-            );
+            await act(async () =>
+            {
+                resolve('content');
+            });
 
             // hidden content should be visible again
             expect(siblingTextRef.current.visible).toEqual(true);
@@ -487,70 +548,75 @@ describe('reconciler', () =>
             // loading text, sibling text, and async text content were all created
             const createInstanceMock = getCall(hostconfig.createInstance);
 
-            expect(createInstanceMock.all.map(([ins]) => ins)).toEqual(['Text', 'Text', 'Text']);
+            expect(createInstanceMock.all.map(([ins]) => ins)).toEqual([
+                'Text',
+                'Text',
+                'Text',
+            ]);
         });
     });
 
     describe('emits request render', () =>
     {
-        const spy1 = jest.fn();
-        const spy2 = jest.fn();
-
-        const container2 = new PixiContainer();
-
-        container2.root = true;
-        const renderInContainer2 = (comp) => act(() =>
+        function spyOnContainer(container)
         {
-            render(comp, container2);
-        });
+            const spy = jest.fn();
 
-        beforeEach(() =>
-        {
-            spy1.mockReset();
-            spy2.mockReset();
-            container.on('__REACT_PIXI_REQUEST_RENDER__', spy1);
-            container2.on('__REACT_PIXI_REQUEST_RENDER__', spy2);
-        });
+            container.on('__REACT_PIXI_REQUEST_RENDER__', spy);
 
-        afterEach(() =>
-        {
-            container.off('__REACT_PIXI_REQUEST_RENDER__', spy1);
-            container2.off('__REACT_PIXI_REQUEST_RENDER__', spy2);
-        });
+            return {
+                spy,
+                cleanup: () =>
+                    container.off('__REACT_PIXI_REQUEST_RENDER__', spy),
+            };
+        }
 
         it('receives request events via root container', () =>
         {
-            renderInContainer(
+            const { container, renderToStage } = prepareRender();
+            const { spy, cleanup } = spyOnContainer(container);
+
+            renderToStage(
                 <Container>
                     <Text text="one" />
                 </Container>
             );
 
-            expect(spy1).toHaveBeenCalled();
+            expect(spy).toHaveBeenCalled();
+            cleanup();
         });
 
         it('receives different events in different containers', () =>
         {
-            renderInContainer(
+            const { container, renderToStage } = prepareRender();
+            const { spy, cleanup } = spyOnContainer(container);
+
+            const { container: container2, renderToStage: renderToStage2 } = prepareRender();
+            const { spy: spy2, cleanup: cleanup2 } = spyOnContainer(container2);
+
+            renderToStage(
                 <Container>
                     <Text text="one" />
                 </Container>
             );
 
-            renderInContainer2(
+            renderToStage2(
                 <Container>
                     <Text text="one" />
                 </Container>
             );
 
-            renderInContainer2(
+            renderToStage2(
                 <Container>
                     <Text text="two" />
                 </Container>
             );
 
-            expect(spy1).toHaveBeenCalledTimes(1);
+            expect(spy).toHaveBeenCalledTimes(1);
             expect(spy2).toHaveBeenCalledTimes(2);
+
+            cleanup();
+            cleanup2();
         });
     });
 });

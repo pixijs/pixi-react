@@ -1,20 +1,23 @@
 import { Application } from '@pixi/app';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
-import { roots } from '../src/render';
-import { PixiFiber, render, AppConsumer, AppProvider, Container, Text, withPixiApp, Stage } from '../src';
+import { roots, render, createRoot } from '../src/render';
+import {
+    PixiFiber,
+    AppConsumer,
+    AppProvider,
+    Container,
+    Text,
+    withPixiApp,
+} from '../src';
 
 const app = new Application();
-const callback = jest.fn();
-const element = () => (
-    <Stage>
-        <Text text="Hello Word!" />
-    </Stage>
-);
-const renderElementToStage = () => act(() =>
-{
-    render(element, app.stage, callback);
-});
+const element = () => <Text text="Hello Word!" />;
+const renderElementToStage = () =>
+    act(() =>
+    {
+        render(element, app.stage);
+    });
 
 jest.mock('../src/reconciler', () => ({
     ...jest.requireActual('../src/reconciler'),
@@ -34,8 +37,9 @@ describe('render', () =>
         roots.clear();
         jest.clearAllMocks();
 
-        PixiFiber.createContainer.mockReturnValue({ current: { child: { tag: 'TEXT' } } });
-        PixiFiber.updateContainer.mockImplementation((element, root, _, c) => c());
+        PixiFiber.createContainer.mockReturnValue({
+            current: { child: { tag: 'TEXT' } },
+        });
     });
 
     test('invariant container', () =>
@@ -49,38 +53,53 @@ describe('render', () =>
     {
         renderElementToStage();
         expect(PixiFiber.createContainer).toHaveBeenCalledTimes(1);
-        expect(PixiFiber.createContainer).toHaveBeenLastCalledWith(app.stage);
+        expect(PixiFiber.createContainer).toHaveBeenLastCalledWith(
+            app.stage,
+        );
     });
 
     test('call updateContainer', () =>
     {
         renderElementToStage();
-        const root = roots.values().next().value;
+        const { pixiFiberContainer } = roots.values().next().value;
 
         expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1);
-        expect(PixiFiber.updateContainer).toHaveBeenLastCalledWith(element, root, undefined, callback);
-    });
-
-    test('invoke callback in updateContainer', () =>
-    {
-        renderElementToStage();
-        expect(callback).toHaveBeenCalledTimes(1);
+        expect(PixiFiber.updateContainer).toHaveBeenLastCalledWith(
+            element,
+            pixiFiberContainer,
+            undefined
+        );
     });
 
     test('store root', () =>
     {
         renderElementToStage();
-        expect(roots.values().next().value).toEqual({ current: { child: { tag: 'TEXT' } } });
+
+        expect(roots.values().next().value).toEqual({
+            pixiFiberContainer: {
+                current: {
+                    child: {
+                        tag: 'TEXT',
+                    },
+                },
+            },
+            reactRoot: {
+                render: expect.any(Function),
+                unmount: expect.any(Function),
+            },
+        });
     });
 
     test('does not create root if it is already present', () =>
     {
-        const root = { current: { child: { tag: 'CUSTOM' } } };
+        createRoot(app.stage);
 
-        roots.set(app.stage, root);
+        expect(PixiFiber.createContainer).toHaveBeenCalledTimes(1);
 
         renderElementToStage();
-        expect(PixiFiber.createContainer).toHaveBeenCalledTimes(0);
+
+        expect(PixiFiber.createContainer).toHaveBeenCalledTimes(1);
+        expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1);
     });
 
     describe('passdown `PIXI.Application`', () =>
@@ -105,8 +124,7 @@ describe('render', () =>
                             <AppConsumer>{fn}</AppConsumer>
                         </Container>
                     </AppProvider>,
-                    app.stage,
-                    callback
+                    app.stage
                 );
             });
 
@@ -127,8 +145,7 @@ describe('render', () =>
                             <Comp />
                         </Container>
                     </AppProvider>,
-                    app.stage,
-                    callback
+                    app.stage
                 );
             });
 

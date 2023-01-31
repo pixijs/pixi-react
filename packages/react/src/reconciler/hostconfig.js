@@ -9,11 +9,42 @@
  */
 
 import performanceNow from 'performance-now';
+import { ContinuousEventPriority, DiscreteEventPriority, DefaultEventPriority } from 'react-reconciler/constants';
 import invariant from '../utils/invariant';
 import { createElement } from '../utils/element';
 import { CHILDREN, applyDefaultProps } from '../utils/props';
 
 const NO_CONTEXT = {};
+
+function getEventPriority()
+{
+    if (typeof window === 'undefined')
+    {
+        return DefaultEventPriority;
+    }
+
+    const name = window?.event?.type;
+
+    switch (name)
+    {
+        case 'click':
+        case 'contextmenu':
+        case 'dblclick':
+        case 'pointercancel':
+        case 'pointerdown':
+        case 'pointerup':
+            return DiscreteEventPriority;
+        case 'pointermove':
+        case 'pointerout':
+        case 'pointerover':
+        case 'pointerenter':
+        case 'pointerleave':
+        case 'wheel':
+            return ContinuousEventPriority;
+        default:
+            return DefaultEventPriority;
+    }
+}
 
 function appendChild(parent, child)
 {
@@ -156,6 +187,12 @@ const HostConfig = {
     getPublicInstance(instance)
     {
         return instance;
+    },
+
+    // TODO: Implement a proper version of getCurrentEventPriority
+    getCurrentEventPriority()
+    {
+        return getEventPriority();
     },
 
     prepareForCommit()

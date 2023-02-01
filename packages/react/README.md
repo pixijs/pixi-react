@@ -50,12 +50,22 @@ PixiJS Team
 
 ### Quick start
 
-To add to an existing React application:
+If you want to start a new React project from scratch, we recommend [Create React App](https://github.com/facebook/create-react-app).
+To add to an existing React application, just install the dependencies:
 
+#### Start New React Project "my-app" with Create React App:
+```bash
+# for typescript add "--template typescript"
+npx create-react-app my-app
+cd my-app
 ```
+
+#### Install Pixi React Dependencies:
+```bash
 npm install pixi.js @pixi/react
 ```
 
+#### Usage:
 ```jsx
 import { BlurFilter } from 'pixi.js';
 import { Stage, Container, Sprite, Text } from '@pixi/react';

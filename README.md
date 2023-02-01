@@ -29,16 +29,22 @@ Pixi React is an open-source, production-ready library to render high performant
 
 ## News!
 
-**Pixi React will be a first-party React layer for PIXI and maintained by the core devs of PIXI!**
+We're delighted to announce Pixi React v7.0.0, the first major release since making it an official Pixi package!
 
-Dear Pixi React community,
+While all the core components remain the same, there have been some significant changes under the hood:
 
-I am thrilled to announce that Pixi React, the premier library for using Pixi.js with React, is being officially transferred to the Pixi team! This project started as a passion of mine, and it quickly grew into a beloved resource for the Pixi community thanks to all of your support.
-We are excited to be working closely with the team at Pixi, to continue improving and supporting the library. We want to extend a huge thank you to everyone who has supported Pixi React over the years, and we especially want to thank Mat Groves for making this transfer possible.
-We can't wait to see what the future holds for the library under the stewardship of the Pixi team. Stay tuned for updates and new developments as we work together to take Pixi React to the next level!
+* Full React 18 support including a new `createRoot` API, matching the signature of [React 18's `ReactDOM/client`](https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html#updates-to-client-rendering-apis)
+* Full Pixi V7 support
+* New up-to-date [docs site](pixi-react-docs)
+* Repository converted to a monorepo with separate [`@pixi/react`](https://www.npmjs.com/package/@pixi/react) and [`@pixi/animated`](https://www.npmjs.com/package/@pixi/react-animated) packages
+* Internally all `pixi.js` library imports were replaced with `@pixi/` scoped package versions, providing bundlesize improvements for users who use modular builds
+* Scoped imports allowed us to remove `@pixi/react-legacy` and `@pixi/react-animated-legacy` packages, with rendering deferred to a user's installed `pixi.js` package
+* `sideEffects: false` added to `package.json` to support tree-shaking
 
-Sincerely,
-Patrick Brouwer
+We're excited to see what the community builds with the library and as ever please let us know on [GitHub](github-issues) if you run into any issues, or reach out to us on the [Discord](discord) to chat.
+
+Thanks!
+PixiJS Team
 
 ## Get started
 
@@ -78,7 +84,7 @@ export const MyComponent = () =>
 
 ### Docs
 
-Check out [our documentation](https://pixijs.io/pixi-react/) for guides and a full API reference.
+Check out [our documentation](pixi-react-docs) for guides and a full API reference.
 
 Or checkout [our examples](https://codepen.io/collection/XPpGdb) on codepen for inspiration.
 
@@ -96,4 +102,8 @@ This projects codebase was originally forked from @michalochman 's [react-pixi-f
 
 You have an amazing feature in mind or just want to get in touch with other developers? Feel free to join our Discord channel.
 
-[Join us on Discord](https://discord.com/channels/734147990985375826/968068526566965279)
+[Join us on Discord](discord)
+
+[pixi-react-docs]: https://pixijs.io/pixi-react/
+[discord]: https://discord.com/channels/734147990985375826/968068526566965279
+[github-issues]: https://github.com/pixijs/pixi-react/issues

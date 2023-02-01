@@ -467,6 +467,7 @@ describe('reconciler', () =>
             );
 
             return {
+                // eslint-disable-next-line consistent-return
                 read()
                 {
                     if (status === 'pending')

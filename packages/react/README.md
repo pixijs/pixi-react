@@ -35,13 +35,13 @@ While all the core components remain the same, there have been some significant 
 
 * Full React 18 support including a new `createRoot` API, matching the signature of [React 18's `ReactDOM/client`](https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html#updates-to-client-rendering-apis)
 * Full Pixi V7 support
-* New up-to-date [docs site](pixi-react-docs)
+* New up-to-date [docs site](https://pixijs.io/pixi-react/)
 * Repository converted to a monorepo with separate [`@pixi/react`](https://www.npmjs.com/package/@pixi/react) and [`@pixi/animated`](https://www.npmjs.com/package/@pixi/react-animated) packages
 * Internally all `pixi.js` library imports were replaced with `@pixi/` scoped package versions, providing bundlesize improvements for users who use modular builds
 * Scoped imports allowed us to remove `@pixi/react-legacy` and `@pixi/react-animated-legacy` packages, with rendering deferred to a user's installed `pixi.js` package
 * `sideEffects: false` added to `package.json` to support tree-shaking
 
-We're excited to see what the community builds with the library and as ever please let us know on [GitHub](github-issues) if you run into any issues, or reach out to us on the [Discord](discord) to chat.
+We're excited to see what the community builds with the library and as ever please let us know on [GitHub](https://github.com/pixijs/pixi-react/issues) if you run into any issues, or reach out to us on the [Discord](https://discord.com/channels/734147990985375826/968068526566965279) to chat.
 
 Thanks!
 PixiJS Team
@@ -112,8 +112,4 @@ This projects codebase was originally forked from @michalochman 's [react-pixi-f
 
 You have an amazing feature in mind or just want to get in touch with other developers? Feel free to join our Discord channel.
 
-[Join us on Discord](discord)
-
-[pixi-react-docs]: https://pixijs.io/pixi-react/
-[discord]: https://discord.com/channels/734147990985375826/968068526566965279
-[github-issues]: https://github.com/pixijs/pixi-react/issues
+[Join us on Discord](https://discord.com/channels/734147990985375826/968068526566965279)

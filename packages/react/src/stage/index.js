@@ -138,6 +138,13 @@ class Stage extends React.Component
             autoDensity: options?.autoDensity !== false,
         });
 
+        if (process.env.NODE_ENV === 'development')
+        {
+            // workaround for React 18 Strict Mode unmount causing canvas
+            // context to be lost
+            this.app.renderer.context.extensions.loseContext = null;
+        }
+
         this.app.ticker.autoStart = false;
         this.app.ticker[raf ? 'start' : 'stop']();
 

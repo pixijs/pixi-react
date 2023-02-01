@@ -8,7 +8,6 @@
     "directory": "packages/react"
   },
   "license": "MIT",
-  "author": "Patrick Brouwer <patrick@inlet.nl>",
   "sideEffects": false,
   "main": "index.js",
   "module": "module.js",
@@ -17,6 +16,7 @@
   "files": [
     "dist/",
     "LICENSE",
+    "README.md",
     "index.d.ts",
     "index.js",
     "module.js"

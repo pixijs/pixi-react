@@ -7,7 +7,7 @@
   "scripts": {
     "build": "nx run-many --target=build --all --parallel",
     "build:force": "nx run-many --target=build --all --parallel --skip-nx-cache",
-    "build:docs": "nx run @pixi/react-docs:deploy --verbose",
+    "build:docs": "nx run @pixi/react-docs:deploy --skip-nx-cache --verbose",
     "clean": "rimraf packages/*/dist packages/*/build",
     "lint": "eslint .",
     "prepare": "husky install",

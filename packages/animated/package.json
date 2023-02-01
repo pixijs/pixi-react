@@ -1,7 +1,7 @@
 {
   "name": "@pixi/react-animated",
   "version": "7.0.0-alpha.2",
-  "description": "TODO: Write PixiJS applications using React declarative style.",
+  "description": "Animate your @pixi/react components with react-spring",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pixijs/pixi-react.git",
@@ -15,6 +15,7 @@
   "files": [
     "dist/",
     "LICENSE",
+    "README.md",
     "index.d.ts",
     "index.js",
     "module.js"

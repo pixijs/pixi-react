@@ -94,13 +94,13 @@ export const MyComponent = () =>
 
 ### Docs
 
-Check out [our documentation](pixi-react-docs) for guides and a full API reference.
+Check out [our documentation](https://pixijs.io/pixi-react/) for guides and a full API reference.
 
 Or checkout [our examples](https://codepen.io/collection/XPpGdb) on codepen for inspiration.
 
 ## Contribute
 
-Want to contribute to Pixi React? Our [contributing guide](CONTRIBUTING.md) has you covered.
+Want to contribute to Pixi React? Our [contributing guide](/CONTRIBUTING.md) has you covered.
 
 ## License
 

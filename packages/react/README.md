@@ -112,4 +112,4 @@ This projects codebase was originally forked from @michalochman 's [react-pixi-f
 
 You have an amazing feature in mind or just want to get in touch with other developers? Feel free to join our Discord channel.
 
-[Join us on Discord](https://discord.com/channels/734147990985375826/968068526566965279)
+[Join us on Discord](https://discord.gg/zqbXQAADuM)

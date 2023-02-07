@@ -356,7 +356,7 @@ declare namespace _ReactPixi {
 // components
 export const Text: AnimatedComponent<React.FC<_ReactPixi.IText>>;
 export const Sprite: AnimatedComponent<React.FC<_ReactPixi.ISprite>>;
-export const Container: AnimatedComponent<React.FC<_ReactPixi.IContainer>>;
+export const Container: AnimatedComponent<React.FC<React.PropsWithChildren<_ReactPixi.IContainer>>>;
 export const Graphics: AnimatedComponent<React.FC<_ReactPixi.IGraphics>>;
 export const BitmapText: AnimatedComponent<React.FC<_ReactPixi.IBitmapText>>;
 export const NineSlicePlane: AnimatedComponent<React.FC<_ReactPixi.INineSlicePlane>>;
@@ -405,7 +405,7 @@ export class Stage extends React.Component<_ReactPixi.IStage> { }
  *   }
  * });
  */
-export const PixiComponent: <Props, PixiInstance extends PixiDisplayObject>(
+export const PixiComponent: <Props extends { [key: string]: any; }, PixiInstance extends PixiDisplayObject>(
   componentName: string,
   lifecycle: _ReactPixi.ICustomComponent<Props, PixiInstance>
 ) => AnimatedComponent<React.FC<Props & { ref?: React.Ref<PixiInstance> }>>;

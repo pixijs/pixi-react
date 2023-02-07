@@ -1,6 +1,6 @@
 {
   "name": "@pixi/react-animated",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "description": "Animate your @pixi/react components with react-spring",
   "repository": {
     "type": "git",
@@ -31,7 +31,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@pixi/react": "*"
+    "@pixi/react": "^7.0.1"
   },
   "devDependencies": {
     "@pixi/app": "^7.1.1",

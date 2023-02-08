@@ -386,6 +386,13 @@ export const SimpleRope: React.FC<_ReactPixi.ISimpleRope>;
 export const SimpleMesh: React.FC<_ReactPixi.ISimpleMesh>;
 export const AnimatedSprite: React.FC<_ReactPixi.IAnimatedSprite>;
 
+export interface ReactPixiRoot {
+    render(element: React.ReactElement | React.ReactElement[] | React.Factory<any>): any
+    unmount(): void
+}
+
+export const createRoot: (container: PixiContainer) => ReactPixiRoot
+
 // renderer
 export const render: (
     element: React.ReactElement | React.ReactElement[] | React.Factory<any>,

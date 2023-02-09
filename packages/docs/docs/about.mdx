@@ -46,22 +46,48 @@ We're excited to see what the community builds with the library and as ever plea
 Thanks!
 PixiJS Team
 
-## Install
+### Quick start
 
+If you want to start a new React project from scratch, we recommend [Create React App](https://github.com/facebook/create-react-app).
+To add to an existing React application, just install the dependencies:
+
+#### Start New React Project "my-app" with Create React App:
 ```bash
-npm install @pixi/react --save
+# for typescript add "--template typescript"
+npx create-react-app my-app
+cd my-app
 ```
 
-## Usage
+#### Install Pixi React Dependencies:
+```bash
+npm install pixi.js @pixi/react
+```
 
+#### Usage:
 ```jsx
-import { Stage, Sprite } from '@pixi/react';
+import { BlurFilter } from 'pixi.js';
+import { Stage, Container, Sprite, Text } from '@pixi/react';
+import { useMemo } from 'react';
 
-const App = () => (
-  <Stage>
-    <Sprite image="./bunny.png" x={100} y={100} />
-  </Stage>
-);
+export const MyComponent = () =>
+{
+  const blurFilter = useMemo(() => new BlurFilter(4), []);
+
+  return (
+    <Stage>
+      <Sprite
+        image="https://pixijs.io/pixi-react/img/bunny.png"
+        x={400}
+        y={270}
+        anchor={{ x: 0.5, y: 0.5 }}
+      />
+
+      <Container x={400} y={330}>
+        <Text text="Hello World" anchor={{ x: 0.5, y: 0.5 }} filters={[blurFilter]} />
+      </Container>
+    </Stage>
+  );
+};
 ```
 
 [Codepen examples](https://codepen.io/collection/XPpGdb/)

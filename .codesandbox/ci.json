@@ -1,0 +1,5 @@
+{
+  "buildCommand": "build:force",
+  "sandboxes": ["react", "packages/sandbox"],
+  "node": "18"
+}

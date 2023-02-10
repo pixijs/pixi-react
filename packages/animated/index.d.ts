@@ -186,7 +186,7 @@ declare namespace _ReactPixi {
   type Container<T extends PixiDisplayObject, U = {}> = Partial<
     Omit<T, 'children' | P | ReadonlyKeys<T> | keyof U> &
     WithPointLike<P>
-  > & U & InteractionEvents & { ref?: React.Ref<T> }  & {children?: React.ReactElement | React.ReactElement[] | React.Factory<any>};
+  > & U & InteractionEvents & { ref?: React.Ref<T> };
 
   type IContainer = Container<PixiContainer>;
   type ISprite = Container<PixiSprite, WithSource>;

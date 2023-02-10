@@ -1,5 +1,9 @@
 {
   "buildCommand": "build:force",
-  "sandboxes": ["react", "packages/sandbox"],
+  "packages": [
+    "packages/react",
+    "packages/animated"
+  ],
+  "sandboxes": ["/packages/sandbox"],
   "node": "18"
 }

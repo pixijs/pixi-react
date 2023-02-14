@@ -1,6 +1,10 @@
 {
   "buildCommand": "build:force",
   "packages": [
+    "packages/react-invariant",
+    "packages/react-components",
+    "packages/react-fiber",
+    "packages/react-modular",
     "packages/react",
     "packages/animated"
   ],

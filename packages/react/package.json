@@ -1,6 +1,6 @@
 {
   "name": "@pixi/react",
-  "version": "7.0.1",
+  "version": "7.0.2",
   "description": "Write PixiJS applications using React declarative style.",
   "repository": {
     "type": "git",

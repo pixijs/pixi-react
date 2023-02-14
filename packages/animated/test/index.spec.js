@@ -1,8 +1,8 @@
-import * as index from '../src/index';
+import * as index from '../src';
 
 describe('index', () =>
 {
-    test('export modules for react-spring', () =>
+    test('export modules for react-animated', () =>
     {
         expect(index).toMatchSnapshot();
     });

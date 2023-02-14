@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`graphics renders a graphics component with draw prop 1`] = `<canvas />`;
-
-exports[`graphics renders a graphics component with geometry prop 1`] = `<canvas />`;

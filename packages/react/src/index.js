@@ -1,21 +1,75 @@
-import { TYPES } from './utils/element';
+import { configurePixiReact, PixiComponent } from '@pixi/react-modular';
+import { configurePixiReactFiber, configurePixiReactHostConfig } from '@pixi/react-fiber';
+import {
+    TYPES,
+    AppProvider,
+    AppConsumer,
+    AppContext,
+    applyDefaultProps,
+    configurePixiReactComponents,
+    configurePixiReactStage,
+    configurePixiReactRenderAPI,
+    eventHandlers,
+    useTick,
+    useApp,
+    withPixiApp,
+    withFilters,
+} from '@pixi/react-components';
 
-/**
- * -------------------------------------------
- * Public API
- * -------------------------------------------
- */
+const {
+    PixiReactFiber,
+    createRoot,
+    render,
+    unmountComponentAtNode,
+    Stage,
+} = configurePixiReact({
+    configurePixiReactHostConfig,
+    configurePixiReactFiber,
+    configurePixiReactComponents,
+    configurePixiReactStage,
+    configurePixiReactRenderAPI,
+});
 
-export * from './exports';
+const {
+    BitmapText,
+    Container,
+    Graphics,
+    NineSlicePlane,
+    ParticleContainer,
+    Sprite,
+    AnimatedSprite,
+    Text,
+    TilingSprite,
+    SimpleMesh,
+    SimpleRope,
+} = TYPES;
 
-export const BitmapText = TYPES.BitmapText;
-export const Container = TYPES.Container;
-export const Graphics = TYPES.Graphics;
-export const NineSlicePlane = TYPES.NineSlicePlane;
-export const ParticleContainer = TYPES.ParticleContainer;
-export const Sprite = TYPES.Sprite;
-export const AnimatedSprite = TYPES.AnimatedSprite;
-export const Text = TYPES.Text;
-export const TilingSprite = TYPES.TilingSprite;
-export const SimpleMesh = TYPES.SimpleMesh;
-export const SimpleRope = TYPES.SimpleRope;
+export {
+    PixiComponent,
+    PixiReactFiber,
+    TYPES,
+    BitmapText,
+    Container,
+    Graphics,
+    NineSlicePlane,
+    ParticleContainer,
+    Sprite,
+    AnimatedSprite,
+    Text,
+    TilingSprite,
+    SimpleMesh,
+    SimpleRope,
+    createRoot,
+    render,
+    unmountComponentAtNode,
+    Stage,
+    AppProvider,
+    AppConsumer,
+    AppContext,
+    useTick,
+    useApp,
+    applyDefaultProps,
+    withPixiApp,
+    withFilters,
+    eventHandlers,
+};

@@ -106,6 +106,8 @@ Want to contribute to Pixi React? Our [contributing guide](/CONTRIBUTING.md) has
 
 Pixi React is MIT licensed.
 
+This project was originally created and maintained by @inlet. He graciously gave the Pixi team the keys to maintain and push the project forward. Big thanks for all the hard work on making this project so awesome.
+
 This projects codebase was originally forked from @michalochman 's [react-pixi-fiber](https://github.com/michalochman/react-pixi-fiber).
 
 ## Meet fellow developers

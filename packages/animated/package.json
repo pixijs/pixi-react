@@ -8,6 +8,7 @@
     "directory": "packages/animated"
   },
   "license": "MIT",
+  "sideEffects": false,
   "main": "index.js",
   "module": "module.js",
   "jsnext:main": "module.js",
@@ -21,17 +22,18 @@
     "module.js"
   ],
   "scripts": {
-    "clean": "rimraf ./dist",
     "prebuild": "npm run clean",
     "build": "npm run build:dev && npm run build:prod",
     "build:dev": "cross-env NODE_ENV=development rollup -c",
     "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "clean": "rimraf ./dist",
     "test": "jest --silent",
     "test:watch": "jest --watch"
   },
-  "sideEffects": false,
+  "dependencies": {
+    "@pixi/react": "*"
+  },
   "devDependencies": {
-    "@pixi/react": "*",
     "@pixi/app": "^7.1.1",
     "@pixi/core": "^7.1.1",
     "@pixi/display": "^7.1.1",
@@ -39,37 +41,22 @@
     "@pixi/math": "^7.1.1",
     "@pixi/mesh-extras": "^7.1.1",
     "@pixi/particle-container": "^7.1.1",
+    "@pixi/react": "*",
     "@pixi/sprite": "^7.1.1",
     "@pixi/sprite-animated": "^7.1.1",
     "@pixi/sprite-tiling": "^7.1.1",
     "@pixi/text": "^7.1.1",
     "@pixi/text-bitmap": "^7.1.1",
-    "@pixi/ticker": "^7.1.1"
+    "@pixi/ticker": "^7.1.1",
+    "@react-spring/animated": "^9.0.0",
+    "@react-spring/types": "^9.6.1",
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
   },
   "peerDependencies": {
-    "@babel/runtime": "^7.14.8",
-    "@pixi/app": ">=7.0.0",
-    "@pixi/core": ">=7.0.0",
-    "@pixi/display": ">=7.0.0",
-    "@pixi/graphics": ">=7.0.0",
-    "@pixi/math": ">=7.0.0",
-    "@pixi/mesh-extras": ">=7.0.0",
-    "@pixi/particle-container": ">=7.0.0",
-    "@pixi/react": ">=7.0.0",
-    "@pixi/sprite": ">=7.0.0",
-    "@pixi/sprite-animated": ">=7.0.0",
-    "@pixi/sprite-tiling": ">=7.0.0",
-    "@pixi/text": ">=7.0.0",
-    "@pixi/text-bitmap": ">=7.0.0",
-    "@pixi/ticker": ">=7.0.0",
-    "@react-spring/animated": ">=9.0.0",
-    "prop-types": "^15.8.1",
-    "react": ">=17.0.0",
-    "react-dom": ">=17.0.0",
-    "react-spring": ">=9.0.0"
+    "@react-spring/animated": ">=9.0.0"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "gitHead": "6d5b98bc6d7eafd1b0016e60a725b2b6c9f46a33"
+  }
 }

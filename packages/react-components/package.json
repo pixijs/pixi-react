@@ -9,10 +9,6 @@
   },
   "license": "MIT",
   "sideEffects": false,
-  "main": "v7/index.js",
-  "module": "v7/module.js",
-  "jsnext:main": "v7/module.js",
-  "typings": "./v7/index.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -25,6 +21,10 @@
       }
     }
   },
+  "main": "v7/index.js",
+  "module": "v7/module.js",
+  "jsnext:main": "v7/module.js",
+  "typings": "./v7/index.d.ts",
   "files": [
     "v7/",
     "LICENSE",
@@ -37,26 +37,25 @@
     "@pixi/react-components-pixi-v7": "*"
   },
   "peerDependencies": {
-    "@pixi/math": ">=6.0.0",
     "@pixi/app": ">=6.0.0",
-    "@pixi/ticker": ">=6.0.0",
-    "@pixi/display": ">=6.0.0",
+    "@pixi/constants": ">=6.0.0",
     "@pixi/core": ">=6.0.0",
-    "@pixi/sprite-animated": ">=6.0.0",
-    "@pixi/text-bitmap": ">=6.0.0",
+    "@pixi/display": ">=6.0.0",
     "@pixi/graphics": ">=6.0.0",
+    "@pixi/math": ">=6.0.0",
     "@pixi/mesh-extras": ">=6.0.0",
     "@pixi/particle-container": ">=6.0.0",
-    "@pixi/constants": ">=6.0.0",
     "@pixi/sprite": ">=6.0.0",
-    "@pixi/text": ">=6.0.0",
+    "@pixi/sprite-animated": ">=6.0.0",
     "@pixi/sprite-tiling": ">=6.0.0",
+    "@pixi/text": ">=6.0.0",
+    "@pixi/text-bitmap": ">=6.0.0",
+    "@pixi/ticker": ">=6.0.0",
     "prop-types": ">=15.0.0",
     "react": ">=17.0.0",
     "react-dom": ">=17.0.0"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "gitHead": "6d5b98bc6d7eafd1b0016e60a725b2b6c9f46a33"
+  }
 }

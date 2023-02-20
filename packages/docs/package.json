@@ -2,16 +2,28 @@
   "name": "@pixi/react-docs",
   "private": true,
   "scripts": {
-    "docusaurus": "docusaurus",
-    "start": "docusaurus start",
     "build": "docusaurus build",
-    "swizzle": "docusaurus swizzle",
-    "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
+    "deploy": "docusaurus deploy",
+    "docusaurus": "docusaurus",
+    "prettify": "prettier --write **/**/*.{md,mdx}",
     "serve": "docusaurus serve",
-    "write-translations": "docusaurus write-translations",
+    "start": "docusaurus start",
+    "swizzle": "docusaurus swizzle",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "prettify": "prettier --write **/**/*.{md,mdx}"
+    "write-translations": "docusaurus write-translations"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "dependencies": {
     "@docusaurus/core": "^2.3.0",
@@ -28,18 +40,6 @@
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^2.3.0",
     "prettier": "^2.8.1"
-  },
-  "browserslist": {
-    "production": [
-      ">0.5%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "engines": {
     "node": ">=16.14"

@@ -9,10 +9,6 @@
   },
   "license": "MIT",
   "sideEffects": false,
-  "main": "index.js",
-  "module": "module.js",
-  "jsnext:main": "module.js",
-  "typings": "./index.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -25,6 +21,10 @@
       }
     }
   },
+  "main": "index.js",
+  "module": "module.js",
+  "jsnext:main": "module.js",
+  "typings": "./index.d.ts",
   "files": [
     "dist/",
     "LICENSE",
@@ -47,6 +47,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "gitHead": "6d5b98bc6d7eafd1b0016e60a725b2b6c9f46a33"
+  }
 }

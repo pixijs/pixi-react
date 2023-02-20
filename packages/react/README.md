@@ -100,7 +100,7 @@ Or checkout [our examples](https://codepen.io/collection/XPpGdb) on codepen for 
 
 ## Contribute
 
-Want to contribute to Pixi React? Our [contributing guide](/CONTRIBUTING.md) has you covered.
+Want to contribute to Pixi React? Our [contributing guide](/.github/CONTRIBUTING.md) has you covered.
 
 ## License
 

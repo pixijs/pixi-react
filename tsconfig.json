@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
     "esModuleInterop": true,
+    "jsx": "react-jsx",
     "lib": [
       "ESNext"
     ],
@@ -10,10 +12,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "pretty": true,
+    "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
     "target": "ESNext",
-    "baseUrl": "./"
   },
   "files": [
     "node_modules/jest-extended/types/index.d.ts"

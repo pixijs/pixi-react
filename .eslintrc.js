@@ -25,6 +25,10 @@ module.exports = {
         'packages/*/index.d.ts',
         '**/test/__fixtures__',
     ],
+    globals: {
+        React: true,
+        JSX: true,
+    },
     rules: {
         'no-empty-function': 0,
         'no-prototype-builtins': 0,
@@ -32,7 +36,11 @@ module.exports = {
         '@typescript-eslint/triple-slash-reference': [1, { path: 'always' }],
         '@typescript-eslint/consistent-type-imports': [1, { disallowTypeAnnotations: false }],
         '@typescript-eslint/no-parameter-properties': 1,
-        '@typescript-eslint/type-annotation-spacing': 1
+        '@typescript-eslint/type-annotation-spacing': 1,
+        '@typescript-eslint/ban-ts-comment': [
+            'error',
+            { 'ts-ignore': 'allow-with-description' },
+        ],
     },
     overrides: [
         {

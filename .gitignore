@@ -3,3 +3,5 @@ node_modules/
 **/dist/
 packages/*/stats.html
 .eslintcache
+.prettierrc
+.run

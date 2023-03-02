@@ -1,6 +1,6 @@
-import { getJestConfig } from '../../shared/getJestConfig.mjs';
+import { getJestTSConfig } from '../../shared/getJestConfig.mjs';
 
-const jestConfig = getJestConfig({
+const jestConfig = getJestTSConfig({
     roots: [
         'test'
     ],

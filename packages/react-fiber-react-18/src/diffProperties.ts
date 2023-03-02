@@ -1,18 +1,21 @@
+import type { PropsType, UpdatePayload } from '@pixi/react-types';
+
 const CHILDREN = 'children';
 
 // get diff between 2 objects
 // https://github.com/facebook/react/blob/97e2911/packages/react-dom/src/client/ReactDOMFiberComponent.js#L546
-export function diffProperties(pixiElement, type, lastProps, nextProps)
+export function diffProperties<PixiDisplayObject>(
+    _pixiElement: PixiDisplayObject,
+    _type: string,
+    lastProps: PropsType,
+    nextProps: PropsType,
+): UpdatePayload
 {
     let updatePayload = null;
 
     for (const propKey in lastProps)
     {
-        if (
-            nextProps.hasOwnProperty(propKey)
-            || !lastProps.hasOwnProperty(propKey)
-            || lastProps[propKey] === null
-        )
+        if (nextProps.hasOwnProperty(propKey) || !lastProps.hasOwnProperty(propKey) || lastProps[propKey] === null)
         {
             continue;
         }
@@ -37,11 +40,7 @@ export function diffProperties(pixiElement, type, lastProps, nextProps)
         const nextProp = nextProps[propKey];
         const lastProp = lastProps !== null ? lastProps[propKey] : undefined;
 
-        if (
-            !nextProps.hasOwnProperty(propKey)
-            || nextProp === lastProp
-            || (nextProp === null && lastProp === null)
-        )
+        if (!nextProps.hasOwnProperty(propKey) || nextProp === lastProp || (nextProp === null && lastProp === null))
         {
             continue;
         }

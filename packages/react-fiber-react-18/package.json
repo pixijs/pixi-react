@@ -9,36 +9,14 @@
   },
   "license": "MIT",
   "sideEffects": false,
-  "main": "index.js",
-  "module": "module.js",
-  "jsnext:main": "module.js",
-  "typings": "./index.d.ts",
-  "exports": {
-    ".": {
-      "import": {
-        "types": "./index.d.ts",
-        "default": "./module.js"
-      },
-      "require": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
-      }
-    }
-  },
-  "files": [
-    "dist/",
-    "LICENSE",
-    "README.md",
-    "index.d.ts",
-    "index.js",
-    "module.js"
-  ],
   "scripts": {
+    "clean": "rimraf ../react-fiber/v18/dist",
     "prebuild": "npm run clean",
-    "build": "npm run build:dev && npm run build:prod",
+    "build": "npm run build:versions && npm run build:types && npm run build:dev && npm run build:prod",
+    "build:versions": "./scripts/getVersions.mjs",
+    "build:types": "tsc -p tsconfig.types.json",
     "build:dev": "cross-env NODE_ENV=development rollup -c",
     "build:prod": "cross-env NODE_ENV=production rollup -c",
-    "clean": "rimraf ../react-fiber/v18/dist",
     "test": "jest --silent",
     "test:watch": "jest --watch"
   },
@@ -46,10 +24,8 @@
     "@pixi/react-invariant": "*"
   },
   "devDependencies": {
+    "@pixi/react-modular": "*",
+    "@types/react-reconciler": "^0.28.2",
     "react-reconciler": "^0.29.0"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "gitHead": "6d5b98bc6d7eafd1b0016e60a725b2b6c9f46a33"
+  }
 }

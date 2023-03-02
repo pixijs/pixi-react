@@ -25,4 +25,4 @@ jobs:
 
       - run: npm run lint
 
-      - run: npm test --ci --silent
+      - run: npm test:types && npm test:ci --ci --silent

@@ -18,6 +18,8 @@
     "build:prod": "cross-env NODE_ENV=production rollup -c",
     "postbuild": "./scripts/fixDeclarationReference.mjs",
     "test": "jest --silent",
+    "test:ci": "jest --silent --runInBand",
+    "test:types": "tsc --noEmit",
     "test:watch": "jest --watch"
   },
   "dependencies": {

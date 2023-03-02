@@ -40,6 +40,8 @@
     "build:dev": "cross-env NODE_ENV=development rollup -c",
     "build:prod": "cross-env NODE_ENV=production rollup -c",
     "test": "jest --silent",
+    "test:ci": "jest --silent --runInBand",
+    "test:types": "tsc --noEmit",
     "test:watch": "jest --watch"
   },
   "sideEffects": false,

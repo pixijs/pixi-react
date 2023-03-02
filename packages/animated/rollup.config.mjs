@@ -1,4 +1,4 @@
-import { getRollupConfig, isProductionBuild } from '../../shared/getRollupConfig.mjs';
+import { getRollupTSConfig, isProductionBuild } from '../../shared/getRollupConfig.mjs';
 
 const buildType = isProductionBuild() ? '' : '-dev';
 
@@ -24,7 +24,7 @@ const external =  [
 ];
 
 const builds = ['cjs', 'es'].map(
-    (format) => getRollupConfig(
+    (format) => getRollupTSConfig(
         `dist/index.${format}${buildType}.js`,
         format,
         { external }

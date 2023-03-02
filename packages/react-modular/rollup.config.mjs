@@ -1,8 +1,6 @@
-import alias from '@rollup/plugin-alias';
-
 import {
     getBuildFormat,
-    getRollupConfig,
+    getRollupTSConfig,
     isProductionBuild,
 } from '../../shared/getRollupConfig.mjs';
 
@@ -21,15 +19,7 @@ let builds;
 if (format)
 {
     builds = [
-        getRollupConfig(`dist/index.${format}${buildType}.js`, format, {
-            beforePlugins: [
-                alias({
-                    entries: {
-                        '@react-spring/animated':
-                            '../../shared/react-spring-create-host.js',
-                    },
-                }),
-            ],
+        getRollupTSConfig(`dist/index.${format}${buildType}.js`, format, {
             external,
         }),
     ];
@@ -37,15 +27,7 @@ if (format)
 else
 {
     builds = ['cjs', 'es'].map((format) =>
-        getRollupConfig(`dist/index.${format}${buildType}.js`, format, {
-            beforePlugins: [
-                alias({
-                    entries: {
-                        '@react-spring/animated':
-                            '../../shared/react-spring-create-host.js',
-                    },
-                }),
-            ],
+        getRollupTSConfig(`dist/index.${format}${buildType}.js`, format, {
             external,
         })
     );

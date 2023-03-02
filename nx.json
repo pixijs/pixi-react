@@ -24,6 +24,9 @@
     },
     "test": {
       "dependsOn": ["^build"]
+    },
+    "test:types": {
+      "dependsOn": ["^build"]
     }
   },
   "namedInputs": {

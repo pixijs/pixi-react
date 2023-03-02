@@ -3,9 +3,9 @@ import { makeHostConfig } from './hostconfig';
 import rootPackageJson from '../../../package.json';
 import packageJson from '../package.json';
 
-export const REACT_DOM_VERSION = rootPackageJson.dependencies[
+export const REACT_DOM_VERSION = rootPackageJson?.dependencies?.[
     'react-dom'
-].replace(/[^0-9.]/g, '');
+]?.replace(/[^0-9.]/g, '') || '18.0.0';
 export const VERSION = packageJson.version;
 export const PACKAGE_NAME = packageJson.name;
 

@@ -43,7 +43,12 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "@pixi/react-invariant": "*",
+    "@pixi/react-invariant": "*"
+  },
+  "devDependencies": {
+    "react-reconciler": "~0.29.0"
+  },
+  "peerDependencies": {
     "react-reconciler": "^0.29.0"
   },
   "publishConfig": {

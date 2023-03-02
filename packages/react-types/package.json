@@ -1,0 +1,34 @@
+{
+  "name": "@pixi/react-types",
+  "description": "Pixi React shared TS types",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pixijs/pixi-react.git",
+    "directory": "packages/react-types"
+  },
+  "license": "MIT",
+  "main": "index.ts",
+  "module": "index.ts",
+  "jsnext:main": "index.ts",
+  "typings": "./index..ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.ts",
+        "default": "./index.ts"
+      },
+      "require": {
+        "types": "./index.ts",
+        "default": "./index.ts"
+      }
+    }
+  },
+  "files": [
+    "index.ts",
+    "LICENSE",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

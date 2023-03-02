@@ -12,15 +12,15 @@
   "main": "v7/index.js",
   "module": "v7/module.js",
   "jsnext:main": "v7/module.js",
-  "typings": "./v7/index.d.ts",
+  "typings": "./v7/dist/types/index.d.ts",
   "exports": {
     ".": {
       "import": {
-        "types": "./v7/index.d.ts",
+        "types": "./v7/dist/types/index.d.ts",
         "default": "./v7/module.js"
       },
       "require": {
-        "types": "./v7/index.d.ts",
+        "types": "./v7/dist/types/index.d.ts",
         "default": "./v7/index.js"
       }
     }

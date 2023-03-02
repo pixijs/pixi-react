@@ -1,13 +1,8 @@
-import { getJestConfig } from '../../shared/getJestConfig.mjs';
+import { getJestTSConfig } from '../../shared/getJestConfig.mjs';
 
-const jestConfig = getJestConfig({
-    roots: [
-        'test'
-    ],
-    setupFiles: [
-        '<rootDir>/test/bootstrap.js',
-        '<rootDir>/test/__mocks__/matchMediaMock.js'
-    ]
+const jestConfig = getJestTSConfig({
+    roots: ['test'],
+    setupFiles: ['<rootDir>/test/bootstrap.ts', '<rootDir>/test/__mocks__/matchMediaMock.ts'],
 });
 
 export default jestConfig;

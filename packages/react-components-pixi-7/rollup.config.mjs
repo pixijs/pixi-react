@@ -1,10 +1,7 @@
 import alias from '@rollup/plugin-alias';
+import copy from 'rollup-plugin-copy';
 
-import {
-    getBuildFormat,
-    getRollupConfig,
-    isProductionBuild,
-} from '../../shared/getRollupConfig.mjs';
+import { getBuildFormat, getRollupTSConfig, isProductionBuild } from '../../shared/getRollupConfig.mjs';
 
 const format = getBuildFormat();
 const buildType = isProductionBuild() ? '' : '-dev';
@@ -37,36 +34,32 @@ const external = [
 
 let builds;
 
+const mergeOptions = {
+    beforePlugins: [
+        alias({
+            entries: {
+                '@react-spring/animated': '../../shared/react-spring-create-host.js',
+            },
+        }),
+        copy({
+            targets: [
+                { src: 'src/global.d.ts', dest: '../react-components/v7/dist/types' }
+            ]
+        })
+    ],
+    external,
+};
+
 if (format)
 {
     builds = [
-        getRollupConfig(`../react-components/v7/dist/index.${format}${buildType}.js`, format, {
-            beforePlugins: [
-                alias({
-                    entries: {
-                        '@react-spring/animated':
-                            '../../shared/react-spring-create-host.js',
-                    },
-                }),
-            ],
-            external,
-        }),
+        getRollupTSConfig(`../react-components/v7/dist/index.${format}${buildType}.js`, format, mergeOptions),
     ];
 }
 else
 {
     builds = ['cjs', 'es'].map((format) =>
-        getRollupConfig(`../react-components/v7/dist/index.${format}${buildType}.js`, format, {
-            beforePlugins: [
-                alias({
-                    entries: {
-                        '@react-spring/animated':
-                            '../../shared/react-spring-create-host.js',
-                    },
-                }),
-            ],
-            external,
-        })
+        getRollupTSConfig(`../react-components/v7/dist/index.${format}${buildType}.js`, format, mergeOptions),
     );
 }
 

@@ -12,15 +12,15 @@
   "main": "index.js",
   "module": "module.js",
   "jsnext:main": "module.js",
-  "typings": "./index.d.ts",
+  "typings": "./dist/types/index.d.ts",
   "exports": {
     ".": {
       "import": {
-        "types": "./index.d.ts",
+        "types": "./dist/types/index.d.ts",
         "default": "./module.js"
       },
       "require": {
-        "types": "./index.d.ts",
+        "types": "./dist/types/index.d.ts",
         "default": "./index.js"
       }
     }
@@ -34,11 +34,12 @@
     "module.js"
   ],
   "scripts": {
+    "clean": "rimraf dist index.d.ts",
     "prebuild": "npm run clean",
-    "build": "npm run build:dev && npm run build:prod",
+    "build": "npm run build:types && npm run build:dev && npm run build:prod",
+    "build:types": "tsc -p tsconfig.types.json",
     "build:dev": "cross-env NODE_ENV=development rollup -c",
-    "build:prod": "cross-env NODE_ENV=production rollup -c",
-    "clean": "rimraf ./dist"
+    "build:prod": "cross-env NODE_ENV=production rollup -c"
   },
   "publishConfig": {
     "access": "public"

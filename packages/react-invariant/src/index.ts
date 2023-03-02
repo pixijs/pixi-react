@@ -1,5 +1,5 @@
 // borrowed from fbjs
-export function invariant(condition, format, ...args)
+export function invariant(condition: boolean, format: string, ...args: string[])
 {
     if (process.env.NODE_ENV === 'production')
     {
@@ -25,6 +25,7 @@ export function invariant(condition, format, ...args)
             error.name = 'Invariant Violation';
         }
 
+        // @ts-ignore: as per original fbjs implementation
         error.framesToPop = 1; // Skip invariant's own stack frame.
         throw error;
     }

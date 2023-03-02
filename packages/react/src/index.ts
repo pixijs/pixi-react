@@ -1,36 +1,5 @@
-import { configurePixiReact, PixiComponent } from '@pixi/react-modular';
-import { configurePixiReactFiber, configurePixiReactHostConfig } from '@pixi/react-fiber';
 import {
     TYPES,
-    AppProvider,
-    AppConsumer,
-    AppContext,
-    applyDefaultProps,
-    configurePixiReactComponents,
-    configurePixiReactStage,
-    configurePixiReactRenderAPI,
-    eventHandlers,
-    useTick,
-    useApp,
-    withPixiApp,
-    withFilters,
-} from '@pixi/react-components';
-
-const {
-    PixiReactFiber,
-    createRoot,
-    render,
-    unmountComponentAtNode,
-    Stage,
-} = configurePixiReact({
-    configurePixiReactHostConfig,
-    configurePixiReactFiber,
-    configurePixiReactComponents,
-    configurePixiReactStage,
-    configurePixiReactRenderAPI,
-});
-
-const {
     BitmapText,
     Container,
     Graphics,
@@ -42,7 +11,24 @@ const {
     TilingSprite,
     SimpleMesh,
     SimpleRope,
-} = TYPES;
+    AppProvider,
+    AppConsumer,
+    AppContext,
+    applyDefaultProps,
+    eventHandlers,
+    useTick,
+    useApp,
+    withPixiApp,
+    withFilters,
+} from '@pixi/react-components';
+import {
+    PixiComponent,
+    PixiReactFiber,
+    Stage,
+    createRoot,
+    render,
+    unmountComponentAtNode,
+} from './bootstrap';
 
 export {
     PixiComponent,

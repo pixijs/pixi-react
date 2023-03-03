@@ -16,7 +16,7 @@ jobs:
           - v{{ checksum "_cache_version" }}-dependencies-{{ checksum "package.json" }}
           - v{{ checksum "_cache_version" }}-dependencies-
 
-      - run: npm install
+      - run: npm ci --legacy-peer-deps
 
       - save_cache:
           paths:

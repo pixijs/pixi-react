@@ -15,7 +15,7 @@
     "release": "lerna publish --no-private",
     "test": "nx run-many --target=test --all --parallel",
     "test:force": "nx run-many --target=test --all --parallel --skip-nx-cache",
-    "test:ci": "nx run-many --target=test:ci --all --parallel",
+    "test:ci": "nx run-many --target=test:ci --all --parallel=false",
     "test:ci:force": "nx run-many --target=test:ci --all --parallel --skip-nx-cache",
     "test:types": "nx run-many --target=test:types --all --parallel",
     "test:types:force": "nx run-many --target=test:types --all --parallel --skip-nx-cache",

@@ -12,11 +12,10 @@
   "scripts": {
     "prebuild": "npm run clean",
     "clean": "rimraf ../react-components/v7/dist",
-    "build": "npm run build:types && npm run build:dev && npm run build:prod",
+    "build": "npm run build:types && npm run build:dev && npm run build:prod && ./scripts/fixDeclarationReference.mjs",
     "build:types": "tsc -p tsconfig.types.json",
     "build:dev": "cross-env NODE_ENV=development rollup -c",
     "build:prod": "cross-env NODE_ENV=production rollup -c",
-    "postbuild": "./scripts/fixDeclarationReference.mjs",
     "test": "jest --silent",
     "test:ci": "jest --silent --runInBand",
     "test:types": "tsc --noEmit",

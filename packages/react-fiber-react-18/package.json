@@ -17,6 +17,7 @@
     "build:types": "tsc -p tsconfig.types.json",
     "build:dev": "cross-env NODE_ENV=development rollup -c",
     "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "postbuild": "../../scripts/logBuildDirectoryStructure.mjs",
     "test": "jest --silent",
     "test:ci": "jest --silent --runInBand",
     "test:types": "tsc --noEmit",

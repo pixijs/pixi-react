@@ -18,7 +18,8 @@
     "test:ci": "nx run-many --target=test:ci --all --parallel",
     "test:ci:force": "nx run-many --target=test:ci --all --parallel --skip-nx-cache",
     "test:types": "nx run-many --target=test:types --all --parallel",
-    "test:types:force": "nx run-many --target=test:types --all --parallel --skip-nx-cache"
+    "test:types:force": "nx run-many --target=test:types --all --parallel --skip-nx-cache",
+    "log:build": "scripts/logBuildDirectoryStructure.mjs"
   },
   "husky": {
     "hooks": {
@@ -81,6 +82,7 @@
     "babel-jest": "^29.3.1",
     "babel-plugin-module-resolver": "4.1.0",
     "cross-env": "^7.0.3",
+    "directory-tree": "^3.5.1",
     "eslint": "^8.29.0",
     "eslint-plugin-react": "^7.31.11",
     "husky": "^8.0.2",

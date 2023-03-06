@@ -1,6 +1,6 @@
 import { Container as PixiContainer } from '@pixi/display';
-import type { ExpandoContainer } from '../types';
+import type { PixiReactContainer } from '../types';
 
-const Container = (): ExpandoContainer => new PixiContainer();
+const Container = (): PixiReactContainer => new PixiContainer();
 
 export default Container;

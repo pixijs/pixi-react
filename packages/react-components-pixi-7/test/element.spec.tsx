@@ -11,14 +11,14 @@ import { SimpleRope, SimpleMesh, NineSlicePlane } from '@pixi/mesh-extras';
 import { Point } from '@pixi/math';
 import { render } from '@testing-library/react';
 import type { PixiReactHostConfig } from '@pixi/react-fiber';
-import type { ComponentsType, ComponentType, PixiComponentType, PropsType } from '@pixi/react-types';
+import type { ComponentsType, PixiComponentType, PropsType } from '@pixi/react-types';
 
 import { TYPES } from '../src';
 import { emptyTexture } from './__fixtures__/textures';
 import { desyrel } from './__fixtures__/bitmapfonts';
 import parseBitmapFont from './__utils__/parseBitmapFont';
 import { configure } from './__utils__/configure';
-import type { ExpandoContainer, StageType } from '../src/types';
+import type { PixiReactContainer, ReactStageComponent } from '../src/types';
 
 parseBitmapFont(desyrel);
 
@@ -139,7 +139,7 @@ describe('applyProps', () =>
 {
     let spy: any;
     let hostConfig: PixiReactHostConfig<Container>;
-    let createElement: (type: string, props?: PropsType) => ExpandoContainer;
+    let createElement: (type: string, props?: PropsType) => PixiReactContainer;
 
     beforeEach(() =>
     {
@@ -387,10 +387,10 @@ describe('PixiComponent', () =>
 {
     let hostConfig: PixiReactHostConfig<Container>;
     let root: Container;
-    let createElement: (type: string, props?: PropsType) => ExpandoContainer;
-    let Stage: StageType;
+    let createElement: (type: string, props?: PropsType) => PixiReactContainer;
+    let Stage: ReactStageComponent;
     let COMPONENTS: ComponentsType;
-    let PixiComponent: PixiComponentType<PropsType, ComponentType<PropsType, ExpandoContainer>>;
+    let PixiComponent: PixiComponentType;
 
     const mockLifeCycle = {
         create: () => new Container(),
@@ -475,7 +475,7 @@ describe('PixiComponent', () =>
             destroy: true,
         };
 
-        const makeLifecycle = (pixiInstance: ExpandoContainer) => ({
+        const makeLifecycle = (pixiInstance: PixiReactContainer) => ({
             create: jest.fn(() => pixiInstance),
             didMount: jest.fn(),
             willUnmount: jest.fn(),

@@ -1,6 +1,5 @@
-import type { Component } from 'react';
 import type React from 'react';
-import type { ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
+import type { Component, ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 
 export type PropsType = { [key: string]: any };
 
@@ -32,6 +31,98 @@ export interface PixiReactMinimalExpandoContainer extends MinimalContainer
         root: any | null;
     };
 }
+
+// TODO: defining twice like this seems to be the only way to get around an
+// issue with circular references and the fact this version uses generics
+export type PixiReactExpandoContainer<PixiContainer extends PixiReactMinimalExpandoContainer> = {
+    config?: lifeCycleConfigType;
+    applyProps?: applyPropsType<PropsType, PixiContainer>;
+    didMount?: didMountType<PixiContainer>;
+    willUnmount?: willUnmountType<PixiContainer>;
+    __reactpixi?: {
+        root: PixiContainer | null;
+    };
+};
+
+type IfEquals<X, Y, A = X, B = never> = (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y ? 1 : 2 ? A : B;
+
+type ReadonlyKeys<T> = {
+    [P in keyof T]-?: IfEquals<{ [Q in P]: T[P] }, { -readonly [Q in P]: T[P] }, never, P>;
+}[keyof T];
+
+type AnySource<PixiTexture> = number | ImageSource | VideoSource | HTMLCanvasElement | PixiTexture;
+
+export type PointCoords = [number, number] | [number];
+export type PointLike<PixiPoint, PixiObservablePoint> =
+    | PixiPoint
+    | PixiObservablePoint
+    | PointCoords
+    | number
+    | { x?: number; y?: number }
+    | string;
+
+type WithPointLike<PixiPoint, PixiObservablePoint, T extends keyof any> = {
+    [P in T]: PointLike<PixiPoint, PixiObservablePoint>;
+};
+
+export interface WithSource<PixiTexture>
+{
+    /**
+     * Directly apply an image
+     *
+     * @example
+     *
+     * image="./image.png"
+     */
+    image?: ImageSource;
+
+    /**
+     * Directly apply a video
+     *
+     * @example
+     *
+     * video="./video.mp4"
+     */
+    video?: VideoSource;
+
+    /**
+     * Directly apply an already created PixiJS Texture
+     */
+    texture?: PixiTexture;
+
+    /**
+     * Directly apply a source.
+     * Can be an image, video, canvas, frame id or even a texture
+     *
+     * @example
+     *
+     * source="./image.jpg"
+     * source="./video.mp4"
+     * source={document.querySelector('img')}
+     * source={document.querySelector('video')}
+     * source={document.querySelector('canvas')}
+     */
+    source?: AnySource<PixiTexture>;
+}
+
+export type InstanceProps = PropsType & WithAttach;
+
+// This helper is used to create types for the prop argument to React.FC
+export type ReactContainerProps<
+    PixiPoint,
+    PixiObservablePoint,
+    PixiContainer extends MinimalContainer,
+    Props = object,
+> = Partial<
+Omit<PixiContainer, 'children' | PointLikeProps | ReadonlyKeys<PixiContainer> | keyof Props> &
+WithPointLike<PixiPoint, PixiObservablePoint, PointLikeProps>
+> &
+Props &
+InteractionEvents & { ref?: React.Ref<PixiContainer> };
+
+// This helper is used to create types for the return argument of component lifecycle create
+export type PixiReactContainer<PixiContainer extends PixiReactMinimalExpandoContainer> = PixiContainer &
+PixiReactExpandoContainer<PixiContainer>;
 
 export type UpdatePayload = Array<any> | null;
 
@@ -225,7 +316,66 @@ export type UnmountComponentAtNodeType<Container extends MinimalContainer> = (co
 
 type MountUnmountType<Application> = (app: Application) => void;
 
-export type StageProps<Application, ApplicationOptions> = {
+export type DisplayObjectSettableProperty =
+    | 'alpha'
+    | 'buttonMode'
+    | 'cacheAsBitmap'
+    | 'cursor'
+    | 'filterArea'
+    | 'filters'
+    | 'hitArea'
+    | 'interactive'
+    | 'mask'
+    | 'pivot'
+    | 'position'
+    | 'renderable'
+    | 'rotation'
+    | 'scale'
+    | 'skew'
+    | 'transform'
+    | 'visible'
+    | 'x'
+    | 'y';
+
+type InteractionEventTypes =
+    | 'click'
+    | 'mousedown'
+    | 'mousemove'
+    | 'mouseout'
+    | 'mouseover'
+    | 'mouseup'
+    | 'mouseupoutside'
+    | 'tap'
+    | 'touchstart'
+    | 'touchmove'
+    | 'touchend'
+    | 'touchendoutside'
+    | 'pointercancel'
+    | 'pointerout'
+    | 'pointerover'
+    | 'pointertap'
+    | 'pointerdown'
+    | 'pointerup'
+    | 'pointerupoutside'
+    | 'pointermove'
+    | 'rightclick'
+    | 'rightdown'
+    | 'rightup'
+    | 'rightupoutside'
+    | 'touchcancel';
+
+export type InteractionEvents = {
+    [P in InteractionEventTypes]?: (event: any) => void;
+};
+
+export type PointLikeProps = 'position' | 'scale' | 'pivot' | 'anchor' | 'skew';
+
+export type ImageSource = string | HTMLImageElement;
+export type VideoSource = string | HTMLVideoElement;
+
+export type HTMLCanvasProps = React.CanvasHTMLAttributes<HTMLCanvasElement>;
+
+export type StageProps<Application, ApplicationOptions> = HTMLCanvasProps & {
     children: React.ReactNode;
     width?: number;
     height?: number;
@@ -233,11 +383,45 @@ export type StageProps<Application, ApplicationOptions> = {
     onUnmount?: MountUnmountType<Application>;
     raf?: boolean;
     renderOnComponentChange?: boolean;
-    options?: ApplicationOptions;
+    options?: Partial<ApplicationOptions>;
 };
 
-export type StageType<BaseStage, Application, ApplicationOptions> = ForwardRefExoticComponent<
-PropsWithoutRef<PropsType & StageProps<Application, ApplicationOptions>> & RefAttributes<BaseStage>
+export type StagePropsWithFiber<Application, ApplicationOptions, PixiContainer extends MinimalContainer> = StageProps<
+Application,
+ApplicationOptions
+> & {
+    pixiReactFiberInstance: MinimalPixiReactFiber<PixiContainer>;
+};
+
+// TODO: Is it possible to write a forwardRef compatible interface for BaseStage?
+// export interface IBaseStage<Application, IApplicationOptions, PixiContainer extends MinimalContainer, Ticker>
+//     extends React.Component<Required<StagePropsWithFiber<Application, IApplicationOptions, PixiContainer>>>
+// {
+//     _canvas: HTMLCanvasElement | null;
+//     _mediaQuery: MediaQueryList | null;
+//     _ticker: Ticker | null;
+//     _needsUpdate: boolean;
+//     app: Application | null;
+//     mountNode: any;
+//     updateSize: () => void;
+//     needsRenderUpdate: () => void;
+//     renderStage: () => void;
+//     resetInteractionManager: () => void;
+//     getChildren: () => any;
+// }
+//
+// export type ReactStageComponent<
+//     Application,
+//     ApplicationOptions,
+//     PixiContainer extends MinimalContainer,
+//     Ticker,
+// > = ForwardRefExoticComponent<
+// PropsWithoutRef<StageProps<Application, ApplicationOptions>> &
+// RefAttributes<IBaseStage<Application, ApplicationOptions, PixiContainer, Ticker>>
+// >;
+
+export type ReactStageComponent<BaseStage, Application, ApplicationOptions> = ForwardRefExoticComponent<
+PropsWithoutRef<StageProps<Application, ApplicationOptions>> & RefAttributes<BaseStage>
 >;
 
 export type applyPropsType<P extends PropsType, PixiContainer extends PixiReactMinimalExpandoContainer> = (
@@ -342,9 +526,9 @@ export type ComponentType<
 
 export type ComponentsType = Record<string, ComponentType<any, any>>;
 
-export type PixiComponentType<P extends PropsType, ComponentType> = (
+export type PixiComponentType = <P extends PropsType, PixiContainer extends PixiReactMinimalExpandoContainer>(
     type: string,
-    lifecycle: ComponentType,
+    lifecycle: ComponentType<P, PixiContainer>,
 ) => React.ComponentType<P>;
 
 export type PixiReactRenderEventType =

@@ -3,31 +3,35 @@ import PropTypes from 'prop-types';
 import { invariant } from '@pixi/react-invariant';
 import type { Filter } from '@pixi/core';
 import { hasKey, not } from '../utils/fp';
+import type { Container } from '@pixi/display';
+import type { BaseReactContainerProps } from '../types';
 
 export type FilterClassMap = Record<string, typeof Filter>;
 export type FilterInstanceMap = Record<string, Filter>;
-type FilterProps = {
-    [key: string]: {
-        construct?: any[];
-        [key: string]: any;
-    } | any;
-};
+
 export type WrapperProps = {
     apply?: (filters: FilterInstanceMap) => void;
-    children?: React.ReactNode;
+    [key: string]:
+        | {
+              construct?: any[];
+              [key: string]: any;
+          }
+        | any;
 };
-export type WithFiltersProps = {
-    filters: Filter[];
-};
-export type AllProps = WrapperProps & WithFiltersProps;
 
-export const withFilters = <P extends AllProps>(WrapperComponent: React.ComponentType<P>, filters: FilterClassMap) =>
+// TODO: P seems to be missing some Container props in code completion eg. x, y
+export const withFilters = <T extends Container, P extends BaseReactContainerProps<T>>(
+    WrapperComponent: React.ComponentType<P>,
+    filters: FilterClassMap,
+) =>
 {
     invariant(typeof filters === 'object', 'Second argument needs to be an indexed object with { prop: Filter }');
 
     const filterKeys = Object.keys(filters);
 
-    const Wrapper = ({ apply, children, ...props }: Omit<P, keyof WithFiltersProps> & FilterProps) =>
+    // TODO: It would be nice to Omit 'filters' from Wrapper but this breaks the
+    // apply typing for some reason
+    const Wrapper = ({ apply, children, ...props }: P & WrapperProps) =>
     {
         // TODO: useRef shouldn't wrap a useMemo... what's the point of the useRef?
         // create filters

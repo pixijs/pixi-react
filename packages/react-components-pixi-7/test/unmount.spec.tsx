@@ -4,7 +4,7 @@ import { act } from 'react-dom/test-utils';
 
 import { Text } from '../src';
 import { configure } from './__utils__/configure';
-import type { RenderType, Roots, StageType, UnmountComponentAtNodeType } from '../src/types';
+import type { RenderType, Roots, ReactStageComponent, UnmountComponentAtNodeType } from '../src/types';
 
 jest.useFakeTimers();
 
@@ -16,7 +16,7 @@ describe('unmount render', () =>
     let roots: Roots;
     let render: RenderType;
     let unmountComponentAtNode: UnmountComponentAtNodeType;
-    let Stage: StageType;
+    let Stage: ReactStageComponent;
 
     beforeEach(() =>
     {

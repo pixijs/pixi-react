@@ -1,13 +1,7 @@
-import type { IBitmapTextStyle } from '@pixi/text-bitmap';
 import { BitmapText as PixiBitmapText } from '@pixi/text-bitmap';
-import type { ExpandoBitmapText, ExpandoContainer, PropsType } from '../types';
+import type { BitmapTextProps, PixiReactBitmapText, PixiReactContainer } from '../types';
 
-export type BitmapTextProps = PropsType & {
-    text: string;
-    style: Partial<IBitmapTextStyle>;
-};
-
-const BitmapText = (_root: ExpandoContainer, props: BitmapTextProps): ExpandoBitmapText =>
+const BitmapText = (_root: PixiReactContainer, props: BitmapTextProps): PixiReactBitmapText =>
 {
     const { text, style } = props;
 

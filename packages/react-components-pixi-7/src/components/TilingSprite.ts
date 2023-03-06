@@ -1,24 +1,14 @@
-import type { Texture } from '@pixi/core';
 import { TilingSprite as PixiTilingSprite } from '@pixi/sprite-tiling';
 import { getTextureFromProps, applyDefaultProps } from '../utils/props';
 import { parsePoint, pointsAreEqual } from '../utils/pixi';
-import type { ExpandoContainer, ExpandoTilingSprite, PointLike, PropsType } from '../types';
+import type { PixiReactContainer, PixiReactTilingSprite, TilingSpriteProps } from '../types';
 
-export type TilingSpriteProps = PropsType & {
-    image?: string | HTMLImageElement;
-    texture?: Texture;
-    width?: number;
-    height?: number;
-    tilePosition?: PointLike;
-    tileScale?: PointLike;
-};
-
-const TilingSprite = (root: ExpandoContainer, props: TilingSpriteProps) =>
+const TilingSprite = (root: PixiReactContainer, props: TilingSpriteProps) =>
 {
     const { width = 100, height = 100 } = props;
     const texture = getTextureFromProps('TilingSprite', root, props);
 
-    const ts: ExpandoTilingSprite = new PixiTilingSprite(texture, width, height);
+    const ts: PixiReactTilingSprite = new PixiTilingSprite(texture, width, height);
 
     ts.applyProps = (instance, oldProps, newProps) =>
     {

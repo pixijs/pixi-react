@@ -11,7 +11,7 @@ import type {
     RenderType,
     UnmountComponentAtNodeType,
     MinimalContainer,
-    MinimalHostConfig,
+    MinimalHostConfig, ComponentsType
 } from '@pixi/react-types';
 
 type ConfigurePixiReactHostConfigType<
@@ -29,7 +29,7 @@ type ConfigurePixiReactFiberType<
 > = (hostConfig: HostConfigType) => PixiReactFiberType;
 
 type ConfigurePixiReactComponentsType<PixiContainer extends PixiReactMinimalExpandoContainer> = (
-    pixiComponent: PixiComponentType<PropsType, ComponentType<PropsType, PixiContainer>>,
+    pixiComponent: PixiComponentType,
 ) => {
     TYPES: Record<string, string>;
     applyDefaultProps: applyPropsType<PropsType, PixiContainer>;
@@ -51,10 +51,9 @@ type ConfigurePixiReactRenderAPIType<
     unmountComponentAtNode: UnmountComponentAtNodeType<Container>;
 };
 
-export function configurePixiComponent<PixiContainer extends PixiReactMinimalExpandoContainer>()
+export function configurePixiComponent()
 {
-    type ConcreteComponentType = ComponentType<PropsType, PixiContainer>;
-    const COMPONENTS: Record<string, ConcreteComponentType> = {};
+    const COMPONENTS: ComponentsType = {};
 
     /**
      * Create Component
@@ -62,7 +61,10 @@ export function configurePixiComponent<PixiContainer extends PixiReactMinimalExp
      * @param {string} type
      * @param {Object} lifecycle methods
      */
-    function PixiComponent<P extends PropsType>(type: string, lifecycle: ConcreteComponentType)
+    function PixiComponent<P extends PropsType, PixiContainer extends PixiReactMinimalExpandoContainer>(
+        type: string,
+        lifecycle: ComponentType<P, PixiContainer>,
+    )
     {
         invariant(!!type, 'Expect type to be defined, got `%s`', type);
         invariant(
@@ -98,7 +100,7 @@ export function configurePixiReact<
     configurePixiReactRenderAPI: ConfigurePixiReactRenderAPIType<PixiContainer, PixiReactFiberType>;
 })
 {
-    const { COMPONENTS, PixiComponent } = configurePixiComponent<PixiContainer>();
+    const { COMPONENTS, PixiComponent } = configurePixiComponent();
 
     // `configurePixiReactComponents` depends on this module's `PixiComponent` in order to build and store references to
     // instances of the default PixiReact component types
@@ -130,7 +132,7 @@ export function configurePixiReact<
         // From this module
         COMPONENTS,
         PixiComponent,
-        // From pixi-react-fiber, hostConfig exposed for testing purposes only
+        // From pixi-react-fiber
         PixiReactFiber,
         // From pixi-react-components
         TYPES,

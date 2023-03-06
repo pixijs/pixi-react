@@ -1,16 +1,10 @@
 import { Sprite as PixiSprite } from '@pixi/sprite';
-import type { Texture } from '@pixi/core';
 import { getTextureFromProps, applyDefaultProps } from '../utils/props';
-import type { ExpandoContainer, ExpandoSprite, PropsType } from '../types';
+import type { PixiReactContainer, PixiReactSprite, SpriteProps } from '../types';
 
-export type SpriteProps = PropsType & {
-    image?: string | HTMLImageElement;
-    texture?: Texture;
-};
-
-const Sprite = (root: ExpandoContainer, props: SpriteProps) =>
+const Sprite = (root: PixiReactContainer, props: SpriteProps) =>
 {
-    const sprite: ExpandoSprite = new PixiSprite(getTextureFromProps('Sprite', root, props));
+    const sprite: PixiReactSprite = new PixiSprite(getTextureFromProps('Sprite', root, props));
 
     sprite.applyProps = (instance, oldProps, newProps) =>
     {

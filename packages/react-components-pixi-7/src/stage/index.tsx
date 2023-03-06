@@ -6,9 +6,9 @@ import { Application } from '@pixi/app';
 import { Ticker } from '@pixi/ticker';
 import PropTypes from 'prop-types';
 import { invariant } from '@pixi/react-invariant';
-import type { MinimalPixiReactFiber, PropsType, StageProps } from '@pixi/react-types';
+import type { HTMLCanvasProps, MinimalPixiReactFiber, StageProps, StagePropsWithFiber } from '@pixi/react-types';
 import { PROPS_DISPLAY_OBJECT } from '../utils/props';
-import type { ExpandoContainer } from '../types';
+import type { PixiReactContainer } from '../types';
 import { AppProvider } from './provider';
 
 /**
@@ -116,35 +116,34 @@ const wrappedStagePropTypes = {
     pixiReactFiberInstance: PropTypes.object,
 };
 
-const noop = () => {};
+const noop = (_app: Application) => {};
 
 const defaultProps = {
     width: 800,
     height: 600,
     onMount: noop,
     onUnmount: noop,
+    options: {},
     raf: true,
     renderOnComponentChange: true,
 };
 
-// TODO: move to types?
-export type PixiReactStageProps = StageProps<Application, Partial<IApplicationOptions>> &
-    PropsType & {
-        pixiReactFiberInstance: MinimalPixiReactFiber<Container>;
-    };
-// force optional props to required props for defaults
-export type PixiReactStagePropsWithDefaults = PixiReactStageProps & typeof defaultProps;
+type BaseStageProps = StagePropsWithFiber<Application, IApplicationOptions, Container>;
+type HOCStageProps = StageProps<Application, IApplicationOptions>;
+// force optional to required props for defaults to prevent TS undefined errors
+type BaseStagePropsWithDefaults = Required<BaseStageProps>;
+type HOCStagePropsWithDefaults = Required<HOCStageProps>;
 
-export function getCanvasProps(props: Partial<PixiReactStagePropsWithDefaults>)
+export function getCanvasProps(props: Partial<BaseStagePropsWithDefaults>)
 {
     const reserved = [...Object.keys(wrappedStagePropTypes), ...Object.keys(PROPS_DISPLAY_OBJECT)];
 
     return Object.keys(props)
         .filter((p) => !reserved.includes(p))
-        .reduce((all, prop) => ({ ...all, [prop]: props[prop] }), {});
+        .reduce((all, prop) => ({ ...all, [prop]: props[prop as keyof HTMLCanvasProps] }), {});
 }
 
-export class BaseStage extends React.Component<PixiReactStagePropsWithDefaults>
+export class BaseStage extends React.Component<BaseStagePropsWithDefaults>
 {
     _canvas: HTMLCanvasElement | null = null;
     _mediaQuery: MediaQueryList | null = null;
@@ -179,7 +178,7 @@ export class BaseStage extends React.Component<PixiReactStagePropsWithDefaults>
         this.app.ticker.autoStart = false;
         this.app.ticker[raf ? 'start' : 'stop']();
 
-        (this.app.stage as ExpandoContainer).__reactpixi = { root: this.app.stage };
+        (this.app.stage as PixiReactContainer).__reactpixi = { root: this.app.stage };
         // @ts-ignore - react reconciler lists several parameters as required that are optional
         this.mountNode = pixiReactFiberInstance.createContainer(this.app.stage);
         pixiReactFiberInstance.updateContainer(this.getChildren(), this.mountNode, this);
@@ -207,7 +206,7 @@ export class BaseStage extends React.Component<PixiReactStagePropsWithDefaults>
         this.renderStage();
     }
 
-    componentDidUpdate(prevProps: PixiReactStagePropsWithDefaults)
+    componentDidUpdate(prevProps: BaseStageProps)
     {
         const { pixiReactFiberInstance, width, height, raf, renderOnComponentChange, options } = this.props;
 
@@ -351,26 +350,23 @@ export class BaseStage extends React.Component<PixiReactStagePropsWithDefaults>
 
 export function configurePixiReactStage(pixiReactFiberInstance: MinimalPixiReactFiber<Container>)
 {
-    const StageWithPixiReactFiber = forwardRef<BaseStage, Omit<PixiReactStagePropsWithDefaults, 'pixiReactFiberInstance'>>(
-        (props, ref) =>
-        {
-            const normalizedProps = {
-                ...defaultProps,
-                ...props,
-            };
+    const StageWithPixiReactFiber = forwardRef<BaseStage, HOCStageProps>((props, ref) =>
+    {
+        const normalizedProps = {
+            ...defaultProps,
+            ...props,
+        };
 
-            return (
-                <BaseStage
-                    ref={ref}
-                    {...(normalizedProps as PixiReactStagePropsWithDefaults)}
-                    pixiReactFiberInstance={pixiReactFiberInstance}
-                />
-            );
-        },
-    );
+        return (
+            <BaseStage
+                ref={ref}
+                {...(normalizedProps as HOCStagePropsWithDefaults)}
+                pixiReactFiberInstance={pixiReactFiberInstance}
+            />
+        );
+    });
 
     StageWithPixiReactFiber.displayName = 'StageWithPixiReactFiber';
-    StageWithPixiReactFiber.propTypes = propTypes;
 
     return StageWithPixiReactFiber;
 }

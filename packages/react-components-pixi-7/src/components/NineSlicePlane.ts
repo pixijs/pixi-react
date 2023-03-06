@@ -1,23 +1,13 @@
-import type { Texture } from '@pixi/core';
 import { NineSlicePlane as PixiNineSlicePlane } from '@pixi/mesh-extras';
 import { getTextureFromProps, applyDefaultProps } from '../utils/props';
-import type { ExpandoContainer, ExpandoNineSlicePlane, PropsType } from '../types';
+import type { NineSlicePlaneProps, PixiReactContainer, PixiReactNineSlicePlane } from '../types';
 
-export type NineSlicePlaneProps = PropsType & {
-    texture?: Texture;
-    image?: string | HTMLImageElement;
-    leftWidth?: number;
-    topWidth?: number;
-    rightWidth?: number;
-    bottomWidth?: number;
-};
-
-const NineSlicePlane = (root: ExpandoContainer, props: NineSlicePlaneProps) =>
+const NineSlicePlane = (root: PixiReactContainer, props: NineSlicePlaneProps) =>
 {
     const { leftWidth = 10, topHeight = 10, rightWidth = 10, bottomHeight = 10 } = props;
     const texture = getTextureFromProps('NineSlicePlane', root, props);
 
-    const nineSlicePlane: ExpandoNineSlicePlane = new PixiNineSlicePlane(
+    const nineSlicePlane: PixiReactNineSlicePlane = new PixiNineSlicePlane(
         texture,
         leftWidth,
         topHeight,

@@ -34,7 +34,7 @@
     "module.js"
   ],
   "scripts": {
-    "clean": "rimraf dist index.d.ts",
+    "clean": "rimraf dist",
     "prebuild": "npm run clean",
     "build": "npm run build:types && npm run build:dev && npm run build:prod",
     "build:types": "tsc -p tsconfig.types.json",

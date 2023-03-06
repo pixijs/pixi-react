@@ -1,15 +1,8 @@
-import type { TextStyle } from '@pixi/text';
 import { Text as PixiText } from '@pixi/text';
 import { Sprite as PixiSprite } from '@pixi/sprite';
-import type { ExpandoContainer, ExpandoSprite, ExpandoText, PropsType } from '../types';
+import type { PixiReactContainer, PixiReactSprite, PixiReactText, TextProps } from '../types';
 
-export type TextProps = PropsType & {
-    text?: string;
-    style?: Partial<TextStyle>;
-    isSprite?: boolean;
-};
-
-const Text = (_root: ExpandoContainer, props: TextProps): ExpandoText | ExpandoSprite =>
+const Text = (_root: PixiReactContainer, props: TextProps): PixiReactText | PixiReactSprite =>
 {
     const { text = '', style = {}, isSprite } = props;
     const pixiText = new PixiText(text, style);

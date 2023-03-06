@@ -1,13 +1,7 @@
 import { ParticleContainer as PixiParticleContainer } from '@pixi/particle-container';
-import type { ExpandoContainer, ExpandoParticleContainer, PropsType } from '../types';
+import type { ParticleContainerProps, PixiReactContainer, PixiReactParticleContainer } from '../types';
 
-export type ParticleContainerProps = PropsType & {
-    maxSize?: number;
-    batchSize?: number;
-    autoResize?: boolean;
-};
-
-const ParticleContainer = (_root: ExpandoContainer, props: ParticleContainerProps) =>
+const ParticleContainer = (_root: PixiReactContainer, props: ParticleContainerProps) =>
 {
     const { maxSize = 1500, batchSize = 16384, autoResize = false } = props;
 
@@ -32,7 +26,7 @@ const ParticleContainer = (_root: ExpandoContainer, props: ParticleContainerProp
         ...(props.destroyOptions || {}),
     };
 
-    const container: ExpandoParticleContainer = new PixiParticleContainer(maxSize, properties, batchSize, autoResize);
+    const container: PixiReactParticleContainer = new PixiParticleContainer(maxSize, properties, batchSize, autoResize);
 
     container.willUnmount = (instance) =>
     {

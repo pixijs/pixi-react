@@ -5,13 +5,12 @@ import type { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-render
 import renderer, { act } from 'react-test-renderer';
 import * as reactTest from '@testing-library/react';
 
-import type { ExpandoContainer } from '../src';
+import type { PixiReactContainer } from '../src';
 import { Container, Text, AppContext } from '../src';
 import { configure } from './__utils__/configure';
 import { spyOnObjectMethods } from './__utils__/mock';
 import { BaseStage } from '../src/stage';
-import type { PixiReactStagePropsWithDefaults, PixiReactStageProps } from '../src/stage';
-import type { StageType } from '../src/types';
+import type { ReactStageComponent, ReactStageProps } from '../src/types';
 import { getCanvasProps } from '../src/stage';
 
 // add events extension
@@ -27,7 +26,7 @@ describe('getCanvasProps', () =>
 {
     test('filter out reserved props from getCanvasProps', () =>
     {
-        const props: Partial<PixiReactStagePropsWithDefaults> = {
+        const props: ReactStageProps = {
             children: [],
             options: { width: 100, height: 200 },
             raf: true,
@@ -42,8 +41,8 @@ describe('getCanvasProps', () =>
 
 describe('stage', () =>
 {
-    let PixiReactFiber: PixiReactReconciler<ExpandoContainer>;
-    let Stage: StageType;
+    let PixiReactFiber: PixiReactReconciler<PixiReactContainer>;
+    let Stage: ReactStageComponent;
 
     beforeEach(() =>
     {
@@ -103,7 +102,7 @@ describe('stage', () =>
                         view: document.createElement('canvas'),
                         ...options,
                     }}
-                    onMount={(_app: Application) =>
+                    onMount={(_app) =>
                     {
                         app = _app;
                     }}
@@ -144,7 +143,7 @@ describe('stage', () =>
         const view = document.createElement('canvas');
 
         renderer.create(
-            <Stage options={{ view }} onMount={(_app: Application) => (app = _app)}>
+            <Stage options={{ view }} onMount={(_app) => (app = _app)}>
                 <Container />
             </Stage>,
         );
@@ -193,7 +192,7 @@ describe('stage', () =>
                 width={100}
                 height={50}
                 options={{ backgroundColor: 0xff0000 }}
-                onMount={(_app: Application) => (app = _app)}
+                onMount={(_app) => (app = _app)}
             >
                 <Container />
             </Stage>,
@@ -213,7 +212,7 @@ describe('stage', () =>
         let app: Application;
 
         const App = ({ width, height }: { width: number; height: number }) => (
-            <Stage width={width} height={height} onMount={(_app: Application) => (app = _app)}>
+            <Stage width={width} height={height} onMount={(_app) => (app = _app)}>
                 <Container />
             </Stage>
         );
@@ -256,7 +255,7 @@ describe('stage', () =>
         let app: Application;
 
         const el = renderer.create(
-            <Stage onMount={(_app: Application) => (app = _app)}>
+            <Stage onMount={(_app) => (app = _app)}>
                 <Container />
             </Stage>,
         );
@@ -272,7 +271,7 @@ describe('stage', () =>
         let app: Application;
 
         renderer.create(
-            <Stage onMount={(_app: Application) => (app = _app)}>
+            <Stage onMount={(_app) => (app = _app)}>
                 <Container />
             </Stage>,
         );
@@ -344,7 +343,7 @@ describe('stage', () =>
 
     describe('pixi application', () =>
     {
-        const renderStage = (props: Partial<PixiReactStageProps> = {}) =>
+        const renderStage = (props: Partial<ReactStageProps> = {}) =>
         {
             const stageRef = createRef<BaseStage>();
             const el = renderer.create(
@@ -353,7 +352,7 @@ describe('stage', () =>
                 </Stage>,
             );
 
-            const rerender = (nextProps: Partial<PixiReactStageProps> = {}) =>
+            const rerender = (nextProps: Partial<ReactStageProps> = {}) =>
             {
                 el.update(
                     <Stage ref={stageRef} {...nextProps}>

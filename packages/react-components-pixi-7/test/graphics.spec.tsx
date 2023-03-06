@@ -6,11 +6,11 @@ import type { Graphics as PixiGraphics } from '@pixi/graphics';
 
 import { configure } from './__utils__/configure';
 import { Graphics } from '../src';
-import type { StageType } from '../src/types';
+import type { ReactStageComponent } from '../src/types';
 
 describe('graphics', () =>
 {
-    let Stage: StageType;
+    let Stage: ReactStageComponent;
 
     beforeEach(() =>
     {

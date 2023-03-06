@@ -9,7 +9,7 @@ import {
     configurePixiReactStage,
 } from '../../src';
 import type { PixiReactHostConfig, PixiReactReconciler } from '@pixi/react-fiber';
-import type { ExpandoContainer, StageType } from '../../src/types';
+import type { PixiReactContainer, ReactStageComponent } from '../../src/types';
 import type { Container } from '@pixi/display';
 
 type IdentityType<Type> = (arg: Type) => Type;
@@ -21,23 +21,23 @@ export function configure({
     spyOnHostConfig = identity,
     spyOnPixiFiber = identity,
 }: {
-    spyOnHostConfig?: IdentityType<PixiReactHostConfig<ExpandoContainer>>;
-    spyOnPixiFiber?: IdentityType<PixiReactReconciler<ExpandoContainer>>;
+    spyOnHostConfig?: IdentityType<PixiReactHostConfig<PixiReactContainer>>;
+    spyOnPixiFiber?: IdentityType<PixiReactReconciler<PixiReactContainer>>;
 } = {})
 {
-    const { COMPONENTS, PixiComponent } = configurePixiComponent<ExpandoContainer>();
+    const { COMPONENTS, PixiComponent } = configurePixiComponent();
 
     configurePixiReactComponents(PixiComponent);
 
     const hostConfig = spyOnHostConfig(
-        configurePixiReactHostConfig<ExpandoContainer>({
+        configurePixiReactHostConfig({
             COMPONENTS,
             applyDefaultProps,
-        }),
+        })
     );
-    const PixiReactFiber = spyOnPixiFiber(configurePixiReactFiber<ExpandoContainer>(hostConfig));
+    const PixiReactFiber = spyOnPixiFiber(configurePixiReactFiber(hostConfig));
 
-    const Stage: StageType = configurePixiReactStage(PixiReactFiber);
+    const Stage: ReactStageComponent = configurePixiReactStage(PixiReactFiber);
     const {
         roots,
         createRoot,

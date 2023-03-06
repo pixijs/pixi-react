@@ -1,16 +1,12 @@
 import { invariant } from '@pixi/react-invariant';
 import { Graphics as PixiGraphics } from '@pixi/graphics';
 import { applyDefaultProps } from '../utils/props';
-import type { ExpandoContainer, ExpandoGraphics, PropsType } from '../types';
+import type { GraphicsProps, PixiReactContainer, PixiReactGraphics } from '../types';
 
-export type GraphicsProps = PropsType & {
-    geometry?: PixiGraphics;
-};
-
-const Graphics = (_root: ExpandoContainer, { geometry }: GraphicsProps) =>
+const Graphics = (_root: PixiReactContainer, { geometry }: GraphicsProps) =>
 {
     invariant(!geometry || geometry instanceof PixiGraphics, `Graphics geometry needs to be a \`PIXI.Graphics\``);
-    const g: ExpandoGraphics = geometry ? new PixiGraphics(geometry.geometry) : new PixiGraphics();
+    const g: PixiReactGraphics = geometry ? new PixiGraphics(geometry.geometry) : new PixiGraphics();
 
     g.applyProps = (instance, oldProps, newProps) =>
     {

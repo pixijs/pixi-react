@@ -3,7 +3,7 @@ import type { Container } from '@pixi/display';
 import { DisplayObject } from '@pixi/display';
 import { eventHandlers, setValue } from './pixi';
 import { invariant } from '@pixi/react-invariant';
-import type { DisplayObjectSettableProperty, ExpandoTexture, PropsType } from '../types';
+import type { DisplayObjectSettableProperty, PixiReactTexture, PropsType } from '../types';
 import { not, hasKey } from './fp';
 import type { FederatedEventEmitterTypes } from '@pixi/events';
 
@@ -66,7 +66,7 @@ type TypeValidator = {
  */
 export const getTextureFromProps = (elementType: string, root: Container, props: PropsType = {}) =>
 {
-    const emitChange = (texture: ExpandoTexture) =>
+    const emitChange = (texture: PixiReactTexture) =>
         requestAnimationFrame(() =>
         {
             texture?.__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`);
@@ -103,7 +103,7 @@ export const getTextureFromProps = (elementType: string, root: Container, props:
 
     invariant(!!result, `${elementType} could not get texture from props`);
 
-    const texture: ExpandoTexture = Texture.from(result);
+    const texture: PixiReactTexture = Texture.from(result);
 
     texture.__reactpixi = { root };
     texture.once('update', emitChange);

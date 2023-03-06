@@ -105,16 +105,6 @@ exports[`index export modules for pixi-react 1`] = `
   "Sprite": "Sprite",
   "Stage": {
     "$$typeof": Symbol(react.forward_ref),
-    "propTypes": {
-      "children": [Function],
-      "height": [Function],
-      "onMount": [Function],
-      "onUnmount": [Function],
-      "options": [Function],
-      "raf": [Function],
-      "renderOnComponentChange": [Function],
-      "width": [Function],
-    },
     "render": [Function],
   },
   "TYPES": {

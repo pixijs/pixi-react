@@ -1,6 +1,6 @@
 import { invariant } from '@pixi/react-invariant';
 import isNil from 'lodash.isnil';
-import type { ExpandoContainer, PointCoords, PointLike } from '../types';
+import type { PixiReactContainer, PointCoords, PointLike } from '../types';
 import type { IPoint } from '@pixi/core';
 
 /**
@@ -134,7 +134,7 @@ export const eventHandlers = [
  * @param {string} prop
  * @param {*} value
  */
-export function setValue(instance: ExpandoContainer, prop: string, value: any)
+export function setValue(instance: PixiReactContainer, prop: string, value: any)
 {
     type InstanceProperty = keyof typeof instance;
 

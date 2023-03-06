@@ -1,24 +1,14 @@
-import type { Texture } from '@pixi/core';
 import { DRAW_MODES } from '@pixi/constants';
 import { SimpleMesh as PixiSimpleMesh } from '@pixi/mesh-extras';
 import { applyDefaultProps, getTextureFromProps } from '../utils/props';
-import type { ExpandoContainer, ExpandoSimpleMesh, PropsType } from '../types';
+import type { PixiReactContainer, PixiReactSimpleMesh, SimpleMeshProps } from '../types';
 
-export type SimpleMeshProps = PropsType & {
-    image?: string | HTMLImageElement;
-    texture?: Texture;
-    vertices?: Float32Array;
-    uvs?: Float32Array;
-    indices?: Uint16Array;
-    drawMode?: DRAW_MODES;
-};
-
-const SimpleMesh = (root: ExpandoContainer, props: SimpleMeshProps) =>
+const SimpleMesh = (root: PixiReactContainer, props: SimpleMeshProps) =>
 {
     const texture = getTextureFromProps('Mesh', root, props);
     const { vertices, uvs, indices, drawMode = DRAW_MODES.TRIANGLES } = props;
 
-    const simpleMesh: ExpandoSimpleMesh = new PixiSimpleMesh(texture, vertices, uvs, indices, drawMode);
+    const simpleMesh: PixiReactSimpleMesh = new PixiSimpleMesh(texture, vertices, uvs, indices, drawMode);
 
     simpleMesh.applyProps = (instance, oldProps, newProps) =>
     {

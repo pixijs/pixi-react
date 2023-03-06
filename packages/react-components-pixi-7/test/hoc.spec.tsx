@@ -1,7 +1,7 @@
 import { Filter } from '@pixi/core';
 import renderer from 'react-test-renderer';
-import { Container, withFilters } from '../src';
 import type { ReactTestRendererJSON } from 'react-test-renderer';
+import { Container, withFilters } from '../src';
 
 class MockBlurFilter extends Filter
 {

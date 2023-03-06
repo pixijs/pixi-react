@@ -1,6 +1,5 @@
 /// <reference path="./global.d.ts" />
-import type * as React from 'react';
-import type { ComponentsType, ComponentType, PixiComponentType, PropsType } from '@pixi/react-types';
+import type { ComponentsType, PixiComponentType } from '@pixi/react-types';
 
 import {
     AnimatedSprite as AnimatedSpriteComponent,
@@ -17,17 +16,21 @@ import {
 } from './components';
 import { applyDefaultProps } from './utils/props';
 
-import type { ExpandoContainer, StageType } from './types';
-import type { BitmapTextProps } from './components/BitmapText';
-import type { SpriteProps } from './components/Sprite';
-import type { GraphicsProps } from './components/Graphics';
-import type { TextProps } from './components/Text';
-import type { NineSlicePlaneProps } from './components/NineSlicePlane';
-import type { ParticleContainerProps } from './components/ParticleContainer';
-import type { TilingSpriteProps } from './components/TilingSprite';
-import type { SimpleRopeProps } from './components/SimpleRope';
-import type { SimpleMeshProps } from './components/SimpleMesh';
-import type { AnimatedSpriteProps } from './components/AnimatedSprite';
+import type {
+    PixiReactContainer,
+    ReactStageComponent,
+    ReactAnimatedSpriteComponent,
+    ReactBitmapTextComponent,
+    ReactContainerComponent,
+    ReactGraphicsComponent,
+    ReactNineSlicePlaneComponent,
+    ReactParticleContainerComponent,
+    ReactSimpleMeshComponent,
+    ReactSimpleRopeComponent,
+    ReactSpriteComponent,
+    ReactTextComponent,
+    ReactTilingSpriteComponent,
+} from './types';
 
 /**
  * -------------------------------------------
@@ -42,7 +45,7 @@ export { eventHandlers } from './utils/pixi';
 export { configurePixiReactStage } from './stage';
 export { configurePixiReactRenderAPI } from './render';
 export { applyDefaultProps };
-export type { StageType, ExpandoContainer };
+export type { PixiReactContainer, ReactStageComponent };
 
 /**
  * Available tag types
@@ -63,19 +66,17 @@ export const TYPES = {
     SimpleRope: 'SimpleRope',
 };
 
-export const BitmapText = TYPES.BitmapText as unknown as React.FC<BitmapTextProps>;
-export const Container = TYPES.Container as unknown as React.FC<React.PropsWithChildren<PropsType>>;
-export const Graphics = TYPES.Graphics as unknown as React.FC<GraphicsProps>;
-export const NineSlicePlane = TYPES.NineSlicePlane as unknown as React.FC<NineSlicePlaneProps>;
-export const ParticleContainer = TYPES.ParticleContainer as unknown as React.FC<
-React.PropsWithChildren<ParticleContainerProps>
->;
-export const Sprite = TYPES.Sprite as unknown as React.FC<React.PropsWithChildren<SpriteProps>>;
-export const AnimatedSprite = TYPES.AnimatedSprite as unknown as React.FC<AnimatedSpriteProps>;
-export const Text = TYPES.Text as unknown as React.FC<TextProps>;
-export const TilingSprite = TYPES.TilingSprite as unknown as React.FC<TilingSpriteProps>;
-export const SimpleMesh = TYPES.SimpleMesh as unknown as React.FC<SimpleMeshProps>;
-export const SimpleRope = TYPES.SimpleRope as unknown as React.FC<SimpleRopeProps>;
+export const BitmapText = TYPES.BitmapText as unknown as ReactBitmapTextComponent;
+export const Container = TYPES.Container as unknown as ReactContainerComponent;
+export const Graphics = TYPES.Graphics as unknown as ReactGraphicsComponent;
+export const NineSlicePlane = TYPES.NineSlicePlane as unknown as ReactNineSlicePlaneComponent;
+export const ParticleContainer = TYPES.ParticleContainer as unknown as ReactParticleContainerComponent;
+export const Sprite = TYPES.Sprite as unknown as ReactSpriteComponent;
+export const AnimatedSprite = TYPES.AnimatedSprite as unknown as ReactAnimatedSpriteComponent;
+export const Text = TYPES.Text as unknown as ReactTextComponent;
+export const TilingSprite = TYPES.TilingSprite as unknown as ReactTilingSpriteComponent;
+export const SimpleMesh = TYPES.SimpleMesh as unknown as ReactSimpleMeshComponent;
+export const SimpleRope = TYPES.SimpleRope as unknown as ReactSimpleRopeComponent;
 
 const components: ComponentsType = {
     AnimatedSprite: AnimatedSpriteComponent,
@@ -92,7 +93,7 @@ const components: ComponentsType = {
 };
 
 export function configurePixiReactComponents(
-    PixiComponent: PixiComponentType<PropsType, ComponentType<PropsType, ExpandoContainer>>,
+    PixiComponent: PixiComponentType,
 )
 {
     // Register default components in `react-modular`'s COMPONENTS hash

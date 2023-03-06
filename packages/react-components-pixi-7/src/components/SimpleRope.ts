@@ -1,21 +1,14 @@
 import { SimpleRope as PixiSimpleRope } from '@pixi/mesh-extras';
 import { invariant } from '@pixi/react-invariant';
 import { getTextureFromProps, applyDefaultProps } from '../utils/props';
-import type { ExpandoContainer, ExpandoSimpleRope, PropsType } from '../types';
-import type { IPoint, Texture } from '@pixi/core';
+import type { PixiReactContainer, PixiReactSimpleRope, SimpleRopeProps } from '../types';
 
-export type SimpleRopeProps = PropsType & {
-    image?: string | HTMLImageElement;
-    texture?: Texture;
-    points: IPoint[];
-};
-
-const SimpleRope = (root: ExpandoContainer, props: SimpleRopeProps) =>
+const SimpleRope = (root: PixiReactContainer, props: SimpleRopeProps) =>
 {
     const texture = getTextureFromProps('SimpleRope', root, props);
     const { points } = props;
 
-    const rope: ExpandoSimpleRope = new PixiSimpleRope(texture, points);
+    const rope: PixiReactSimpleRope = new PixiSimpleRope(texture, points);
 
     rope.applyProps = (instance, oldProps, newProps) =>
     {

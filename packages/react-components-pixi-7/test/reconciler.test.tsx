@@ -12,8 +12,8 @@ import type { PixiReactHostConfig } from '@pixi/react-fiber';
 import type {
     createInstanceType,
     CreateRootType,
-    ExpandoContainer,
-    ExpandoText,
+    PixiReactContainer,
+    PixiReactText,
     PropsType,
     UnmountComponentAtNodeType,
 } from '../src/types';
@@ -56,7 +56,7 @@ describe('reconciler', () =>
         };
     };
 
-    const prepare = (spyOnHostConfig = spyOnObjectMethods<PixiReactHostConfig<ExpandoContainer>>) =>
+    const prepare = (spyOnHostConfig = spyOnObjectMethods<PixiReactHostConfig<PixiReactContainer>>) =>
     {
         const { roots, hostConfig, createRoot, unmountComponentAtNode } = configure({
             spyOnHostConfig,
@@ -195,10 +195,10 @@ describe('reconciler', () =>
 
         test('remove sub children', () =>
         {
-            const a = createRef<ExpandoText>();
-            const b = createRef<ExpandoText>();
-            const c = createRef<ExpandoText>();
-            const d = createRef<ExpandoText>();
+            const a = createRef<PixiReactText>();
+            const b = createRef<PixiReactText>();
+            const c = createRef<PixiReactText>();
+            const d = createRef<PixiReactText>();
 
             const { renderToStage, cleanup } = prepare();
 
@@ -451,7 +451,7 @@ describe('reconciler', () =>
         describe('config', () =>
         {
             const createInstances = (
-                hostConfig: PixiReactHostConfig<ExpandoContainer>,
+                hostConfig: PixiReactHostConfig<PixiReactContainer>,
                 createInstance: createInstanceType,
                 config: lifeCycleConfigType,
             ) =>
@@ -639,9 +639,11 @@ describe('reconciler', () =>
             expect(loadingTextRef.current).toBeDefined();
 
             // content should be hidden
-            const mockedHideInstance = hostConfig.hideInstance as jest.MockedFunction<(instance: ExpandoContainer) => void>;
+            const mockedHideInstance = hostConfig.hideInstance as jest.MockedFunction<
+                (instance: PixiReactContainer) => void
+            >;
             const mockedUnhideInstance = hostConfig.unhideInstance as jest.MockedFunction<
-                (instance: ExpandoContainer) => void
+                (instance: PixiReactContainer) => void
             >;
             const mockedCreateInstance = hostConfig.createInstance as jest.MockedFunction<createInstanceType>;
 
@@ -668,7 +670,7 @@ describe('reconciler', () =>
 
     describe('emits request render', () =>
     {
-        function spyOnContainer(container: ExpandoContainer)
+        function spyOnContainer(container: PixiReactContainer)
         {
             const spy = jest.fn();
 

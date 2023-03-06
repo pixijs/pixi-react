@@ -6,7 +6,7 @@ import { Application } from '@pixi/app';
 import { Ticker } from '@pixi/ticker';
 
 import { Container, useTick, useApp } from '../src';
-import type { StageType } from '../src/types';
+import type { ReactStageComponent } from '../src/types';
 import { configure } from './__utils__/configure';
 
 jest.useFakeTimers({
@@ -15,7 +15,7 @@ jest.useFakeTimers({
 
 describe('hooks', () =>
 {
-    let Stage: StageType;
+    let Stage: ReactStageComponent;
 
     beforeEach(() =>
     {

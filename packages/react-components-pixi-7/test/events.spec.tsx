@@ -5,7 +5,7 @@ import type { RenderType } from '@pixi/react-types';
 
 import { eventHandlers, Container, Text } from '../src';
 import { configure } from './__utils__/configure';
-import type { ExpandoContainer, ExpandoText } from '../src/types';
+import type { PixiReactContainer, PixiReactText } from '../src/types';
 import type { FederatedPointerEvent } from '@pixi/events';
 import { createRef } from 'react';
 
@@ -15,8 +15,8 @@ const NOT_CUSTOM_EVENT = 'notCustomEvent';
 describe('react', () =>
 {
     // keep track of real PIXI instances created
-    let instances: ExpandoContainer[] = [];
-    let render: RenderType<ExpandoContainer>;
+    let instances: PixiReactContainer[] = [];
+    let render: RenderType<PixiReactContainer>;
     let renderInContainer: (container: JSX.Element) => void;
 
     beforeEach(() =>
@@ -66,7 +66,7 @@ describe('react', () =>
         test('trigger click event', () =>
         {
             const onClick = jest.fn();
-            const text = createRef<ExpandoText>();
+            const text = createRef<PixiReactText>();
 
             renderInContainer(
                 <Container>
@@ -107,7 +107,7 @@ describe('react', () =>
         {
             const onCustomEvent = jest.fn();
             const onNotCustomEvent = jest.fn();
-            const text = createRef<ExpandoText>();
+            const text = createRef<PixiReactText>();
 
             eventHandlers.push(CUSTOM_EVENT);
 

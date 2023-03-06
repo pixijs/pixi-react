@@ -1,18 +1,24 @@
+import type * as React from 'react';
 import type { Container } from '@pixi/display';
-import type { Texture } from '@pixi/core';
-import type { AnimatedSprite } from '@pixi/sprite-animated';
+import type { IPoint, Resource, Texture } from '@pixi/core';
+import type { AnimatedSprite, FrameObject } from '@pixi/sprite-animated';
 import type { Graphics } from '@pixi/graphics';
-import type { BitmapText } from '@pixi/text-bitmap';
+import type { BitmapText, IBitmapTextStyle } from '@pixi/text-bitmap';
 import type { NineSlicePlane, SimpleMesh, SimpleRope } from '@pixi/mesh-extras';
 import type { ParticleContainer } from '@pixi/particle-container';
 import type { Sprite } from '@pixi/sprite';
 import type { TilingSprite } from '@pixi/sprite-tiling';
-import type { Text } from '@pixi/text';
+import type { Text, TextStyle } from '@pixi/text';
 import type { ObservablePoint, Point } from '@pixi/math';
 import type {
     PropsType,
-    PixiReactMinimalExpandoContainer,
-    lifeCycleConfigType,
+    InteractionEvents,
+    PointCoords,
+    PointLike as GenericPointLike,
+    WithSource as GenericWithSource,
+    ReactContainerProps as GenericReactContainerProps,
+    PixiReactContainer as BasePixiReactContainer,
+    DisplayObjectSettableProperty,
     createInstanceType as genericCreateInstanceType,
     applyPropsType as genericApplyPropsType,
     didMountType as genericDidMountType,
@@ -21,91 +27,162 @@ import type {
     CreateRootType as GenericCreateRootType,
     RenderType as GenericRenderType,
     UnmountComponentAtNodeType as GenericUnmountComponentAtNodeType,
-    StageType as GenericStageType,
+    ReactStageComponent as GenericReactStageComponent,
     ComponentType as GenericComponentType,
-    PixiComponentType as GenericPixiComponentType,
+    StageProps as GenericStageProps,
+    MinimalContainer,
 } from '@pixi/react-types';
 import type { Application, IApplicationOptions } from '@pixi/app';
-// TODO: this is a circular dependency
+import type { DRAW_MODES } from '@pixi/constants';
+
+// TODO: this is a circular dependency, but writing a working interface for BaseStage is a nightmare
 import type { BaseStage } from './stage';
 
-export { PropsType };
+export type { DisplayObjectSettableProperty, InteractionEvents, PointCoords, PropsType };
 
-export type PointCoords = [number, number] | [number];
-export type PointLike = Point | ObservablePoint | PointCoords | number | { x?: number; y?: number };
+// These are types for the "expando" Pixi instances, that are returned from
+// the component lifecycle create method with additional properties/methods
+// added for interopability with Pixi React
+export type PixiReactAnimatedSprite = BasePixiReactContainer<AnimatedSprite>;
+export type PixiReactBitmapText = BasePixiReactContainer<BitmapText>;
+export type PixiReactContainer = BasePixiReactContainer<Container>;
+export type PixiReactGraphics = BasePixiReactContainer<Graphics>;
+export type PixiReactNineSlicePlane = BasePixiReactContainer<NineSlicePlane>;
+export type PixiReactParticleContainer = BasePixiReactContainer<ParticleContainer>;
+export type PixiReactSimpleMesh = BasePixiReactContainer<SimpleMesh>;
+export type PixiReactSimpleRope = BasePixiReactContainer<SimpleRope>;
+export type PixiReactSprite = BasePixiReactContainer<Sprite>;
+export type PixiReactText = BasePixiReactContainer<Text>;
+export type PixiReactTilingSprite = BasePixiReactContainer<TilingSprite>;
 
-// TODO: fill these out more and apply them to components
-export type DisplayObjectSettableProperties = {
-    alpha: number;
-    buttonMode: boolean;
-    cacheAsBitmap: boolean;
-    cursor: null;
-    filterArea: null;
-    filters: null;
-    hitArea: null;
-    interactive: boolean;
-    mask: null;
-    pivot: number;
-    position: number;
-    renderable: boolean;
-    rotation: number;
-    scale: number;
-    skew: number;
-    transform: null;
-    visible: boolean;
-    x: number;
-    y: number;
-};
-export type DisplayObjectSettableProperty = keyof DisplayObjectSettableProperties;
-
-export type PixiReactExpandoContainer<PixiContainer extends PixiReactMinimalExpandoContainer> = {
-    config?: lifeCycleConfigType;
-    applyProps?: genericApplyPropsType<PropsType, PixiContainer>;
-    didMount?: genericDidMountType<PixiContainer>;
-    willUnmount?: genericWillUnmountType<PixiContainer>;
+export type PixiReactTexture = Texture & {
     __reactpixi?: {
-        root: PixiContainer | null;
+        root: PixiReactContainer | null;
     };
 };
 
-// TODO: this expando stuff breaks the inheritance chain which is annoying for duck typing
-// AnimatedSprite extends from Container but ExpandoAnimatedSprite does not extend from ExpandoContainer
-export type ExpandoAnimatedSprite = AnimatedSprite & PixiReactExpandoContainer<AnimatedSprite>;
-export type ExpandoBitmapText = BitmapText & PixiReactExpandoContainer<BitmapText>;
-export type ExpandoContainer = Container & PixiReactExpandoContainer<Container>;
-export type ExpandoGraphics = Graphics & PixiReactExpandoContainer<Graphics>;
-export type ExpandoNineSlicePlane = NineSlicePlane & PixiReactExpandoContainer<NineSlicePlane>;
-export type ExpandoParticleContainer = ParticleContainer & PixiReactExpandoContainer<ParticleContainer>;
-export type ExpandoSimpleMesh = SimpleMesh & PixiReactExpandoContainer<SimpleMesh>;
-export type ExpandoSimpleRope = SimpleRope & PixiReactExpandoContainer<SimpleRope>;
-export type ExpandoSprite = Sprite & PixiReactExpandoContainer<Sprite>;
-export type ExpandoText = Text & PixiReactExpandoContainer<Text>;
-export type ExpandoTilingSprite = TilingSprite & PixiReactExpandoContainer<TilingSprite>;
-export type ExpandoTexture = Texture & {
-    __reactpixi?: {
-        root: ExpandoContainer | null;
-    };
+type WithSource = GenericWithSource<Texture>;
+export type PointLike = GenericPointLike<Point, ObservablePoint>;
+
+export type BaseReactContainerProps<PixiContainer extends MinimalContainer, Props = object> = GenericReactContainerProps<
+Point,
+ObservablePoint,
+PixiContainer,
+Props
+>;
+
+// These are types for all of the React props each of the predefined Pixi React
+// Components requires, the first definitions are properties specific to the
+// Pixi React versions, below they are combined with all the properties pulled
+// from each specific Pixi Component, as well as all the inherited DisplayObject
+// and Container props
+// TODO: do some of these props just come from the PIXI components?
+// Compare with original handwritten types
+// Might also be nicer if these were colocated with the components themselves
+export type AnimatedSpriteTexturesProp = Texture<Resource>[] | FrameObject[];
+export type AnimatedSpriteProps = PropsType & {
+    textures?: AnimatedSpriteTexturesProp;
+    images?: string[];
+    isPlaying?: boolean;
+    initialFrame?: number;
 };
+export type BitmapTextProps = PropsType & {
+    text: string;
+    style: Partial<IBitmapTextStyle>;
+};
+export type SpriteProps = PropsType & WithSource;
+export type TextProps = PropsType &
+WithSource & {
+    text?: string;
+    style?: Partial<TextStyle>;
+    isSprite?: boolean;
+};
+export type GraphicsProps = PropsType & {
+    draw?(graphics: Graphics): void;
+    geometry?: Graphics;
+};
+export type NineSlicePlaneProps = PropsType &
+WithSource & {
+    leftWidth?: number;
+    topWidth?: number;
+    rightWidth?: number;
+    bottomWidth?: number;
+};
+export type ParticleContainerProps = PropsType & {
+    maxSize?: number;
+    // TODO: properties contents
+    properties?: object;
+    batchSize?: number;
+    autoResize?: boolean;
+};
+export type TilingSpriteProps = PropsType &
+WithSource & {
+    tilePosition?: PointLike;
+    tileScale?: PointLike;
+};
+export type SimpleMeshProps = PropsType &
+WithSource & {
+    image?: string | HTMLImageElement;
+    texture?: Texture;
+    vertices?: Float32Array;
+    uvs?: Float32Array;
+    indices?: Uint16Array;
+    drawMode?: DRAW_MODES;
+};
+export type SimpleRopeProps = PropsType &
+WithSource & {
+    points: IPoint[];
+};
+
+// Merge above props with relevant Pixi Component and DisplayObject/Container props
+export type ReactStageProps = GenericStageProps<Application, IApplicationOptions>;
+export type ReactAnimatedSpriteProps = BaseReactContainerProps<AnimatedSprite, AnimatedSpriteProps>;
+export type ReactBitmapTextProps = BaseReactContainerProps<BitmapText, BitmapTextProps>;
+export type ReactContainerProps = BaseReactContainerProps<Container>;
+export type ReactGraphicsProps = BaseReactContainerProps<Graphics, GraphicsProps>;
+export type ReactNineSlicePlaneProps = BaseReactContainerProps<NineSlicePlane, NineSlicePlaneProps>;
+export type ReactParticleContainerProps = BaseReactContainerProps<ParticleContainer, ParticleContainerProps>;
+export type ReactSimpleMeshProps = BaseReactContainerProps<SimpleMesh, SimpleMeshProps>;
+export type ReactSimpleRopeProps = BaseReactContainerProps<SimpleRope, SimpleRopeProps>;
+export type ReactSpriteProps = BaseReactContainerProps<Sprite, SpriteProps>;
+export type ReactTextProps = BaseReactContainerProps<Text, TextProps>;
+export type ReactTilingSpriteProps = BaseReactContainerProps<TilingSprite, TilingSpriteProps>;
+
+// Types for the actual React components themselves for when they're rendered in JSX
+export type ReactStageComponent = GenericReactStageComponent<BaseStage, Application, IApplicationOptions>;
+export type ReactAnimatedSpriteComponent = React.FC<ReactAnimatedSpriteProps>;
+export type ReactBitmapTextComponent = React.FC<ReactBitmapTextProps>;
+export type ReactContainerComponent = React.FC<React.PropsWithChildren<ReactContainerProps>>;
+export type ReactGraphicsComponent = React.FC<ReactGraphicsProps>;
+export type ReactNineSlicePlaneComponent = React.FC<ReactNineSlicePlaneProps>;
+export type ReactParticleContainerComponent = React.FC<React.PropsWithChildren<ReactParticleContainerProps>>;
+export type ReactSimpleMeshComponent = React.FC<ReactSimpleMeshProps>;
+export type ReactSimpleRopeComponent = React.FC<ReactSimpleRopeProps>;
+export type ReactSpriteComponent = React.FC<React.PropsWithChildren<ReactSpriteProps>>;
+export type ReactTextComponent = React.FC<ReactTextProps>;
+export type ReactTilingSpriteComponent = React.FC<ReactTilingSpriteProps>;
+
+// TODO: Do we need to create Concrete types like this for everything?
+// Can we supply the Generics on the functions themselves rather than the
+// function type? It might work and create simpler code/types but will need
+// the functions themselves to be rewritten as Generic. This could be a way to
+// minimize the size of the versioned pixi components package
 
 // Concrete types for this version of PIXI, with the Container/ExpandoContainer generics pre-supplied
-export type createInstanceType = genericCreateInstanceType<ExpandoContainer>;
+export type createInstanceType = genericCreateInstanceType<PixiReactContainer>;
 
-export type Roots = GenericRoots<ExpandoContainer>;
+export type Roots = GenericRoots<PixiReactContainer>;
 
-export type CreateRootType = GenericCreateRootType<ExpandoContainer>;
+export type CreateRootType = GenericCreateRootType<PixiReactContainer>;
 
 export type RenderType = GenericRenderType<Container>;
 
 export type UnmountComponentAtNodeType = GenericUnmountComponentAtNodeType<Container>;
 
-export type StageType = GenericStageType<BaseStage, Application, IApplicationOptions>;
+export type applyPropsType = genericApplyPropsType<PropsType, PixiReactContainer>;
 
-export type applyPropsType = genericApplyPropsType<PropsType, ExpandoContainer>;
+export type didMountType = genericDidMountType<PixiReactContainer>;
 
-export type didMountType = genericDidMountType<ExpandoContainer>;
+export type willUnmountType = genericWillUnmountType<PixiReactContainer>;
 
-export type willUnmountType = genericWillUnmountType<ExpandoContainer>;
-
-export type ComponentType = GenericComponentType<ExpandoContainer>;
-
-export type PixiComponentType = GenericPixiComponentType<PropsType, ExpandoContainer>;
+export type ComponentType = GenericComponentType<PixiReactContainer>;

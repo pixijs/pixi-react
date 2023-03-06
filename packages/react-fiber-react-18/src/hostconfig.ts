@@ -145,7 +145,7 @@ function willUnmountRecursive<ExpandoContainer extends PixiReactMinimalExpandoCo
     parent: ExpandoContainer,
 )
 {
-    child.willUnmount?.(child, parent as ExpandoContainer);
+    child.willUnmount?.(child, parent);
 
     // ensure willUnmount is called on children, but don't actually destroy them
     if (child.config?.destroyChildren !== false && child.children?.length)

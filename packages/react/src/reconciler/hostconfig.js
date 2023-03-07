@@ -104,9 +104,15 @@ function insertBefore(parent, child, beforeChild)
     invariant(child !== beforeChild, 'pixi-react: PixiFiber cannot insert node before itself');
 
     const childExists = parent.children.indexOf(child) !== -1;
+
+    if (childExists)
+    {
+        parent.removeChild(child);
+    }
+
     const index = parent.getChildIndex(beforeChild);
 
-    childExists ? parent.setChildIndex(child, index) : parent.addChildAt(child, index);
+    parent.addChildAt(child, index);
 }
 
 // get diff between 2 objects

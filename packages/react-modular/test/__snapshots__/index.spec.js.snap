@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`index export modules for react-modular 1`] = `
-{
-  "COMPONENTS": {},
-  "PixiComponent": [Function],
-  "configurePixiReact": [Function],
-}
-`;

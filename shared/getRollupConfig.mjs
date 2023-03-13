@@ -28,7 +28,6 @@ export function getRollupConfig(dest, format, merge = {})
             json(),
             resolve({
                 browser: true,
-                preferBuiltins: false,
                 mainFields: ['main', 'jsnext'],
             }),
             babel({

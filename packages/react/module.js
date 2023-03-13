@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-if (['test', 'development'].includes(process.env.NODE_ENV))
+if (process.env.NODE_ENV === 'development')
 {
     module.exports = require('./dist/index.es-dev');
 }

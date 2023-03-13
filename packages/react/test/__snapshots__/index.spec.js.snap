@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`index export modules for pixi-react 1`] = `
+exports[`index export modules for index 1`] = `
 {
   "AnimatedSprite": "AnimatedSprite",
   "AppConsumer": {
@@ -63,7 +63,7 @@ exports[`index export modules for pixi-react 1`] = `
   "NineSlicePlane": "NineSlicePlane",
   "ParticleContainer": "ParticleContainer",
   "PixiComponent": [Function],
-  "PixiReactFiber": {
+  "PixiFiber": {
     "attemptContinuousHydration": [Function],
     "attemptDiscreteHydration": [Function],
     "attemptHydrationAtCurrentPriority": [Function],

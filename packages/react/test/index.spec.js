@@ -1,8 +1,8 @@
-import * as index from '../src/index';
+import * as index from '../src';
 
 describe('index', () =>
 {
-    test('export modules for pixi-react', () =>
+    test('export modules for index', () =>
     {
         expect(index).toMatchSnapshot();
     });

@@ -7,15 +7,18 @@ import type {
     UpdatePayload,
 } from '@pixi/react-types';
 
-export type PixiReactHostConfig<ExpandoContainer extends PixiReactMinimalExpandoContainer> = HostConfig<
+export type PixiReactHostConfig<
+    Container extends PixiReactMinimalExpandoContainer,
+    Instance extends PixiReactMinimalExpandoContainer,
+> = HostConfig<
 string,
 PropsType,
-ExpandoContainer,
-ExpandoContainer,
+Container,
+Instance,
 any,
-ExpandoContainer,
-ExpandoContainer,
-ExpandoContainer,
+Instance,
+Instance,
+Instance,
 any,
 UpdatePayload,
 any,
@@ -23,13 +26,10 @@ TimeoutHandle,
 NoTimeout
 >;
 
-export type PixiReactReconciler<ExpandoContainer extends PixiReactMinimalExpandoContainer> = Reconciler<
-ExpandoContainer,
-ExpandoContainer,
-any,
-ExpandoContainer,
-ExpandoContainer
->;
+export type PixiReactReconciler<
+    Container extends PixiReactMinimalExpandoContainer,
+    Instance extends PixiReactMinimalExpandoContainer,
+> = Reconciler<Container, Instance, any, Instance, Instance>;
 
 export type diffPropertiesType<PixiContainer> = (
     instance: PixiContainer,

@@ -13,12 +13,14 @@ import { ContinuousEventPriority, DiscreteEventPriority, DefaultEventPriority } 
 import type {
     applyPropsType,
     ComponentType,
-    MinimalContainer,
     PropsType,
     PixiReactMinimalExpandoContainer,
     ICustomComponent,
     createCustomComponentType,
     UpdatePayload,
+    InstanceProps,
+    AttachType,
+    LocalState,
 } from '@pixi/react-types';
 import { diffProperties as defaultDiffProperties } from './diffProperties';
 import type { diffPropertiesType, PixiReactHostConfig } from './types';
@@ -89,13 +91,29 @@ function prepareForCommit()
     return null;
 }
 
-function hideInstance<PixiContainer extends MinimalContainer>(instance: PixiContainer): void
+function hideInstance<Container extends PixiReactMinimalExpandoContainer>(instance: Container): void
 {
+    // detach while instance is hidden
+    const { attach: type, parent } = instance.__reactpixi ?? {};
+
+    if (type && parent)
+    {
+        detach(parent, instance, type);
+    }
+
     instance.visible = false;
 }
 
-function unhideInstance<PixiContainer extends MinimalContainer>(instance: PixiContainer, props: PropsType): void
+function unhideInstance<Container extends PixiReactMinimalExpandoContainer>(instance: Container, props: PropsType): void
 {
+    // re-attach when the instance is unhidden
+    const { attach: type, parent } = instance.__reactpixi ?? {};
+
+    if (type && parent)
+    {
+        attach(parent, instance, type);
+    }
+
     const visible = props !== undefined && props !== null && props.hasOwnProperty('visible') ? props.visible : true;
 
     instance.visible = visible;
@@ -127,48 +145,168 @@ function createTextInstance(text: string)
  * Mutation
  * -------------------------------------------
  */
+export function prepareReactPixiState<
+    Container extends PixiReactMinimalExpandoContainer,
+    Instance extends PixiReactMinimalExpandoContainer,
+>(object: Instance, state?: Partial<LocalState<Container, Instance>>)
+{
+    object.__reactpixi = {
+        root: null,
+        previousAttach: null,
+        parent: null,
+        attachedObjects: [],
+        ...state,
+    };
 
-function doAppendChild<ExpandoContainer extends PixiReactMinimalExpandoContainer>(
-    parent: ExpandoContainer,
-    child: ExpandoContainer,
+    return object;
+}
+
+function attach<Container extends PixiReactMinimalExpandoContainer, Instance extends PixiReactMinimalExpandoContainer>(
+    parent: Container,
+    child: Instance,
+    type: AttachType<Container, Instance>,
 )
 {
-    if (parent.addChild)
+    if (typeof type === 'string')
     {
-        parent.addChild(child);
-        child.didMount?.(child, parent);
+        // @ts-ignore - allow string access for attach property
+        child.__reactpixi.previousAttach = parent[type];
+        // @ts-ignore - allow string access for attach property
+        parent[type] = child;
+    }
+    else
+    {
+        child.__reactpixi!.previousAttach = type(parent, child);
     }
 }
 
-function willUnmountRecursive<ExpandoContainer extends PixiReactMinimalExpandoContainer>(
-    child: ExpandoContainer,
-    parent: ExpandoContainer,
+function detach<Container extends PixiReactMinimalExpandoContainer, Instance extends PixiReactMinimalExpandoContainer>(
+    parent: Container,
+    child: Instance,
+    type: AttachType<Container, Instance>,
 )
+{
+    if (typeof type === 'string')
+    {
+        const previous = child.__reactpixi!.previousAttach;
+
+        if (previous === undefined)
+        {
+            // When the previous value was undefined, it means the value was never set to begin with
+            // @ts-ignore - allow string access for attach property
+            delete parent[type];
+        }
+        else
+        {
+            // Otherwise set the previous value
+            // @ts-ignore - allow string access for attach property
+            parent[type] = previous;
+        }
+    }
+    else
+    {
+        child.__reactpixi?.previousAttach?.(parent, child);
+    }
+    delete child.__reactpixi?.previousAttach;
+}
+
+// Borrow the attach pattern from react-three-fiber:
+// https://github.com/pmndrs/react-three-fiber/blob/master/packages/fiber/src/core/renderer.ts#L136
+function doAppendChild<
+    Container extends PixiReactMinimalExpandoContainer,
+    Instance extends PixiReactMinimalExpandoContainer,
+>(parent: Container, child: Instance)
+{
+    let added = false;
+
+    if (child.__reactpixi?.attach)
+    {
+        attach(parent, child, child.__reactpixi.attach);
+        // make sure to call custom component didMount method for attach as well as direct mounting
+        child.didMount?.(child, parent);
+    }
+    else if (parent.addChild)
+    {
+        parent.addChild(child);
+        child.didMount?.(child, parent);
+        added = true;
+    }
+
+    // This is for anything that used attach, ie. anything that's a child in React but not necessarily a child in the
+    // scenegraph - it could be part of the scenegraph but that's deferred to the instance receiving the attached object
+    // it won't be automatically added to the PIXI scenegraph via addChild
+    if (!added)
+    {
+        parent.__reactpixi!.attachedObjects.push(child);
+    }
+    if (!child.__reactpixi)
+    {
+        // TODO: Do we need this!?
+        prepareReactPixiState(child, {});
+    }
+
+    child.__reactpixi!.parent = parent;
+}
+
+function willUnmountRecursive<
+    Container extends PixiReactMinimalExpandoContainer,
+    Instance extends PixiReactMinimalExpandoContainer,
+>(child: Instance, parent: Container)
 {
     child.willUnmount?.(child, parent);
 
     // ensure willUnmount is called on children, but don't actually destroy them
     if (child.config?.destroyChildren !== false && child.children?.length)
     {
-        [...child.children].forEach((c) =>
+        // Make sure to include any attachedObjects which aren't necessarily direct children
+        // TODO: should we ensure that willUnmount won't get called on the same element twice?
+        const unmountingChildren = [...child.children, ...(child.__reactpixi?.attachedObjects || [])];
+
+        unmountingChildren.forEach((c) =>
         {
             // TODO: should we call willUnmount anyway irrespective of whether destroyChildren is true?
-            // It's ok if c isn't an ExpandoContainer, willUnmountRecursive just won't do anything. It means any children
-            // of c won't have this called, is it possible that MinimalContainers can have ExpandoContainer children?
-            willUnmountRecursive(c as ExpandoContainer, child);
+            // It's ok if c isn't an Container, willUnmountRecursive just won't do anything. It means any children
+            // of c won't have this called, is it possible that MinimalContainers can have Container children?
+            willUnmountRecursive(c as Container, child);
         });
     }
 }
 
-function doRemoveChild<ExpandoContainer extends PixiReactMinimalExpandoContainer>(
-    parent: ExpandoContainer,
-    child: ExpandoContainer,
-)
+function doRemoveChild<
+    Container extends PixiReactMinimalExpandoContainer,
+    Instance extends PixiReactMinimalExpandoContainer,
+>(parent: Container, child: Instance)
 {
+    if (!child)
+    {
+        return;
+    }
+
     // call willUnmount on child and iteratively on its descendants
     willUnmountRecursive(child, parent);
 
-    parent.removeChild(child);
+    if (child.__reactpixi)
+    {
+        child.__reactpixi.parent = null;
+    }
+    if (parent.__reactpixi?.attachedObjects)
+    {
+        parent.__reactpixi.attachedObjects = parent.__reactpixi.attachedObjects.filter((x) => x !== child);
+    }
+    if (child.__reactpixi?.attach)
+    {
+        detach(parent, child, child.__reactpixi.attach);
+    }
+    else
+    {
+        parent.removeChild(child);
+    }
+
+    if (child.__reactpixi)
+    {
+        delete child.__reactpixi.root;
+        delete (child.__reactpixi as Partial<LocalState<any, any>>).attachedObjects;
+    }
 
     const {
         destroy = true,
@@ -188,10 +326,10 @@ function doRemoveChild<ExpandoContainer extends PixiReactMinimalExpandoContainer
     }
 }
 
-function appendInitialChild<ExpandoContainer extends PixiReactMinimalExpandoContainer>(
-    parent: ExpandoContainer,
-    child: ExpandoContainer,
-)
+function appendInitialChild<
+    Container extends PixiReactMinimalExpandoContainer,
+    Instance extends PixiReactMinimalExpandoContainer,
+>(parent: Container, child: Instance)
 {
     const res = doAppendChild(parent, child);
 
@@ -202,9 +340,9 @@ function appendInitialChild<ExpandoContainer extends PixiReactMinimalExpandoCont
     return res;
 }
 
-function appendChild<ExpandoContainer extends PixiReactMinimalExpandoContainer>(
-    parent: ExpandoContainer,
-    child: ExpandoContainer,
+function appendChild<Container extends PixiReactMinimalExpandoContainer, Instance extends PixiReactMinimalExpandoContainer>(
+    parent: Container,
+    child: Instance,
 )
 {
     const res = doAppendChild(parent, child);
@@ -216,10 +354,10 @@ function appendChild<ExpandoContainer extends PixiReactMinimalExpandoContainer>(
     return res;
 }
 
-function appendChildToContainer<ExpandoContainer extends PixiReactMinimalExpandoContainer>(
-    parent: ExpandoContainer,
-    child: ExpandoContainer,
-)
+function appendChildToContainer<
+    Container extends PixiReactMinimalExpandoContainer,
+    Instance extends PixiReactMinimalExpandoContainer,
+>(parent: Container, child: Instance)
 {
     // TODO: is this intentionally calling appendChild (not doAppendChild)? It will emit two events
     const res = appendChild(parent, child);
@@ -231,9 +369,9 @@ function appendChildToContainer<ExpandoContainer extends PixiReactMinimalExpando
     return res;
 }
 
-function removeChild<ExpandoContainer extends PixiReactMinimalExpandoContainer>(
-    parent: ExpandoContainer,
-    child: ExpandoContainer,
+function removeChild<Container extends PixiReactMinimalExpandoContainer, Instance extends PixiReactMinimalExpandoContainer>(
+    parent: Container,
+    child: Instance,
 )
 {
     const res = doRemoveChild(parent, child);
@@ -245,10 +383,10 @@ function removeChild<ExpandoContainer extends PixiReactMinimalExpandoContainer>(
     return res;
 }
 
-function removeChildFromContainer<ExpandoContainer extends PixiReactMinimalExpandoContainer>(
-    container: ExpandoContainer,
-    child: ExpandoContainer,
-)
+function removeChildFromContainer<
+    Container extends PixiReactMinimalExpandoContainer,
+    Instance extends PixiReactMinimalExpandoContainer,
+>(container: Container, child: Instance)
 {
     // TODO: is this intentionally calling removeChild (not doRemoveChild)? It will emit two events
     const res = removeChild(container, child);
@@ -260,25 +398,53 @@ function removeChildFromContainer<ExpandoContainer extends PixiReactMinimalExpan
     return res;
 }
 
-function insertBefore<ExpandoContainer extends PixiReactMinimalExpandoContainer>(
-    parent: ExpandoContainer,
-    child: ExpandoContainer,
-    beforeChild: ExpandoContainer,
-)
+function insertBefore<
+    Container extends PixiReactMinimalExpandoContainer,
+    Instance extends PixiReactMinimalExpandoContainer,
+    SiblingInstance extends PixiReactMinimalExpandoContainer,
+>(parent: Container, child: Instance, beforeChild: Instance | SiblingInstance)
 {
     invariant(child !== beforeChild, 'pixi-react: PixiFiber cannot insert node before itself');
 
-    const childExists = parent.children.indexOf(child) !== -1;
-    const index = parent.getChildIndex(beforeChild);
+    if (!child)
+    {
+        return;
+    }
 
-    childExists ? parent.setChildIndex(child, index) : parent.addChildAt(child, index);
+    let added = false;
+
+    if (child.__reactpixi?.attach)
+    {
+        attach(parent, child, child.__reactpixi.attach);
+    }
+    else
+    {
+        const childExists = parent.children.indexOf(child) !== -1;
+        const index = parent.getChildIndex(beforeChild);
+
+        childExists ? parent.setChildIndex(child, index) : parent.addChildAt(child, index);
+
+        added = true;
+    }
+
+    if (!added)
+    {
+        parent.__reactpixi?.attachedObjects.push(child);
+    }
+    if (!child.__reactpixi)
+    {
+        // TODO: not sure we need this!?
+        prepareReactPixiState(child, {});
+    }
+
+    child.__reactpixi!.parent = parent;
 }
 
-function insertInContainerBefore<ExpandoContainer extends PixiReactMinimalExpandoContainer>(
-    container: ExpandoContainer,
-    child: ExpandoContainer,
-    beforeChild: ExpandoContainer,
-)
+function insertInContainerBefore<
+    Container extends PixiReactMinimalExpandoContainer,
+    Instance extends PixiReactMinimalExpandoContainer,
+    SiblingInstance extends PixiReactMinimalExpandoContainer,
+>(container: Container, child: Instance, beforeChild: Instance | SiblingInstance)
 {
     const res = insertBefore(container, child, beforeChild);
 
@@ -294,19 +460,22 @@ function clearContainer()
     // TODO implement this
 }
 
-export function makeHostConfig<ExpandoContainer extends PixiReactMinimalExpandoContainer>({
+export function makeHostConfig<
+    Container extends PixiReactMinimalExpandoContainer,
+    Instance extends PixiReactMinimalExpandoContainer,
+>({
     COMPONENTS,
     applyDefaultProps,
     diffProperties = defaultDiffProperties,
 }: {
-    COMPONENTS: Record<string, ComponentType<PropsType, ExpandoContainer>>;
-    applyDefaultProps: applyPropsType<PropsType, ExpandoContainer>;
-    diffProperties?: diffPropertiesType<ExpandoContainer>;
-}): PixiReactHostConfig<ExpandoContainer>
+    COMPONENTS: Record<string, ComponentType<PropsType, Container, Instance>>;
+    applyDefaultProps: applyPropsType<PropsType, Instance>;
+    diffProperties?: diffPropertiesType<Instance>;
+}): PixiReactHostConfig<Container, Instance>
 {
     let prepareChanged: UpdatePayload = null;
 
-    function prepareUpdate(pixiElement: ExpandoContainer, type: string, oldProps: PropsType, newProps: PropsType)
+    function prepareUpdate(pixiElement: Instance, type: string, oldProps: PropsType, newProps: PropsType)
     {
         prepareChanged = diffProperties(pixiElement, type, oldProps, newProps);
 
@@ -314,7 +483,7 @@ export function makeHostConfig<ExpandoContainer extends PixiReactMinimalExpandoC
     }
 
     function commitUpdate(
-        instance: ExpandoContainer,
+        instance: Instance,
         _updatePayload: UpdatePayload,
         _type: string,
         oldProps: PropsType,
@@ -346,8 +515,9 @@ export function makeHostConfig<ExpandoContainer extends PixiReactMinimalExpandoC
      * @param {Object} props Component props
      * @param {Object} root Root instance
      */
-    function createElement(type: string, props: PropsType, root: ExpandoContainer): ExpandoContainer
+    function createElement(type: string, props: InstanceProps<Container, Instance>, root: Container): Instance
     {
+        const { attach, ...restProps } = props;
         let instance;
         let applyProps;
 
@@ -355,13 +525,16 @@ export function makeHostConfig<ExpandoContainer extends PixiReactMinimalExpandoC
 
         if (componentLifecycle)
         {
-            const customComponentLifecycle = componentLifecycle as ICustomComponent<PropsType, ExpandoContainer>;
+            const customComponentLifecycle = componentLifecycle as ICustomComponent<PropsType, Container, Instance>;
 
             // Without a significant overhaul we need to continue to support the existing default component API,
             // since in some cases it relies on closures to maintain instance state
             if (!customComponentLifecycle.create)
             {
-                instance = (componentLifecycle as createCustomComponentType<PropsType, ExpandoContainer>)(root, props);
+                instance = (componentLifecycle as createCustomComponentType<PropsType, Container, Instance>)(
+                    root,
+                    restProps,
+                );
             }
             else
             {
@@ -382,12 +555,10 @@ export function makeHostConfig<ExpandoContainer extends PixiReactMinimalExpandoC
         // apply initial props!
         if (instance)
         {
-            instance.__reactpixi = {
-                root,
-            };
+            prepareReactPixiState(instance, { attach });
 
             applyProps = typeof instance?.applyProps === 'function' ? instance.applyProps : applyDefaultProps;
-            applyProps(instance, {}, props);
+            applyProps(instance, {}, restProps);
         }
         else
         {

@@ -24,7 +24,7 @@ parseBitmapFont(desyrel);
 
 describe('createElement', () =>
 {
-    let hostConfig: PixiReactHostConfig<Container>;
+    let hostConfig: PixiReactHostConfig<Container, Container>;
     let createElement: (type: string, props?: PropsType) => Container;
 
     beforeEach(() =>
@@ -138,7 +138,7 @@ describe('createElement', () =>
 describe('applyProps', () =>
 {
     let spy: any;
-    let hostConfig: PixiReactHostConfig<Container>;
+    let hostConfig: PixiReactHostConfig<Container, Container>;
     let createElement: (type: string, props?: PropsType) => PixiReactContainer;
 
     beforeEach(() =>
@@ -385,7 +385,7 @@ describe('applyProps', () =>
 
 describe('PixiComponent', () =>
 {
-    let hostConfig: PixiReactHostConfig<Container>;
+    let hostConfig: PixiReactHostConfig<Container, Container>;
     let root: Container;
     let createElement: (type: string, props?: PropsType) => PixiReactContainer;
     let Stage: ReactStageComponent;

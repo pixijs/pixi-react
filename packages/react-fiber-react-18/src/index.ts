@@ -6,22 +6,26 @@ import type { diffPropertiesType, PixiReactHostConfig, PixiReactReconciler } fro
 
 export type { PixiReactHostConfig, PixiReactReconciler };
 
-export function configurePixiReactHostConfig<ExpandoContainer extends PixiReactMinimalExpandoContainer>({
+export function configurePixiReactHostConfig<
+    Container extends PixiReactMinimalExpandoContainer,
+    Instance extends PixiReactMinimalExpandoContainer,
+>({
     COMPONENTS,
     applyDefaultProps,
     diffProperties,
 }: {
-    COMPONENTS: Record<string, ComponentType<PropsType, ExpandoContainer>>;
-    applyDefaultProps: applyPropsType<PropsType, ExpandoContainer>;
-    diffProperties?: diffPropertiesType<ExpandoContainer>;
+    COMPONENTS: Record<string, ComponentType<PropsType, Container, Instance>>;
+    applyDefaultProps: applyPropsType<PropsType, Instance>;
+    diffProperties?: diffPropertiesType<Instance>;
 })
 {
-    return makeHostConfig<ExpandoContainer>({ COMPONENTS, applyDefaultProps, diffProperties });
+    return makeHostConfig<Container, Instance>({ COMPONENTS, applyDefaultProps, diffProperties });
 }
 
-export function configurePixiReactFiber<ExpandoContainer extends PixiReactMinimalExpandoContainer>(
-    hostConfig: PixiReactHostConfig<ExpandoContainer>,
-): PixiReactReconciler<ExpandoContainer>
+export function configurePixiReactFiber<
+    PixiContainer extends PixiReactMinimalExpandoContainer,
+    Instance extends PixiReactMinimalExpandoContainer,
+>(hostConfig: PixiReactHostConfig<PixiContainer, Instance>): PixiReactReconciler<PixiContainer, Instance>
 {
     const PixiReactFiber = Reconciler(hostConfig);
 

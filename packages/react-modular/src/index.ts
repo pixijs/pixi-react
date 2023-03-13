@@ -11,28 +11,31 @@ import type {
     RenderType,
     UnmountComponentAtNodeType,
     MinimalContainer,
-    MinimalHostConfig, ComponentsType
+    MinimalHostConfig,
+    ComponentsType,
 } from '@pixi/react-types';
 
 type ConfigurePixiReactHostConfigType<
-    ExpandoContainer extends PixiReactMinimalExpandoContainer,
-    HostConfigType extends MinimalHostConfig<ExpandoContainer>,
+    Container extends PixiReactMinimalExpandoContainer,
+    Instance extends PixiReactMinimalExpandoContainer,
+    HostConfigType extends MinimalHostConfig<Container, Instance>,
 > = (params: {
-    COMPONENTS: Record<string, ComponentType<PropsType, ExpandoContainer>>;
-    applyDefaultProps: applyPropsType<PropsType, ExpandoContainer>;
+    COMPONENTS: Record<string, ComponentType<PropsType, Container, Instance>>;
+    applyDefaultProps: applyPropsType<PropsType, Instance>;
 }) => HostConfigType;
 
 type ConfigurePixiReactFiberType<
-    ExpandoContainer extends PixiReactMinimalExpandoContainer,
-    HostConfigType extends MinimalHostConfig<ExpandoContainer>,
-    PixiReactFiberType extends MinimalPixiReactFiber<ExpandoContainer>,
+    PixiContainer extends PixiReactMinimalExpandoContainer,
+    Instance extends PixiReactMinimalExpandoContainer,
+    HostConfigType extends MinimalHostConfig<PixiContainer, Instance>,
+    PixiReactFiberType extends MinimalPixiReactFiber<PixiContainer>,
 > = (hostConfig: HostConfigType) => PixiReactFiberType;
 
-type ConfigurePixiReactComponentsType<PixiContainer extends PixiReactMinimalExpandoContainer> = (
+type ConfigurePixiReactComponentsType<Instance extends PixiReactMinimalExpandoContainer> = (
     pixiComponent: PixiComponentType,
 ) => {
     TYPES: Record<string, string>;
-    applyDefaultProps: applyPropsType<PropsType, PixiContainer>;
+    applyDefaultProps: applyPropsType<PropsType, Instance>;
 };
 
 type ConfigureStageType<
@@ -61,10 +64,11 @@ export function configurePixiComponent()
      * @param {string} type
      * @param {Object} lifecycle methods
      */
-    function PixiComponent<P extends PropsType, PixiContainer extends PixiReactMinimalExpandoContainer>(
-        type: string,
-        lifecycle: ComponentType<P, PixiContainer>,
-    )
+    function PixiComponent<
+        P extends PropsType,
+        Container extends PixiReactMinimalExpandoContainer,
+        Instance extends PixiReactMinimalExpandoContainer,
+    >(type: string, lifecycle: ComponentType<P, Container, Instance>)
     {
         invariant(!!type, 'Expect type to be defined, got `%s`', type);
         invariant(
@@ -83,9 +87,10 @@ export function configurePixiComponent()
 
 export function configurePixiReact<
     ConcreteStageType,
-    PixiContainer extends PixiReactMinimalExpandoContainer,
-    HostConfigType extends MinimalHostConfig<PixiContainer>,
-    PixiReactFiberType extends MinimalPixiReactFiber<PixiContainer>,
+    Container extends PixiReactMinimalExpandoContainer,
+    Instance extends PixiReactMinimalExpandoContainer,
+    HostConfigType extends MinimalHostConfig<Container, Instance>,
+    PixiReactFiberType extends MinimalPixiReactFiber<Container>,
 >({
     configurePixiReactHostConfig,
     configurePixiReactFiber,
@@ -93,11 +98,11 @@ export function configurePixiReact<
     configurePixiReactStage,
     configurePixiReactRenderAPI,
 }: {
-    configurePixiReactHostConfig: ConfigurePixiReactHostConfigType<PixiContainer, HostConfigType>;
-    configurePixiReactFiber: ConfigurePixiReactFiberType<PixiContainer, HostConfigType, PixiReactFiberType>;
-    configurePixiReactComponents: ConfigurePixiReactComponentsType<PixiContainer>;
-    configurePixiReactStage: ConfigureStageType<ConcreteStageType, PixiContainer, PixiReactFiberType>;
-    configurePixiReactRenderAPI: ConfigurePixiReactRenderAPIType<PixiContainer, PixiReactFiberType>;
+    configurePixiReactHostConfig: ConfigurePixiReactHostConfigType<Container, Instance, HostConfigType>;
+    configurePixiReactFiber: ConfigurePixiReactFiberType<Container, Instance, HostConfigType, PixiReactFiberType>;
+    configurePixiReactComponents: ConfigurePixiReactComponentsType<Instance>;
+    configurePixiReactStage: ConfigureStageType<ConcreteStageType, Container, PixiReactFiberType>;
+    configurePixiReactRenderAPI: ConfigurePixiReactRenderAPIType<Container, PixiReactFiberType>;
 })
 {
     const { COMPONENTS, PixiComponent } = configurePixiComponent();

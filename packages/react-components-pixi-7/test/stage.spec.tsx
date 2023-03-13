@@ -41,7 +41,7 @@ describe('getCanvasProps', () =>
 
 describe('stage', () =>
 {
-    let PixiReactFiber: PixiReactReconciler<PixiReactContainer>;
+    let PixiReactFiber: PixiReactReconciler<PixiReactContainer, PixiReactContainer>;
     let Stage: ReactStageComponent;
 
     beforeEach(() =>

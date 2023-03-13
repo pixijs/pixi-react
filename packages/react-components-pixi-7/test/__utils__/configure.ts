@@ -21,8 +21,8 @@ export function configure({
     spyOnHostConfig = identity,
     spyOnPixiFiber = identity,
 }: {
-    spyOnHostConfig?: IdentityType<PixiReactHostConfig<PixiReactContainer>>;
-    spyOnPixiFiber?: IdentityType<PixiReactReconciler<PixiReactContainer>>;
+    spyOnHostConfig?: IdentityType<PixiReactHostConfig<PixiReactContainer, PixiReactContainer>>;
+    spyOnPixiFiber?: IdentityType<PixiReactReconciler<PixiReactContainer, PixiReactContainer>>;
 } = {})
 {
     const { COMPONENTS, PixiComponent } = configurePixiComponent();

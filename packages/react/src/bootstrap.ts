@@ -7,8 +7,9 @@ import type { PixiReactContainer, ReactStageComponent } from '@pixi/react-compon
 const { PixiComponent, PixiReactFiber, Stage, createRoot, render, unmountComponentAtNode } = configurePixiReact<
 ReactStageComponent,
 PixiReactContainer,
-PixiReactHostConfig<PixiReactContainer>,
-PixiReactReconciler<PixiReactContainer>
+PixiReactContainer,
+PixiReactHostConfig<PixiReactContainer, PixiReactContainer>,
+PixiReactReconciler<PixiReactContainer, PixiReactContainer>
 >({
     configurePixiReactHostConfig,
     configurePixiReactFiber,

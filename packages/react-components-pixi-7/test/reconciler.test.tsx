@@ -56,7 +56,7 @@ describe('reconciler', () =>
         };
     };
 
-    const prepare = (spyOnHostConfig = spyOnObjectMethods<PixiReactHostConfig<PixiReactContainer>>) =>
+    const prepare = (spyOnHostConfig = spyOnObjectMethods<PixiReactHostConfig<PixiReactContainer, PixiReactContainer>>) =>
     {
         const { roots, hostConfig, createRoot, unmountComponentAtNode } = configure({
             spyOnHostConfig,
@@ -451,7 +451,7 @@ describe('reconciler', () =>
         describe('config', () =>
         {
             const createInstances = (
-                hostConfig: PixiReactHostConfig<PixiReactContainer>,
+                hostConfig: PixiReactHostConfig<PixiReactContainer, PixiReactContainer>,
                 createInstance: createInstanceType,
                 config: lifeCycleConfigType,
             ) =>

@@ -20,15 +20,11 @@ import type {
     PixiReactContainer as BasePixiReactContainer,
     DisplayObjectSettableProperty,
     createInstanceType as genericCreateInstanceType,
-    applyPropsType as genericApplyPropsType,
-    didMountType as genericDidMountType,
-    willUnmountType as genericWillUnmountType,
     Roots as GenericRoots,
     CreateRootType as GenericCreateRootType,
     RenderType as GenericRenderType,
     UnmountComponentAtNodeType as GenericUnmountComponentAtNodeType,
     ReactStageComponent as GenericReactStageComponent,
-    ComponentType as GenericComponentType,
     StageProps as GenericStageProps,
     MinimalContainer,
 } from '@pixi/react-types';
@@ -43,17 +39,17 @@ export type { DisplayObjectSettableProperty, InteractionEvents, PointCoords, Pro
 // These are types for the "expando" Pixi instances, that are returned from
 // the component lifecycle create method with additional properties/methods
 // added for interopability with Pixi React
-export type PixiReactAnimatedSprite = BasePixiReactContainer<AnimatedSprite>;
-export type PixiReactBitmapText = BasePixiReactContainer<BitmapText>;
-export type PixiReactContainer = BasePixiReactContainer<Container>;
-export type PixiReactGraphics = BasePixiReactContainer<Graphics>;
-export type PixiReactNineSlicePlane = BasePixiReactContainer<NineSlicePlane>;
-export type PixiReactParticleContainer = BasePixiReactContainer<ParticleContainer>;
-export type PixiReactSimpleMesh = BasePixiReactContainer<SimpleMesh>;
-export type PixiReactSimpleRope = BasePixiReactContainer<SimpleRope>;
-export type PixiReactSprite = BasePixiReactContainer<Sprite>;
-export type PixiReactText = BasePixiReactContainer<Text>;
-export type PixiReactTilingSprite = BasePixiReactContainer<TilingSprite>;
+export type PixiReactAnimatedSprite = BasePixiReactContainer<Container, AnimatedSprite>;
+export type PixiReactBitmapText = BasePixiReactContainer<Container, BitmapText>;
+export type PixiReactContainer = BasePixiReactContainer<Container, Container>;
+export type PixiReactGraphics = BasePixiReactContainer<Container, Graphics>;
+export type PixiReactNineSlicePlane = BasePixiReactContainer<Container, NineSlicePlane>;
+export type PixiReactParticleContainer = BasePixiReactContainer<Container, ParticleContainer>;
+export type PixiReactSimpleMesh = BasePixiReactContainer<Container, SimpleMesh>;
+export type PixiReactSimpleRope = BasePixiReactContainer<Container, SimpleRope>;
+export type PixiReactSprite = BasePixiReactContainer<Container, Sprite>;
+export type PixiReactText = BasePixiReactContainer<Container, Text>;
+export type PixiReactTilingSprite = BasePixiReactContainer<Container, TilingSprite>;
 
 export type PixiReactTexture = Texture & {
     __reactpixi?: {
@@ -64,10 +60,11 @@ export type PixiReactTexture = Texture & {
 type WithSource = GenericWithSource<Texture>;
 export type PointLike = GenericPointLike<Point, ObservablePoint>;
 
-export type BaseReactContainerProps<PixiContainer extends MinimalContainer, Props = object> = GenericReactContainerProps<
+export type BaseReactContainerProps<PixiInstance extends MinimalContainer, Props = object> = GenericReactContainerProps<
 Point,
 ObservablePoint,
-PixiContainer,
+Container,
+PixiInstance,
 Props
 >;
 
@@ -169,7 +166,7 @@ export type ReactTilingSpriteComponent = React.FC<ReactTilingSpriteProps>;
 // minimize the size of the versioned pixi components package
 
 // Concrete types for this version of PIXI, with the Container/ExpandoContainer generics pre-supplied
-export type createInstanceType = genericCreateInstanceType<PixiReactContainer>;
+export type createInstanceType = genericCreateInstanceType<PixiReactContainer, PixiReactContainer>;
 
 export type Roots = GenericRoots<PixiReactContainer>;
 
@@ -178,11 +175,3 @@ export type CreateRootType = GenericCreateRootType<PixiReactContainer>;
 export type RenderType = GenericRenderType<Container>;
 
 export type UnmountComponentAtNodeType = GenericUnmountComponentAtNodeType<Container>;
-
-export type applyPropsType = genericApplyPropsType<PropsType, PixiReactContainer>;
-
-export type didMountType = genericDidMountType<PixiReactContainer>;
-
-export type willUnmountType = genericWillUnmountType<PixiReactContainer>;
-
-export type ComponentType = GenericComponentType<PixiReactContainer>;

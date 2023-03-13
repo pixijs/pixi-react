@@ -6,7 +6,12 @@ import { Application } from '@pixi/app';
 import { Ticker } from '@pixi/ticker';
 import PropTypes from 'prop-types';
 import { invariant } from '@pixi/react-invariant';
-import type { HTMLCanvasProps, MinimalPixiReactFiber, StageProps, StagePropsWithFiber } from '@pixi/react-types';
+import type {
+    HTMLCanvasProps,
+    MinimalPixiReactFiber,
+    StageProps,
+    StagePropsWithFiber,
+} from '@pixi/react-types';
 import { PROPS_DISPLAY_OBJECT } from '../utils/props';
 import type { PixiReactContainer } from '../types';
 import { AppProvider } from './provider';
@@ -76,7 +81,7 @@ export const propTypes = {
                 el
                     && invariant(
                         el === window || el instanceof HTMLElement,
-                        `Invalid prop \`resizeTo\` of type ${typeof el}, expect \`window\` or an \`HTMLElement\`.`,
+                        `Invalid prop \`resizeTo\` of type ${typeof el}, expect \`window\` or an \`HTMLElement\`.`
                     );
             }
             catch (e)
@@ -97,7 +102,7 @@ export const propTypes = {
                 el
                     && invariant(
                         el instanceof HTMLCanvasElement,
-                        `Invalid prop \`view\` of type ${typeof el}, supplied to ${componentName}, expected \`<canvas> Element\``,
+                        `Invalid prop \`view\` of type ${typeof el}, supplied to ${componentName}, expected \`<canvas> Element\``
                     );
             }
             catch (e)
@@ -128,7 +133,11 @@ const defaultProps = {
     renderOnComponentChange: true,
 };
 
-type BaseStageProps = StagePropsWithFiber<Application, IApplicationOptions, Container>;
+type BaseStageProps = StagePropsWithFiber<
+    Application,
+    IApplicationOptions,
+    Container
+>;
 type HOCStageProps = StageProps<Application, IApplicationOptions>;
 // force optional to required props for defaults to prevent TS undefined errors
 type BaseStagePropsWithDefaults = Required<BaseStageProps>;
@@ -136,11 +145,20 @@ type HOCStagePropsWithDefaults = Required<HOCStageProps>;
 
 export function getCanvasProps(props: Partial<BaseStagePropsWithDefaults>)
 {
-    const reserved = [...Object.keys(wrappedStagePropTypes), ...Object.keys(PROPS_DISPLAY_OBJECT)];
+    const reserved = [
+        ...Object.keys(wrappedStagePropTypes),
+        ...Object.keys(PROPS_DISPLAY_OBJECT),
+    ];
 
     return Object.keys(props)
         .filter((p) => !reserved.includes(p))
-        .reduce((all, prop) => ({ ...all, [prop]: props[prop as keyof HTMLCanvasProps] }), {});
+        .reduce(
+            (all, prop) => ({
+                ...all,
+                [prop]: props[prop as keyof HTMLCanvasProps],
+            }),
+            {}
+        );
 }
 
 export class BaseStage extends React.Component<BaseStagePropsWithDefaults>
@@ -157,7 +175,15 @@ export class BaseStage extends React.Component<BaseStagePropsWithDefaults>
 
     componentDidMount()
     {
-        const { pixiReactFiberInstance, onMount, width, height, options, raf, renderOnComponentChange } = this.props;
+        const {
+            pixiReactFiberInstance,
+            onMount,
+            width,
+            height,
+            options,
+            raf,
+            renderOnComponentChange,
+        } = this.props;
 
         this.app = new Application({
             width,
@@ -178,18 +204,33 @@ export class BaseStage extends React.Component<BaseStagePropsWithDefaults>
         this.app.ticker.autoStart = false;
         this.app.ticker[raf ? 'start' : 'stop']();
 
-        (this.app.stage as PixiReactContainer).__reactpixi = { root: this.app.stage };
+        (this.app.stage as PixiReactContainer).__reactpixi = {
+            root: this.app.stage,
+            parent: null,
+            previousAttach: null,
+            attachedObjects: [],
+        };
         // @ts-ignore - react reconciler lists several parameters as required that are optional
         this.mountNode = pixiReactFiberInstance.createContainer(this.app.stage);
-        pixiReactFiberInstance.updateContainer(this.getChildren(), this.mountNode, this);
+        pixiReactFiberInstance.updateContainer(
+            this.getChildren(),
+            this.mountNode,
+            this
+        );
 
         onMount(this.app);
 
         // update size on media query resolution change?
         // only if autoDensity = true
-        if (options?.autoDensity && window.matchMedia && options?.resolution === undefined)
+        if (
+            options?.autoDensity
+            && window.matchMedia
+            && options?.resolution === undefined
+        )
         {
-            this._mediaQuery = window.matchMedia(`(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 120dpi)`);
+            this._mediaQuery = window.matchMedia(
+                `(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 120dpi)`
+            );
             this._mediaQuery.addListener(this.updateSize);
         }
 
@@ -199,7 +240,10 @@ export class BaseStage extends React.Component<BaseStagePropsWithDefaults>
             this._ticker = new Ticker();
             this._ticker.autoStart = true;
             this._ticker.add(this.renderStage);
-            this.app.stage.on('__REACT_PIXI_REQUEST_RENDER__', this.needsRenderUpdate);
+            this.app.stage.on(
+                '__REACT_PIXI_REQUEST_RENDER__',
+                this.needsRenderUpdate
+            );
         }
 
         this.updateSize();
@@ -208,10 +252,20 @@ export class BaseStage extends React.Component<BaseStagePropsWithDefaults>
 
     componentDidUpdate(prevProps: BaseStageProps)
     {
-        const { pixiReactFiberInstance, width, height, raf, renderOnComponentChange, options } = this.props;
+        const {
+            pixiReactFiberInstance,
+            width,
+            height,
+            raf,
+            renderOnComponentChange,
+            options,
+        } = this.props;
 
         // update resolution
-        if (options?.resolution !== undefined && prevProps?.options?.resolution !== options?.resolution)
+        if (
+            options?.resolution !== undefined
+            && prevProps?.options?.resolution !== options?.resolution
+        )
         {
             // @ts-ignore - resolution now settable see pixijs PR - https://github.com/pixijs/pixijs/pull/9209
             this.app!.renderer.resolution = options.resolution;
@@ -235,7 +289,11 @@ export class BaseStage extends React.Component<BaseStagePropsWithDefaults>
         }
 
         // flush fiber
-        pixiReactFiberInstance.updateContainer(this.getChildren(), this.mountNode, this);
+        pixiReactFiberInstance.updateContainer(
+            this.getChildren(),
+            this.mountNode,
+            this
+        );
 
         if (
             prevProps.width !== width
@@ -320,7 +378,10 @@ export class BaseStage extends React.Component<BaseStagePropsWithDefaults>
             this._ticker.destroy();
         }
 
-        this.app!.stage.off('__REACT_PIXI_REQUEST_RENDER__', this.needsRenderUpdate);
+        this.app!.stage.off(
+            '__REACT_PIXI_REQUEST_RENDER__',
+            this.needsRenderUpdate
+        );
 
         pixiReactFiberInstance.updateContainer(null, this.mountNode, this);
 
@@ -339,32 +400,44 @@ export class BaseStage extends React.Component<BaseStagePropsWithDefaults>
 
         if (options && options.view)
         {
-            invariant(options.view instanceof HTMLCanvasElement, 'options.view needs to be a `HTMLCanvasElement`');
+            invariant(
+                options.view instanceof HTMLCanvasElement,
+                'options.view needs to be a `HTMLCanvasElement`'
+            );
 
             return null;
         }
 
-        return <canvas {...getCanvasProps(this.props)} ref={(c: HTMLCanvasElement) => (this._canvas = c)} />;
+        return (
+            <canvas
+                {...getCanvasProps(this.props)}
+                ref={(c: HTMLCanvasElement) => (this._canvas = c)}
+            />
+        );
     }
 }
 
-export function configurePixiReactStage(pixiReactFiberInstance: MinimalPixiReactFiber<Container>)
+export function configurePixiReactStage(
+    pixiReactFiberInstance: MinimalPixiReactFiber<Container>
+)
 {
-    const StageWithPixiReactFiber = forwardRef<BaseStage, HOCStageProps>((props, ref) =>
-    {
-        const normalizedProps = {
-            ...defaultProps,
-            ...props,
-        };
+    const StageWithPixiReactFiber = forwardRef<BaseStage, HOCStageProps>(
+        (props, ref) =>
+        {
+            const normalizedProps = {
+                ...defaultProps,
+                ...props,
+            };
 
-        return (
-            <BaseStage
-                ref={ref}
-                {...(normalizedProps as HOCStagePropsWithDefaults)}
-                pixiReactFiberInstance={pixiReactFiberInstance}
-            />
-        );
-    });
+            return (
+                <BaseStage
+                    ref={ref}
+                    {...(normalizedProps as HOCStagePropsWithDefaults)}
+                    pixiReactFiberInstance={pixiReactFiberInstance}
+                />
+            );
+        }
+    );
 
     StageWithPixiReactFiber.displayName = 'StageWithPixiReactFiber';
 

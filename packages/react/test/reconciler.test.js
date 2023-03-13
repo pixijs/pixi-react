@@ -198,6 +198,41 @@ describe('reconciler', () =>
             expect(m.args[2].text).toEqual('three'); // beforeChild
         });
 
+        test('sort elements', () =>
+        {
+            const { renderToStage } = prepareRender();
+
+            const elements = [
+                { id: 1, text: 'one' },
+                { id: 2, text: 'two' },
+                { id: 3, text: 'three' }
+            ];
+
+            renderToStage(
+                <Container>
+                    {elements.map((e) => <Text key={e.id} text={e.text} />)}
+                </Container>
+            );
+
+            const reordered = [elements[1], elements[0], elements[2]];
+
+            renderToStage(
+                <Container>
+                    {reordered.map((e) => <Text key={e.id} text={e.text} />)}
+                </Container>
+            );
+
+            const m = getCall(hostconfig.insertBefore)(0);
+
+            expect(m.args[0]).toBeInstanceOf(PixiContainer); // parent
+
+            const container = m.args[0];
+
+            expect(container.getChildAt(0).text).toEqual('two');
+            expect(container.getChildAt(1).text).toEqual('one');
+            expect(container.getChildAt(2).text).toEqual('three');
+        });
+
         test('update elements', () =>
         {
             const { renderToStage } = prepareRender();

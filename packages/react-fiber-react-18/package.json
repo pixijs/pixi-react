@@ -1,0 +1,55 @@
+{
+  "name": "@pixi/react-fiber-react-18",
+  "private": true,
+  "description": "Configurable React Reconciler for PixiJS and React 17/18",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pixijs/pixi-react.git",
+    "directory": "packages/react-fiber-react-18"
+  },
+  "license": "MIT",
+  "sideEffects": false,
+  "main": "index.js",
+  "module": "module.js",
+  "jsnext:main": "module.js",
+  "typings": "./index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./module.js"
+      },
+      "require": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      }
+    }
+  },
+  "files": [
+    "dist/",
+    "LICENSE",
+    "README.md",
+    "index.d.ts",
+    "index.js",
+    "module.js"
+  ],
+  "scripts": {
+    "prebuild": "npm run clean",
+    "build": "npm run build:dev && npm run build:prod",
+    "build:dev": "cross-env NODE_ENV=development rollup -c",
+    "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "clean": "rimraf ../react-fiber/v18/dist",
+    "test": "jest --silent",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "@pixi/react-invariant": "*"
+  },
+  "devDependencies": {
+    "react-reconciler": "^0.29.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "6d5b98bc6d7eafd1b0016e60a725b2b6c9f46a33"
+}

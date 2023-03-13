@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`index export modules for react-spring 1`] = `
+exports[`index export modules for react-animated 1`] = `
 {
   "AnimatedSprite": {
     "$$typeof": Symbol(react.forward_ref),

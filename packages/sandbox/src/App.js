@@ -1,6 +1,6 @@
 import { BlurFilter } from 'pixi.js';
-import { Stage, Container, Sprite, Text } from '@pixi/react';
 import { useMemo } from 'react';
+import { Stage, Container, Sprite, Text } from '@pixi/react';
 
 export const MyComponent = () =>
 {

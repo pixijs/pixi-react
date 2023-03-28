@@ -555,7 +555,7 @@ export function makeHostConfig<
         // apply initial props!
         if (instance)
         {
-            prepareReactPixiState(instance, { attach });
+            prepareReactPixiState(instance, { attach, root });
 
             applyProps = typeof instance?.applyProps === 'function' ? instance.applyProps : applyDefaultProps;
             applyProps(instance, {}, restProps);

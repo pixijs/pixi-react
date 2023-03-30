@@ -24,6 +24,12 @@
     },
     "test": {
       "dependsOn": ["^build"]
+    },
+    "test:ci": {
+      "dependsOn": ["^build"]
+    },
+    "test:types": {
+      "dependsOn": ["^build"]
     }
   },
   "namedInputs": {

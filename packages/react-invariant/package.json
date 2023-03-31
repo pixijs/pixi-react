@@ -39,8 +39,7 @@
     "build": "npm run build:types && npm run build:dev && npm run build:prod",
     "build:types": "tsc -p tsconfig.types.json",
     "build:dev": "cross-env NODE_ENV=development rollup -c",
-    "build:prod": "cross-env NODE_ENV=production rollup -c",
-    "postbuild": "../../scripts/logBuildDirectoryStructure.mjs"
+    "build:prod": "cross-env NODE_ENV=production rollup -c"
   },
   "publishConfig": {
     "access": "public"

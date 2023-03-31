@@ -8,7 +8,7 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const packagesPath = resolve(__dirname, '..', 'packages');
 
-// annoyingly only supports exclude rather than include, so we have a fugly negative lookahead to only show us dist dirs
+// annoyingly only supports exclude rather than include
 const tree = dirTree(packagesPath, {
     exclude: /(node_modules|docs|sandbox|test|src|scripts|react-fiber-react-18|react-components-pixi-7)/,
     extensions: /\.(js|ts)$/

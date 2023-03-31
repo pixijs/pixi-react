@@ -8,7 +8,9 @@
         "cacheableOperations": [
           "build",
           "lint",
-          "test"
+          "test",
+          "test:ci",
+          "test:types"
         ],
         "accessToken": "ZjQ3OWVmMTAtMTBlYS00YmJkLTk1ZjMtNmM5MWQ0YWFhYzY4fHJlYWQtd3JpdGU=",
         "scan": true

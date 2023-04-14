@@ -417,7 +417,7 @@ describe('PixiComponent', () =>
         new PixiComponent('Rectangle', lifecycle);
 
         const props = { x: 100, y: 200 };
-        const element = createElement('Rectangle', props);
+        const element = createElement('Rectangle', props, null);
 
         expect(element.didMount).toBeDefined();
         expect(element.willUnmount).toBeDefined();
@@ -425,7 +425,7 @@ describe('PixiComponent', () =>
         expect(element.config).toBe(config);
         expect(element).toBeInstanceOf(Graphics);
         expect(lifecycle.create).toHaveBeenCalledTimes(1);
-        expect(lifecycle.create).toHaveBeenCalledWith(props);
+        expect(lifecycle.create).toHaveBeenCalledWith(props, { root: null });
         expect(lifecycle.applyProps).toHaveBeenCalledTimes(1);
         expect(scoped).toHaveBeenCalledTimes(1);
         expect(scoped).toHaveBeenCalledWith(element);

@@ -122,4 +122,4 @@ running `npm run lint`.
 
 ## Contributor Code of Conduct
 
-[Code of Conduct](CODE_OF_CONDUCT.md) is adapted from [Contributor Covenant, version 1.4](http://contributor-covenant.org/version/1/4)
+[Code of Conduct](./CODE_OF_CONDUCT.md) is adapted from [Contributor Covenant, version 1.4](http://contributor-covenant.org/version/1/4)

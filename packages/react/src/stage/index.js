@@ -140,9 +140,12 @@ class Stage extends React.Component
 
         if (process.env.NODE_ENV === 'development')
         {
-            // workaround for React 18 Strict Mode unmount causing canvas
-            // context to be lost
-            this.app.renderer.context.extensions.loseContext = null;
+            // workaround for React 18 Strict Mode unmount causing
+            // webgl canvas context to be lost
+            if (this.app.renderer.context?.extensions)
+            {
+                this.app.renderer.context.extensions.loseContext = null;
+            }
         }
 
         this.app.ticker.autoStart = false;

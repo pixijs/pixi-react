@@ -57,7 +57,7 @@ export function createElement(type, props = {}, root = null)
 
         if (injected)
         {
-            instance = injected.create(props);
+            instance = injected.create(props, { root });
             instance.didMount = injected.didMount ? injected.didMount.bind(instance) : undefined;
             instance.willUnmount = injected.willUnmount ? injected.willUnmount.bind(instance) : undefined;
             instance.applyProps = injected.applyProps ? injected.applyProps.bind(instance) : undefined;
@@ -68,12 +68,12 @@ export function createElement(type, props = {}, root = null)
     // apply initial props!
     if (instance)
     {
+        instance.__reactpixi = {
+            root
+        };
+
         applyProps = typeof instance?.applyProps === 'function' ? instance.applyProps : applyDefaultProps;
         applyProps(instance, {}, props);
-
-        instance.__reactpixi = {
-            root,
-        };
     }
 
     return instance;

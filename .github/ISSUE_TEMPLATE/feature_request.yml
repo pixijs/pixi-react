@@ -13,8 +13,8 @@ body:
 
         Before submitting please read:
 
-        Contributors guide: <https://github.com/pixijs/pixi-react/blob/master/CONTRIBUTING.md>
-        Code of Conduct: <https://github.com/pixijs/pixi-react/blob/master/CODE_OF_CONDUCT.md>
+        Contributors guide: <https://github.com/pixijs/pixi-react/blob/master/.github/CONTRIBUTING.md>
+        Code of Conduct: <https://github.com/pixijs/pixi-react/blob/master/.github/CODE_OF_CONDUCT.md>
   - type: textarea
     attributes:
       label: Description

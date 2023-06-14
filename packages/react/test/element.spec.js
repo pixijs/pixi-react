@@ -154,6 +154,13 @@ describe('element.applyProps', () =>
         expect(spy).lastCalledWith('./image.png');
     });
 
+    test('AnimatedSprite.applyProps with updated image props', () =>
+    {
+        const element = createElement(TYPES.AnimatedSprite, { images: ['./image.png'] });
+        const changed = element.applyProps(element, { image: './image.png' }, { image: './new-image.png' });
+        expect(spy).lastCalledWith('./new-image.png');
+    });
+
     test('AnimatedSprite.applyProps with textures prop exists', () =>
     {
         const element = createElement(TYPES.AnimatedSprite, { textures: [Texture.from('./image.png')] });

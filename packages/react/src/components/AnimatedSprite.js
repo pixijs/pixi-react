@@ -28,6 +28,17 @@ const AnimatedSprite = (root, props) =>
 
         let changed = applyDefaultProps(instance, oldProps, props);
 
+        if (images && oldProps.images !== images)
+        {
+            const newTextures = [];
+            for (let i = 0; i < images.length; ++i)
+            {
+                newTextures.push(Texture.from(images[i]));
+            }
+            instance.textures = newTextures
+            changed = true;
+        }
+
         if (textures && oldProps.textures !== textures)
         {
             instance.textures = makeTexture(textures);

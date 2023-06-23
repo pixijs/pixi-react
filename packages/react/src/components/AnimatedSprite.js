@@ -24,7 +24,7 @@ const AnimatedSprite = (root, props) =>
     animatedSprite[isPlaying ? 'gotoAndPlay' : 'gotoAndStop'](initialFrame || 0);
     animatedSprite.applyProps = (instance, oldProps, newProps) =>
     {
-        const { textures, isPlaying, initialFrame, ...props } = newProps;
+        const { textures, isPlaying, initialFrame, images, ...props } = newProps;
 
         let changed = applyDefaultProps(instance, oldProps, props);
 

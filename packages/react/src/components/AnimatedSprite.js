@@ -24,9 +24,20 @@ const AnimatedSprite = (root, props) =>
     animatedSprite[isPlaying ? 'gotoAndPlay' : 'gotoAndStop'](initialFrame || 0);
     animatedSprite.applyProps = (instance, oldProps, newProps) =>
     {
-        const { textures, isPlaying, initialFrame, ...props } = newProps;
+        const { textures, isPlaying, initialFrame, images, ...props } = newProps;
 
         let changed = applyDefaultProps(instance, oldProps, props);
+
+        if (images && oldProps.images !== images)
+        {
+            const newTextures = [];
+            for (let i = 0; i < images.length; ++i)
+            {
+                newTextures.push(Texture.from(images[i]));
+            }
+            instance.textures = newTextures
+            changed = true;
+        }
 
         if (textures && oldProps.textures !== textures)
         {

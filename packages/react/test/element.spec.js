@@ -149,9 +149,15 @@ describe('element.applyProps', () =>
     test('AnimatedSprite.applyProps with images prop exists', () =>
     {
         const element = createElement(TYPES.AnimatedSprite, { images: ['./image.png'] });
-
         expect(element).toHaveProperty('applyProps');
         expect(spy).lastCalledWith('./image.png');
+    });
+
+    test('AnimatedSprite.applyProps with updated image props', () =>
+    {
+        const element = createElement(TYPES.AnimatedSprite, { images: ['./image.png'] });
+        const changed = element.applyProps(element, { images: ['./image.png'] }, { images: ['./new-image.png'] });
+        expect(spy).lastCalledWith('./new-image.png');
     });
 
     test('AnimatedSprite.applyProps with textures prop exists', () =>

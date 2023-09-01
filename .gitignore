@@ -3,3 +3,4 @@ node_modules/
 **/dist/
 packages/*/stats.html
 .eslintcache
+.DS_Store

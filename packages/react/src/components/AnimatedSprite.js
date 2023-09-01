@@ -31,11 +31,12 @@ const AnimatedSprite = (root, props) =>
         if (images && oldProps.images !== images)
         {
             const newTextures = [];
+
             for (let i = 0; i < images.length; ++i)
             {
                 newTextures.push(Texture.from(images[i]));
             }
-            instance.textures = newTextures
+            instance.textures = newTextures;
             changed = true;
         }
 

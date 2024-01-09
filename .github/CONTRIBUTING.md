@@ -1,6 +1,6 @@
 # How to contribute
 
-It is essential to the development of React Pixi that the community is empowered
+It is essential to the development of Pixi React that the community is empowered
 to make changes and get them into the library. Here are some guidelines to make
 that process silky smooth for all involved.
 
@@ -13,7 +13,7 @@ version so that our users learn about the upcoming changes and migrate their cod
 ## Reporting issues
 
 To report a bug, request a feature, or even ask a question, make use of the GitHub Issues
-section for [React Pixi][issues]. When submitting an issue please take the following steps:
+section for [pixi-react][issues]. When submitting an issue please take the following steps:
 
 1. **Search for existing issues.** Your question or bug may have already been answered or fixed,
    be sure to search the issues first before putting in a duplicate issue.
@@ -35,21 +35,22 @@ section for [React Pixi][issues]. When submitting an issue please take the follo
 
 To setup for making changes you will need to take a few steps, we've outlined them below:
 
-1. Ensure you have node.js installed. You can download node.js from [nodejs.org][node]. Because
-   pixi uses modern JS features, you will need a modern version of node. We recommend using the version defined in our
-   [`.nvmrc`][nvmrc] file, which is generally the latest LTS version. You can also use [`nvm`][nvm] to manage multiple
-   versions of node installed on your development machine.
+1. Ensure you have node.js installed. We recommend that you install using [`nvm`][nvm]; alternatively you **can**
+   download node.js from [nodejs.org][node]. Because pixi uses modern JS features, you will need a modern version
+   of node. We recommend using the version defined in our [`.nvmrc`][nvmrc] file, which is generally the latest
+   LTS version.  Currently (Jan 2024) the build is known to work with node v16 and v18; ***t**h**ere are reports of
+   issues using v20***.
 
 2. Fork the **[pixi-react][pixi-react]** repository, if you are unsure how to do this GitHub has a guides
    for the [command line][fork-cli] and for the [GitHub Client][fork-gui].
 
 3. Next, run `npm install` from within your clone of your fork. That will install dependencies
-   necessary to build React Pixi.
+   necessary to build Pixi-React.
 
 4. Pixi React is set up as a monorepo, with separate packages for:
   - The main library - `packages/react`
   - The "animated" library, for working with `react-spring` - `packages/animated`
-  - Their "legacy" counterparts for compatibility with `pixi.js-legacy` - `packages/react-legacy` and `packages/animated-legacy`
+  - Their "legacy" counterparts for compatibility with `pixi.js-legacy` - `packages/react-**legacy**` and `packages/animated-legacy`
   - The sourcecode for the docs website, built with docusaurus - `packages/docs`
 
 ### Making a Change
@@ -89,7 +90,7 @@ You can use the `docs` package as a way to test Pixi React features are working 
 ### Submitting Your Change
 
 After you have made and tested your change, commit and push it to your fork. Then, open a Pull Request
-from your fork to the main **React Pixi** repository on the branch you used in the `Making a Change` section of this document.
+from your fork to the main **Pixi React** repository on the branch you used in the `Making a Change` section of this document.
 
 ## Quickie Code Style Guide
 

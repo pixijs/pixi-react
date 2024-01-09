@@ -1,6 +1,8 @@
 import React from 'react';
 import * as PIXI from 'pixi.js';
+import { Point, TextStyle, Texture } from 'pixi.js';
 import * as ReactPixi from '@pixi/react';
+import { BitmapText, Graphics, Text } from '@pixi/react';
 import * as ReactPixiAnimated from '@pixi/react-animated';
 import { Spring } from 'react-spring';
 import times from 'lodash.times';
@@ -17,6 +19,12 @@ const ReactLiveScope = {
     ReactPixiAnimated,
     Spring,
     PIXI,
+    BitmapText,
+    Graphics,
+    Point,
+    TextStyle,
+    Text,
+    Texture,
     ExampleAssetLoader,
     makeAnimatedSpriteTextures,
     makeSimpleMeshData,

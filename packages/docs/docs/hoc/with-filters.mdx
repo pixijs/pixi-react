@@ -5,9 +5,10 @@ Wrap your ReactPixi component with `withFilters` to control filter params via pr
 ```jsx
 import { AdjustmentFilter } from '@pixi/filter-adjustment';
 import { Container } from '@pixi/react';
+import { filters } from 'pixi.js';
 
 const Filters = withFilters(Container, {
-  blur: PIXI.filters.BlurFilter,
+  blur: filters.BlurFilter,
   adjust: AdjustmentFilter,
 });
 
@@ -26,9 +27,10 @@ For filters that expose methods, you can use the `apply` prop that is called wit
 
 ```jsx
 import { Container } from '@pixi/react';
+import { filter } from 'pixi.js';
 
 const Filters = withFilters(Container, {
-  matrix: PIXI.filters.ColorMatrixFilter,
+  matrix: filters.ColorMatrixFilter,
 });
 
 const App = () => (

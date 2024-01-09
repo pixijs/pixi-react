@@ -70,8 +70,12 @@ In most cases you can use simple React compositions. A rule of thumb is to use c
 Example, don't do:
 
 ```jsx
+import {Sprite} from 'pixi.js';
+
+...
+
 PixiComponent('Rectangle', {
-  create: () => new PIXI.Sprite(),
+  create: () => new Sprite(),
   applyProps: () => {...}
 });
 ```

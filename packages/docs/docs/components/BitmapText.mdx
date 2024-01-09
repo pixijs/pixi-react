@@ -45,8 +45,9 @@ See https://pixijs.io/examples/#/demos/text-demo.js
 ```js
 import { render } from 'react-dom'
 import { Stage, BitmapText } from '@pixi/react'
+import { Loader } from 'pixi.js'
 
-PIXI.Loader.shared
+Loader.shared
   .add('desyrel', './assets/desyrel.xml')
   .load(onAssetsLoaded)
 

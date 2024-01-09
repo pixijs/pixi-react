@@ -17,10 +17,12 @@ ReactPixi gives you full type support.
 The props `position`, `scale`, `pivot`, `anchor` and `skew` are PointLike types.
 
 ```ts
+// import {Point, ObservablePoint} from 'pixi.js';
+
 type PointLike =
   | { x: number; y: number }
-  | PIXI.Point
-  | PIXI.ObservablePoint
+  | Point
+  | ObservablePoint
   | number
   | [number]
   | [number, number];
@@ -29,11 +31,15 @@ type PointLike =
 Example:
 
 ```jsx
-<Sprite anchor={{ x: 0.5, y: 0.5 }} />
-<Sprite anchor={new PIXI.Point(0.5, 0.5)} />
-<Sprite anchor={0.5} />
-<Sprite anchor={[0.5]} />
-<Sprite anchor={[0.5, 0.5]} />
+import {Point} from 'pixi.js';
+
+...
+
+  <Sprite anchor={{ x: 0.5, y: 0.5 }} />
+  <Sprite anchor={new Point(0.5, 0.5)} />
+  <Sprite anchor={0.5} />
+  <Sprite anchor={[0.5]} />
+  <Sprite anchor={[0.5, 0.5]} />
 ```
 
 ## Source types
@@ -50,6 +56,8 @@ Source types are available for:
 - `<AnimatedSprite>`
 
 ```ts
+// import {Texture} from 'pixi.js';
+
 type Source = {
   image?: ImageSource;
   video?: VideoSource;
@@ -58,7 +66,7 @@ type Source = {
     | ImageSource
     | VideoSource
     | HTMLCanvasElement
-    | PIXI.Texture;
+    | Texture;
 };
 ```
 
@@ -130,6 +138,8 @@ const App = () => {
 Extract a component prop type as follow:
 
 ```tsx
+// import {Graphics} from 'pixi.js';
+
 import { useCallback, ComponentProps } from 'react';
 import { Graphics } from '@pixi/react';
 

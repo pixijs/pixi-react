@@ -7,6 +7,8 @@ https://pixijs.download/dev/docs/PIXI.SimpleMesh.html
 ## Usage
 
 ```jsx live noInline
+// import {DRAW_MODES} from 'pixi.js';
+
 const { uvs, vertices, indices } = makeSimpleMeshData();
 
 render(
@@ -16,7 +18,7 @@ render(
       uvs={uvs}
       vertices={vertices}
       indices={indices}
-      drawMode={PIXI.DRAW_MODES.TRIANGLES}
+      drawMode={DRAW_MODES.TRIANGLES}
     />
   </Stage>,
 );

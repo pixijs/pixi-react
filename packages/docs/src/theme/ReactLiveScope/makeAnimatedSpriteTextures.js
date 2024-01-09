@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js';
+import { TextStyle, Texture } from 'pixi.js';
 
 export default function makeAnimatedSpriteTextures()
 {
@@ -8,7 +8,7 @@ export default function makeAnimatedSpriteTextures()
     {
         for (let i = 1; i <= 10; i++)
         {
-            const style = new PIXI.TextStyle({
+            const style = new TextStyle({
                 fontFamily: 'Arial',
                 fontSize: 36,
                 fontStyle: 'italic',
@@ -24,11 +24,11 @@ export default function makeAnimatedSpriteTextures()
                 wordWrap: true,
                 wordWrapWidth: 440,
             });
-            const text = new PIXI.Text(i.toString(), style);
+            const text = new Text(i.toString(), style);
 
             text.width = 60;
             text.height = 50;
-            textures.push(new PIXI.Texture(text.texture));
+            textures.push(new Texture(text.texture));
         }
     }
 

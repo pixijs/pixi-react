@@ -10,6 +10,8 @@ const ExampleAssetLoader = ({ name, url, loader, children }) =>
     {
         const loadAsset = async () =>
         {
+            Assets.reset(); // clear cache
+
             Assets.add(name, url);
 
             await Assets.load(name);

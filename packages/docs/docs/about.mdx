@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # About
 
-<p>
+<div>
   <h1 align="center" hidden>
     Pixi React
   </h1>
@@ -14,16 +14,16 @@ sidebar_position: 1
     alt="pixi-react"
     width="310"
   />
-</p>
+</div>
 
-<p>
-  <strong>Simply the best way to write PIXI applications in React</strong>
+<div style={{marginTop: '10px'}}>
+  <strong>Simply the best way to write PixiJS applications in React</strong>
   <br />
   <sub>
-    Write <a href="http://www.pixijs.com/">PIXI</a> applications using React
+    Write <a href="http://www.pixijs.com/">PixiJS</a> applications using React
     declarative style 👌
   </sub>
-</p>
+</div>
 
 ![release](https://img.shields.io/github/v/release/pixijs/pixi-react) &nbsp;&nbsp; ![downloads](https://img.shields.io/npm/dm/@pixi/react) &nbsp;&nbsp; [![CircleCI](https://img.shields.io/circleci/project/github/pixijs/pixi-react/master.svg)](https://circleci.com/gh/pixijs/pixi-react) &nbsp;&nbsp; ![license](https://img.shields.io/badge/license-MIT-green.svg) &nbsp;&nbsp; ![react](https://img.shields.io/badge/react-latest-ff69b4.svg) &nbsp;&nbsp; ![pixi](https://img.shields.io/badge/pixi-v6+-ff69b4.svg)
 
@@ -48,49 +48,86 @@ PixiJS Team
 
 ## Quick start
 
-If you want to start a new React project from scratch, we recommend [Create React App](https://github.com/facebook/create-react-app).
-To add to an existing React application, just install the dependencies:
+If you want to start a new React project from scratch, we recommend [Vite](https://vitejs.dev/guide/).
+To add to an existing React application, just install the dependencies.
 
-### Start New React Project "my-app" with Create React App:
+### 1. Create a new React project with Vite:
+
 ```bash
-# for typescript add "--template typescript"
-npx create-react-app my-app
+# for typescript use "--template react-ts"
+npx create-vite@latest --template react my-app
 cd my-app
+npm install
 ```
 
-### Install Pixi React Dependencies:
+### 2. Install Pixi-React dependencies:
+
 ```bash
 npm install pixi.js @pixi/react
 ```
 
-## Usage:
+### 3. Replace App.jsx with the following:
+
 ```jsx
-import { BlurFilter } from 'pixi.js';
-import { Stage, Container, Sprite, Text } from '@pixi/react';
+import './App.css';
 import { useMemo } from 'react';
 
-export const MyComponent = () =>
-{
+import { BlurFilter, TextStyle } from 'pixi.js';
+import { Stage, Container, Sprite, Text } from '@pixi/react';
+
+export const App = () => {
   const blurFilter = useMemo(() => new BlurFilter(4), []);
-
+  const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
   return (
-    <Stage>
-      <Sprite
-        image="https://pixijs.io/pixi-react/img/bunny.png"
-        x={400}
-        y={270}
-        anchor={{ x: 0.5, y: 0.5 }}
-      />
+    <Stage x={800} y={600}>
+      <Sprite image={bunnyUrl} x={300} y={150} />
+      <Sprite image={bunnyUrl} x={500} y={150} />
+      <Sprite image={bunnyUrl} x={400} y={200} />
 
-      <Container x={400} y={330}>
-        <Text text="Hello World" anchor={{ x: 0.5, y: 0.5 }} filters={[blurFilter]} />
+      <Container x={200} y={200}>
+        <Text
+          text="Hello World"
+          anchor={0.5}
+          x={220}
+          y={150}
+          filters={[blurFilter]}
+          style={
+            new TextStyle({
+              align: 'center',
+              fontSize: 50,
+              stroke: '#01d27e',
+              strokeThickness: 5,
+              letterSpacing: 20,
+              dropShadow: true,
+              dropShadowColor: '#ccced2',
+              dropShadowDistance: 6,
+            })
+          }
+        />
       </Container>
     </Stage>
   );
-};
+}
 ```
 
-[Codepen examples](https://codepen.io/collection/XPpGdb/)
+### 4. Run the app:
+
+```bash
+npm run dev
+```
+
+<div style={{ marginLeft: '50px' }}>
+  <img
+    src="/pixi-react/img/quick-start-my-app.png"
+    alt="Screenshot of the quick start 'my-app' project"
+    width="500"
+  />
+</div>
+
+<div style={{ paddingTop: '20px' }} />
+
+
+See the [Codepen examples](https://codepen.io/collection/XPpGdb/)
 
 ## Example
 
@@ -129,19 +166,24 @@ render(
 
 ## Components
 
-Pass PIXI properties directly as component props, example:
+Pass PixiJS properties directly as component props, example:
 
 ```jsx
 import { Sprite } from '@pixi/react'
+import { BLEND_MODES, BlurFilter } from 'pixi.js';
+import { useMemo } from 'react';
+
 
 const MyComponent = () => (
+  const blurFilter = useMemo(() => new BlurFilter(4), []);
+
   <Sprite
     texture={myTexture}
     anchor={0.5}
     position={[100, 200]}
-    blendMode={PIXI.BLEND_MODES.ADD}
+    blendMode={BLEND_MODES.ADD}
     roundPixels={true}
-    filters={[blurFilter, matrixFilter]}
+    filters={[blurFilter]}
   />;
 );
 ```

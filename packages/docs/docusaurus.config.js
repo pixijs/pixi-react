@@ -57,7 +57,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
         navbar: {
-            title: 'React Pixi',
+            title: 'Pixi React',
         },
         footer: {
             style: 'dark',

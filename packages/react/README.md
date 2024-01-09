@@ -7,9 +7,9 @@
 </h1>
 
 <p align="center">
-  <strong>Simply the best way to write PIXI applications in React</strong>
+  <strong>Simply the best way to write PixiJS applications in React</strong>
   <br />
-  <sub>Write <a href="http://www.pixijs.com/">PIXI</a> applications using React declarative style 👌</sub>
+  <sub>Write <a href="http://www.pixijs.com/">PixiJS</a> applications using React declarative style 👌</sub>
 </p>
 
 <br />
@@ -25,7 +25,7 @@
 
 <br />
 
-Pixi React is an open-source, production-ready library to render high performant PIXI applications in React.
+Pixi React is an open-source, production-ready library to render high performant PixiJS applications in React.
 
 ## News!
 

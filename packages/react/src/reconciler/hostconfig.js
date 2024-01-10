@@ -113,6 +113,8 @@ function insertBefore(parent, child, beforeChild)
     const index = parent.getChildIndex(beforeChild);
 
     parent.addChildAt(child, index);
+
+    parent.__reactpixi?.root?.emit(`__REACT_PIXI_REQUEST_RENDER__`, { detail: 'insertBefore' });
 }
 
 // get diff between 2 objects

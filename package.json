@@ -35,23 +35,7 @@
     "hosted-git-info": "^2.1.4"
   },
   "dependencies": {
-    "@babel/runtime": "^7.14.8",
-    "@pixi/app": "^7.1.1",
-    "@pixi/constants": "^7.1.1",
-    "@pixi/core": "^7.1.1",
-    "@pixi/display": "^7.1.1",
-    "@pixi/extensions": "^7.1.1",
-    "@pixi/graphics": "^7.1.1",
-    "@pixi/math": "^7.1.1",
-    "@pixi/mesh": "^7.1.1",
-    "@pixi/mesh-extras": "^7.1.1",
-    "@pixi/particle-container": "^7.1.1",
-    "@pixi/sprite": "^7.1.1",
-    "@pixi/sprite-animated": "^7.1.1",
-    "@pixi/sprite-tiling": "^7.1.1",
-    "@pixi/text": "^7.1.1",
-    "@pixi/text-bitmap": "^7.1.1",
-    "@pixi/ticker": "^7.1.1",
+    "pixi.js": "^8.0.0",
     "@react-spring/animated": "^9.6.1",
     "@react-spring/types": "^9.6.1",
     "react": "^18.0.0",
@@ -60,6 +44,7 @@
     "react-spring": "^9.6.1"
   },
   "devDependencies": {
+    "@babel/runtime": "^7.14.8",
     "@babel/cli": "^7.20.7",
     "@babel/core": "^7.20.7",
     "@babel/eslint-parser": "^7.19.1",

@@ -2,11 +2,14 @@
 
 ## Props
 
-https://pixijs.download/dev/docs/PIXI.BitmapText.html
+https://pixijs.download/v7.x/docs/PIXI.BitmapText.html
 
 ## Usage
 
 ```jsx live noInline
+// import { render } from 'react-dom';
+// import { Stage, BitmapText, Text } from '@pixi/react';
+
 const position = {
   anchor: 0.5,
   x: 250,
@@ -45,10 +48,18 @@ See https://pixijs.io/examples/#/demos/text-demo.js
 ```js
 import { render } from 'react-dom'
 import { Stage, BitmapText } from '@pixi/react'
+import { Loader } from 'pixi.js'
 
-PIXI.Loader.shared
+Loader.shared
   .add('desyrel', './assets/desyrel.xml')
   .load(onAssetsLoaded)
+
+// If using v7 or later, use the following code:
+// import { Assets } from 'pixi.js'
+//
+// Assets
+//  .load('./assets/desyrel.xml')
+//  .then(onAssetsLoaded)
 
 const App = () => (
   <Stage>

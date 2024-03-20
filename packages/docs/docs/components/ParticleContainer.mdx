@@ -1,20 +1,20 @@
 # ParticleContainer
 
-NOTE: Writing PIXI apps in vanilla js (the imperative way) is always more performant.
+NOTE: Writing PixiJS apps in vanilla js (the imperative way) is always more performant.
 The React reconciler needs to pass and validate props which can be costly when dealing with lots of components.
 
 > Most of the time you won't notice any difference though (rendering 1000 sprites in a particle container is still fast).
 
 ## Props
 
-https://pixijs.download/dev/docs/PIXI.ParticleContainer.html
+https://pixijs.download/v7.x/docs/PIXI.ParticleContainer.html
 
 ### maxSize
 
 The maximum number of particles that can be rendered by the container. Affects size of allocated buffers.
 This will only affect the component once and will be applied during creation.
 
-### [properties](https://pixijs.download/dev/docs/PIXI.ParticleContainer.html#ParticleContainer)
+### [properties](https://pixijs.download/v7.x/docs/PIXI.ParticleContainer.html#ParticleContainer)
 
 The properties of children that should be uploaded to the gpu and applied.
 
@@ -36,7 +36,9 @@ If true, container allocates more batches in case there are more than `maxSize` 
 
 ## Usage
 
-```jsx live
+```
+// import { ParticleContainer, Sprite, Stage } from '@pixi/react'
+
 <ExampleAssetLoader name="bunny" url="/pixi-react/img/bunny.png">
   <Stage width={300} height={300} options={{ backgroundColor: 0xffffff }}>
     <ParticleContainer position={[150, 150]} properties={{ position: true }}>

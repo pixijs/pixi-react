@@ -19,6 +19,9 @@ Note: isSprite establishes how the Text is rendered during its whole lifecycle a
 ## Usage
 
 ```jsx live
+// import { Stage, Text } from '@pixi/react'
+// import { TextStyle } from 'pixi.js'
+
 <Stage width={300} height={300} options={{ backgroundColor: 0xeef1f5 }}>
   <Text
     text="Hello World"
@@ -26,7 +29,7 @@ Note: isSprite establishes how the Text is rendered during its whole lifecycle a
     x={150}
     y={150}
     style={
-      new PIXI.TextStyle({
+      new TextStyle({
         align: 'center',
         fontFamily: '"Source Sans Pro", Helvetica, sans-serif',
         fontSize: 50,

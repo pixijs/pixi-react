@@ -5,146 +5,199 @@ sidebar_position: 1
 
 # About
 
-<p>
+<div style={{textAlign: 'center'}}>
+<div>
   <h1 align="center" hidden>
     Pixi React
   </h1>
   <img
-    src="/pixi-react/img/pixi-react-rainbow.png"
+    src="/pixi-react/img/pixi-react-logo.png"
     alt="pixi-react"
-    width="310"
+    width="400"
   />
-</p>
+</div>
 
-<p>
-  <strong>Simply the best way to write PIXI applications in React</strong>
+<div style={{ marginTop: '-10px' }}>
+  <strong>Simply the best way to write PixiJS applications in React</strong>
   <br />
   <sub>
-    Write <a href="http://www.pixijs.com/">PIXI</a> applications using React
+    Write <a href="http://www.pixijs.com/">PixiJS</a> applications using React
     declarative style 👌
   </sub>
-</p>
+</div>
 
-![release](https://img.shields.io/github/v/release/pixijs/pixi-react) &nbsp;&nbsp; ![downloads](https://img.shields.io/npm/dm/@pixi/react) &nbsp;&nbsp; [![CircleCI](https://img.shields.io/circleci/project/github/pixijs/pixi-react/master.svg)](https://circleci.com/gh/pixijs/pixi-react) &nbsp;&nbsp; ![license](https://img.shields.io/badge/license-MIT-green.svg) &nbsp;&nbsp; ![react](https://img.shields.io/badge/react-latest-ff69b4.svg) &nbsp;&nbsp; ![pixi](https://img.shields.io/badge/pixi-v6+-ff69b4.svg)
+![release](https://img.shields.io/github/v/release/pixijs/pixi-react) &nbsp;&nbsp; ![downloads](https://img.shields.io/npm/dm/@pixi/react) &nbsp;&nbsp; ![pixi](https://img.shields.io/badge/pixi-v6/v7-E72264.svg)
 
-## News!
+</div>
 
-**We're delighted to announce Pixi React v7.0.0, the first major release since making it an official Pixi package!**
+## Features
 
-While all the core components remain the same, there have been some significant changes under the hood:
-
-* Full React 18 support including a new `createRoot` API, matching the signature of [React 18's `ReactDOM/client`](https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html#updates-to-client-rendering-apis)
-* Full Pixi V7 support
-* New up-to-date [docs site](https://pixijs.io/pixi-react/)
-* Repository converted to a monorepo with separate [`@pixi/react`](https://www.npmjs.com/package/@pixi/react) and [`@pixi/animated`](https://www.npmjs.com/package/@pixi/react-animated) packages
-* Internally all `pixi.js` library imports were replaced with `@pixi/` scoped package versions, providing bundlesize improvements for users who use modular builds
-* Scoped imports allowed us to remove `@pixi/react-legacy` and `@pixi/react-animated-legacy` packages, with rendering deferred to a user's installed `pixi.js` package
-* `sideEffects: false` added to `package.json` to support tree-shaking
-
-We're excited to see what the community builds with the library and as ever please let us know on [GitHub](https://github.com/pixijs/pixi-react/issues) if you run into any issues, or reach out to us on the [Discord](https://discord.gg/zqbXQAADuM) to chat.
-
-Thanks!
-PixiJS Team
+- React 17 and 18 support
+- PixiJS v6 and v7 support
+- `react-spring` compatible animated components
 
 ## Quick start
 
-If you want to start a new React project from scratch, we recommend [Create React App](https://github.com/facebook/create-react-app).
-To add to an existing React application, just install the dependencies:
+If you want to start a new React project from scratch, we recommend [Vite](https://vitejs.dev/guide/).
+To add to an existing React application, just install the dependencies.
 
-### Start New React Project "my-app" with Create React App:
+### 1. Create a new React project with Vite:
+
 ```bash
-# for typescript add "--template typescript"
-npx create-react-app my-app
+# for typescript use "--template react-ts"
+npx create-vite@latest --template react my-app
 cd my-app
+npm install
 ```
 
-### Install Pixi React Dependencies:
+### 2. Install Pixi-React dependencies:
+
 ```bash
 npm install pixi.js @pixi/react
 ```
 
-## Usage:
+### 3. Replace App.jsx with the following:
+
 ```jsx
-import { BlurFilter } from 'pixi.js';
-import { Stage, Container, Sprite, Text } from '@pixi/react';
+import './App.css';
 import { useMemo } from 'react';
 
-export const MyComponent = () =>
-{
-  const blurFilter = useMemo(() => new BlurFilter(4), []);
+import { BlurFilter, TextStyle } from 'pixi.js';
+import { Stage, Container, Sprite, Text } from '@pixi/react';
 
+export const App = () => {
+  const blurFilter = useMemo(() => new BlurFilter(2), []);
+  const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
   return (
-    <Stage>
-      <Sprite
-        image="https://pixijs.io/pixi-react/img/bunny.png"
-        x={400}
-        y={270}
-        anchor={{ x: 0.5, y: 0.5 }}
-      />
+    <Stage x={800} y={600} options={{ background: 0x1099bb }}>
+      <Sprite image={bunnyUrl} x={300} y={150} />
+      <Sprite image={bunnyUrl} x={500} y={150} />
+      <Sprite image={bunnyUrl} x={400} y={200} />
 
-      <Container x={400} y={330}>
-        <Text text="Hello World" anchor={{ x: 0.5, y: 0.5 }} filters={[blurFilter]} />
+      <Container x={200} y={200}>
+        <Text
+          text="Hello World"
+          anchor={0.5}
+          x={220}
+          y={150}
+          filters={[blurFilter]}
+          style={
+            new TextStyle({
+              align: 'center',
+              fill: '0xffffff',
+              fontSize: 50,
+              letterSpacing: 20,
+              dropShadow: true,
+              dropShadowColor: '#E72264',
+              dropShadowDistance: 6,
+            })
+          }
+        />
       </Container>
     </Stage>
   );
 };
 ```
 
-[Codepen examples](https://codepen.io/collection/XPpGdb/)
+### 4. Run the app:
+
+```bash
+npm run dev
+```
+
+The final result should look like this:
+
+<div style={{ marginLeft: '50px' }}>
+  <img
+    src="/pixi-react/img/pixi-react-example.png"
+    alt="Screenshot of the quick start 'my-app' project"
+    width="500"
+  />
+</div>
+
+<div style={{ paddingTop: '20px' }} />
+
+See the [Codepen examples](https://codepen.io/collection/XPpGdb/)
 
 ## Example
 
 ```jsx live noInline
-const reducer = (_, { data }) => data;
+// import { Stage, Sprite, Container, Text } from '@pixi/react';
+// import { TextStyle, BlurFilter } from 'pixi.js';
+// import { useMemo } from 'react';
+// import { render } from 'react-dom';
 
-const Bunny = () => {
-  const [motion, update] = useReducer(reducer);
-  const iter = useRef(0);
+const App = () => {
+  const blurFilter = useMemo(() => new BlurFilter(2), []);
+  const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
+  return (
+    <Stage x={800} y={600} options={{ background: 0x1099bb }}>
+      <Sprite image={bunnyUrl} x={300} y={150} />
+      <Sprite image={bunnyUrl} x={500} y={150} />
+      <Sprite image={bunnyUrl} x={400} y={200} />
 
-  useTick((delta) => {
-    const i = (iter.current += 0.05 * delta);
-
-    update({
-      type: 'update',
-      data: {
-        x: Math.sin(i) * 100,
-        y: Math.sin(i / 1.5) * 100,
-        rotation: Math.sin(i) * Math.PI,
-        anchor: Math.sin(i / 2),
-      },
-    });
-  });
-
-  return <Sprite image="/pixi-react/img/bunny.png" {...motion} />;
+      <Container x={200} y={200}>
+        <Text
+          text="Hello World"
+          anchor={0.5}
+          x={220}
+          y={150}
+          filters={[blurFilter]}
+          style={
+            new TextStyle({
+              align: 'center',
+              fill: '0xffffff',
+              fontSize: 50,
+              letterSpacing: 20,
+              dropShadow: true,
+              dropShadowColor: '#E72264',
+              dropShadowDistance: 6,
+            })
+          }
+        />
+      </Container>
+    </Stage>
+  );
 };
-
-render(
-  <Stage width={300} height={300} options={{ backgroundAlpha: 0 }}>
-    <Container x={150} y={150}>
-      <Bunny />
-    </Container>
-  </Stage>,
-);
+render(<App />);
 ```
 
 ## Components
 
-Pass PIXI properties directly as component props, example:
+Pass PixiJS properties directly as component props, example:
 
 ```jsx
-import { Sprite } from '@pixi/react'
+import { Sprite } from '@pixi/react';
+import { BLEND_MODES, BlurFilter } from 'pixi.js';
+import { useMemo } from 'react';
 
 const MyComponent = () => (
+  const blurFilter = useMemo(() => new BlurFilter(4), []);
+
   <Sprite
     texture={myTexture}
     anchor={0.5}
     position={[100, 200]}
-    blendMode={PIXI.BLEND_MODES.ADD}
+    blendMode={BLEND_MODES.ADD}
     roundPixels={true}
-    filters={[blurFilter, matrixFilter]}
+    filters={[blurFilter]}
   />;
 );
 ```
+
+## FAQ
+
+<details>
+  <summary>Interaction does not work</summary>
+  <div>
+
+  If you are using PixiJS without the `pixi.js` package and are instead using scoped packages like `@pixi/app`, `@pixi/sprite` etc, you will need to import the `@pixi/events` package to enable interaction.
+
+  ```js
+  import '@pixi/events';
+  ```
+  </div>
+</details>
 
 ## Join us
 

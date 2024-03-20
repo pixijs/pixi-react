@@ -19,8 +19,8 @@ The props `position`, `scale`, `pivot`, `anchor` and `skew` are PointLike types.
 ```ts
 type PointLike =
   | { x: number; y: number }
-  | PIXI.Point
-  | PIXI.ObservablePoint
+  | Point
+  | ObservablePoint
   | number
   | [number]
   | [number, number];
@@ -29,8 +29,11 @@ type PointLike =
 Example:
 
 ```jsx
+import { Sprite } from '@pixi/react';
+import { Point } from 'pixi.js';
+
 <Sprite anchor={{ x: 0.5, y: 0.5 }} />
-<Sprite anchor={new PIXI.Point(0.5, 0.5)} />
+<Sprite anchor={new Point(0.5, 0.5)} />
 <Sprite anchor={0.5} />
 <Sprite anchor={[0.5]} />
 <Sprite anchor={[0.5, 0.5]} />
@@ -58,7 +61,7 @@ type Source = {
     | ImageSource
     | VideoSource
     | HTMLCanvasElement
-    | PIXI.Texture;
+    | Texture;
 };
 ```
 
@@ -110,14 +113,14 @@ const App = () => (
 
 ## PixiRef
 
-Get the PIXI instance type for a ReactPixi component:
+Get the PixiJS instance type for a ReactPixi component:
 
 Example:
 
 ```tsx
 import { Container, PixiRef } from '@pixi/react';
 
-type IContainer = PixiRef<typeof Container>; // PIXI.Container
+type IContainer = PixiRef<typeof Container>; // Pixi Container
 
 const App = () => {
   const containerRef = React.useRef<IContainer>(null);

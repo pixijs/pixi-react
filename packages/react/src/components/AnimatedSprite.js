@@ -12,7 +12,7 @@ const AnimatedSprite = (root, props) =>
         {
             invariant(
                 texture instanceof Texture || texture?.texture,
-                `AnimationSprite texture needs to be an array of \`PIXI.Texture\` or \`{ texture: PIXI.Texture, time:
+                `AnimationSprite texture needs to be an array of \`Texture\` or \`{ texture: Texture, time:
                 number }\``
             );
 

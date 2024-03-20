@@ -101,7 +101,7 @@ function removeChild(parent, child)
 
 function insertBefore(parent, child, beforeChild)
 {
-    invariant(child !== beforeChild, 'pixi-react: PixiFiber cannot insert node before itself');
+    invariant(child !== beforeChild, 'Cannot insert node before itself');
 
     const childExists = parent.children.indexOf(child) !== -1;
 
@@ -258,10 +258,9 @@ const HostConfig = {
     {
         invariant(
             false,
-            `pixi-react: Error trying to add text node "${text}"`,
-            'PixiFiber does not support text nodes as children of a Pixi component. '
-        + 'To pass a string value to your component, use a property other than children. '
-        + 'If you wish to display some text, you can use &lt;Text text={string} /&gt; instead.'
+            `Error trying to add text node "${text}"`,
+            'text strings as children of a Pixi component is not supported. '
+        + 'To add some text, use &lt;Text text={string} /&gt;'
         );
     },
 

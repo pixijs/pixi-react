@@ -1,6 +1,6 @@
 # Custom Components
 
-ReactPixi already covers a large set of PIXI components (like `<Container>`, `<Sprite>`, `<Graphics>` and many more), but in some use cases you'd like to add new "reconciler primitive" components.
+ReactPixi already covers a large set of PixiJS components (like `<Container>`, `<Sprite>`, `<Graphics>` and many more), but in some use cases you'd like to add new "reconciler primitive" components.
 
 To tap into the React reconciliation you can create custom components with `PixiComponent`.
 
@@ -37,8 +37,8 @@ export default PixiComponent('ComponentName', {
 
 ## Props helper
 
-ReactPixi comes with a handy utility method `applyDefaultProps` that can help you applying props directly to a PIXI
-primitive instance handling events, PIXI props and point-like values.
+ReactPixi comes with a handy utility method `applyDefaultProps` that can help you applying props directly to a PixiJS
+primitive instance handling events, PixiJS props and point-like values.
 
 Here's an example to pass through every other DisplayObject props and handle prop `count` separately:
 
@@ -70,8 +70,10 @@ In most cases you can use simple React compositions. A rule of thumb is to use c
 Example, don't do:
 
 ```jsx
+import { Sprite } from 'pixi.js';
+
 PixiComponent('Rectangle', {
-  create: () => new PIXI.Sprite(),
+  create: () => new Sprite(),
   applyProps: () => {...}
 });
 ```

@@ -2,11 +2,16 @@
 
 ## Props
 
-https://pixijs.download/dev/docs/PIXI.SimpleMesh.html
+https://pixijs.download/v7.x/docs/PIXI.SimpleMesh.html
 
 ## Usage
 
 ```jsx live noInline
+// import React from 'react';
+// import { render } from 'react-dom';
+// import { Stage, SimpleMesh } from '@pixi/react';
+// import { DRAW_MODES } from 'pixi.js';
+
 const { uvs, vertices, indices } = makeSimpleMeshData();
 
 render(
@@ -16,7 +21,7 @@ render(
       uvs={uvs}
       vertices={vertices}
       indices={indices}
-      drawMode={PIXI.DRAW_MODES.TRIANGLES}
+      drawMode={DRAW_MODES.TRIANGLES}
     />
   </Stage>,
 );

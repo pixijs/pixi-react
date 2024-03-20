@@ -57,7 +57,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
         navbar: {
-            title: 'React Pixi',
+            title: 'PixiJS React',
         },
         footer: {
             style: 'dark',
@@ -71,7 +71,7 @@ const config = {
                         },
                         {
                             label: 'Discord',
-                            href: 'https://discord.com/channels/734147990985375826/968068526566965279',
+                            href: 'https://discord.gg/CPTjeb28nH',
                         },
                     ],
                 },
@@ -81,6 +81,9 @@ const config = {
         prism: {
             theme: lightCodeTheme,
             darkTheme: darkCodeTheme,
+        },
+        liveCodeBlock: {
+            playgroundPosition: 'top',
         },
     }),
 };

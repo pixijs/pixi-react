@@ -7,9 +7,9 @@
 </h1>
 
 <p align="center">
-  <strong>Simply the best way to write PIXI applications in React</strong>
+  <strong>Simply the best way to write PixiJS applications in React</strong>
   <br />
-  <sub>Write <a href="http://www.pixijs.com/">PIXI</a> applications using React declarative style 👌</sub>
+  <sub>Write <a href="http://www.pixijs.com/">PixiJS</a> applications using React declarative style 👌</sub>
 </p>
 
 <br />
@@ -25,26 +25,13 @@
 
 <br />
 
-Pixi React is an open-source, production-ready library to render high performant PIXI applications in React.
+Pixi React is an open-source, production-ready library to render high performant PixiJS applications in React.
 
-## News!
+## Features
 
-We're delighted to announce Pixi React v7.0.0, the first major release since making it an official Pixi package!
-
-While all the core components remain the same, there have been some significant changes under the hood:
-
-* Full React 18 support including a new `createRoot` API, matching the signature of [React 18's `ReactDOM/client`](https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html#updates-to-client-rendering-apis)
-* Full Pixi V7 support
-* New up-to-date [docs site](https://pixijs.io/pixi-react/)
-* Repository converted to a monorepo with separate [`@pixi/react`](https://www.npmjs.com/package/@pixi/react) and [`@pixi/animated`](https://www.npmjs.com/package/@pixi/react-animated) packages
-* Internally all `pixi.js` library imports were replaced with `@pixi/` scoped package versions, providing bundlesize improvements for users who use modular builds
-* Scoped imports allowed us to remove `@pixi/react-legacy` and `@pixi/react-animated-legacy` packages, with rendering deferred to a user's installed `pixi.js` package
-* `sideEffects: false` added to `package.json` to support tree-shaking
-
-We're excited to see what the community builds with the library and as ever please let us know on [GitHub](https://github.com/pixijs/pixi-react/issues) if you run into any issues, or reach out to us on the [Discord](https://discord.com/channels/734147990985375826/968068526566965279) to chat.
-
-Thanks!
-PixiJS Team
+- React 17 and 18 support
+- PixiJS v6 and v7 support
+- react-spring compatible animated components
 
 ## Get started
 
@@ -76,7 +63,7 @@ export const MyComponent = () =>
   const blurFilter = useMemo(() => new BlurFilter(4), []);
 
   return (
-    <Stage>
+    <Stage options={{ background: 0xffffff }}>
       <Sprite
         image="https://pixijs.io/pixi-react/img/bunny.png"
         x={400}

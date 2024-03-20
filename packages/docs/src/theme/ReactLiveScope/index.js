@@ -12,11 +12,11 @@ import useIteration from './useIteration';
 
 const ReactLiveScope = {
     React,
+    ...PIXI,
     ...React,
     ...ReactPixi,
     ReactPixiAnimated,
     Spring,
-    PIXI,
     ExampleAssetLoader,
     makeAnimatedSpriteTextures,
     makeSimpleMeshData,

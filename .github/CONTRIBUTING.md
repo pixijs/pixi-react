@@ -1,6 +1,6 @@
 # How to contribute
 
-It is essential to the development of React Pixi that the community is empowered
+It is essential to the development of PixiJS React that the community is empowered
 to make changes and get them into the library. Here are some guidelines to make
 that process silky smooth for all involved.
 
@@ -13,7 +13,7 @@ version so that our users learn about the upcoming changes and migrate their cod
 ## Reporting issues
 
 To report a bug, request a feature, or even ask a question, make use of the GitHub Issues
-section for [React Pixi][issues]. When submitting an issue please take the following steps:
+section for [PixiJS React][issues]. When submitting an issue please take the following steps:
 
 1. **Search for existing issues.** Your question or bug may have already been answered or fixed,
    be sure to search the issues first before putting in a duplicate issue.
@@ -44,7 +44,7 @@ To setup for making changes you will need to take a few steps, we've outlined th
    for the [command line][fork-cli] and for the [GitHub Client][fork-gui].
 
 3. Next, run `npm install` from within your clone of your fork. That will install dependencies
-   necessary to build React Pixi.
+   necessary to build PixiJS React.
 
 4. Pixi React is set up as a monorepo, with separate packages for:
   - The main library - `packages/react`
@@ -67,7 +67,7 @@ Your change should be made directly to the branch in your fork, or to a branch i
 
 ### Testing Your Change
 
-You can test your change by using the automated tests packaged with React Pixi. You can run these tests by running `npm test`
+You can test your change by using the automated tests packaged with PixiJS React. You can run these tests by running `npm test`
 from the command line, either from the project root to test all packages or from within an individual package to test only
 that package. If you fix a bug please add a test that will catch that bug if it ever happens again. This prevents regressions
 from sneaking in.
@@ -89,7 +89,7 @@ You can use the `docs` package as a way to test Pixi React features are working 
 ### Submitting Your Change
 
 After you have made and tested your change, commit and push it to your fork. Then, open a Pull Request
-from your fork to the main **React Pixi** repository on the branch you used in the `Making a Change` section of this document.
+from your fork to the main **PixiJS React** repository on the branch you used in the `Making a Change` section of this document.
 
 ## Quickie Code Style Guide
 

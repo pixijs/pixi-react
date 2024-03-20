@@ -350,7 +350,7 @@ declare namespace _ReactPixi
      */
       applyProps?(
           instance: PixiInstance,
-          oldProps: Readonly<P>,
+          oldProps: Readonly<P | object>,
           newProps: Readonly<P>
       ): void;
 

@@ -45,7 +45,7 @@ describe('render', () =>
     test('invariant container', () =>
     {
         expect(() => render('something', null)).toThrow(
-            'Invalid argument `container`, expected instance of `PIXI.Container`'
+            'Invalid argument `container`, expected instance of `Container`'
         );
     });
 

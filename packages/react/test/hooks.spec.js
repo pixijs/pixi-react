@@ -33,7 +33,7 @@ describe('hooks', () =>
                 });
 
             expect(createApp).toThrow(
-                'No Context found with `PIXI.Application`. Make sure to wrap component with `AppProvider`'
+                'No Context found with `Application`. Make sure to wrap component with `AppProvider`'
             );
         });
 
@@ -91,7 +91,7 @@ describe('hooks', () =>
                 });
 
             expect(createApp).toThrow(
-                'No Context found with `PIXI.Application`. Make sure to wrap component with `AppProvider`'
+                'No Context found with `Application`. Make sure to wrap component with `AppProvider`'
             );
         });
 

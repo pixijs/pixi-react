@@ -138,9 +138,8 @@ export function setValue(instance, prop, value)
 
         invariant(
             typeof coordinates !== 'undefined' && coordinates.length > 0 && coordinates.length < 3,
-            'The property `%s` is a `PIXI.Point` or `PIXI.ObservablePoint` and must be set to a comma-separated string of '
-        + 'either 1 or 2 coordinates, a 1 or 2 element array containing coordinates, or a PIXI Point/ObservablePoint. '
-        + 'If only one coordinate is given then X and Y will be set to the provided value. Received: `%s` of type `%s`.',
+            'The property `%s` is a `Point` and must be set to a comma-separated string of '
+        + 'either coordinates, an array containing coordinates, or a Point.',
             prop,
             JSON.stringify(value),
             typeof value

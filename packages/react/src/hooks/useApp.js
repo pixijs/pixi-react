@@ -10,7 +10,7 @@ export function useApp()
     invariant(
         app instanceof Application,
         'No Context found with `%s`. Make sure to wrap component with `%s`',
-        'PIXI.Application',
+        'Application',
         'AppProvider'
     );
 

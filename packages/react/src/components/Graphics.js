@@ -4,7 +4,7 @@ import invariant from '../utils/invariant';
 
 const Graphics = (root, { geometry }) =>
 {
-    invariant(!geometry || geometry instanceof PixiGraphics, `Graphics geometry needs to be a \`PIXI.Graphics\``);
+    invariant(!geometry || geometry instanceof PixiGraphics, `Graphics geometry needs to be a \`Graphics\``);
     const g = geometry ? new PixiGraphics(geometry.geometry) : new PixiGraphics();
 
     g.applyProps = (instance, oldProps, newProps) =>

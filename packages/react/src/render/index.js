@@ -12,7 +12,7 @@ function unmountComponent(container)
 {
     invariant(
         Container.prototype.isPrototypeOf(container),
-        'Invalid argument `container`, expected instance of `PIXI.Container`.'
+        'Invalid argument `container`, expected instance of `Container`.'
     );
 
     if (roots.has(container))
@@ -38,12 +38,12 @@ export function createRoot(container)
 {
     invariant(
         Container.prototype.isPrototypeOf(container),
-        'Invalid argument `container`, expected instance of `PIXI.Container`.'
+        'Invalid argument `container`, expected instance of `Container`.'
     );
 
     let root = roots.get(container);
 
-    invariant(!root, 'Pixi React: createRoot should only be called once');
+    invariant(!root, 'createRoot should only be called once');
 
     if (!root)
     {

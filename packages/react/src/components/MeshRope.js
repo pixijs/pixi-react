@@ -1,19 +1,19 @@
-import { SimpleRope as PixiSimpleRope } from '@pixi/mesh-extras';
+import { MeshRope as PixiMeshRope } from 'pixi.js';
 import invariant from '../utils/invariant';
 import { getTextureFromProps, applyDefaultProps } from '../utils/props';
 
-const SimpleRope = (root, props) =>
+const MeshRope = (root, props) =>
 {
-    const texture = getTextureFromProps('SimpleRope', root, props);
+    const texture = getTextureFromProps('MeshRope', root, props);
     const { points } = props;
 
-    const rope = new PixiSimpleRope(texture, points);
+    const rope = new PixiMeshRope({ texture, points });
 
     rope.applyProps = (instance, oldProps, newProps) =>
     {
         const { image, texture, ...props } = newProps;
 
-        invariant(Array.isArray(newProps.points), 'SimpleRope points needs to be %s', 'Array<Point>');
+        invariant(Array.isArray(newProps.points), 'MeshRope points needs to be %s', 'Array<Point>');
         let changed = applyDefaultProps(instance, oldProps, props);
 
         if (image || texture)
@@ -22,7 +22,7 @@ const SimpleRope = (root, props) =>
             {
                 changed = true;
             }
-            instance.texture = getTextureFromProps('SimpleRope', root, newProps);
+            instance.texture = getTextureFromProps('MeshRope', root, newProps);
         }
 
         return changed;
@@ -31,4 +31,4 @@ const SimpleRope = (root, props) =>
     return rope;
 };
 
-export default SimpleRope;
+export default MeshRope;

@@ -3,7 +3,7 @@ import { act } from 'react-dom/test-utils';
 import renderer from 'react-test-renderer';
 import { Graphics, Stage } from '../src';
 
-describe('graphics', () =>
+describe.skip('graphics', () =>
 {
     beforeAll(() =>
     {

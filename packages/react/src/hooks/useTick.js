@@ -1,19 +1,13 @@
-import { Application } from '@pixi/app';
+import { Application, Ticker } from 'pixi.js';
 import { useEffect, useRef } from 'react';
 import { useApp } from './useApp';
 import invariant from '../utils/invariant';
 
+const ticker = new Ticker();
+
 function useTick(callback, enabled = true)
 {
-    const app = useApp();
-
     invariant(typeof callback === 'function', '`useTick` needs a callback function.');
-    invariant(
-        app instanceof Application,
-        'No Context found with `%s`. Make sure to wrap component with `%s`',
-        'Application',
-        'AppProvider'
-    );
 
     const savedRef = useRef(null);
 
@@ -27,15 +21,15 @@ function useTick(callback, enabled = true)
     {
         if (enabled)
         {
-            const tick = (delta) => savedRef.current.apply(app.ticker, [delta, app.ticker]);
+            const tick = (delta) => savedRef.current.apply(ticker, [delta, ticker]);
 
-            app.ticker.add(tick);
+            ticker.add(tick);
 
             return () =>
             {
-                if (app.ticker)
+                if (ticker)
                 {
-                    app.ticker.remove(tick);
+                    ticker.remove(tick);
                 }
             };
         }

@@ -4,7 +4,8 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-export const getJestConfig = (merge = {}) => {
+export const getJestConfig = (merge = {}) =>
+{
     const { setupFiles = [], ...rest } = merge;
 
     return {

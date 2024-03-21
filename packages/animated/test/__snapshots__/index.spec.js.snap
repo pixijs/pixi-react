@@ -18,19 +18,15 @@ exports[`index export modules for react-spring 1`] = `
     "$$typeof": Symbol(react.forward_ref),
     "render": [Function],
   },
-  "NineSlicePlane": {
+  "MeshRope": {
     "$$typeof": Symbol(react.forward_ref),
     "render": [Function],
   },
-  "ParticleContainer": {
+  "MeshSimple": {
     "$$typeof": Symbol(react.forward_ref),
     "render": [Function],
   },
-  "SimpleMesh": {
-    "$$typeof": Symbol(react.forward_ref),
-    "render": [Function],
-  },
-  "SimpleRope": {
+  "NineSliceSprite": {
     "$$typeof": Symbol(react.forward_ref),
     "render": [Function],
   },

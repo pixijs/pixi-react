@@ -9,20 +9,7 @@ const builds = ['cjs', 'es'].map(
         {
             external: [
                 '@pixi/react',
-                '@pixi/app',
-                '@pixi/core',
-                '@pixi/display',
-                '@pixi/graphics',
-                '@pixi/math',
-                '@pixi/mesh-extras',
-                '@pixi/text',
-                '@pixi/text-bitmap',
-                '@pixi/ticker',
-                '@pixi/sprite',
-                '@pixi/sprite-tiling',
-                '@pixi/sprite-animated',
-                '@pixi/particle-container',
-                '@react-spring/animated',
+                'pixi.js',
                 'react',
                 'react-dom',
                 'react-spring'

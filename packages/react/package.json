@@ -36,16 +36,16 @@
     "lodash.isnil": "4.0.0",
     "lodash.times": "4.3.2",
     "performance-now": "2.1.0",
-    "prop-types": "^15.8.1"
+    "prop-types": "^15.8.1",
+    "cancelable-promise": "^4.3.1"
   },
   "devDependencies": {
-    "@testing-library/react": "^13.4.0",
-    "canvas": "^2.11.0",
-    "jest-webgl-canvas-mock": "^0.2.3",
+    "@testing-library/react": "^14.2.2",
+    "canvas": "^2.11.2",
     "react-test-renderer": "18.2.0"
   },
   "peerDependencies": {
-    "pixi.js": ">=8.0.0",
+    "pixi.js": ">=8.1.0",
     "prop-types": "^15.8.1",
     "react": ">=17.0.0",
     "react-dom": ">=17.0.0"

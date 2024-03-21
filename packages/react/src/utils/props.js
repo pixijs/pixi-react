@@ -1,8 +1,7 @@
-import { Texture } from '@pixi/core';
-import { DisplayObject } from '@pixi/display';
 import { eventHandlers, setValue } from './pixi';
 import invariant from '../utils/invariant';
 import { not, hasKey } from '../helpers';
+import { autoDetectSource, Texture, Container } from 'pixi.js';
 
 export const CHILDREN = 'children';
 /**
@@ -13,7 +12,23 @@ export const CHILDREN = 'children';
 export const PROPS_RESERVED = {
     [CHILDREN]: true,
     parent: true,
-    worldAlpha: true,
+    localColor: true,
+    localAlpha: true,
+    groupAlpha: true,
+    groupColor: true,
+    groupColorAlpha: true,
+    localBlendMode: true,
+    groupBlendMode: true,
+    localVisibleRenderable: true,
+    groupVisibleRenderable: true,
+    renderPipeId: true,
+    includeInBuild: true,
+    measurable: true,
+    isSimple: true,
+    updateTick: true,
+    localTransform: true,
+    relativeGroupTransform: true,
+    groupTransform: true,
     worldTransform: true,
     worldVisible: true,
 };
@@ -24,7 +39,7 @@ export const PROPS_RESERVED = {
  *
  * @type {Object}
  */
-export const PROPS_DISPLAY_OBJECT = {
+export const PROPS_CONTAINER = {
     alpha: 1,
     buttonMode: false,
     cacheAsBitmap: false,
@@ -94,16 +109,13 @@ export const getTextureFromProps = (elementType, root, props = {}) =>
 
     invariant(!!result, `${elementType} could not get texture from props`);
 
+    // const source = typeof result === 'string' ? result : { resource: result };
     const texture = Texture.from(result);
 
     texture.__reactpixi = { root };
     texture.once('update', emitChange);
-    texture.once('loaded', emitChange);
 
-    if (texture.valid)
-    {
-        emitChange(texture);
-    }
+    emitChange(texture);
 
     return texture;
 };
@@ -113,7 +125,7 @@ const filterProps = not(hasKey([...Object.keys(PROPS_RESERVED), ...eventHandlers
 /**
  * Apply default props on Display Object instance (which are all components)
  *
- * @param {PIXI.DisplayObject} instance
+ * @param {PIXI.Container} instance
  * @param {Object} oldProps
  * @param {Object} newProps
  */
@@ -122,8 +134,8 @@ export function applyDefaultProps(instance, oldProps, newProps)
     let changed = false;
 
     invariant(
-        DisplayObject.prototype.isPrototypeOf(instance),
-        'instance needs to be typeof `DisplayObject`, got `%s`',
+        Container.prototype.isPrototypeOf(instance),
+        'instance needs to be typeof `Container`, got `%s`',
         typeof instance
     );
 
@@ -190,12 +202,12 @@ export function applyDefaultProps(instance, oldProps, newProps)
             // set value if defined
             setValue(instance, prop, value);
         }
-        else if (prop in PROPS_DISPLAY_OBJECT)
+        else if (prop in PROPS_CONTAINER)
         {
             // is a default value, use that
             console.warn(`setting default value: ${prop}, from: ${instance[prop]} to: ${value} for`, instance);
             changed = true;
-            setValue(instance, prop, PROPS_DISPLAY_OBJECT[prop]);
+            setValue(instance, prop, PROPS_CONTAINER[prop]);
         }
         else
         {

@@ -1,16 +1,21 @@
-import { Text as PixiText } from '@pixi/text';
-import { Sprite as PixiSprite } from '@pixi/sprite';
+import { Sprite as PixiSprite, Text as PixiText } from 'pixi.js';
 
 const Text = (root, props) =>
 {
     const { text = '', style = {}, isSprite } = props;
-    const pixiText = new PixiText(text, style);
+    const pixiText = new PixiText({ text, style });
 
     if (isSprite)
     {
-        pixiText.updateText();
+        const app = root.__reactpixi.app;
+        const texture = app.renderer.canvasText.getTexture(
+            text,
+            app.renderer.resolution,
+            pixiText.style,
+            pixiText._getKey()
+        );
 
-        return new PixiSprite(pixiText.texture);
+        return new PixiSprite(texture);
     }
 
     return pixiText;

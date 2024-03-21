@@ -36,7 +36,7 @@
     "@pixi/react": "^7.1.2"
   },
   "peerDependencies": {
-    "pixi.js": ">=8.0.0",
+    "pixi.js": ">=8.1.0",
     "@pixi/react": ">=8.0.0",
     "@react-spring/animated": ">=9.0.0",
     "prop-types": "^15.8.1",

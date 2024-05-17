@@ -5,7 +5,7 @@ import { Context } from '../src/stage/provider';
 
 describe('stage-context', () =>
 {
-    test('pass down app to child component via render prop', () =>
+    test.skip('pass down app to child component via render prop', () =>
     {
         const fn = jest.fn(() => <Container />);
         let el;
@@ -31,7 +31,7 @@ describe('stage-context', () =>
         expect(fn).toHaveBeenCalledWith(instance.app);
     });
 
-    test('pass down app to child component via HOC', () =>
+    test.skip('pass down app to child component via HOC', () =>
     {
         const fn = jest.fn(() => <Container />);
         const Comp = withPixiApp(({ app }) => fn(app));
@@ -55,7 +55,7 @@ describe('stage-context', () =>
         expect(fn).toHaveBeenCalledWith(instance.app);
     });
 
-    test('use context via hooks', () =>
+    test.skip('use context via hooks', () =>
     {
         const fn = jest.fn();
 

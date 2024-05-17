@@ -1,5 +1,5 @@
-import { Point, ObservablePoint } from '@pixi/math';
-import { DisplayObject } from '@pixi/display';
+import { Point, ObservablePoint } from 'pixi.js';
+import { Container } from 'pixi.js';
 import { parsePoint, isPointType, eventHandlers, setValue } from '../src/utils/pixi';
 
 const noop = () => {};
@@ -66,7 +66,7 @@ describe('pixi', () =>
 
             test('observablepoint', () =>
             {
-                expect(isPointType(new ObservablePoint(noop, this, 100, 200))).toBeTruthy();
+                expect(isPointType(new ObservablePoint(noop, 100, 200))).toBeTruthy();
             });
         });
 
@@ -108,7 +108,7 @@ describe('pixi', () =>
 
         beforeEach(() =>
         {
-            instance = new DisplayObject();
+            instance = new Container();
         });
 
         test('copy point data', () =>

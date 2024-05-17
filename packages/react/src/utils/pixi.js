@@ -1,4 +1,4 @@
-import { Point, ObservablePoint } from '@pixi/math';
+import { Point, ObservablePoint } from 'pixi.js';
 import invariant from '../utils/invariant';
 import isNil from 'lodash.isnil';
 
@@ -117,10 +117,10 @@ export const eventHandlers = [
 ];
 
 /**
- * Set value on a PIXI.DisplayObject
+ * Set value on a PIXI.Container
  * See https://github.com/Izzimach/react-pixi/blob/a25196251a13ed9bb116a8576d93e9fceac2a14c/src/ReactPIXI.js#L114
  *
- * @param {PIXI.DisplayObject} instance
+ * @param {PIXI.Container} instance
  * @param {string} prop
  * @param {*} value
  */

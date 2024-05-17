@@ -11,14 +11,13 @@ export const TYPES = {
     BitmapText: 'BitmapText',
     Container: 'Container',
     Graphics: 'Graphics',
-    NineSlicePlane: 'NineSlicePlane',
-    ParticleContainer: 'ParticleContainer',
+    NineSliceSprite: 'NineSliceSprite',
     Sprite: 'Sprite',
     AnimatedSprite: 'AnimatedSprite',
     Text: 'Text',
     TilingSprite: 'TilingSprite',
-    SimpleMesh: 'SimpleMesh',
-    SimpleRope: 'SimpleRope',
+    MeshSimple: 'MeshSimple',
+    MeshRope: 'MeshRope',
 };
 
 const ELEMENTS = Object.keys(TYPES).reduce((elements, type) => ({ ...elements, [type]: components[type] }), {});

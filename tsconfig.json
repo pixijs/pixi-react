@@ -11,6 +11,7 @@
     "noUnusedParameters": true,
     "pretty": true,
     "sourceMap": true,
+    "checkJs": true,
     "strict": true,
     "target": "ESNext",
     "baseUrl": "./"

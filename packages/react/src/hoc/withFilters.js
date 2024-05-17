@@ -18,7 +18,7 @@ export const withFilters = (WrapperComponent, filters) =>
                 {
                     const constructorArgs = props?.[prop]?.construct || [];
 
-                    return new filters[prop](...constructorArgs);
+                    return new filters[prop](constructorArgs);
                 }), [keys])
         );
 

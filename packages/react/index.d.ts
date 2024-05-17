@@ -1,25 +1,24 @@
-import * as React from 'react';
-import { Application as PixiApplication } from '@pixi/app'
-import { Texture as PixiTexture } from '@pixi/core'
-import { Container as PixiContainer, DisplayObject as PixiDisplayObject } from '@pixi/display'
-import { Graphics as PixiGraphics } from '@pixi/graphics'
-import { Point as PixiPoint, ObservablePoint as PixiObservablePoint } from '@pixi/math'
 import {
-    NineSlicePlane as PixiNineSlicePlane,
-    SimpleRope as PixiSimpleRope,
-    SimpleMesh as PixiSimpleMesh,
-} from '@pixi/mesh-extras'
-import { Text as PixiText } from '@pixi/text'
-import { BitmapText as PixiBitmapText } from '@pixi/text-bitmap'
-import { Ticker as PixiTicker } from '@pixi/ticker'
-import { Sprite as PixiSprite } from '@pixi/sprite'
-import { TilingSprite as PixiTilingSprite } from '@pixi/sprite-tiling'
-import { AnimatedSprite as PixiAnimatedSprite } from '@pixi/sprite-animated'
-import { ParticleContainer as PixiParticleContainer } from '@pixi/particle-container'
+    AnimatedSprite as PixiAnimatedSprite,
+    Application as PixiApplication,
+    BitmapText as PixiBitmapText,
+    Container as PixiContainer,
+    Graphics as PixiGraphics,
+    NineSliceSprite as PixiNineSliceSprite,
+    ObservablePoint as PixiObservablePoint,
+    Point as PixiPoint,
+    MeshSimple as PixiMeshSimple,
+    MeshRope as PixiMeshRope,
+    Sprite as PixiSprite,
+    Text as PixiText,
+    Texture as PixiTexture,
+    Ticker as PixiTicker,
+    TilingSprite as PixiTilingSprite,
+} from "pixi.js";
+import * as React from "react";
 
 // Reconciler API
-interface Reconciler<Instance, TextInstance, Container, PublicInstance>
-{
+interface Reconciler<Instance, TextInstance, Container, PublicInstance> {
     updateContainerAtExpirationTime(
         element: any,
         container: any,
@@ -27,7 +26,11 @@ interface Reconciler<Instance, TextInstance, Container, PublicInstance>
         expirationTime: any,
         callback: () => void | null | undefined
     ): any;
-    createContainer(containerInfo: any, isConcurrent: boolean, hydrate: boolean): any;
+    createContainer(
+        containerInfo: any,
+        isConcurrent: boolean,
+        hydrate: boolean
+    ): any;
     updateContainer(
         element: any,
         container: any,
@@ -45,14 +48,15 @@ interface Reconciler<Instance, TextInstance, Container, PublicInstance>
     flushInteractiveUpdates(): void;
     flushControlled(fn: () => any): void;
     flushSync<A>(fn: () => A): A;
-    getPublicRootInstance(container: any): React.Component<any, any> | PublicInstance | null;
+    getPublicRootInstance(
+        container: any
+    ): React.Component<any, any> | PublicInstance | null;
     findHostInstance(component: object): PublicInstance | null;
     findHostInstanceWithNoPortals(component: any): PublicInstance | null;
     injectIntoDevTools(devToolsConfig: any): boolean;
 }
 
-interface ReconcilerConfig
-{
+interface ReconcilerConfig {
     getRootHostContext(rootContainerInstance: any): any;
     getChildHostContext(): any;
     getChildHostContextForEventComponent(parentHostContext: any): any;
@@ -86,312 +90,317 @@ interface ReconcilerConfig
 }
 
 export type InteractionEventTypes =
-  | 'click'
-  | 'mousedown'
-  | 'mousemove'
-  | 'mouseout'
-  | 'mouseover'
-  | 'mouseup'
-  | 'mouseupoutside'
-  | 'tap'
-  | 'touchstart'
-  | 'touchmove'
-  | 'touchend'
-  | 'touchendoutside'
-  | 'pointercancel'
-  | 'pointerout'
-  | 'pointerover'
-  | 'pointertap'
-  | 'pointerdown'
-  | 'pointerup'
-  | 'pointerupoutside'
-  | 'pointermove'
-  | 'rightclick'
-  | 'rightdown'
-  | 'rightup'
-  | 'rightupoutside'
-  | 'touchcancel'
+    | "click"
+    | "mousedown"
+    | "mousemove"
+    | "mouseout"
+    | "mouseover"
+    | "mouseup"
+    | "mouseupoutside"
+    | "tap"
+    | "touchstart"
+    | "touchmove"
+    | "touchend"
+    | "touchendoutside"
+    | "pointercancel"
+    | "pointerout"
+    | "pointerover"
+    | "pointertap"
+    | "pointerdown"
+    | "pointerup"
+    | "pointerupoutside"
+    | "pointermove"
+    | "rightclick"
+    | "rightdown"
+    | "rightup"
+    | "rightupoutside"
+    | "touchcancel";
 
 export type InteractionEvents = {
-    [P in InteractionEventTypes]?: (
-        event: any
-    ) => void;
+    [P in InteractionEventTypes]?: (event: any) => void;
 };
 
-export const TYPES:Record<string, string>;
+export const TYPES: Record<string, string>;
 
 // private
-declare namespace _ReactPixi
-{
-  type FunctionTypes<T> = {
-      [P in keyof T]: ((...args: any) => any) extends T[P] ? P : never;
-  }[keyof T];
+declare namespace _ReactPixi {
+    type FunctionTypes<T> = {
+        [P in keyof T]: ((...args: any) => any) extends T[P] ? P : never;
+    }[keyof T];
 
-  type IfEquals<X, Y, A=X, B=never> =
-    (<T>() => T extends X ? 1 : 2) extends
-    (<T>() => T extends Y ? 1 : 2) ? A : B;
+    type IfEquals<X, Y, A = X, B = never> = (<T>() => T extends X
+        ? 1
+        : 2) extends <T>() => T extends Y ? 1 : 2
+        ? A
+        : B;
 
-  type ReadonlyKeys<T> = {
-      [P in keyof T]-?: IfEquals<{ [Q in P]: T[P] }, { -readonly [Q in P]: T[P] }, never, P>
-  }[keyof T];
+    type ReadonlyKeys<T> = {
+        [P in keyof T]-?: IfEquals<
+            { [Q in P]: T[P] },
+            { -readonly [Q in P]: T[P] },
+            never,
+            P
+        >;
+    }[keyof T];
 
-  type ApplicationOptions = ConstructorParameters<typeof PixiApplication>[0];
-  type PointLike =
-    | PixiPoint
-    | PixiObservablePoint
-    | [number, number]
-    | [number]
-    | number
-    | { x: number, y: number };
-  type ImageSource = string | HTMLImageElement;
-  type VideoSource = string | HTMLVideoElement;
-  type AnySource = number | ImageSource | VideoSource | HTMLCanvasElement | PixiTexture;
-  type WithPointLike<T extends keyof any> = { [P in T]: PointLike };
+    type ApplicationOptions = ConstructorParameters<typeof PixiApplication>[0];
+    type PointLike =
+        | PixiPoint
+        | PixiObservablePoint
+        | [number, number]
+        | [number]
+        | number
+        | { x: number; y: number };
+    type ImageSource = string | HTMLImageElement;
+    type VideoSource = string | HTMLVideoElement;
+    type AnySource =
+        | number
+        | ImageSource
+        | VideoSource
+        | HTMLCanvasElement
+        | PixiTexture;
+    type WithPointLike<T extends keyof any> = { [P in T]: PointLike };
 
-  interface WithSource
-  {
-      /**
-     * Directly apply an image
-     *
-     * @example
-     *
-     * image="./image.png"
-     */
-      image?: ImageSource;
+    interface WithSource {
+        /**
+         * Directly apply an image
+         *
+         * @example
+         *
+         * image="./image.png"
+         */
+        image?: ImageSource;
 
-      /**
-     * Directly apply a video
-     *
-     * @example
-     *
-     * video="./video.mp4"
-     */
-      video?: VideoSource;
+        /**
+         * Directly apply a video
+         *
+         * @example
+         *
+         * video="./video.mp4"
+         */
+        video?: VideoSource;
 
-      /**
-     * Directly apply a source.
-     * Can be an image, video, canvas, frame id or even a texture
-     *
-     * @example
-     *
-     * source="./image.jpg"
-     * source="./video.mp4"
-     * source={document.querySelector('img')}
-     * source={document.querySelector('video')}
-     * source={document.querySelector('canvas')}
-     */
-      source?: AnySource;
-  }
+        /**
+         * Directly apply a source.
+         * Can be an image, video, canvas, frame id or even a texture
+         *
+         * @example
+         *
+         * source="./image.jpg"
+         * source="./video.mp4"
+         * source={document.querySelector('img')}
+         * source={document.querySelector('video')}
+         * source={document.querySelector('canvas')}
+         */
+        source?: AnySource;
+    }
 
-  type P = 'position' | 'scale' | 'pivot' | 'anchor' | 'skew';
+    type P = "position" | "scale" | "pivot" | "anchor" | "skew";
 
-  type Container<T extends PixiDisplayObject, U = {}> = Partial<
-  Omit<T, 'children' | P | ReadonlyKeys<T> | keyof U> &
-  WithPointLike<P>
-  > & U & InteractionEvents & { ref?: React.Ref<T> };
+    type Container<T extends PixiContainer, U = {}> = Partial<
+        Omit<T, "children" | P | ReadonlyKeys<T> | keyof U> & WithPointLike<P>
+    > &
+        U &
+        InteractionEvents & { ref?: React.Ref<T> };
 
-  type IContainer = Container<PixiContainer>;
-  type ISprite = Container<PixiSprite, WithSource>;
-  type IText = Container<PixiText, WithSource>;
-  type IGraphics = Container<PixiGraphics, {
-      /**
-     * Draw a graphic with imperative callback.
-     *
-     * @param {PixiGraphics} graphics - The graphics instance to draw on
-     * @example
-     *
-     * draw={g => {
-     *   g.beginFill(0xff0000);
-     *   g.drawRect(0,0,100,100);
-     *   g.endFill();
-     * }}
-     */
-      draw?(graphics: PixiGraphics): void;
-  }>;
+    type IContainer = Container<PixiContainer>;
+    type ISprite = Container<PixiSprite, WithSource>;
+    type IText = Container<PixiText, WithSource>;
+    type IGraphics = Container<
+        PixiGraphics,
+        {
+            /**
+             * Draw a graphic with imperative callback.
+             *
+             * @param {PixiGraphics} graphics - The graphics instance to draw on
+             * @example
+             *
+             * draw={g => {
+             *   g.beginFill(0xff0000);
+             *   g.drawRect(0,0,100,100);
+             *   g.endFill();
+             * }}
+             */
+            draw?(graphics: PixiGraphics): void;
+        }
+    >;
 
-  type IBitmapText = Container<
-  PixiBitmapText,
-  {
-      /**
-       * Set the style object
-       *
-       * @example
-       *
-       * style={{ font: '50px Desyrel' }}
-       */
-      style?: ConstructorParameters<typeof PixiBitmapText>[1];
-  }
-  >;
+    type IBitmapText = Container<
+        PixiBitmapText,
+        {
+            /**
+             * Set the style object
+             *
+             * @example
+             *
+             * style={{ font: '50px Desyrel' }}
+             */
+            style?: ConstructorParameters<typeof PixiBitmapText>[1];
+        }
+    >;
 
-  type INineSlicePlane = Container<PixiNineSlicePlane, WithSource>;
-  type IParticleContainer = Container<
-  PixiParticleContainer,
-  {
-      maxSize?: ConstructorParameters<typeof PixiParticleContainer>[0];
-      properties?: ConstructorParameters<typeof PixiParticleContainer>[1];
-      batchSize?: ConstructorParameters<typeof PixiParticleContainer>[2];
-      autoResize?: ConstructorParameters<typeof PixiParticleContainer>[3];
-  }
-  >;
+    type INineSliceSprite = Container<PixiNineSliceSprite, WithSource>;
 
-  type ITilingSprite = Container<
-  PixiTilingSprite,
-  WithSource & {
-      tileScale?: PointLike;
-      tilePosition: PointLike;
-  }
-  >;
+    type ITilingSprite = Container<
+        PixiTilingSprite,
+        WithSource & {
+            tileScale?: PointLike;
+            tilePosition: PointLike;
+        }
+    >;
 
-  type ISimpleRope = Container<PixiSimpleRope, WithSource>;
-  type ISimpleMesh = Container<
-  PixiSimpleMesh,
-  WithSource & {
-      uvs?: ConstructorParameters<typeof PixiSimpleMesh>[2];
-      indices?: ConstructorParameters<typeof PixiSimpleMesh>[3];
-  }
-  >;
+    type IMeshRope = Container<PixiMeshRope, WithSource>;
+    type IMeshSimple = Container<
+        PixiMeshSimple,
+        WithSource & {
+            uvs?: Float32Array;
+            indices?: Float32Array;
+        }
+    >;
 
-  type IAnimatedSprite = Container<
-  PixiAnimatedSprite,
-  WithSource & {
-      isPlaying: boolean;
-      images?: string[];
-      initialFrame?: number;
-  }
-  >;
+    type IAnimatedSprite = Container<
+        PixiAnimatedSprite,
+        WithSource & {
+            isPlaying: boolean;
+            images?: string[];
+            initialFrame?: number;
+        }
+    >;
 
-  type IStage = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
-      /**
-     * Width of the Stage and canvas
-     */
-      width?: number;
+    type IStage = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
+        /**
+         * Width of the Stage and canvas
+         */
+        width?: number;
 
-      /**
-     * Height of the Stage and canvas
-     */
-      height?: number;
+        /**
+         * Height of the Stage and canvas
+         */
+        height?: number;
 
-      /**
-     * Enable the {@see PixiApplication} ticker? [default=true].
-     * Automatically renders the stage on request animation frame.
-     */
-      raf?: boolean;
+        /**
+         * Enable the {@see PixiApplication} ticker? [default=true].
+         * Automatically renders the stage on request animation frame.
+         */
+        raf?: boolean;
 
-      /**
-     * Render the PIXI stage on React component changes.
-     * You'll need to set raf={false}.
-     */
-      renderOnComponentChange?: boolean;
+        /**
+         * Render the PIXI stage on React component changes.
+         * You'll need to set raf={false}.
+         */
+        renderOnComponentChange?: boolean;
 
-      /**
-     * The PIXI application options.
-     *
-     * @see PixiApplicationOptions
-     * @example
-     *
-     * options={{ antialias: true, roundPixels: true }}
-     */
-      options?: ApplicationOptions;
+        /**
+         * The PIXI application options.
+         *
+         * @see PixiApplicationOptions
+         * @example
+         *
+         * options={{ antialias: true, roundPixels: true }}
+         */
+        options?: ApplicationOptions;
 
-      /**
-     * Callback when the component is successfully mounted
-     *
-     * @param {PixiApplication} app
-     */
-      onMount?(app: PixiApplication): void;
+        /**
+         * Callback when the component is successfully mounted
+         *
+         * @param {PixiApplication} app
+         */
+        onMount?(app: PixiApplication): void;
 
-      /**
-     * Callback when the component is successfully unmounted
-     *
-     * @param {PixiApplication} app
-     */
-      onUnmount?(app: PixiApplication): void;
-  };
+        /**
+         * Callback when the component is successfully unmounted
+         *
+         * @param {PixiApplication} app
+         */
+        onUnmount?(app: PixiApplication): void;
+    };
 
-  interface ICustomComponent<
-      P extends { [key: string]: any },
-      PixiInstance extends PixiDisplayObject
-  >
-  {
-      /**
-     * Create the PIXI instance
-     * The component is created during React reconciliation.
-     *
-     * @param props passed down props
-     * @returns {PixiDisplayObject}
-     */
-      create(props: P): PixiInstance;
+    interface ICustomComponent<
+        P extends { [key: string]: any },
+        PixiInstance extends PixiContainer
+    > {
+        /**
+         * Create the PIXI instance
+         * The component is created during React reconciliation.
+         *
+         * @param props passed down props
+         * @returns {PixiContainer}
+         */
+        create(props: P): PixiInstance;
 
-      /**
-     * Instance mounted
-     * This is called during React reconciliation.
-     *
-     * @param {PixiDisplayObject} instance
-     * @param {PixiContainer} parent
-     */
-      didMount?(instance: PixiInstance, parent: PixiContainer): void;
+        /**
+         * Instance mounted
+         * This is called during React reconciliation.
+         *
+         * @param {PixiContainer} instance
+         * @param {PixiContainer} parent
+         */
+        didMount?(instance: PixiInstance, parent: PixiContainer): void;
 
-      /**
-     * Instance will unmount
-     * This is called during React reconciliation.
-     *
-     * @param {PixiDisplayObject} instance
-     * @param {PixiContainer} parent
-     */
-      willUnmount?(instance: PixiInstance, parent: PixiContainer): void;
+        /**
+         * Instance will unmount
+         * This is called during React reconciliation.
+         *
+         * @param {PixiContainer} instance
+         * @param {PixiContainer} parent
+         */
+        willUnmount?(instance: PixiInstance, parent: PixiContainer): void;
 
-      /**
-     * Apply props for this custom component.
-     * This is called during React reconciliation.
-     *
-     * @param {PixiDisplayObject} instance
-     * @param oldProps
-     * @param newProps
-     */
-      applyProps?(
-          instance: PixiInstance,
-          oldProps: Readonly<P | object>,
-          newProps: Readonly<P>
-      ): void;
+        /**
+         * Apply props for this custom component.
+         * This is called during React reconciliation.
+         *
+         * @param {PixiContainer} instance
+         * @param oldProps
+         * @param newProps
+         */
+        applyProps?(
+            instance: PixiInstance,
+            oldProps: Readonly<P | object>,
+            newProps: Readonly<P>
+        ): void;
 
-      /**
-     * Reconcile config
-     */
-      config?: {
-      /**
-       * Destroy instance on unmount?
-       * @default true
-       */
-          destroy?: boolean;
+        /**
+         * Reconcile config
+         */
+        config?: {
+            /**
+             * Destroy instance on unmount?
+             * @default true
+             */
+            destroy?: boolean;
 
-          /**
-       * Destroy child instances?
-       * @default true
-       */
-          destroyChildren?: boolean
-      };
-  }
+            /**
+             * Destroy child instances?
+             * @default true
+             */
+            destroyChildren?: boolean;
+        };
+    }
 }
 
 // components
 export const Text: React.FC<_ReactPixi.IText>;
 export const Sprite: React.FC<React.PropsWithChildren<_ReactPixi.ISprite>>;
-export const Container: React.FC<React.PropsWithChildren<_ReactPixi.IContainer>>;
+export const Container: React.FC<
+    React.PropsWithChildren<_ReactPixi.IContainer>
+>;
 export const Graphics: React.FC<_ReactPixi.IGraphics>;
 export const BitmapText: React.FC<_ReactPixi.IBitmapText>;
-export const NineSlicePlane: React.FC<_ReactPixi.INineSlicePlane>;
-export const ParticleContainer: React.FC<React.PropsWithChildren<_ReactPixi.IParticleContainer>>;
+export const NineSliceSprite: React.FC<_ReactPixi.INineSliceSprite>;
 export const TilingSprite: React.FC<_ReactPixi.ITilingSprite>;
-export const SimpleRope: React.FC<_ReactPixi.ISimpleRope>;
-export const SimpleMesh: React.FC<_ReactPixi.ISimpleMesh>;
+export const MeshRope: React.FC<_ReactPixi.IMeshRope>;
+export const MeshSimple: React.FC<_ReactPixi.IMeshSimple>;
 export const AnimatedSprite: React.FC<_ReactPixi.IAnimatedSprite>;
 
 export interface ReactPixiRoot {
-    render(element: React.ReactElement | React.ReactElement[] | React.Factory<any>): any
-    unmount(): void
+    render(
+        element: React.ReactElement | React.ReactElement[] | React.Factory<any>
+    ): any;
+    unmount(): void;
 }
 
-export const createRoot: (container: PixiContainer) => ReactPixiRoot
+export const createRoot: (container: PixiContainer) => ReactPixiRoot;
 
 // renderer
 export const render: (
@@ -405,13 +414,17 @@ export const unmountComponentAtNode: (container: PixiContainer) => void;
 
 // context
 export const AppContext: React.Context<PixiApplication>;
-export const AppProvider: React.ComponentType<React.ProviderProps<PixiApplication>>;
-export const AppConsumer: React.ComponentType<React.ConsumerProps<PixiApplication>>;
+export const AppProvider: React.ComponentType<
+    React.ProviderProps<PixiApplication>
+>;
+export const AppConsumer: React.ComponentType<
+    React.ConsumerProps<PixiApplication>
+>;
 
 // fiber
-export const PixiFiber: (
-    eventsMap?: { [P in keyof ReconcilerConfig]: (...args: any) => void }
-) => Reconciler<any, any, any, any>;
+export const PixiFiber: (eventsMap?: {
+    [P in keyof ReconcilerConfig]: (...args: any) => void;
+}) => Reconciler<any, any, any, any>;
 
 // stage
 export class Stage extends React.Component<_ReactPixi.IStage> {}
@@ -435,7 +448,10 @@ export class Stage extends React.Component<_ReactPixi.IStage> {}
  *   }
  * });
  */
-export const PixiComponent: <Props extends { [key: string]: any; }, PixiInstance extends PixiDisplayObject>(
+export const PixiComponent: <
+    Props extends { [key: string]: any },
+    PixiInstance extends PixiContainer
+>(
     componentName: string,
     lifecycle: _ReactPixi.ICustomComponent<Props, PixiInstance>
 ) => React.FC<Props & { ref?: React.Ref<PixiInstance> }>;
@@ -488,7 +504,7 @@ export const useApp: () => PixiApplication;
  */
 export const withPixiApp: <P extends { app: PixiApplication }>(
     WrappedComponent: React.ComponentType<P>
-) => React.ComponentClass<Omit<P, 'app'>>;
+) => React.ComponentClass<Omit<P, "app">>;
 
 /**
  * Apply default props. Useful in Custom Components.
@@ -505,7 +521,7 @@ export const withPixiApp: <P extends { app: PixiApplication }>(
  * });
  */
 export const applyDefaultProps: <P extends object>(
-    instance: PixiDisplayObject,
+    instance: PixiContainer,
     oldProps: P,
     newProps: P
 ) => void;
@@ -531,19 +547,21 @@ export const applyDefaultProps: <P extends object>(
  */
 export const withFilters: <
     Component extends React.ComponentType<
-    _ReactPixi.Container<PixiDisplayObject, any>
+        _ReactPixi.Container<PixiContainer, any>
     >,
     Filters extends { [filterKey: string]: any }
 >(
     WrapperComponent: Component,
     filters: Filters
 ) => React.ComponentType<
-React.ComponentProps<Component> &
-Partial<
-{
-    [P in keyof Filters]: Partial<InstanceType<Filters[P]> & { construct: ConstructorParameters<Filters[P]> }>
-}
->
+    React.ComponentProps<Component> &
+        Partial<{
+            [P in keyof Filters]: Partial<
+                InstanceType<Filters[P]> & {
+                    construct: ConstructorParameters<Filters[P]>;
+                }
+            >;
+        }>
 >;
 
 /**
@@ -558,8 +576,8 @@ Partial<
  * };
  */
 export type PixiRef<T extends React.ComponentType<any>> = Extract<
-React.ComponentProps<T>['ref'],
-React.RefObject<any>
+    React.ComponentProps<T>["ref"],
+    React.RefObject<any>
 > extends React.Ref<infer R>
     ? R
     : never;

@@ -1,22 +1,25 @@
-import * as React from 'react';
-import { Application as PixiApplication } from '@pixi/app'
-import { Texture as PixiTexture } from '@pixi/core'
-import { Container as PixiContainer, DisplayObject as PixiDisplayObject } from '@pixi/display'
-import { Graphics as PixiGraphics } from '@pixi/graphics'
-import { Point as PixiPoint, ObservablePoint as PixiObservablePoint } from '@pixi/math'
+import { ComponentPropsWithRef, ElementType } from '@react-spring/types';
 import {
-    NineSlicePlane as PixiNineSlicePlane,
-    SimpleRope as PixiSimpleRope,
-    SimpleMesh as PixiSimpleMesh,
-} from '@pixi/mesh-extras'
-import { Text as PixiText } from '@pixi/text'
-import { BitmapText as PixiBitmapText } from '@pixi/text-bitmap'
-import { Ticker as PixiTicker } from '@pixi/ticker'
-import { Sprite as PixiSprite } from '@pixi/sprite'
-import { TilingSprite as PixiTilingSprite } from '@pixi/sprite-tiling'
-import { AnimatedSprite as PixiAnimatedSprite } from '@pixi/sprite-animated'
-import { ParticleContainer as PixiParticleContainer } from '@pixi/particle-container'
-import { ElementType, ComponentPropsWithRef } from '@react-spring/types';
+    AnimatedSprite as PixiAnimatedSprite,
+    Application as PixiApplication,
+    ApplicationOptions as PixiApplicationOptions,
+    BitmapText as PixiBitmapText,
+    Container as PixiContainer,
+    Graphics as PixiGraphics,
+    MeshRope as PixiMeshRope,
+    MeshSimple as PixiMeshSimple,
+    NineSliceSprite as PixiNineSliceSprite,
+    ObservablePoint as PixiObservablePoint,
+    Point as PixiPoint,
+    Sprite as PixiSprite,
+    Text as PixiText,
+    TextStyle as PixiTextStyle,
+    TextStyleOptions as PixiTextStyleOptions,
+    Texture as PixiTexture,
+    Ticker as PixiTicker,
+    TilingSprite as PixiTilingSprite
+} from 'pixi.js';
+import * as React from 'react';
 import { AnimatedProps } from 'react-spring';
 
 type AnimatedComponent<T extends ElementType> = React.ForwardRefExoticComponent<AnimatedProps<ComponentPropsWithRef<T>>>;
@@ -134,7 +137,7 @@ declare namespace _ReactPixi {
     [P in keyof T]-?: IfEquals<{ [Q in P]: T[P] }, { -readonly [Q in P]: T[P] }, never, P>
   }[keyof T];
 
-  type ApplicationOptions = ConstructorParameters<typeof PixiApplication>[0];
+  type ApplicationOptions = PixiApplicationOptions;
   type PointLike =
     | PixiPoint
     | PixiObservablePoint
@@ -183,7 +186,7 @@ declare namespace _ReactPixi {
 
   type P = 'position' | 'scale' | 'pivot' | 'anchor' | 'skew';
 
-  type Container<T extends PixiDisplayObject, U = {}> = Partial<
+  type Container<T extends PixiContainer, U = {}> = Partial<
     Omit<T, 'children' | P | ReadonlyKeys<T> | keyof U> &
     WithPointLike<P>
   > & U & InteractionEvents & { ref?: React.Ref<T> };
@@ -217,20 +220,11 @@ declare namespace _ReactPixi {
        *
        * style={{ font: '50px Desyrel' }}
        */
-      style?: ConstructorParameters<typeof PixiBitmapText>[1];
+      style?: PixiTextStyle|PixiTextStyleOptions
     }
   >;
 
-  type INineSlicePlane = Container<PixiNineSlicePlane, WithSource>;
-  type IParticleContainer = Container<
-    PixiParticleContainer,
-    {
-      maxSize?: ConstructorParameters<typeof PixiParticleContainer>[0];
-      properties?: ConstructorParameters<typeof PixiParticleContainer>[1];
-      batchSize?: ConstructorParameters<typeof PixiParticleContainer>[2];
-      autoResize?: ConstructorParameters<typeof PixiParticleContainer>[3];
-    }
-  >;
+  type INineSliceSprite = Container<PixiNineSliceSprite, WithSource>;
 
   type ITilingSprite = Container<
     PixiTilingSprite,
@@ -240,12 +234,12 @@ declare namespace _ReactPixi {
     }
   >;
 
-  type ISimpleRope = Container<PixiSimpleRope, WithSource>;
-  type ISimpleMesh = Container<
-    PixiSimpleMesh,
+  type IMeshRope = Container<PixiMeshRope, WithSource>;
+  type IMeshSimple = Container<
+    PixiMeshSimple,
     WithSource & {
-      uvs?: ConstructorParameters<typeof PixiSimpleMesh>[2];
-      indices?: ConstructorParameters<typeof PixiSimpleMesh>[3];
+      uvs?: Float32Array;
+      indices?: Float32Array;
     }
   >;
 
@@ -308,14 +302,14 @@ declare namespace _ReactPixi {
 
   interface ICustomComponent<
     P extends { [key: string]: any },
-    PixiInstance extends PixiDisplayObject
+    PixiInstance extends PixiContainer
     > {
     /**
      * Create the PIXI instance
      * The component is created during React reconciliation.
      *
      * @param props passed down props
-     * @returns {PixiDisplayObject}
+     * @returns {PixiContainer}
      */
     create(props: P): PixiInstance;
 
@@ -323,7 +317,7 @@ declare namespace _ReactPixi {
      * Instance mounted
      * This is called during React reconciliation.
      *
-     * @param {PixiDisplayObject} instance
+     * @param {PixiContainer} instance
      * @param {PixiContainer} parent
      */
     didMount?(instance: PixiInstance, parent: PixiContainer): void;
@@ -332,7 +326,7 @@ declare namespace _ReactPixi {
      * Instance will unmount
      * This is called during React reconciliation.
      *
-     * @param {PixiDisplayObject} instance
+     * @param {PixiContainer} instance
      * @param {PixiContainer} parent
      */
     willUnmount?(instance: PixiInstance, parent: PixiContainer): void;
@@ -341,7 +335,7 @@ declare namespace _ReactPixi {
      * Apply props for this custom component.
      * This is called during React reconciliation.
      *
-     * @param {PixiDisplayObject} instance
+     * @param {PixiContainer} instance
      * @param oldProps
      * @param newProps
      */
@@ -359,11 +353,10 @@ export const Sprite: AnimatedComponent<React.FC<React.PropsWithChildren<_ReactPi
 export const Container: AnimatedComponent<React.FC<React.PropsWithChildren<_ReactPixi.IContainer>>>;
 export const Graphics: AnimatedComponent<React.FC<_ReactPixi.IGraphics>>;
 export const BitmapText: AnimatedComponent<React.FC<_ReactPixi.IBitmapText>>;
-export const NineSlicePlane: AnimatedComponent<React.FC<_ReactPixi.INineSlicePlane>>;
-export const ParticleContainer: AnimatedComponent<React.FC<React.PropsWithChildren<_ReactPixi.IParticleContainer>>>;
+export const NineSliceSprite: AnimatedComponent<React.FC<_ReactPixi.INineSliceSprite>>;
 export const TilingSprite: AnimatedComponent<React.FC<_ReactPixi.ITilingSprite>>;
-export const SimpleRope: AnimatedComponent<React.FC<_ReactPixi.ISimpleRope>>;
-export const SimpleMesh: AnimatedComponent<React.FC<_ReactPixi.ISimpleMesh>>;
+export const MeshRope: AnimatedComponent<React.FC<_ReactPixi.IMeshRope>>;
+export const MeshSimple: AnimatedComponent<React.FC<_ReactPixi.IMeshSimple>>;
 export const AnimatedSprite: AnimatedComponent<React.FC<_ReactPixi.IAnimatedSprite>>;
 
 // renderer
@@ -405,7 +398,7 @@ export class Stage extends React.Component<_ReactPixi.IStage> { }
  *   }
  * });
  */
-export const PixiComponent: <Props extends { [key: string]: any; }, PixiInstance extends PixiDisplayObject>(
+export const PixiComponent: <Props extends { [key: string]: any; }, PixiInstance extends PixiContainer>(
   componentName: string,
   lifecycle: _ReactPixi.ICustomComponent<Props, PixiInstance>
 ) => AnimatedComponent<React.FC<Props & { ref?: React.Ref<PixiInstance> }>>;
@@ -475,7 +468,7 @@ export const withPixiApp: <P extends { app: PixiApplication }>(
  * });
  */
 export const applyDefaultProps: <P extends object>(
-  instance: PixiDisplayObject,
+  instance: PixiContainer,
   oldProps: P,
   newProps: P
 ) => void;
@@ -501,7 +494,7 @@ export const applyDefaultProps: <P extends object>(
  */
 export const withFilters: <
   Component extends React.ComponentType<
-    _ReactPixi.Container<PixiDisplayObject, any>
+    _ReactPixi.Container<PixiContainer, any>
   >,
   Filters extends { [filterKey: string]: any }
   >(

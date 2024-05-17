@@ -1,11 +1,11 @@
-import { Graphics as PixiGraphics } from '@pixi/graphics';
+import { Graphics as PixiGraphics } from 'pixi.js';
 import { applyDefaultProps } from '../utils/props';
 import invariant from '../utils/invariant';
 
 const Graphics = (root, { geometry }) =>
 {
     invariant(!geometry || geometry instanceof PixiGraphics, `Graphics geometry needs to be a \`Graphics\``);
-    const g = geometry ? new PixiGraphics(geometry.geometry) : new PixiGraphics();
+    const g = geometry ? new PixiGraphics(geometry.clone(true)) : new PixiGraphics();
 
     g.applyProps = (instance, oldProps, newProps) =>
     {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
-import { Container as PixiContainer } from '@pixi/display';
-import { Text as PixiText } from '@pixi/text';
+import { Container as PixiContainer } from 'pixi.js';
+import { Text as PixiText } from 'pixi.js';
 
 import hostconfig from '../src/reconciler/hostconfig';
 import { createElement } from '../src/utils/element';

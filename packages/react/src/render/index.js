@@ -1,4 +1,4 @@
-import { Container } from '@pixi/display';
+import { Container } from 'pixi.js';
 import invariant from '../utils/invariant';
 import { PixiFiber } from '../reconciler';
 

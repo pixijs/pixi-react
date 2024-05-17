@@ -85,7 +85,7 @@ function removeChild(parent, child)
         destroy = true,
         destroyChildren = true,
         destroyTexture = false,
-        destroyBaseTexture = false
+        destroyTextureSource = false,
     } = child.config ?? {};
 
     if (destroy)
@@ -94,7 +94,7 @@ function removeChild(parent, child)
         child.destroy({
             children: destroyChildren,
             texture: destroyTexture,
-            baseTexture: destroyBaseTexture
+            textureSource: destroyTextureSource,
         });
     }
 }

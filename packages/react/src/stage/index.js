@@ -1,11 +1,11 @@
 import React from 'react';
-import { Application } from '@pixi/app';
-import { Ticker } from '@pixi/ticker';
+import { Application, RendererType, Ticker } from 'pixi.js';
 import PropTypes from 'prop-types';
 import invariant from '../utils/invariant';
-import { PROPS_DISPLAY_OBJECT } from '../utils/props';
+import { PROPS_CONTAINER } from '../utils/props';
 import { PixiFiber } from '../reconciler';
 import { AppProvider } from './provider';
+import { TrackablePromise } from './promise';
 
 const noop = () => {};
 
@@ -46,23 +46,41 @@ const propTypes = {
 
     children: PropTypes.node,
 
-    // PIXI options, see https://pixijs.download/v7.x/docs/PIXI.Application.html
+    // PIXI options, see https://pixijs.download/dev/docs/app.Application.html
     options: PropTypes.shape({
+        antialias: PropTypes.bool,
+        autoDensity: PropTypes.bool,
         autoStart: PropTypes.bool,
+        background: PropTypes.number,
+        backgroundAlpha: PropTypes.number,
+        backgroundColor: PropTypes.number,
+        bezierSmoothness: PropTypes.number,
+        clearBeforeRender: PropTypes.bool,
+        context: PropTypes.any,
+        eventFeatures: PropTypes.object,
+        eventMode: PropTypes.string,
+        failIfMajorPerformanceCaveat: PropTypes.bool,
+        forceFallbackAlpha: PropTypes.bool,
         width: PropTypes.number,
         height: PropTypes.number,
-        useContextAlpha: PropTypes.bool,
-        backgroundAlpha: PropTypes.number,
-        autoDensity: PropTypes.bool,
-        antialias: PropTypes.bool,
+        hello: PropTypes.bool,
+        manageImports: PropTypes.bool,
+        multiView: PropTypes.bool,
+        powerPreference: PropTypes.string,
+        preferences: PropTypes.object,
+        preferWebGLVersion: PropTypes.number,
+        premultipliedAlpha: PropTypes.bool,
         preserveDrawingBuffer: PropTypes.bool,
         resolution: PropTypes.number,
-        forceCanvas: PropTypes.bool,
-        backgroundColor: PropTypes.number,
-        clearBeforeRender: PropTypes.bool,
-        powerPreference: PropTypes.string,
+        roundPixels: PropTypes.bool,
         sharedTicker: PropTypes.bool,
         sharedLoader: PropTypes.bool,
+        textureGCActive: PropTypes.bool,
+        textureGCMaxIdle: PropTypes.number,
+        textureGCCheckCountMax: PropTypes.number,
+        useBackBuffer: PropTypes.bool,
+        webgl: PropTypes.object,
+        webgpu: PropTypes.object,
 
         // resizeTo needs to be a window or HTMLElement
         resizeTo: (props, propName) =>
@@ -76,15 +94,16 @@ const propTypes = {
                 );
         },
 
-        // view is optional, use if provided
-        view: (props, propName, componentName) =>
+        // canvas is optional, use if provided
+        canvas: (props, propName, componentName) =>
         {
             const el = props[propName];
 
             el
                 && invariant(
                     el instanceof HTMLCanvasElement,
-                    `Invalid prop \`view\` of type ${typeof el}, supplied to ${componentName}, expected \`<canvas> Element\``
+                    // eslint-disable-next-line max-len
+                    `Invalid prop \`canvas\` of type ${typeof el}, supplied to ${componentName}, expected \`<canvas> Element\``
                 );
         },
     }),
@@ -103,7 +122,7 @@ export function getCanvasProps(props)
 {
     const reserved = [
         ...Object.keys(propTypes),
-        ...Object.keys(PROPS_DISPLAY_OBJECT),
+        ...Object.keys(PROPS_CONTAINER),
     ];
 
     return Object.keys(props)
@@ -118,77 +137,38 @@ class Stage extends React.Component
     _ticker = null;
     _needsUpdate = true;
     app = null;
+    appReady = null;
 
     componentDidMount()
     {
         const {
-            onMount,
             width,
             height,
             options,
-            raf,
-            renderOnComponentChange,
         } = this.props;
 
-        this.app = new Application({
+        if (this.app && this.appReady)
+        {
+            this.appReady.destroy();
+            this.appReady = null;
+        }
+
+        this.app = new Application();
+        // eslint-disable-next-line no-void
+        this.appReady = new TrackablePromise(this.app.init({
             width,
             height,
-            view: this._canvas,
+            canvas: this._canvas,
             ...options,
             autoDensity: options?.autoDensity !== false,
-        });
+        }));
 
-        if (process.env.NODE_ENV === 'development')
-        {
-            // workaround for React 18 Strict Mode unmount causing
-            // webgl canvas context to be lost
-            if (this.app.renderer.context?.extensions)
-            {
-                this.app.renderer.context.extensions.loseContext = null;
-            }
-        }
-
-        this.app.ticker.autoStart = false;
-        this.app.ticker[raf ? 'start' : 'stop']();
-
-        this.app.stage.__reactpixi = { root: this.app.stage };
-        this.mountNode = PixiFiber.createContainer(this.app.stage);
-        PixiFiber.updateContainer(this.getChildren(), this.mountNode, this);
-
-        onMount(this.app);
-
-        // update size on media query resolution change?
-        // only if autoDensity = true
-        if (
-            options?.autoDensity
-            && window.matchMedia
-            && options?.resolution === undefined
-        )
-        {
-            this._mediaQuery = window.matchMedia(
-                `(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 120dpi)`
-            );
-            this._mediaQuery.addListener(this.updateSize);
-        }
-
-        // listen for reconciler changes
-        if (renderOnComponentChange && !raf)
-        {
-            this._ticker = new Ticker();
-            this._ticker.autoStart = true;
-            this._ticker.add(this.renderStage);
-            this.app.stage.on(
-                '__REACT_PIXI_REQUEST_RENDER__',
-                this.needsRenderUpdate
-            );
-        }
-
-        this.updateSize();
-        this.renderStage();
+        this.appReady.promiseCallback = () => this._initStage();
     }
 
     componentDidUpdate(prevProps, prevState, prevContext)
     {
+        if (this.appReady?.isPending) return;
         const { width, height, raf, renderOnComponentChange, options }
             = this.props;
 
@@ -199,7 +179,6 @@ class Stage extends React.Component
         )
         {
             this.app.renderer.resolution = options.resolution;
-            this.resetInteractionManager();
         }
 
         // update size
@@ -241,7 +220,6 @@ class Stage extends React.Component
         if (!options?.resolution)
         {
             this.app.renderer.resolution = window.devicePixelRatio;
-            this.resetInteractionManager();
         }
 
         this.app.renderer.resize(width, height);
@@ -263,20 +241,6 @@ class Stage extends React.Component
         }
     };
 
-    // provide support for Pixi v6 still
-    resetInteractionManager()
-    {
-        // `interaction` property is absent in Pixi v7 and in v6 if user has installed Federated Events API plugin.
-        // https://api.pixijs.io/@pixi/events.html
-        // in v7 however, there's a stub object which displays a deprecation warning, so also check the resolution property:
-        const { interaction: maybeInteraction } = this.app.renderer.plugins;
-
-        if (maybeInteraction?.resolution)
-        {
-            maybeInteraction.resolution = this.app.renderer.resolution;
-        }
-    }
-
     getChildren()
     {
         const { children } = this.props;
@@ -293,6 +257,16 @@ class Stage extends React.Component
 
     componentWillUnmount()
     {
+        // check if appReady is fulfilled
+        if (this.appReady?.isPending)
+        {
+            this.appReady.destroy();
+            this.appReady = null;
+            this.app = null;
+
+            return;
+        }
+
         this.props.onUnmount(this.app);
 
         if (this._ticker)
@@ -321,11 +295,11 @@ class Stage extends React.Component
     {
         const { options } = this.props;
 
-        if (options && options.view)
+        if (options && options.canvas)
         {
             invariant(
-                options.view instanceof HTMLCanvasElement,
-                'options.view needs to be a `HTMLCanvasElement`'
+                options.canvas instanceof HTMLCanvasElement,
+                'options.canvas needs to be a `HTMLCanvasElement`'
             );
 
             return null;
@@ -337,6 +311,64 @@ class Stage extends React.Component
                 ref={(c) => (this._canvas = c)}
             />
         );
+    }
+
+    _initStage()
+    {
+        const {
+            onMount,
+            options,
+            raf,
+            renderOnComponentChange,
+        } = this.props;
+
+        if (process.env.NODE_ENV === 'development' && this.app.renderer.type === RendererType.WEBGL)
+        {
+            // workaround for React 18 Strict Mode unmount causing
+            // webgl canvas context to be lost
+            if (this.app.renderer.context?.extensions)
+            {
+                this.app.renderer.context.extensions.loseContext = null;
+            }
+        }
+
+        this.app.ticker.autoStart = false;
+        this.app.ticker[raf ? 'start' : 'stop']();
+
+        this.app.stage.__reactpixi = { root: this.app.stage, app: this.app };
+        this.mountNode = PixiFiber.createContainer(this.app.stage);
+        PixiFiber.updateContainer(this.getChildren(), this.mountNode, this);
+
+        onMount(this.app);
+
+        // update size on media query resolution change?
+        // only if autoDensity = true
+        if (
+            options?.autoDensity
+                && window.matchMedia
+                && options?.resolution === undefined
+        )
+        {
+            this._mediaQuery = window.matchMedia(
+                `(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 120dpi)`
+            );
+            this._mediaQuery.addListener(this.updateSize);
+        }
+
+        // listen for reconciler changes
+        if (renderOnComponentChange && !raf)
+        {
+            this._ticker = new Ticker();
+            this._ticker.autoStart = true;
+            this._ticker.add(this.renderStage);
+            this.app.stage.on(
+                '__REACT_PIXI_REQUEST_RENDER__',
+                this.needsRenderUpdate
+            );
+        }
+
+        this.updateSize();
+        this.renderStage();
     }
 }
 

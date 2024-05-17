@@ -1,13 +1,12 @@
-import { DRAW_MODES } from '@pixi/constants';
-import { SimpleMesh as PixiSimpleMesh } from '@pixi/mesh-extras';
+import { MeshSimple as PixiMeshSimple } from 'pixi.js';
 import { applyDefaultProps, getTextureFromProps } from '../utils/props';
 
-const SimpleMesh = (root, props) =>
+const MeshSimple = (root, props) =>
 {
     const texture = getTextureFromProps('Mesh', root, props);
-    const { vertices, uvs, indices, drawMode = DRAW_MODES.TRIANGLES } = props;
+    const { vertices, uvs, indices, topology = 'triangle-list' } = props;
 
-    const simpleMesh = new PixiSimpleMesh(texture, vertices, uvs, indices, drawMode);
+    const simpleMesh = new PixiMeshSimple({ texture, vertices, uvs, indices, topology });
 
     simpleMesh.applyProps = (instance, oldProps, newProps) =>
     {
@@ -30,4 +29,4 @@ const SimpleMesh = (root, props) =>
     return simpleMesh;
 };
 
-export default SimpleMesh;
+export default MeshSimple;

@@ -1,0 +1,23 @@
+name: Build and Deploy Docs
+on: [push]
+permissions:
+  contents: write
+jobs:
+  build-and-deploy:
+    concurrency: ci-${{ github.ref }}
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/docs'  || github.ref == 'refs/heads/master'
+    steps:
+        - uses: actions/checkout@v3
+        - uses: actions/setup-node@v3
+          with:
+              node-version: '18'
+              cache: 'npm'
+        - run: npm ci --legacy-peer-deps
+        - run: |
+              git config --global user.name "$GITHUB_ACTOR"
+              git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
+              npm run build:docs
+          env:
+              GIT_USER: $GITHUB_ACTOR
+              GIT_PASS: ${{ secrets.GITHUB_TOKEN }}

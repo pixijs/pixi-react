@@ -1,0 +1,74 @@
+# Fallback to Canvas
+
+By default the PixiJS renderer uses the power of hardware acceleration (WebGL), but sometimes you need fallback support for
+browsers that do not support WebGL or more modern JavaScript features.
+
+Luckily this is possible using a `legacy` pixi package.
+
+## Install
+
+If using the entire pixi package, make sure to install the legacy package instead of `pixi.js`:
+
+```bash
+npm install pixi.js-legacy
+```
+
+For advanced users using `@pixi` scoped modules, make sure to properly import pixi's canvas packages:
+
+```ts
+import '@pixi/canvas-display';
+import '@pixi/canvas-extract';
+import '@pixi/canvas-graphics';
+import '@pixi/canvas-mesh';
+import '@pixi/canvas-particle-container';
+import '@pixi/canvas-prepare';
+import '@pixi/canvas-renderer';
+import '@pixi/canvas-sprite-tiling';
+import '@pixi/canvas-sprite';
+import '@pixi/canvas-text';
+```
+
+Also note that these will not be installed for you. You will need to install them yourself
+
+```bash
+npm install @pixi/canvas-display
+```
+
+## Usage
+
+Unlike in previous versions (`<=6.x`), `pixi-react` will automatically defer to the user installed `pixi` package(s) for
+rendering, so you can continue to use the `@pixi/react` and `@pixi/react-animated` packages as normal. There's no need to
+replace these with different legacy builds.
+
+## Verify
+
+Check the PixiJS welcome message in your console to make sure your application is actually running in Canvas, you should see
+something like:
+
+<img
+  src="/pixi-react/img/pixi-legacy-banner.png"
+  draggable={false}
+  width={448}
+  style={{
+    width: '100%',
+    maxWidth: 448,
+  }}
+/>
+
+In PixiJS v7 upwards, this welcome message is disabled by default, to enable it pass through `hello: true` in your
+application options. If for some reason you specifically want to force canvas rendering in an environment that supports WebGL
+then you also need to pass `forceCanvas: true`:
+
+```jsx
+<Stage options={{ hello: true, forceCanvas: true }} />
+```
+
+<img
+  src="/pixi-react/img/pixi-v7-canvas-hello.png"
+  draggable={false}
+  width={553}
+  style={{
+    width: '100%',
+    maxWidth: 553,
+  }}
+/>

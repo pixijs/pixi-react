@@ -1,0 +1,73 @@
+# BitmapText
+
+## Props
+
+https://pixijs.download/v7.x/docs/PIXI.BitmapText.html
+
+## Usage
+
+```jsx live noInline
+// import { render } from 'react-dom';
+// import { Stage, BitmapText, Text } from '@pixi/react';
+
+const position = {
+  anchor: 0.5,
+  x: 250,
+  y: 150,
+};
+
+render(
+  <Stage width={500} height={300} options={{ backgroundColor: 0xffffff }}>
+    <ExampleAssetLoader
+      name="desyrel"
+      url="/pixi-react/font/desyrel.xml"
+      loader={
+        <Text
+          {...position}
+          text="⌛ Loading font..."
+          style={{ fontFamily: 'Arial', fontSize: 15 }}
+        />
+      }
+    >
+      <BitmapText
+        {...position}
+        text="Hello World!"
+        style={{ fontName: 'Desyrel', fontSize: 50 }}
+      />
+    </ExampleAssetLoader>
+  </Stage>,
+);
+```
+
+## Example
+
+Make sure to load the bitmap font data before mounting.
+
+See https://pixijs.io/examples/#/demos/text-demo.js
+
+```js
+import { render } from 'react-dom'
+import { Stage, BitmapText } from '@pixi/react'
+import { Loader } from 'pixi.js'
+
+Loader.shared
+  .add('desyrel', './assets/desyrel.xml')
+  .load(onAssetsLoaded)
+
+// If using v7 or later, use the following code:
+// import { Assets } from 'pixi.js'
+//
+// Assets
+//  .load('./assets/desyrel.xml')
+//  .then(onAssetsLoaded)
+
+const App = () => (
+  <Stage>
+    <BitmapText text="Hello World" style={{ fontName: 'Desyrel', fontSize: 35 }}>
+  </Stage>
+)
+
+function onAssetsLoaded() {
+  render(<App />, document.getElementById('root'))
+}
+```

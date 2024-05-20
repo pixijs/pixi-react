@@ -1,0 +1,19 @@
+name: Release Notes
+
+on: [push]
+
+jobs:
+  release:
+    runs-on: macos-latest
+    if: contains(github.ref, 'refs/tags/v')
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Install GitHub CLI
+        run: |
+          brew update
+          brew install gh
+      - name: Generate Release
+        run: gh release create ${{github.ref_name}} --generate-notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

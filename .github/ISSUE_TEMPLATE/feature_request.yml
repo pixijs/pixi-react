@@ -1,0 +1,22 @@
+name: '💡 Feature Request'
+description: I have a great idea for Pixi React!
+title: 'Feature Request: '
+labels: ['Feature Request']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for creating a feature request!
+
+        Before opening an issue **please** check if a similar issue exists by
+        searching existing issues (<https://github.com/pixijs/pixi-react/issues>).
+
+        Before submitting please read:
+
+        Contributors guide: <https://github.com/pixijs/pixi-react/blob/master/.github/CONTRIBUTING.md>
+        Code of Conduct: <https://github.com/pixijs/pixi-react/blob/master/.github/CODE_OF_CONDUCT.md>
+  - type: textarea
+    attributes:
+      label: Description
+    validations:
+      required: true

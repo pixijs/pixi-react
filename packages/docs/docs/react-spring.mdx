@@ -1,0 +1,134 @@
+# React Spring
+
+Use `"@pixi/react-animated"` to import react-spring animated components.
+
+## Usage
+
+```jsx
+import React from 'react';
+import { Spring } from 'react-spring';
+import { Texture } from 'pixi.js';
+import { Stage, Sprite } from '@pixi/react-animated';
+
+const App = () => (
+  <Stage>
+    <Spring native from={{ x: 0, y: 0 }} to={{ x: 200, y: 200 }}>
+      {(props) => <Sprite texture={Texture.WHITE} tint={0xff0000} {...props} />}
+    </Spring>
+  </Stage>
+);
+```
+
+## Example
+
+Click anywhere to animate
+
+```jsx live noInline
+// import React, { useState } from 'react';
+// import { render } from 'react-dom';
+// import { Spring } from 'react-spring';
+// import { Texture } from 'pixi.js';
+// import * as ReactPixiAnimated from '@pixi/react-animated';
+
+const config = {
+  size: { width: 800, height: 500 },
+  spring: { mass: 10, tension: 1000, friction: 100 },
+  stage: { antialias: true, backgroundColor: 0x1099bb },
+};
+
+const set = () => ({
+  x: Math.random() * config.size.width,
+  y: Math.random() * config.size.height,
+  rotation: Math.random() * 10,
+  scale: Math.max(1, Math.random() * 10),
+});
+
+const Box = (props) => (
+  <Spring native to={props} config={config.spring}>
+    {(props) => (
+      <ReactPixiAnimated.Sprite
+        texture={Texture.WHITE}
+        tint={0xaddb67}
+        anchor={0.5}
+        {...props}
+      />
+    )}
+  </Spring>
+);
+
+const App = () => {
+  const [transform, setTransform] = useState(set);
+  return (
+    <Stage
+      {...config.size}
+      options={config.stage}
+      onPointerUp={() => setTransform(set)}
+    >
+      <Box {...transform} />
+    </Stage>
+  );
+};
+
+render(<App />);
+```
+
+## Animating `tint` values
+
+```jsx live noInline
+// import React, { useState } from 'react';
+// import { render } from 'react-dom';
+// import { Spring } from 'react-spring';
+// import { Texture } from 'pixi.js';
+// import * as ReactPixiAnimated from '@pixi/react-animated';
+
+const config = {
+  size: { width: 800, height: 500 },
+  stage: { antialias: true, backgroundColor: 0x1099bb },
+};
+
+const toHex = (color) =>
+  /^#/.test(color)
+    ? utils.string2hex(color)
+    : utils.rgb2hex(
+        color
+          .replace(/^rgba?\(|\s+|\)$/g, "")
+          .split(",")
+          .map((val) => val / 255)
+      );
+
+const set = () => ({
+  x: Math.random() * config.size.width,
+  y: Math.random() * config.size.height,
+  rotation: Math.random() * 10,
+  scale: Math.max(1, Math.random() * 10),
+  tint: "#" + Math.floor(Math.random() * 16777215).toString(16)
+});
+
+const App = () => {
+  const [props, setProps] = useState(set);
+
+  return (
+    <Stage
+      width={config.size.width}
+      height={config.size.height}
+      options={config.stage}
+      onPointerUp={() => setProps(set)}
+    >
+      <Spring native to={props}>
+        {({ tint, ...props }) => (
+          <ReactPixiAnimated.Sprite
+            anchor={0.5}
+            width={100}
+            height={100}
+            texture={Texture.WHITE}
+            tint={tint.to((color) => toHex(color))}
+            {...props}
+          />
+        )}
+      </Spring>
+    </Stage>
+  );
+};
+
+render(<App />);
+```

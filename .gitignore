@@ -1,7 +1,6 @@
 .idea
 node_modules/
 **/dist/
-**/lib/
 packages/*/stats.html
 .eslintcache
 .DS_Store

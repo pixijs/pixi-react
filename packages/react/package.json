@@ -1,0 +1,74 @@
+{
+  "name": "@pixi/react",
+  "version": "7.1.2",
+  "description": "Write PixiJS applications using React declarative style.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pixijs/pixi-react.git",
+    "directory": "packages/react"
+  },
+  "license": "MIT",
+  "sideEffects": false,
+  "main": "index.js",
+  "module": "module.js",
+  "jsnext:main": "module.js",
+  "typings": "./index.d.ts",
+  "files": [
+    "dist/",
+    "LICENSE",
+    "README.md",
+    "index.d.ts",
+    "index.js",
+    "module.js"
+  ],
+  "scripts": {
+    "prebuild": "npm run clean",
+    "build": "npm run build:dev && npm run build:prod",
+    "build:dev": "cross-env NODE_ENV=development rollup -c",
+    "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "clean": "rimraf ./dist",
+    "test": "jest --silent",
+    "test:ci": "jest --silent --runInBand",
+    "test:types": "tsc --noEmit",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "lodash.isnil": "4.0.0",
+    "lodash.times": "4.3.2",
+    "performance-now": "2.1.0",
+    "prop-types": "^15.8.1"
+  },
+  "devDependencies": {
+    "@pixi/events": "^7.1.1",
+    "@testing-library/react": "^13.4.0",
+    "canvas": "^2.11.0",
+    "jest-webgl-canvas-mock": "^0.2.3",
+    "react-test-renderer": "18.2.0"
+  },
+  "peerDependencies": {
+    "@babel/runtime": "^7.14.8",
+    "@pixi/app": ">=6.0.0",
+    "@pixi/constants": ">=6.0.0",
+    "@pixi/core": ">=6.0.0",
+    "@pixi/display": ">=6.0.0",
+    "@pixi/extensions": ">=6.0.0",
+    "@pixi/graphics": ">=6.0.0",
+    "@pixi/math": ">=6.0.0",
+    "@pixi/mesh": ">=6.0.0",
+    "@pixi/mesh-extras": ">=6.0.0",
+    "@pixi/particle-container": ">=6.0.0",
+    "@pixi/sprite": ">=6.0.0",
+    "@pixi/sprite-animated": ">=6.0.0",
+    "@pixi/sprite-tiling": ">=6.0.0",
+    "@pixi/text": ">=6.0.0",
+    "@pixi/text-bitmap": ">=6.0.0",
+    "@pixi/ticker": ">=6.0.0",
+    "prop-types": "^15.8.1",
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "6d5b98bc6d7eafd1b0016e60a725b2b6c9f46a33"
+}

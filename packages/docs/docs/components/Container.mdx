@@ -1,0 +1,32 @@
+# Container
+
+## Props
+
+https://pixijs.download/v7.x/docs/PIXI.Container.html
+
+## Usage
+
+```jsx live
+// import React from 'react'
+// import { Stage, Container, Sprite } from '@pixi/react';
+
+<Stage width={300} height={300} options={{ backgroundColor: 0xeef1f5 }}>
+  <Container position={[150, 150]}>
+    <Sprite anchor={0.5} x={-75} y={-75} image="/pixi-react/img/bunny.png" />
+    <Sprite anchor={0.5} x={0} y={0} image="/pixi-react/img/bunny.png" />
+    <Sprite anchor={0.5} x={75} y={75} image="/pixi-react/img/bunny.png" />
+  </Container>
+</Stage>
+```
+
+## Example
+
+<iframe
+  height={500}
+  scrolling="no"
+  title="Container"
+  src="//codepen.io/inlet/embed/ca683993e355b9f3370f0a44d189141f/?height=300&theme-id=33987&default-tab=result&embed-version=2"
+  frameBorder="no"
+  allowFullScreen={true}
+  style={{ width: '100%' }}
+/>

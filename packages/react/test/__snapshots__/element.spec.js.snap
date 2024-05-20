@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createElement types 1`] = `
+{
+  "AnimatedSprite": "AnimatedSprite",
+  "BitmapText": "BitmapText",
+  "Container": "Container",
+  "Graphics": "Graphics",
+  "NineSlicePlane": "NineSlicePlane",
+  "ParticleContainer": "ParticleContainer",
+  "SimpleMesh": "SimpleMesh",
+  "SimpleRope": "SimpleRope",
+  "Sprite": "Sprite",
+  "Text": "Text",
+  "TilingSprite": "TilingSprite",
+}
+`;

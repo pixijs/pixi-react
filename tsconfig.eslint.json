@@ -1,13 +1,5 @@
 {
-  "extends": "./tsconfig.json",
-  "files": [
-    ".eslintrc.js",
-    "wallaby.js",
-  ],
-  "include": [
-    "packages/*/.eslintrc.js",
-    "packages/**/*",
-    "scripts/**/*",
-    "shared/**/*",
-  ]
+    "extends": "./tsconfig.json",
+    "include": ["**/*.ts", "**/*.js", ".eslintrc.js"],
+    "exclude": ["node_modules", "dist"],
 }

@@ -1,31 +1,23 @@
 {
+  "extends": "@pixi/extension-scripts/tsconfig",
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "lib": [
-      "ESNext"
-    ],
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "pretty": true,
-    "sourceMap": true,
-    "strict": true,
-    "target": "ESNext",
-    "baseUrl": "./"
+      "module": "ES2020",
+      "strict": false,
+      "noImplicitThis": true,
+      "strictFunctionTypes": true,
+      "strictBindCallApply": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "preserveConstEnums": true,
+      "noFallthroughCasesInSwitch": true,
+      "noImplicitReturns": true,
+      "noUncheckedIndexedAccess": true,
+      "skipLibCheck": true,
+      "esModuleInterop": true,
+      "jsx": "react",
+      "types": ["./types"]
   },
-  "files": [
-    "node_modules/jest-extended/types/index.d.ts"
-  ],
-  "exclude": [
-    "dist",
-    "node_modules"
-  ],
-  "ts-node": {
-    "files": true,
-    "compilerOptions": {
-      "esModuleInterop": true
-    }
-  }
+  "include": [
+      "src/**/*",
+  ]
 }

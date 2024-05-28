@@ -4,5 +4,5 @@
     ".eslintrc.js",
     "wallaby.js",
   ],
-  "include": ["src/**/*"]
+  "include": ["lib/**/*"]
 }

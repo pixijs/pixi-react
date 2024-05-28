@@ -84,11 +84,6 @@
       "optional": true
     }
   },
-  "engines": {
-    "node": ">=16",
-    "npm": ">=8",
-    "yarn": "please-use-npm"
-  },
   "publishConfig": {
     "access": "public"
   },

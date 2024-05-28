@@ -90,7 +90,7 @@
   "extensionConfig": {
     "lint": [
       "test",
-      "src"
+      "lib"
     ],
     "environments": ["node"],
     "docsName": "PixiJS React",

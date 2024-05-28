@@ -3,8 +3,13 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "checkJs": true,
+    "declaration": true,
+    "declarationDir": "./types",
+    "emitDeclarationOnly": true,
     "esModuleInterop": true,
+    "jsx": "react-jsx",
     "lib": [
+      "DOM",
       "ESNext"
     ],
     "module": "commonjs",
@@ -12,17 +17,16 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "pretty": true,
+    "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
     "target": "ESNext",
     "baseUrl": "./"
   },
-  "files": [
-    "node_modules/jest-extended/types/index.d.ts"
-  ],
   "exclude": [
     "dist",
-    "node_modules"
+    "node_modules",
+    "types"
   ],
   "ts-node": {
     "files": true,

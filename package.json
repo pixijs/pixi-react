@@ -35,19 +35,17 @@
     "types/"
   ],
   "scripts": {
-    "build": "xs build",
+    "build": "tsc",
     "clean": "xs clean",
     "docs": "xs docs",
     "lint": "xs lint",
     "lint:fix": "xs lint --fix",
     "prepare": "husky install",
-    "release": "xs release",
-    "start": "xs serve",
+    "prerelease": "npm run test:lint && npm run build",
+    "release": "xs bump,publish,git-push",
     "test": "vitest run",
     "test:lint": "xs lint",
-    "test:watch": "vitest",
-    "types": "xs types",
-    "watch": "xs watch"
+    "test:watch": "vitest"
   },
   "husky": {
     "hooks": {

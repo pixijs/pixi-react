@@ -58,14 +58,15 @@
     ]
   },
   "dependencies": {
-    "react-reconciler": "^0.29.2"
+    "react-reconciler": "^0.29.2",
+    "statery": "^0.7.1"
   },
   "devDependencies": {
     "@pixi/extension-scripts": "^2.4.1",
     "@types/react": "^18.3.2",
     "@types/react-reconciler": "^0.28.8",
     "husky": "^8.0.0",
-    "pixi.js": "^8.1.4",
+    "pixi.js": "v8.1.5-dev.1ebdfc5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "typescript": "^5.4.5",
@@ -89,7 +90,9 @@
       "test",
       "lib"
     ],
-    "environments": ["node"],
+    "environments": [
+      "node"
+    ],
     "docsName": "PixiJS React",
     "docsTitle": "PixiJS React API Documentation",
     "docsDescription": "Documentation for PixiJS React library",

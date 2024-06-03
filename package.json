@@ -36,7 +36,7 @@
     "types/"
   ],
   "scripts": {
-    "build": "rimraf dist lib && rollup -c && tsc && npm run lint:fix",
+    "build": "rimraf dist lib && npm run lint:fix && rollup -c && tsc",
     "clean": "xs clean",
     "docs": "xs docs",
     "lint": "xs lint",

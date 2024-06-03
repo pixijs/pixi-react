@@ -19,6 +19,13 @@ export function createInstance(type, props)
     // Get the class from an imported Pixi.js namespace
     const TARGET = /** @type {new (...args: any[]) => any} */ (catalogue[name]);
 
+    if (!TARGET)
+    {
+        throw new Error(
+            `@react/pixi: ${name} is not part of the PIXI namespace! Did you forget to extend?`,
+        );
+    }
+
     let instance;
 
     // Create instance

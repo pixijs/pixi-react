@@ -1,7 +1,8 @@
 .idea
-node_modules/
-**/dist/
-types/
-packages/*/stats.html
 .eslintcache
 .DS_Store
+packages/*/stats.html
+node_modules/
+dist/
+lib/
+types/

@@ -12,26 +12,24 @@
       "DOM",
       "ESNext"
     ],
-    "module": "commonjs",
+    "module": "ESNext",
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "pretty": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ESNext",
-    "baseUrl": "./"
+    "target": "ESNext"
   },
   "exclude": [
     "dist",
     "node_modules",
     "types"
   ],
-  "ts-node": {
-    "files": true,
-    "compilerOptions": {
-      "esModuleInterop": true
-    }
-  }
+  "include": [
+    "rollup.config.mjs",
+    "src"
+  ]
 }

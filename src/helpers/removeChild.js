@@ -1,5 +1,5 @@
 /** @typedef {import('pixi.js').Container} Container */
-/** @typedef {import('../types/HostContainer.js').HostContainer} HostContainer */
+/** @typedef {import('../typedefs/HostContainer.js').HostContainer} HostContainer */
 
 /**
  * Removes elements from our scene and disposes of them.

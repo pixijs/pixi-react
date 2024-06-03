@@ -7,8 +7,8 @@ import { applyProps } from './helpers/applyProps.js';
 import { createInstance } from './helpers/createInstance.js';
 import { removeChild } from './helpers/removeChild.js';
 
-/** @typedef {import('./types/HostConfig.js').HostConfig} HostConfig */
-/** @typedef {import('./types/Node.js').Node} Node */
+/** @typedef {import('./typedefs/HostConfig.js').HostConfig} HostConfig */
+/** @typedef {import('./typedefs/Node.js').Node} Node */
 
 /**
  * @type {Reconciler.HostConfig<

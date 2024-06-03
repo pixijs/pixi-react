@@ -1,4 +1,4 @@
-import type { PixiElementsImpl } from '../lib/types/PixiElementsImpl';
+import type { PixiElementsImpl } from './typedefs/PixiElementsImpl';
 
 declare global
 {

@@ -1,5 +1,5 @@
 /** @typedef {import('pixi.js').Container} Container */
-/** @typedef {import('../types/HostContainer.js').HostContainer} HostContainer */
+/** @typedef {import('../typedefs/HostContainer.js').HostContainer} HostContainer */
 
 /**
  * Adds elements to our scene and attaches geometry and material to meshes.

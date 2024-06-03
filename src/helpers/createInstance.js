@@ -2,7 +2,7 @@ import { applyProps } from './applyProps.js';
 import { catalogue } from './catalogue.js';
 import { convertStringToPascalCase } from './convertStringToPascalCase.js';
 
-/** @typedef {import('../types/PixiElements.js').PixiElements} PixiElements */
+/** @typedef {import('../typedefs/PixiElements.js').PixiElements} PixiElements */
 
 /**
  * @param {keyof PixiElements} type

@@ -3,6 +3,5 @@
   "files": [
     ".eslintrc.js",
     "wallaby.js",
-  ],
-  "include": ["lib/**/*"]
+  ]
 }

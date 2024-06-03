@@ -29,13 +29,14 @@
   },
   "main": "lib/index.js",
   "module": "lib/index.mjs",
-  "types": "lib/index.d.ts",
+  "types": "types/index.d.ts",
   "files": [
-    "lib/",
+    "lib",
+    "dist",
     "types/"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "rimraf dist lib && rollup -c && tsc && npm run lint:fix",
     "clean": "xs clean",
     "docs": "xs docs",
     "lint": "xs lint",
@@ -58,17 +59,22 @@
     ]
   },
   "dependencies": {
-    "react-reconciler": "^0.29.2",
-    "statery": "^0.7.1"
+    "react-reconciler": "^0.29.2"
   },
   "devDependencies": {
     "@pixi/extension-scripts": "^2.4.1",
+    "@rollup/plugin-commonjs": "^25.0.8",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@types/eslint": "^8.56.10",
     "@types/react": "^18.3.2",
     "@types/react-reconciler": "^0.28.8",
     "husky": "^8.0.0",
     "pixi.js": "v8.1.5-dev.1ebdfc5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "rollup": "^4.18.0",
+    "rollup-plugin-esbuild": "^6.1.1",
+    "rollup-plugin-sourcemaps": "^0.6.3",
     "typescript": "^5.4.5",
     "vitest": "^1.6.0"
   },

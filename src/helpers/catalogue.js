@@ -1,4 +1,4 @@
-/** @typedef {import('../types/Instance.js').Instance} Instance */
+/** @typedef {import('../typedefs/Instance.js').Instance} Instance */
 
 /**
  * @type {{

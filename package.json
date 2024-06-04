@@ -33,10 +33,10 @@
   "files": [
     "lib",
     "dist",
-    "types/"
+    "types"
   ],
   "scripts": {
-    "build": "rimraf dist lib && npm run lint:fix && rollup -c && tsc",
+    "build": "rimraf dist lib types && npm run lint:fix && rollup -c && tsc",
     "clean": "xs clean",
     "docs": "xs docs",
     "lint": "xs lint",

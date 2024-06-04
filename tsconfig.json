@@ -2,6 +2,7 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
+    "baseUrl": "./src",
     "checkJs": true,
     "declaration": true,
     "declarationDir": "./types",
@@ -29,7 +30,6 @@
     "types"
   ],
   "include": [
-    "rollup.config.mjs",
     "src"
   ]
 }

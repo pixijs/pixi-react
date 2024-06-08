@@ -41,6 +41,7 @@ If you want to start a new React project from scratch, we recommend [Create Reac
 To add to an existing React application, just install the dependencies:
 
 #### Start New React Project "my-app" with Create React App:
+
 ```bash
 # for typescript add "--template typescript"
 npx create-react-app my-app
@@ -48,18 +49,19 @@ cd my-app
 ```
 
 #### Install Pixi React Dependencies:
+
 ```bash
-npm install pixi.js @pixi/react
+npm install pixi.js@7 @pixi/react
 ```
 
 #### Usage:
-```jsx
-import { BlurFilter } from 'pixi.js';
-import { Stage, Container, Sprite, Text } from '@pixi/react';
-import { useMemo } from 'react';
 
-export const MyComponent = () =>
-{
+```jsx
+import { BlurFilter } from "pixi.js";
+import { Stage, Container, Sprite, Text } from "@pixi/react";
+import { useMemo } from "react";
+
+export const MyComponent = () => {
   const blurFilter = useMemo(() => new BlurFilter(4), []);
 
   return (
@@ -72,7 +74,11 @@ export const MyComponent = () =>
       />
 
       <Container x={400} y={330}>
-        <Text text="Hello World" anchor={{ x: 0.5, y: 0.5 }} filters={[blurFilter]} />
+        <Text
+          text="Hello World"
+          anchor={{ x: 0.5, y: 0.5 }}
+          filters={[blurFilter]}
+        />
       </Container>
     </Stage>
   );

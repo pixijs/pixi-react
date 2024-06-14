@@ -1,4 +1,7 @@
-import { Container } from 'pixi.js';
+import {
+    Container,
+    Graphics,
+} from 'pixi.js';
 import { diffProps } from './diffProps.js';
 import { isDiffSet } from './isDiffSet.js';
 // import { pruneKeys } from './pruneKeys.js';
@@ -43,6 +46,11 @@ export function applyProps(instance, data)
         /** @type {Instance} */
         let currentInstance = /** @type {*} */ (instance);
         let targetProp = currentInstance[key];
+
+        if ((instance instanceof Graphics) && (key === 'draw') && (value instanceof Function))
+        {
+            value(instance);
+        }
 
         // Resolve dashed props
         if (keys.length)

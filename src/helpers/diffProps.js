@@ -1,5 +1,6 @@
 import { isEqual } from './compare.js';
 
+/** @typedef {import('../typedefs/Change.js').Change} Change */
 /** @typedef {import('../typedefs/DiffSet.js').DiffSet} DiffSet */
 /** @typedef {import('../typedefs/InstanceProps.js').InstanceProps} InstanceProps */
 
@@ -33,7 +34,7 @@ export function diffProps(
 
     const entries = Object.entries(newPropsRest);
 
-    /** @type {[key: string, value: unknown, isEvent: boolean, keys: string[]][]} */
+    /** @type {Change[]} */
     const changes = [];
 
     // Catch removed props, prepend them so they can be reset or removed

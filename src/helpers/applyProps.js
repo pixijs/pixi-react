@@ -1,85 +1,123 @@
-import { Graphics } from 'pixi.js';
-import { pruneKeys } from './pruneKeys.js';
+import { Container } from 'pixi.js';
+import { diffProps } from './diffProps.js';
+import { isDiffSet } from './isDiffSet.js';
+// import { pruneKeys } from './pruneKeys.js';
+
+/** @typedef {import('../typedefs/DiffSet.js').DiffSet} DiffSet */
+/** @typedef {import('../typedefs/EventHandlers.js').EventHandlers} EventHandlers */
+/** @typedef {import('../typedefs/Instance.js').Instance} Instance */
+/** @typedef {import('../typedefs/InstanceProps.js').InstanceProps} InstanceProps */
+/** @typedef {import('../typedefs/MaybeInstance.js').MaybeInstance} MaybeInstance */
+
+const DEFAULT = '__default';
+const DEFAULTS_CONTAINERS = new Map();
 
 /**
  * Apply properties to Pixi.js instance.
  *
- * @param {{ [key: string]: any }} instance An instance?
- * @param {{ [key: string]: any }} newProps New props.
- * @param {{ [key: string]: any }} [oldProps] Old props.
+ * @param {MaybeInstance} instance An instance?
+ * @param {InstanceProps | DiffSet} data New props.
  */
-export function applyProps(instance, newProps, oldProps = {})
+export function applyProps(instance, data)
 {
-    // Filter identical props, event handlers, and reserved keys
-    const identicalProps = Object
-        .keys(newProps)
-        .filter((key) => newProps[key] === oldProps[key]);
+    const localState = instance.__reactpixi;
+    const {
+        __reactpixi,
+        ...instanceProps
+    } = instance;
 
-    if ((instance instanceof Graphics) && !identicalProps.includes('draw'))
+    /** @type {DiffSet} */
+    const { changes } = /** @type {*} */ (isDiffSet(data) ? data : diffProps(instanceProps, data));
+
+    let changeIndex = 0;
+
+    while (changeIndex < changes.length)
     {
-        newProps.draw?.(instance);
-    }
+        const change = changes[changeIndex];
 
-    const handlers = Object.keys(newProps).filter((key) =>
-    {
-        const isFunction = typeof newProps[key] === 'function';
+        let key = change[0];
+        let value = change[1];
+        const isEvent = change[2];
+        const keys = change[3];
 
-        return isFunction && key.startsWith('on');
-    });
+        /** @type {Instance} */
+        let currentInstance = /** @type {*} */ (instance);
+        let targetProp = currentInstance[key];
 
-    const props = pruneKeys(newProps, [
-        ...identicalProps,
-        ...handlers,
-        'children',
-        'draw',
-        'key',
-        'ref',
-    ]);
-
-    // Mutate our Pixi.js element
-    if (Object.keys(props).length)
-    {
-        Object.entries(props).forEach(([key, value]) =>
+        // Resolve dashed props
+        if (keys.length)
         {
-            // const target = instance[key]
-            // const isColor = target instanceof THREE.Color
+            targetProp = keys.reduce((accumulator, key) =>
+                accumulator[key], currentInstance);
 
-            // // Prefer to use properties' copy and set methods
-            // // otherwise, mutate the property directly
-            // if (target?.set) {
-            // 	if (target.constructor.name === value.constructor.name) {
-            // 		target.copy(value)
-            // 	} else if (Array.isArray(value)) {
-            // 		target.set(...value)
-            // 	} else if (!isColor && target?.setScalar) {
-            // 		// Allow shorthand like scale={1}
-            // 		target.setScalar(value)
-            // 	} else {
-            // 		target.set(value)
-            // 	}
+            // If the target is atomic, it forces us to switch the root
+            if (!(targetProp && targetProp.set))
+            {
+                const [name, ...reverseEntries] = keys.reverse();
 
-            // 	// Auto-convert sRGB colors
-            // 	if (isColor) {
-            // 		target.convertSRGBToLinear()
-            // 	}
-            // } else {
-            // 	instance[key] = value
-            // }
-            instance[key] = value;
-        });
+                currentInstance = reverseEntries.reverse().reduce((accumulator, key) =>
+                    accumulator[key], currentInstance);
+
+                key = name;
+            }
+        }
+
+        // https://github.com/mrdoob/three.js/issues/21209
+        // HMR/fast-refresh relies on the ability to cancel out props, but threejs
+        // has no means to do this. Hence we curate a small collection of value-classes
+        // with their respective constructor/set arguments
+        // For removed props, try to set default values, if possible
+        if (value === `${DEFAULT}remove`)
+        {
+            if (currentInstance instanceof Container)
+            {
+                // create a blank slate of the instance and copy the particular parameter.
+                let ctor = DEFAULTS_CONTAINERS.get(currentInstance.constructor);
+
+                if (!ctor)
+                {
+                    /** @type {Container} */
+                    ctor = /** @type {*} */ (currentInstance.constructor);
+
+                    // eslint-disable-next-line new-cap
+                    ctor = new ctor();
+
+                    DEFAULTS_CONTAINERS.set(currentInstance.constructor, ctor);
+                }
+
+                value = ctor[key];
+            }
+            else
+            {
+                // instance does not have constructor, just set it to 0
+                value = 0;
+            }
+        }
+
+        // Deal with pointer events ...
+        if (isEvent && localState)
+        {
+            /** @type {keyof EventHandlers} */
+            const typedKey = /** @type {*} */ (key);
+
+            if (value)
+            {
+                localState.handlers[typedKey] = /** @type {*} */ (value);
+            }
+            else
+            {
+                delete localState.handlers[typedKey];
+            }
+
+            localState.eventCount = Object.keys(localState.handlers).length;
+        }
+        else
+        {
+            currentInstance[key] = value;
+        }
+
+        changeIndex += 1;
     }
 
-    // Collect event handlers.
-    // We put this on an invalid prop so Pixi.js doesn't serialize handlers
-    // if you do ref.current.clone() or ref.current.toJSON()
-    if (handlers.length)
-    {
-        instance.__handlers = handlers.reduce(
-            (acc, key) => ({
-                ...acc,
-                [key]: newProps[key],
-            }),
-            {},
-        );
-    }
+    return instance;
 }

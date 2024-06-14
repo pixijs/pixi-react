@@ -1,14 +1,20 @@
 /* eslint-disable no-empty-function */
 
 import Reconciler from 'react-reconciler';
-import { DefaultEventPriority } from 'react-reconciler/constants.js';
 import { appendChild } from './helpers/appendChild.js';
-import { applyProps } from './helpers/applyProps.js';
+import { commitUpdate } from './helpers/commitUpdate.js';
 import { createInstance } from './helpers/createInstance.js';
+import { createTextInstance } from './helpers/createTextInstance.js';
+import { getChildHostContext } from './helpers/getChildHostContext.js';
+import { getCurrentEventPriority } from './helpers/getCurrentEventPriority.js';
+import { getInstanceFromScope } from './helpers/getInstanceFromScope.js';
+import { getPublicInstance } from './helpers/getPublicInstance.js';
+import { insertBefore } from './helpers/insertBefore.js';
+import { prepareUpdate } from './helpers/prepareUpdate.js';
 import { removeChild } from './helpers/removeChild.js';
 
 /** @typedef {import('./typedefs/HostConfig.js').HostConfig} HostConfig */
-/** @typedef {import('./typedefs/Node.js').Node} Node */
+/** @typedef {import('./typedefs/Instance.js').Instance} Instance */
 
 /**
  * @type {Reconciler.HostConfig<
@@ -38,19 +44,26 @@ const reconcilerConfig = {
     appendChildToContainer: appendChild,
     appendInitialChild: appendChild,
     cancelTimeout: clearTimeout,
+    commitUpdate,
     createInstance,
+    createTextInstance,
+    getChildHostContext,
+    getCurrentEventPriority,
+    getInstanceFromScope,
+    getPublicInstance,
+    insertBefore,
+    insertInContainerBefore: insertBefore,
+    prepareUpdate,
     removeChild,
     removeChildFromContainer: removeChild,
     scheduleTimeout: setTimeout,
 
     afterActiveInstanceBlur() {},
     beforeActiveInstanceBlur() {},
-    createTextInstance() {},
     detachDeletedInstance() {},
-    getInstanceFromScope() {},
-    insertBefore() {},
     preparePortalMount() {},
     prepareScopeUpdate() {},
+    resetAfterCommit() {},
 
     clearContainer()
     {
@@ -60,26 +73,9 @@ const reconcilerConfig = {
     {
         return false;
     },
-    getChildHostContext()
-    {
-        return null;
-    },
-    getCurrentEventPriority()
-    {
-        return DefaultEventPriority;
-    },
     getInstanceFromNode()
     {
         return null;
-    },
-    /**
-	 * @template T
-	 * @param {T} instance
-	 * @returns {T}
-	 */
-    getPublicInstance(instance)
-    {
-        return instance;
     },
     getRootHostContext()
     {
@@ -87,34 +83,11 @@ const reconcilerConfig = {
     },
     prepareForCommit()
     {
-        return {};
-    },
-    prepareUpdate()
-    {
-        return {};
-    },
-    resetAfterCommit()
-    {
-        return {};
+        return null;
     },
     shouldSetTextContent()
     {
         return false;
-    },
-
-    /**
-	 * @param {Node} instance
-	 * @param {*} _updatePayload Unused.
-	 * @param {*} _type Unused.
-	 * @param {{}} oldProps
-	 * @param {{}} newProps
-	 */
-    commitUpdate(instance, _updatePayload, _type, oldProps, newProps)
-    {
-        // This is where we mutate Pixi.js objects in the render phase
-        instance.busy = true;
-        applyProps(instance, newProps, oldProps);
-        instance.busy = false;
     },
 };
 

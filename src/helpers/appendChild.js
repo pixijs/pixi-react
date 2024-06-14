@@ -1,18 +1,22 @@
+import { log } from './log.js';
+
 /** @typedef {import('pixi.js').Container} Container */
-/** @typedef {import('../typedefs/HostContainer.js').HostContainer} HostContainer */
+/** @typedef {import('../typedefs/Instance.js').Instance} Instance */
 
 /**
- * Adds elements to our scene and attaches geometry and material to meshes.
+ * Adds elements to our application.
  *
- * @param {HostContainer & Container} parentInstance
- * @param {HostContainer & Container} child
+ * @param {Instance} parentInstance
+ * @param {Instance} childInstance
  */
-export function appendChild(parentInstance, child)
+export function appendChild(parentInstance, childInstance)
 {
-    if (!child)
+    log('info', 'lifecycle::appendChild');
+
+    if (!childInstance)
     {
         return;
     }
 
-    parentInstance.addChild(child);
+    parentInstance.addChild(childInstance);
 }

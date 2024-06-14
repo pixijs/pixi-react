@@ -4,7 +4,7 @@
 /**
  * @typedef {{
  *  [K in import('./AutoFilteredKeys.js').AutoFilteredKeys]: [
- *      Lowercase<K>,
+ *      Uncapitalize<K>,
  *      React.PropsWithChildren<
  *      import('./ConstructorParams.js').ConstructorParams<PixiType[K]>
  *      & { init?: readonly any[] }

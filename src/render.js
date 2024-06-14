@@ -4,7 +4,9 @@ import {
     createElement,
 } from 'react';
 import { ConcurrentRoot } from 'react-reconciler/constants.js';
+import { prepareInstance } from './helpers/prepareInstance.js';
 import { reconciler } from './reconciler.js';
+import { store as globalStore } from './store.js';
 
 /**
  * Internal Pixi.js state.
@@ -24,13 +26,18 @@ const roots = new Map();
  * @param {import('react').ReactNode} component The component to be rendered.
  * @param {HTMLElement | HTMLCanvasElement} target The target element into which the Pixi application will be rendered. Can be any element, but if a <canvas> is passed the application will be rendered to it directly.
  * @param {RenderProps} [props]
+ * @param {object} [options]
+ * @param {boolean} [options.enableLogging]
  */
 export function render(
     component,
     target,
     props = {},
+    options = {},
 )
 {
+    globalStore.debug = Boolean(options.enableLogging);
+
     const {
         children = null,
         ...componentProps
@@ -74,6 +81,7 @@ export function render(
 
         state.app = new Application();
         state.app.init(applicationProps);
+        state.rootContainer = prepareInstance(state.app.stage);
 
         if (!canvas)
         {
@@ -91,7 +99,7 @@ export function render(
         }
 
         root = reconciler.createContainer(
-            state.app.stage,
+            state.rootContainer,
             ConcurrentRoot,
             null,
             false,
@@ -111,11 +119,6 @@ export function render(
         // 	}
         // }
     }
-
-    // // Handle resize
-    // state.gl.setSize(size.width, size.height)
-    // state.camera.aspect = size.width / size.height
-    // state.camera.updateProjectionMatrix()
 
     // Update root
     roots.set(target, { root, state });

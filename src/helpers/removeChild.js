@@ -1,21 +1,16 @@
+import { log } from './log.js';
+
 /** @typedef {import('pixi.js').Container} Container */
-/** @typedef {import('../typedefs/HostContainer.js').HostContainer} HostContainer */
+/** @typedef {import('../typedefs/Instance.js').Instance} Instance */
 
 /**
  * Removes elements from our scene and disposes of them.
  *
- * @param {HostContainer & Container} _container Unused.
- * @param {HostContainer & Container} child The child to be removed.
+ * @param {Instance} _parentInstance The parent instance.
+ * @param {Instance} childInstance The child instance to be removed.
  */
-export function removeChild(_container, child)
+export function removeChild(_parentInstance, childInstance)
 {
-    if (!child)
-    {
-        return;
-    }
-
-    if (child.destroy)
-    {
-        child.destroy();
-    }
+    log('info', 'lifecycle::removeChild');
+    childInstance.destroy();
 }

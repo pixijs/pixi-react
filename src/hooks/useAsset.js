@@ -3,6 +3,7 @@ import {
     useEffect,
     useState,
 } from 'react';
+import { isEqual } from '../helpers/compare.js';
 
 /**
  * @typedef {import('pixi.js').ProgressCallback} ProgressCallback
@@ -21,12 +22,20 @@ export function useAsset(options, onProgress)
 {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [memoizedOptions, setMemoizedOptions] = useState(options);
     const [texture, setTexture] = useState(null);
 
     useEffect(() =>
     {
-        setIsLoaded(false);
-    }, [options]);
+        if (isEqual(options, memoizedOptions))
+        {
+            setMemoizedOptions(options);
+            setIsLoaded(false);
+        }
+    }, [
+        memoizedOptions,
+        options,
+    ]);
 
     useEffect(() =>
     {

@@ -7,7 +7,6 @@
  *  | 'Mesh'
  *  | 'Sprite'
  *  | 'Graphics'
- *  | 'Text'
  *  | 'HTMLText'
  * } TargetKeys
  */

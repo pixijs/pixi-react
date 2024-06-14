@@ -30,7 +30,14 @@ export function createInstance(type, props, root)
     }
 
     const {
+        // react props
         children,
+        key,
+        ref,
+
+        // @pixi/react props
+        draw,
+
         ...pixiProps
     } = props;
 

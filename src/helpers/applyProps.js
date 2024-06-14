@@ -119,7 +119,7 @@ export function applyProps(instance, data)
 
             localState.eventCount = Object.keys(localState.handlers).length;
         }
-        else if (key !== 'draw')
+        else
         {
             currentInstance[key] = value;
         }

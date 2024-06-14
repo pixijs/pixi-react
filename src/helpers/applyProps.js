@@ -30,7 +30,7 @@ export function applyProps(instance, data)
     } = instance;
 
     /** @type {DiffSet} */
-    const { changes } = /** @type {*} */ (isDiffSet(data) ? data : diffProps(instanceProps, data));
+    const { changes } = /** @type {*} */ (isDiffSet(data) ? data : diffProps(data, instanceProps));
 
     let changeIndex = 0;
 

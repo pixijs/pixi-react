@@ -34,4 +34,4 @@
  * @property {import('react').MouseEventHandler<HTMLCanvasElement>} ontouchstart
  * @property {import('react').MouseEventHandler<HTMLCanvasElement>} onwheel
  */
-export const EventHandlers = {};
+export {};

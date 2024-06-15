@@ -1,4 +1,4 @@
-import { NameOverrides } from './NameOverrides.js';
+import { NameOverrides } from '../constants/NameOverrides.js';
 
 /** @typedef {typeof import('pixi.js')} PixiType */
 
@@ -20,4 +20,4 @@ import { NameOverrides } from './NameOverrides.js';
  *      > & import('react').PropsWithRef<{ ref?: import('react').MutableRefObject<InstanceType<PixiType[K]>> }>
  * }} PixiElementsImpl
  */
-export const PixiElementsImpl = {};
+export {};

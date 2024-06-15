@@ -5,4 +5,4 @@
  * @property {P} props
  * @property {Node[]} children
  */
-export const Node = {};
+export {};

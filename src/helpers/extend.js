@@ -1,9 +1,13 @@
 import { catalogue } from './catalogue.js';
 
+/** @typedef {import('../typedefs/AutoFilteredKeys.js').AutoFilteredKeys} AutoFilteredKeys */
+
 /**
  * Expose Pixi.js components for use in JSX.
  *
- * @param {import('../typedefs/PixiElementsImpl.js').PixiElementsImpl} objects The Pixi.js components to be exposed.
+ * @param {{
+ *  [K in AutoFilteredKeys]?: typeof import('pixi.js')[K]
+ * }} objects The Pixi.js components to be exposed.
  */
 export function extend(objects)
 {

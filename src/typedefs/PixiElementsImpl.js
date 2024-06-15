@@ -1,4 +1,4 @@
-import { NameOverrides } from './NameOverrides.js';
+import { NameOverrides } from '../constants/NameOverrides.js';
 
 /** @typedef {typeof import('pixi.js')} PixiType */
 

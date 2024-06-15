@@ -1,9 +1,9 @@
 /** @typedef {import('./Instance.js').Instance} Instance */
-/** @typedef {import('../typedefs/PixiElements.js').PixiElements} PixiElements */
+/** @typedef {import('../typedefs/PixiElementsImpl.js').PixiElementsImpl} PixiElementsImpl */
 
 /**
  * @typedef {object} HostConfig
- * @property {keyof PixiElements} type
+ * @property {keyof PixiElementsImpl} type
  * @property {Record<string, unknown>} props
  * @property {Instance} container
  * @property {Instance} instance

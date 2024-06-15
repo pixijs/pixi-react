@@ -1,7 +1,7 @@
 /** @typedef {import('pixi.js').Graphics} Graphics */
 
 /** @typedef {import('./ContainerElement.js').ContainerElement} ContainerElement */
-/** @typedef {import('./EventHandlers.js').EventHandlers} EventHandlers */
+/** @typedef {import('./InstanceProps.js').InstanceProps} InstanceProps */
 /** @typedef {import('./InstanceState.js').InstanceState} InstanceState */
 
 /**

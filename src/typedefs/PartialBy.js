@@ -4,4 +4,4 @@
  * @typedef {Omit<T, K> & Partial<Pick<T, K>>} PartialBy
  * @see https://stackoverflow.com/a/54178819
  */
-export {};
+export const PartialBy = {};

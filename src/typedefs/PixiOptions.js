@@ -10,4 +10,4 @@
  * | import('pixi.js').HTMLTextOptions
  * } PixiOptions
  */
-export {};
+export const PixiOptions = {};

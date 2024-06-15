@@ -11,4 +11,5 @@
  */
 
 /** @typedef {ContainerElement & BaseInstance} Instance */
-export {};
+
+export const Instance = {};

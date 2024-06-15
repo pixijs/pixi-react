@@ -17,4 +17,4 @@
  * @property {number} timeoutHandle
  * @property {-1} noTimeout
  */
-export {};
+export const HostConfig = {};

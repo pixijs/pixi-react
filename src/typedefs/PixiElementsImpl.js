@@ -16,7 +16,7 @@ import { NameOverrides } from '../constants/NameOverrides.js';
  *      import('react').PropsWithChildren<
  *          Omit<PixiOptionsType<import('./ConstructorParams.js').ConstructorParams<PixiType[K]>>, 'children'>
  *          & { init?: import('./ConstructorParams.js').ConstructorParams<PixiType[K]> }
- *      > & import('react').PropsWithRef<{ ref?: import('react').MutableRefObject<InstanceType<PixiType[K]>> }>
+ *      > & import('react').PropsWithRef<{ ref?: import('react').RefObject<InstanceType<PixiType[K]>> }>
  * }} PixiElementsImpl
  */
 export const PixiElementsImpl = {};

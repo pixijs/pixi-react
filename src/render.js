@@ -17,7 +17,8 @@ const context = createContext(null);
 const roots = new Map();
 
 /** @typedef {import('pixi.js').ApplicationOptions} ApplicationOptions */
-/** @typedef {Partial<import('react').PropsWithChildren<ApplicationOptions>>} RenderProps */
+/** @typedef {import('react').PropsWithChildren} PropsWithChildren */
+/** @typedef {Partial<PropsWithChildren & ApplicationOptions>} RenderProps */
 
 /**
  * This renders an element to a canvas, creates a renderer, scene, etc.

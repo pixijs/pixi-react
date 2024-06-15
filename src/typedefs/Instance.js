@@ -1,13 +1,15 @@
-/** @typedef {import('pixi.js').Container} Container */
-
+/** @typedef {import('./ContainerElement.js').ContainerElement} ContainerElement */
 /** @typedef {import('./EventHandlers.js').EventHandlers} EventHandlers */
 /** @typedef {import('./InstanceState.js').InstanceState} InstanceState */
 
 /**
  * @typedef {object} BaseInstance
  * @property {InstanceState} [__pixireact]
+ * @property {boolean} [autoRemovedBeforeAppend]
+ * @property {ContainerElement | ContainerElement[]} [children]
+ * @property {(...args: any[]) => any} [draw]
  */
 
-/** @typedef {{ [key: string]: any } & Container & BaseInstance} Instance */
+/** @typedef {ContainerElement & BaseInstance} Instance */
 
 export const Instance = {};

@@ -42,7 +42,6 @@ export function createInstance(type, props, root)
     } = props;
 
     const instance = prepareInstance(new PixiComponent(pixiProps), {
-        children,
         root,
         type,
     });

@@ -1,5 +1,3 @@
-/** @typedef {import('pixi.js').Container} Container */
-
 /** @typedef {import('./EventHandlers.js').EventHandlers} EventHandlers */
 /** @typedef {import('./Instance.js').Instance} Instance */
 

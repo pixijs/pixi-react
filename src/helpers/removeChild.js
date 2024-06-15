@@ -1,6 +1,5 @@
 import { log } from './log.js';
 
-/** @typedef {import('pixi.js').Container} Container */
 /** @typedef {import('../typedefs/Instance.js').Instance} Instance */
 
 /**

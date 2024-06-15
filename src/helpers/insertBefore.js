@@ -1,7 +1,6 @@
 import { invariant } from './invariant.js';
 import { log } from './log.js';
 
-/** @typedef {import('pixi.js').Container} Container */
 /** @typedef {import('../typedefs/Instance.js').Instance} Instance */
 
 /**
@@ -15,16 +14,12 @@ export function insertBefore(parentInstance, childInstance, beforeChildInstance)
 
     invariant(childInstance === beforeChildInstance, 'Cannot insert node before itself');
 
-    const { component: parentComponent } = parentInstance;
-    const { component: childComponent } = childInstance;
-    const { component: beforeChildComponent } = beforeChildInstance;
-
-    if (parentComponent.children.indexOf(childComponent) === -1)
+    if (parentInstance.children.indexOf(childInstance) === -1)
     {
         parentInstance.removeChild(childInstance);
     }
 
-    const index = parentComponent.getChildIndex(beforeChildComponent);
+    const index = parentInstance.getChildIndex(beforeChildInstance);
 
-    parentInstance.addChild(childInstance, index);
+    parentInstance.addChildAt(childInstance, index);
 }

@@ -3,6 +3,7 @@ import { createInstance } from './createInstance.js';
 import { removeChild } from './removeChild.js';
 
 /** @typedef {import('../typedefs/HostConfig.js').HostConfig} HostConfig */
+/** @typedef {import('../typedefs/Instance.js').Instance} Instance */
 
 /**
  * @param {HostConfig['instance']} instance
@@ -18,14 +19,16 @@ export function switchInstance(
     fiber,
 )
 {
-    const parent = instance.parent;
+    const parent = instance.__pixireact?.parent;
 
     if (!parent)
     {
         return;
     }
 
-    const newInstance = createInstance(type, newProps, instance.root);
+    /** @type {Instance} */
+    const root = /** @type {*} */ (instance.__pixireact?.root);
+    const newInstance = createInstance(type, newProps, root);
 
     if (!instance.autoRemovedBeforeAppend)
     {

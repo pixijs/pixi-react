@@ -23,9 +23,9 @@ const DEFAULTS_CONTAINERS = new Map();
  */
 export function applyProps(instance, data)
 {
-    const localState = instance.__reactpixi;
+    const localState = instance.__pixireact;
     const {
-        __reactpixi,
+        __pixireact,
         ...instanceProps
     } = instance;
 
@@ -38,10 +38,13 @@ export function applyProps(instance, data)
     {
         const change = changes[changeIndex];
 
-        let key = change[0];
+        /** @type {keyof Instance} */
+        let key = /** @type {*} */ (change[0]);
         let value = change[1];
         const isEvent = change[2];
-        const keys = change[3];
+
+        /** @type {(keyof Instance)[]} */
+        const keys = /** @type {*} */ (change[3]);
 
         /** @type {Instance} */
         let currentInstance = /** @type {*} */ (instance);
@@ -55,8 +58,7 @@ export function applyProps(instance, data)
         // Resolve dashed props
         if (keys.length)
         {
-            targetProp = keys.reduce((accumulator, key) =>
-                accumulator[key], currentInstance);
+            targetProp = keys.reduce((accumulator, key) => accumulator[key], currentInstance);
 
             // If the target is atomic, it forces us to switch the root
             if (!(targetProp && targetProp.set))
@@ -121,7 +123,14 @@ export function applyProps(instance, data)
         }
         else
         {
-            currentInstance[key] = value;
+            const prototype = Object.getPrototypeOf(currentInstance);
+            const propertyDescriptor = Object.getOwnPropertyDescriptor(prototype, key);
+
+            if (typeof propertyDescriptor === 'undefined' || propertyDescriptor.set)
+            {
+                // @ts-expect-error The key is cast to any property of Container, including read-only properties. The check above prevents us from setting read-only properties, but TS doesn't understand it. 🤷🏻‍♂️
+                currentInstance[key] = value;
+            }
         }
 
         changeIndex += 1;

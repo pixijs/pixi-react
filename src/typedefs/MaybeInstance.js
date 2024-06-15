@@ -1,4 +1,5 @@
 /** @typedef {import('./Instance.js').Instance} Instance */
+/** @typedef {import('./InstanceState.js').InstanceState} InstanceState */
 
-/** @typedef {Omit<Instance, '__pixireact'> & object} MaybeInstance */
+/** @typedef {import('./PartialBy.js').PartialBy<Instance, '__pixireact'>} MaybeInstance */
 export const MaybeInstance = {};

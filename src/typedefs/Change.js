@@ -6,4 +6,4 @@
  *  keys: string[],
  * ]} Change
  */
-export const Change = {};
+export {};

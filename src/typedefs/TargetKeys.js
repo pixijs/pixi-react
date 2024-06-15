@@ -10,4 +10,4 @@
  *  | 'HTMLText'
  * } TargetKeys
  */
-export const TargetKeys = {};
+export {};

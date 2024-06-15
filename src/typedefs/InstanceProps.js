@@ -6,4 +6,4 @@
  */
 
 /** @typedef {{ [key: string]: unknown } & BaseInstanceProps} InstanceProps */
-export const InstanceProps = {};
+export {};

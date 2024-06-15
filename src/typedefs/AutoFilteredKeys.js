@@ -9,4 +9,4 @@
  *          : never;
  * }[keyof PixiType]} AutoFilteredKeys
  */
-export const AutoFilteredKeys = {};
+export {};

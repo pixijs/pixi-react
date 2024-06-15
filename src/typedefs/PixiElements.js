@@ -12,4 +12,4 @@
  *  ];
  * }} PixiElements
  */
-export const PixiElements = {};
+export {};

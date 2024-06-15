@@ -1,4 +1,5 @@
 import { isEqual } from './compare.js';
+import { gentleCloneProps } from './gentleCloneProps.js';
 
 /** @typedef {import('../typedefs/Change.js').Change} Change */
 /** @typedef {import('../typedefs/DiffSet.js').DiffSet} DiffSet */
@@ -19,18 +20,8 @@ export function diffProps(
     remove = false,
 )
 {
-    const {
-        children: newChildren,
-        key: newKey,
-        ref: newRef,
-        ...newPropsRest
-    } = newProps;
-    const {
-        children: oldChildren,
-        key: oldKey,
-        ref: oldRef,
-        ...oldPropsRest
-    } = oldProps;
+    const newPropsRest = gentleCloneProps(newProps);
+    const oldPropsRest = gentleCloneProps(oldProps);
 
     const entries = Object.entries(newPropsRest);
 

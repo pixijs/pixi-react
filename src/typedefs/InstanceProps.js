@@ -1,8 +1,14 @@
-/** @typedef {import('./Instance.js').Instance} Instance */
+/** @typedef {import('pixi.js').Graphics} Graphics */
+
+/** @typedef {import('./ContainerElement.js').ContainerElement} ContainerElement */
+/** @typedef {import('./InstanceState.js').InstanceState} InstanceState */
+
 /**
  * @typedef {object} BaseInstanceProps
- * @property {any} [children]
- * @property {(...args: any[]) => any} [draw]
+ * @property {InstanceState} [__pixireact]
+ * @property {boolean} [autoRemovedBeforeAppend]
+ * @property {ContainerElement | ContainerElement[]} [children]
+ * @property {(graphics: Graphics) => void} [draw]
  */
 
 /** @typedef {{ [key: string]: unknown } & BaseInstanceProps} InstanceProps */

@@ -1,6 +1,7 @@
 import { applyProps } from './applyProps.js';
 import { catalogue } from './catalogue.js';
 import { convertStringToPascalCase } from './convertStringToPascalCase.js';
+import { gentleCloneProps } from './gentleCloneProps.js';
 import { log } from './log.js';
 import { prepareInstance } from './prepareInstance.js';
 
@@ -29,17 +30,7 @@ export function createInstance(type, props, root)
         throw new Error(`${name} is not part of the PIXI namespace! Did you forget to extend?`);
     }
 
-    const {
-        // react props
-        children,
-        key,
-        ref,
-
-        // @pixi/react props
-        draw,
-
-        ...pixiProps
-    } = props;
+    const pixiProps = gentleCloneProps(props);
 
     const instance = prepareInstance(new PixiComponent(pixiProps), {
         root,

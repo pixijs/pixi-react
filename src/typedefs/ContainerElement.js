@@ -2,4 +2,4 @@
 /** @typedef {import('react').ReactElement} ReactElement */
 
 /** @typedef {Container & ReactElement} ContainerElement */
-export {};
+export const ContainerElement = {};

@@ -7,4 +7,4 @@
  * @template {new (...args: any[]) => any} T
  * @typedef {ConstructorWithOneParam<T>} ConstructorParams
  */
-export {};
+export const ConstructorParams = {};

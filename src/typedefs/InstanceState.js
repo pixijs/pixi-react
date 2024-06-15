@@ -10,4 +10,4 @@
  * @property {Instance} root
  * @property {string} type
  */
-export {};
+export const InstanceState = {};

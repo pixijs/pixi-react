@@ -1,3 +1,4 @@
+import { EventPropNames } from '../constants/EventPropNames.js';
 import { isEqual } from './compare.js';
 import { gentleCloneProps } from './gentleCloneProps.js';
 
@@ -57,8 +58,13 @@ export function diffProps(
             return;
         }
 
-        //   // Collect handlers and bail out
-        //   if (/^on(Pointer|Click|DoubleClick|ContextMenu|Wheel)/.test(key)) return changes.push([key, value, true, []])
+        // Collect handlers and bail out
+        if (key in EventPropNames)
+        {
+            changes.push([key, value, true, []]);
+
+            return;
+        }
 
         // Split dashed props
         /** @type {string[]} */

@@ -15,8 +15,6 @@ export function prepareInstance(component, state = {})
     const instance = /** @type {*} */ (component);
 
     instance.__pixireact = {
-        eventCount: 0,
-        handlers: {},
         parent: null,
         /** @type {Instance} */
         root: /** @type {*} */ (null),

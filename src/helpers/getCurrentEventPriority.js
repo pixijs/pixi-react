@@ -1,7 +1,7 @@
 import {
+    ContinuousEventPriority,
     DefaultEventPriority,
-    // DiscreteEventPriority,
-    // ContinuousEventPriority,
+    DiscreteEventPriority,
 } from 'react-reconciler/constants.js';
 import { log } from './log.js';
 
@@ -9,29 +9,32 @@ export function getCurrentEventPriority()
 {
     log('info', 'lifecycle::getCurrentEventPriority');
 
-    return DefaultEventPriority;
-    // if (typeof window === 'undefined') {
-    //     return DefaultEventPriority;
-    // }
+    const globalScope = (typeof self !== 'undefined' && self) || (typeof window !== 'undefined' && window);
 
-    // const name = window?.event?.type;
+    if (!globalScope)
+    {
+        return DefaultEventPriority;
+    }
 
-    // switch (name) {
-    //     case 'click':
-    //     case 'contextmenu':
-    //     case 'dblclick':
-    //     case 'pointercancel':
-    //     case 'pointerdown':
-    //     case 'pointerup':
-    //         return DiscreteEventPriority;
-    //     case 'pointermove':
-    //     case 'pointerout':
-    //     case 'pointerover':
-    //     case 'pointerenter':
-    //     case 'pointerleave':
-    //     case 'wheel':
-    //         return ContinuousEventPriority;
-    //     default:
-    //         return DefaultEventPriority;
-    // }
+    const name = globalScope.event?.type;
+
+    switch (name)
+    {
+        case 'click':
+        case 'contextmenu':
+        case 'dblclick':
+        case 'pointercancel':
+        case 'pointerdown':
+        case 'pointerup':
+            return DiscreteEventPriority;
+        case 'pointermove':
+        case 'pointerout':
+        case 'pointerover':
+        case 'pointerenter':
+        case 'pointerleave':
+        case 'wheel':
+            return ContinuousEventPriority;
+        default:
+            return DefaultEventPriority;
+    }
 }

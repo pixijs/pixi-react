@@ -1,10 +1,7 @@
-/** @typedef {import('pixi.js').FederatedPointerEvent} FederatedPointerEvent */
-/** @typedef {import('pixi.js').FederatedWheelEvent} FederatedWheelEvent */
 /** @typedef {import('pixi.js').Graphics} Graphics */
 
 /** @typedef {import('./ContainerElement.js').ContainerElement} ContainerElement */
-/** @typedef {import('../constants/EventPropNames.js').EventPropNames} EventPropNames */
-/** @typedef {import('./InstanceProps.js').InstanceProps} InstanceProps */
+/** @typedef {import('./EventHandlers.js').EventHandlers} EventHandlers */
 /** @typedef {import('./InstanceState.js').InstanceState} InstanceState */
 
 /**
@@ -13,12 +10,6 @@
  * @property {boolean} [autoRemovedBeforeAppend]
  * @property {ContainerElement | ContainerElement[]} [children]
  * @property {(graphics: Graphics) => void} [draw]
- */
-
-/**
- * @typedef {{
- * 	[K in EventPropNames]?: (event: FederatedPointerEvent | FederatedWheelEvent) => void
- * }} EventHandlers
  */
 
 /** @typedef {ContainerElement & BaseInstance & EventHandlers} Instance */

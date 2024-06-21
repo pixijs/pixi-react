@@ -2,11 +2,7 @@
 
 /**
  * @typedef {{
- *      [K in keyof PixiType]: K extends import('./TargetKeys.js').TargetKeys
- *          ? PixiType[K] extends new (...args: any) => any
- *          ? K
- *              : never
- *          : never;
+ *  [K in keyof PixiType]: PixiType[K] extends new (...args: any) => any ? K : never
  * }[keyof PixiType]} AutoFilteredKeys
  */
 export const AutoFilteredKeys = {};

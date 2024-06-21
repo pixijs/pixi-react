@@ -36,13 +36,15 @@ import { NameOverrides } from '../constants/NameOverrides.js';
  * @typedef {T extends undefined ? never : Omit<T, 'children'>} OmitChildren
  */
 
+/** @typedef {{ draw?: (graphics: Graphics) => void }} DrawCallback */
+
 /**
  * @typedef {{
  *  [K in AutoFilteredKeys as K extends keyof typeof NameOverrides ? typeof NameOverrides[K] : Uncapitalize<K>]:
  *      & PropsWithChildren<OmitChildren<PixiOptionsType<ConstructorParams<PixiType[K]>>>>
  *      & PropsWithRef<{ ref?: RefObject<InstanceType<PixiType[K]>> }>
  *      & EventHandlers
- *      & { draw?: (graphics: Graphics) => void }
+ *      & DrawCallback
  * }} PixiElementsImpl
  */
 export const PixiElementsImpl = {};

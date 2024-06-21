@@ -2,7 +2,10 @@ import {
     Container,
     Graphics,
 } from 'pixi.js';
-import { EventPropNames } from '../constants/EventPropNames.js';
+import {
+    PixiToReactEventPropNames,
+    ReactToPixiEventPropNames,
+} from '../constants/EventPropNames.js';
 import { diffProps } from './diffProps.js';
 import { isDiffSet } from './isDiffSet.js';
 import { log } from './log.js';
@@ -17,8 +20,6 @@ import { log } from './log.js';
 
 const DEFAULT = '__default';
 const DEFAULTS_CONTAINERS = new Map();
-const EVENT_PROP_NAMES = Object.keys(EventPropNames);
-const PIXI_EVENT_PROP_NAMES = Object.values(EventPropNames);
 
 /** @type {Record<string, boolean>} */
 const PIXI_EVENT_PROP_NAME_ERROR_HAS_BEEN_SHOWN = {};
@@ -46,17 +47,15 @@ export function applyProps(instance, data)
     {
         const change = changes[changeIndex];
         let hasError = false;
-
-        let key = change[0];
+        let key = /** @type {keyof Instance} */ (change[0]);
         let value = change[1];
         const isEvent = change[2];
 
         /** @type {(keyof Instance)[]} */
         const keys = /** @type {*} */ (change[3]);
 
-        /** @type {Instance} */
-        let currentInstance = /** @type {*} */ (instance);
-        let targetProp = /** @type {*} */ (currentInstance[key]);
+        let currentInstance = instance;
+        let targetProp = currentInstance[key];
 
         if ((key === 'draw') && (typeof value === 'function'))
         {
@@ -71,18 +70,17 @@ export function applyProps(instance, data)
             }
         }
 
-        const pixiEventPropNameIndex = PIXI_EVENT_PROP_NAMES.findIndex((propName) => propName === key);
-
-        if (pixiEventPropNameIndex !== -1)
+        if (key in PixiToReactEventPropNames)
         {
+            const typedKey = /** @type {keyof PixiToReactEventPropNames} */ (key);
+
             hasError = true;
+
             if (!PIXI_EVENT_PROP_NAME_ERROR_HAS_BEEN_SHOWN[key])
             {
                 PIXI_EVENT_PROP_NAME_ERROR_HAS_BEEN_SHOWN[key] = true;
 
-                const SUGGESTED_PROP_NAME = EVENT_PROP_NAMES[pixiEventPropNameIndex];
-
-                log('warn', `Event names must be pascal case; instead of \`${key}\`, you probably want \`${SUGGESTED_PROP_NAME}\`.`);
+                log('warn', `Event names must be pascal case; instead of \`${key}\`, you probably want \`${PixiToReactEventPropNames[typedKey]}\`.`);
             }
         }
 
@@ -140,10 +138,8 @@ export function applyProps(instance, data)
             // Deal with events ...
             if (isEvent && localState)
             {
-                /** @type {keyof EventPropNames} */
-                const typedKey = /** @type {*} */ (key);
-
-                const pixiKey = EventPropNames[typedKey];
+                const typedKey = /** @type {keyof ReactToPixiEventPropNames} */ (key);
+                const pixiKey = ReactToPixiEventPropNames[typedKey];
 
                 if (value)
                 {

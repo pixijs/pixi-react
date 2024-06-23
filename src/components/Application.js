@@ -1,12 +1,15 @@
 import {
     createElement,
+    forwardRef,
     useEffect,
+    useImperativeHandle,
     useRef,
+    useState,
 } from 'react';
 import { render } from '../render.js';
 
-/** @typedef {import('pixi.js').Application} Application */
-/** @typedef {import('pixi.js').ApplicationOptions} ApplicationOptions */
+/** @typedef {import('pixi.js').Application} PixiApplication */
+/** @typedef {import('pixi.js').ApplicationOptions} PixiApplicationOptions */
 /**
  * @template T
  * @typedef {import('react').PropsWithChildren<T>} PropsWithChildren
@@ -30,16 +33,16 @@ import { render } from '../render.js';
  * @property {string} [className] CSS classes to be applied to the Pixi Application's canvas element.
  */
 
-/** @typedef {PropsWithChildren<Partial<OmitChildren<ApplicationOptions>>>} ApplicationPropsWithChildren */
-/** @typedef {PropsWithRef<{ ref?: RefObject<Application> }>} ApplicationPropsWithRef */
-/** @typedef {BaseApplicationProps & ApplicationPropsWithChildren & ApplicationPropsWithRef} ApplicationProps */
+/** @typedef {PropsWithChildren<OmitChildren<Partial<PixiApplicationOptions>>>} ApplicationPropsWithChildren */
+/** @typedef {PropsWithRef<{ ref?: RefObject<PixiApplication> }>} ApplicationPropsWithRef */
+/** @typedef {BaseApplicationProps & ApplicationPropsWithChildren} ApplicationProps */
 
 /**
  * Creates a React root and renders a Pixi application.
  *
- * @param {ApplicationProps} props All props.
+ * @type {import('react').ForwardRefRenderFunction<PixiApplication, ApplicationProps>}
  */
-export function Application(props)
+export const ApplicationFunction = (props, forwardedRef) =>
 {
     const {
         children,
@@ -50,18 +53,29 @@ export function Application(props)
     /** @type {RefObject<HTMLCanvasElement>} */
     const canvasRef = useRef(null);
 
+    const [application, setApplication] = /** @type {PixiApplication} */ useState();
+
+    useImperativeHandle(forwardedRef, () => /** @type {PixiApplication} */ /** @type {*} */ (application));
+
     useEffect(() =>
     {
         const canvasElement = canvasRef.current;
 
         if (canvasElement)
         {
-            render(children, canvasElement, applicationProps);
+            setApplication(render(children, canvasElement, applicationProps));
         }
-    }, []);
+    }, [
+        applicationProps,
+        children,
+    ]);
 
     return createElement('canvas', {
         ref: canvasRef,
         className,
     });
-}
+};
+
+ApplicationFunction.displayName = 'Application';
+
+export const Application = forwardRef(ApplicationFunction);

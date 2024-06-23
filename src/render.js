@@ -17,8 +17,28 @@ const context = createContext(null);
 const roots = new Map();
 
 /** @typedef {import('pixi.js').ApplicationOptions} ApplicationOptions */
-/** @typedef {import('react').PropsWithChildren} PropsWithChildren */
-/** @typedef {Partial<PropsWithChildren & ApplicationOptions>} RenderProps */
+
+/**
+ * @template T
+ * @typedef {import('react').PropsWithChildren<T>} PropsWithChildren
+ */
+/**
+ * @template T
+ * @typedef {import('react').PropsWithRef<T>} PropsWithRef
+ */
+/**
+ * @template T
+ * @typedef {import('react').RefObject<T>} RefObject
+ */
+
+/**
+ * @template T
+ * @typedef {import('./typedefs/OmitChildren.js').OmitChildren<T>} OmitChildren
+ */
+
+/** @typedef {PropsWithChildren<OmitChildren<ApplicationOptions>>} ApplicationPropsWithChildren */
+/** @typedef {PropsWithRef<{ ref: RefObject<Application> }>} ApplicationPropsWithRef */
+/** @typedef {Partial<ApplicationPropsWithChildren & ApplicationPropsWithRef & ApplicationOptions>} RenderProps */
 
 /**
  * This renders an element to a canvas, creates a renderer, scene, etc.
@@ -131,5 +151,5 @@ export function render(
         () => undefined
     );
 
-    return state;
+    return state.app;
 }

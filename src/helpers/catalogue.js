@@ -1,3 +1,5 @@
+import { Application } from 'pixi.js';
+
 /** @typedef {import('../typedefs/Instance.js').Instance} Instance */
 
 /**
@@ -7,4 +9,7 @@
  *   }
  * }}
  */
-export const catalogue = {};
+export const catalogue = {
+    // @ts-expect-error
+    Application,
+};

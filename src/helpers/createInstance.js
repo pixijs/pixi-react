@@ -33,7 +33,19 @@ export function createInstance(type, props, root)
 
     const pixiProps = gentleCloneProps(props, PixiReactIgnoredProps);
 
-    const instance = prepareInstance(new PixiComponent(pixiProps), {
+    let component;
+
+    if (name === 'Application')
+    {
+        component = new PixiComponent();
+        component.init(pixiProps);
+    }
+    else
+    {
+        component = new PixiComponent(pixiProps);
+    }
+
+    const instance = prepareInstance(component, {
         root,
         type,
     });

@@ -26,14 +26,14 @@ import { NameOverrides } from '../constants/NameOverrides.js';
 
 /**
  * @template T
- * @typedef {{
- *  [K in keyof T]: T[K] extends (...args: any) => any ? never : T[K]
- * }} PixiOptionsType
+ * @typedef {import('./OmitChildren.js').OmitChildren<T>} OmitChildren
  */
 
 /**
  * @template T
- * @typedef {T extends undefined ? never : Omit<T, 'children'>} OmitChildren
+ * @typedef {{
+ *  [K in keyof T]: T[K] extends (...args: any) => any ? never : T[K]
+ * }} PixiOptionsType
  */
 
 /** @typedef {{ draw?: (graphics: Graphics) => void }} DrawCallback */

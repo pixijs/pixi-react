@@ -105,12 +105,23 @@ export const ApplicationFunction = (props, forwardedRef) =>
 
     useEffect(() =>
     {
-        if (attachToDevTools && applicationRef.current)
+        const application = applicationRef.current;
+
+        if (attachToDevTools && application)
         {
             const globalScope = /** @type {*} */ (globalThis);
 
-            globalScope.__PIXI_APP__ = applicationRef.current;
-            globalScope.__PIXI_DEVTOOLS__ = applicationRef.current;
+            globalScope.__PIXI_APP__ = application;
+
+            import('pixi.js').then((pixi) =>
+            {
+                globalScope.__PIXI_DEVTOOLS__ = {
+                    app: application,
+                    pixi,
+                    renderer: application.renderer,
+                    stage: application.stage,
+                };
+            });
         }
     }, [attachToDevTools]);
 

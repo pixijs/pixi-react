@@ -24,6 +24,13 @@ import { useApp } from './useApp.js';
  */
 
 /**
+ * @typedef {object} TickState
+ * @property {Function} callback
+ * @property {*} context
+ * @property {number | undefined} priority
+ */
+
+/**
  * Attaches a callback to the application's Ticker.
  *
  * @template T
@@ -56,29 +63,45 @@ function useTick(options, enabled = true)
 
     invariant(typeof callback === 'function', '`useTick` needs a callback function.');
 
-    /** @type {MutableRefObject<Function>} */
-    const callbackRef = useRef(callback);
+    /** @type {MutableRefObject<TickState>} */
+    const stateRef = useRef({
+        callback,
+        context,
+        priority,
+    });
 
     useEffect(() =>
     {
-        callbackRef.current = callback;
-    }, [callback]);
+        stateRef.current.callback = callback;
+        stateRef.current.context = context;
+        stateRef.current.priority = priority;
+    }, [
+        callback,
+        context,
+        priority,
+    ]);
 
     // eslint-disable-next-line consistent-return
     useEffect(() =>
     {
         if (enabled)
         {
-            /** @type {TickerCallback<*>} */
-            const tick = (ticker) => callbackRef.current.apply(ticker);
+            const {
+                callback: currentCallback,
+                context: currentContext,
+                priority: currentPriority,
+            } = stateRef.current;
 
-            app.ticker.add(tick, context, priority);
+            /** @type {TickerCallback<*>} */
+            const tick = (ticker) => currentCallback.apply(currentContext, ticker);
+
+            app.ticker.add(tick, currentContext, currentPriority);
 
             return () =>
             {
                 if (app.ticker)
                 {
-                    app.ticker.remove(tick, context);
+                    app.ticker.remove(tick, currentContext);
                 }
             };
         }

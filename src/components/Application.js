@@ -34,6 +34,7 @@ import { render } from '../render.js';
 
 /**
  * @typedef {object} BaseApplicationProps
+ * @property {boolean} [attachToDevTools] Whether this application chould be attached to the dev tools. NOTE: This should only be enabled on one application at a time.
  * @property {string} [className] CSS classes to be applied to the Pixi Application's canvas element.
  */
 
@@ -51,6 +52,7 @@ import { render } from '../render.js';
 export const ApplicationFunction = (props, forwardedRef) =>
 {
     const {
+        attachToDevTools,
         children,
         className,
         resizeTo,
@@ -100,6 +102,14 @@ export const ApplicationFunction = (props, forwardedRef) =>
         children,
         resizeTo,
     ]);
+
+    useEffect(() =>
+    {
+        if (attachToDevTools && applicationRef.current)
+        {
+            /** @type {*} */ (globalThis).__PIXI_APP__ = applicationRef.current;
+        }
+    }, [attachToDevTools]);
 
     return createElement('canvas', {
         ref: canvasRef,

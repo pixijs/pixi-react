@@ -1,9 +1,10 @@
 /** @typedef {import('./Instance.js').Instance} Instance */
+/** @typedef {import('../typedefs/NamespacedPixiElementsImpl.js').NamespacedPixiElementsImpl} NamespacedPixiElementsImpl */
 /** @typedef {import('../typedefs/PixiElementsImpl.js').PixiElementsImpl} PixiElementsImpl */
 
 /**
  * @typedef {object} HostConfig
- * @property {keyof PixiElementsImpl} type
+ * @property {keyof PixiElementsImpl | keyof NamespacedPixiElementsImpl} type
  * @property {Record<string, unknown>} props
  * @property {Instance} container
  * @property {Instance} instance

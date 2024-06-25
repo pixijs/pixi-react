@@ -3,6 +3,7 @@ export { extend } from './helpers/extend.js';
 export { useApp } from './hooks/useApp.js';
 export { useAsset } from './hooks/useAsset.js';
 export { useExtend } from './hooks/useExtend.js';
+export { useTick } from './hooks/useTick.js';
 export { render } from './render.js';
 
 // This is stupid. `global.js` doesn't exist, but `global.ts` does. This is a

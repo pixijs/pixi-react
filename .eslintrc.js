@@ -1,6 +1,9 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
     extends: ['@pixi/eslint-config'],
+    globals: {
+        globalThis: 'readonly',
+    },
     parserOptions: {
         project: './tsconfig.eslint.json',
         ecmaVersion: 2020,

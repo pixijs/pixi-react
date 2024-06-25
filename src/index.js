@@ -1,5 +1,6 @@
 export { Application } from './components/Application.js';
 export { extend } from './helpers/extend.js';
+export { useApp } from './hooks/useApp.js';
 export { useAsset } from './hooks/useAsset.js';
 export { useExtend } from './hooks/useExtend.js';
 export { render } from './render.js';

@@ -107,7 +107,10 @@ export const ApplicationFunction = (props, forwardedRef) =>
     {
         if (attachToDevTools && applicationRef.current)
         {
-            /** @type {*} */ (globalThis).__PIXI_APP__ = applicationRef.current;
+            const globalScope = /** @type {*} */ (globalThis);
+
+            globalScope.__PIXI_APP__ = applicationRef.current;
+            globalScope.__PIXI_DEVTOOLS__ = applicationRef.current;
         }
     }, [attachToDevTools]);
 

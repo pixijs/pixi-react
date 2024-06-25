@@ -1,17 +1,10 @@
 import { Application } from 'pixi.js';
-import {
-    createContext,
-    createElement,
-} from 'react';
+import { createElement } from 'react';
 import { ConcurrentRoot } from 'react-reconciler/constants.js';
+import { ContextProvider } from './components/Context.js';
 import { prepareInstance } from './helpers/prepareInstance.js';
 import { reconciler } from './reconciler.js';
 import { store as globalStore } from './store.js';
-
-/**
- * Internal Pixi.js state.
- */
-const context = createContext(null);
 
 // We store roots here since we can render to multiple canvases
 const roots = new Map();
@@ -73,26 +66,13 @@ export function render(
     // Get store and init/update Pixi.js state
     const store = roots.get(target);
     let root = store?.root;
-    const state = Object.assign((store?.state ?? {}), componentProps);
-
-    // // If size isn't explicitly defined, we can assume it from the canvas
-    // if (!size) {
-    // 	size = {
-    // 		height: canvas.parentElement?.clientHeight || 0,
-    // 		width: canvas.parentElement?.clientWidth || 0,
-    // 	}
-    // }
-
-    // Get store and init/update Pixi.js state
-    // const store = roots.get(canvas)
-    // let root = store?.root
-    // const state = Object.assign(store?.state || {}, { ...props, size })
+    const state = Object.assign((store?.state ?? {}), options);
 
     // Initiate root
     if (!root)
     {
         /** @type {Partial<ApplicationOptions>} */
-        const applicationProps = {};
+        const applicationProps = { ...componentProps };
 
         if (canvas)
         {
@@ -128,16 +108,6 @@ export function render(
             console.error,
             null,
         );
-
-        // // Keep track of elements subscribed to the render loop with useFrame
-        // state.subscribed = []
-        // state.subscribe = ref => {
-        // 	if (state.subscribed.includes(ref)) {
-        // 		state.subscribed = state.subscribed.filter(callback => callback !== ref)
-        // 	} else {
-        // 		state.subscribed.push(ref)
-        // 	}
-        // }
     }
 
     // Update root
@@ -145,7 +115,7 @@ export function render(
 
     // Update fiber and expose Pixi.js state to children
     reconciler.updateContainer(
-        createElement(context.Provider, { value: state }, component),
+        createElement(ContextProvider, { value: state }, component),
         root,
         null,
         () => undefined

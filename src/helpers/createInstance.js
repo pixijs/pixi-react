@@ -20,8 +20,10 @@ export function createInstance(type, props, root)
 {
     log('info', 'lifecycle::createInstance');
 
-    // Convert lowercase primitive to PascalCase
-    const name = convertStringToPascalCase(type);
+    const parsedType = type.startsWith('pixi') ? type.replace(/^pixi([A-Z])/, (_fullMatch, firstCharacter) => firstCharacter.toLowerCase()) : type;
+
+    // Convert lowercase component name to PascalCase
+    const name = convertStringToPascalCase(parsedType);
 
     // Get the class from an imported Pixi.js namespace
     const PixiComponent = /** @type {new (...args: any[]) => any} */ (catalogue[name]);
@@ -47,7 +49,7 @@ export function createInstance(type, props, root)
 
     const instance = prepareInstance(component, {
         root,
-        type,
+        type: parsedType,
     });
 
     // Set initial props

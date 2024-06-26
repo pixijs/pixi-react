@@ -24,8 +24,9 @@ import { useApp } from './useApp.js';
  */
 
 /**
+ * @template T
  * @typedef {object} TickState
- * @property {Function} callback
+ * @property {TickerCallback<T>} callback
  * @property {*} context
  * @property {number | undefined} priority
  */
@@ -41,7 +42,6 @@ function useTick(options, enabled = true)
 {
     const app = useApp();
 
-    /** @type {Function} */
     let callback;
 
     /** @type {*} */
@@ -63,7 +63,7 @@ function useTick(options, enabled = true)
 
     invariant(typeof callback === 'function', '`useTick` needs a callback function.');
 
-    /** @type {MutableRefObject<TickState>} */
+    /** @type {MutableRefObject<TickState<T>>} */
     const stateRef = useRef({
         callback,
         context,
@@ -72,6 +72,10 @@ function useTick(options, enabled = true)
 
     useEffect(() =>
     {
+        if (app.ticker)
+        {
+            app.ticker.remove(stateRef.current.callback, stateRef.current.context);
+        }
         stateRef.current.callback = callback;
         stateRef.current.context = context;
         stateRef.current.priority = priority;
@@ -92,16 +96,13 @@ function useTick(options, enabled = true)
                 priority: currentPriority,
             } = stateRef.current;
 
-            /** @type {TickerCallback<*>} */
-            const tick = (ticker) => currentCallback.apply(currentContext, ticker);
-
-            app.ticker.add(tick, currentContext, currentPriority);
+            app.ticker.add(currentCallback, currentContext, currentPriority);
 
             return () =>
             {
                 if (app.ticker)
                 {
-                    app.ticker.remove(tick, currentContext);
+                    app.ticker.remove(currentCallback, currentContext);
                 }
             };
         }

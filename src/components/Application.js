@@ -1,13 +1,14 @@
+import { Application as PixiApplication } from 'pixi.js';
 import {
     createElement,
     forwardRef,
-    useEffect,
+    useCallback,
     useImperativeHandle,
     useRef,
 } from 'react';
-import { render } from '../render.js';
+import { createRoot } from '../core/createRoot.js';
+import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect.js';
 
-/** @typedef {import('pixi.js').Application} PixiApplication */
 /** @typedef {import('pixi.js').ApplicationOptions} PixiApplicationOptions */
 /**
  * @template T
@@ -27,6 +28,8 @@ import { render } from '../render.js';
  * @typedef {import('../typedefs/OmitChildren.js').OmitChildren<T>} OmitChildren
  */
 
+/** @typedef {import('../typedefs/Root.js').Root} Root */
+
 /**
  * @template T
  * @typedef {T extends undefined ? never : Omit<T, 'resizeTo'>} OmitResizeTo
@@ -36,6 +39,7 @@ import { render } from '../render.js';
  * @typedef {object} BaseApplicationProps
  * @property {boolean} [attachToDevTools] Whether this application chould be attached to the dev tools. NOTE: This should only be enabled on one application at a time.
  * @property {string} [className] CSS classes to be applied to the Pixi Application's canvas element.
+ * @property {(app: PixiApplication) => void} [onInit] Callback to be fired when the application finishes initializing.
  */
 
 /** @typedef {{ resizeTo?: HTMLElement | Window | RefObject<HTMLElement> }} ResizeToProp */
@@ -55,6 +59,7 @@ export const ApplicationFunction = (props, forwardedRef) =>
         attachToDevTools,
         children,
         className,
+        onInit,
         resizeTo,
         ...applicationProps
     } = props;
@@ -62,48 +67,83 @@ export const ApplicationFunction = (props, forwardedRef) =>
     /** @type {MutableRefObject<PixiApplication | null>} */
     const applicationRef = useRef(null);
 
-    /** @type {RefObject<HTMLCanvasElement>} */
+    /** @type {MutableRefObject<HTMLCanvasElement | null>} */
     const canvasRef = useRef(null);
 
-    useImperativeHandle(forwardedRef, () => /** @type {PixiApplication} */ /** @type {*} */ (applicationRef.current));
+    /** @type {MutableRefObject<Root | null>} */
+    const rootRef = useRef(null);
 
-    useEffect(() =>
+    useImperativeHandle(forwardedRef, () =>
     {
-        const canvasElement = canvasRef.current;
+        /** @type {PixiApplication} */
+        const typedApplication = /** @type {*} */ (applicationRef.current);
 
-        if (canvasElement)
+        return typedApplication;
+    });
+
+    const updateResizeTo = useCallback(() =>
+    {
+        const application = applicationRef.current;
+
+        if (application)
         {
-            /** @type {ApplicationProps} */
-            const parsedApplicationProps = {
-                ...applicationProps,
-            };
-
             if (resizeTo)
             {
                 if ('current' in resizeTo)
                 {
                     if (resizeTo.current instanceof HTMLElement)
                     {
-                        parsedApplicationProps.resizeTo = resizeTo.current;
+                        application.resizeTo = resizeTo.current;
                     }
                 }
                 else
                 {
-                    (
-                        parsedApplicationProps.resizeTo = resizeTo
-                    );
+                    application.resizeTo = resizeTo;
                 }
             }
+            else
+            {
+                // @ts-expect-error Actually `resizeTo` is optional, the types are just wrong. 🤷🏻‍♂️
+                delete application.resizeTo;
+            }
+        }
+    }, [resizeTo]);
 
-            applicationRef.current = render(children, canvasElement, parsedApplicationProps);
+    /** @type {(app: PixiApplication) => void} */
+    const handleInit = useCallback((application) =>
+    {
+        applicationRef.current = application;
+        updateResizeTo();
+        onInit?.(application);
+    }, [onInit]);
+
+    useIsomorphicLayoutEffect(() =>
+    {
+        /** @type {HTMLCanvasElement} */
+        const canvasElement = /** @type {*} */ (canvasRef.current);
+
+        if (canvasElement)
+        {
+            if (!rootRef.current)
+            {
+                rootRef.current = createRoot(canvasElement, {}, handleInit);
+            }
+
+            rootRef.current.render(children, applicationProps);
         }
     }, [
         applicationProps,
         children,
+        handleInit,
         resizeTo,
     ]);
 
-    useEffect(() =>
+    useIsomorphicLayoutEffect(() =>
+    {
+        updateResizeTo();
+    }, [resizeTo]);
+
+    useIsomorphicLayoutEffect(() =>
     {
         const application = applicationRef.current;
 

@@ -5,7 +5,9 @@
 /**
  * @typedef {object} InternalState
  * @property {Application} app
- * @property {boolean} debug
+ * @property {HTMLCanvasElement} [canvas]
+ * @property {boolean} [debug]
+ * @property {boolean} [isInitialising]
  * @property {Instance} rootContainer
  */
 export const InternalState = {};

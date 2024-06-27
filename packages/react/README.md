@@ -37,19 +37,19 @@ Pixi React is an open-source, production-ready library to render high performant
 
 ### Quick start
 
-If you want to start a new React project from scratch, we recommend [Create React App](https://github.com/facebook/create-react-app).
+If you want to start a new React project from scratch, we recommend [Vite](https://vitejs.dev/).
 To add to an existing React application, just install the dependencies:
 
-#### Start New React Project "my-app" with Create React App:
+#### Start New React Project "my-app" with Create React Vite:
 ```bash
-# for typescript add "--template typescript"
-npx create-react-app my-app
+# for typescript use "--template react-ts"
+npx create-vite@latest --template react my-app
 cd my-app
 ```
 
 #### Install Pixi React Dependencies:
 ```bash
-npm install pixi.js @pixi/react
+npm install pixi.js@7 @pixi/react@7
 ```
 
 #### Usage:

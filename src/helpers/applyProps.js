@@ -8,6 +8,7 @@ import {
 } from '../constants/EventPropNames.js';
 import { diffProps } from './diffProps.js';
 import { isDiffSet } from './isDiffSet.js';
+import { isReadOnlyProperty } from './isReadOnlyProperty.js';
 import { log } from './log.js';
 
 /** @typedef {import('pixi.js').FederatedPointerEvent} FederatedPointerEvent */
@@ -150,16 +151,10 @@ export function applyProps(instance, data)
                     delete currentInstance[pixiKey];
                 }
             }
-            else
+            else if (!isReadOnlyProperty(currentInstance, key))
             {
-                const prototype = Object.getPrototypeOf(currentInstance);
-                const propertyDescriptor = Object.getOwnPropertyDescriptor(prototype, key);
-
-                if (typeof propertyDescriptor === 'undefined' || propertyDescriptor.set)
-                {
-                    // @ts-expect-error The key is cast to any property of Container, including read-only properties. The check above prevents us from setting read-only properties, but TS doesn't understand it. 🤷🏻‍♂️
-                    currentInstance[key] = value;
-                }
+                // @ts-expect-error The key is cast to any property of Container, including read-only properties. The check above prevents us from setting read-only properties, but TS doesn't understand it. 🤷🏻‍♂️
+                currentInstance[key] = value;
             }
         }
 

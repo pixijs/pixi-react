@@ -49,7 +49,7 @@ cd my-app
 
 #### Install Pixi React Dependencies:
 ```bash
-npm install pixi.js @pixi/react
+npm install pixi.js@7 @pixi/react@7
 ```
 
 #### Usage:

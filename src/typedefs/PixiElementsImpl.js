@@ -35,7 +35,7 @@ import { NameOverrides } from '../constants/NameOverrides.js';
  *  [K in keyof T]: T[K] extends (...args: any) => any ? never : T[K]
  * }} PixiOptionsType
  */
-
+/** @typedef {{ key?: import('react').Key }} KeyProp */
 /** @typedef {{ draw?: (graphics: Graphics) => void }} DrawCallback */
 
 /**
@@ -45,6 +45,7 @@ import { NameOverrides } from '../constants/NameOverrides.js';
  *      & PropsWithRef<{ ref?: RefObject<InstanceType<PixiType[K]>> }>
  *      & EventHandlers
  *      & DrawCallback
+ *      & KeyProp
  * }} PixiElementsImpl
  */
 export const PixiElementsImpl = {};

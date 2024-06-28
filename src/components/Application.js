@@ -104,7 +104,7 @@ export const ApplicationFunction = (props, forwardedRef) =>
             else
             {
                 // @ts-expect-error Actually `resizeTo` is optional, the types are just wrong. 🤷🏻‍♂️
-                delete application.resizeTo;
+                application.resizeTo = undefined;
             }
         }
     }, [resizeTo]);

@@ -2,6 +2,7 @@
   "extends": "./tsconfig.json",
   "files": [
     ".eslintrc.js",
+    "release.config.js",
     "wallaby.js",
   ]
 }

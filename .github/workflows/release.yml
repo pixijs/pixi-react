@@ -1,0 +1,30 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - 'alpha'
+      - 'beta'
+      - 'main'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Project
+        uses: ./.github/actions/setup
+
+      - name: Build Project
+        run: npm run build
+
+      - name: Semantic Release
+        run: npx semantic-release

@@ -5,7 +5,7 @@ on:
     branches:
       - 'alpha'
       - 'beta'
-      - 'main'
+      - 'master'
 
 permissions:
   contents: write

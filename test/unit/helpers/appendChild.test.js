@@ -4,7 +4,7 @@ import {
     expect,
     it,
 } from 'vitest';
-import { appendChild } from '../../../lib/helpers/appendChild.js';
+import { appendChild } from '../../../src/helpers/appendChild.js';
 import { prepareInstance } from '../../../src/helpers/prepareInstance.js';
 
 describe('appendChild', () =>
@@ -32,7 +32,7 @@ describe('appendChild', () =>
 
         expect(parentInstance.children).to.be.empty;
 
-        const result = appendChild(parentInstance);
+        const result = appendChild(parentInstance, null);
 
         expect(parentInstance.children).to.be.empty;
         expect(result).to.be.undefined;

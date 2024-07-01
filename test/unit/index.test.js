@@ -3,7 +3,7 @@ import {
     expect,
     it,
 } from 'vitest';
-import * as PixiReact from '../../lib/index.js';
+import * as PixiReact from '../../src/index.js';
 
 describe('exports', () =>
 {
@@ -47,7 +47,6 @@ describe('exports', () =>
         expect(PixiReact).to.have.all.keys(
             'Application',
             'createRoot',
-            'default',
             'extend',
             'useApp',
             'useAsset',

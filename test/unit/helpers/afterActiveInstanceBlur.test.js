@@ -3,7 +3,7 @@ import {
     expect,
     it,
 } from 'vitest';
-import { afterActiveInstanceBlur } from '../../../lib/helpers/afterActiveInstanceBlur.js';
+import { afterActiveInstanceBlur } from '../../../src/helpers/afterActiveInstanceBlur.js';
 
 describe('afterActiveInstanceBlur', () =>
 {

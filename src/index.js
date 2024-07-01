@@ -13,4 +13,4 @@ export { useTick } from './hooks/useTick.js';
 // If you or someone you know has been hurt by Typescript, or knows how to fix
 // this, you may be entitled to benefits. Please call 'tel:555-555-5555' in your
 // browser devtools.
-export * from './global.js';
+export * from './global.ts';

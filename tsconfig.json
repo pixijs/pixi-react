@@ -30,6 +30,8 @@
     "types"
   ],
   "include": [
-    "src"
+    "src",
+    "test",
+    "vitest.config.js"
   ]
 }

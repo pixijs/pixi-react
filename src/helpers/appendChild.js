@@ -6,7 +6,7 @@ import { log } from './log.js';
  * Adds elements to our application.
  *
  * @param {Instance} parentInstance
- * @param {Instance} childInstance
+ * @param {Instance | null} childInstance
  */
 export function appendChild(parentInstance, childInstance)
 {

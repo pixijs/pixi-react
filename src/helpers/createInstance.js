@@ -6,9 +6,9 @@ import { gentleCloneProps } from './gentleCloneProps.js';
 import { log } from './log.js';
 import { prepareInstance } from './prepareInstance.js';
 
-/** @typedef {import('../typedefs/HostConfig.js').HostConfig} HostConfig */
-/** @typedef {import('../typedefs/Instance.js').Instance} Instance */
-/** @typedef {import('../typedefs/InstanceProps.js').InstanceProps} InstanceProps */
+/** @typedef {import('../typedefs/HostConfig.ts').HostConfig} HostConfig */
+/** @typedef {import('../typedefs/Instance.ts').Instance} Instance */
+/** @typedef {import('../typedefs/InstanceProps.ts').InstanceProps} InstanceProps */
 
 /**
  * @param {HostConfig['type']} type

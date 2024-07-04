@@ -25,8 +25,8 @@ import { removeChild } from '../helpers/removeChild.js';
 import { resetAfterCommit } from '../helpers/resetAfterCommit.js';
 import { shouldSetTextContent } from '../helpers/shouldSetTextContent.js';
 
-/** @typedef {import('../typedefs/HostConfig.js').HostConfig} HostConfig */
-/** @typedef {import('../typedefs/Instance.js').Instance} Instance */
+/** @typedef {import('../typedefs/HostConfig.ts').HostConfig} HostConfig */
+/** @typedef {import('../typedefs/Instance.ts').Instance} Instance */
 
 /**
  * @type {Reconciler.HostConfig<

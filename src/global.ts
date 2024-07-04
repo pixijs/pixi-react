@@ -1,10 +1,10 @@
-import type { NamespacedPixiElementsImpl } from './typedefs/NamespacedPixiElementsImpl';
-import type { PixiElementsImpl } from './typedefs/PixiElementsImpl';
+import type { NamespacedPixiElementsImpl } from './typedefs/NamespacedPixiElementsImpl.ts';
+import type { PixiElementsImpl } from './typedefs/PixiElementsImpl.ts';
 
 declare global
 {
     // eslint-disable-next-line @typescript-eslint/no-namespace
-    namespace React.JSX
+    namespace JSX
     {
         interface IntrinsicElements extends PixiElementsImpl, NamespacedPixiElementsImpl {}
     }

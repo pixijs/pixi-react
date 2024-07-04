@@ -1,6 +1,6 @@
 import { log } from './log.js';
 
-/** @typedef {import('../typedefs/Instance.js').Instance} Instance */
+/** @typedef {import('../typedefs/Instance.ts').Instance} Instance */
 
 /**
  * Adds elements to our application.

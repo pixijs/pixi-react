@@ -10,8 +10,8 @@ import { roots } from './roots.js';
 
 /** @typedef {import('pixi.js').ApplicationOptions} ApplicationOptions */
 
-/** @typedef {import('../typedefs/InternalState.js').InternalState} InternalState */
-/** @typedef {import('../typedefs/Root.js').Root} Root */
+/** @typedef {import('../typedefs/InternalState.ts').InternalState} InternalState */
+/** @typedef {import('../typedefs/Root.ts').Root} Root */
 
 /**
  * Creates a new root for a Pixi React app.

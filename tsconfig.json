@@ -31,8 +31,6 @@
     "types"
   ],
   "include": [
-    "src",
-    "test",
-    "vitest.config.js"
+    "src/**/*"
   ]
 }

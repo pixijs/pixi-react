@@ -25,10 +25,10 @@ import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect.js
 
 /**
  * @template T
- * @typedef {import('../typedefs/OmitChildren.js').OmitChildren<T>} OmitChildren
+ * @typedef {import('../typedefs/OmitChildren.ts').OmitChildren<T>} OmitChildren
  */
 
-/** @typedef {import('../typedefs/Root.js').Root} Root */
+/** @typedef {import('../typedefs/Root.ts').Root} Root */
 
 /**
  * @template T

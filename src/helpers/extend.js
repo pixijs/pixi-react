@@ -1,6 +1,6 @@
 import { catalogue } from './catalogue.js';
 
-/** @typedef {import('../typedefs/AutoFilteredKeys.js').AutoFilteredKeys} AutoFilteredKeys */
+/** @typedef {import('../typedefs/AutoFilteredKeys.ts').AutoFilteredKeys} AutoFilteredKeys */
 
 /**
  * Expose Pixi.js components for use in JSX.

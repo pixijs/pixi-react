@@ -14,10 +14,10 @@ import { log } from './log.js';
 /** @typedef {import('pixi.js').FederatedPointerEvent} FederatedPointerEvent */
 /** @typedef {import('pixi.js').FederatedWheelEvent} FederatedWheelEvent */
 
-/** @typedef {import('../typedefs/DiffSet.js').DiffSet} DiffSet */
-/** @typedef {import('../typedefs/Instance.js').Instance} Instance */
-/** @typedef {import('../typedefs/InstanceProps.js').InstanceProps} InstanceProps */
-/** @typedef {import('../typedefs/MaybeInstance.js').MaybeInstance} MaybeInstance */
+/** @typedef {import('../typedefs/DiffSet.ts').DiffSet} DiffSet */
+/** @typedef {import('../typedefs/Instance.ts').Instance} Instance */
+/** @typedef {import('../typedefs/InstanceProps.ts').InstanceProps} InstanceProps */
+/** @typedef {import('../typedefs/MaybeInstance.ts').MaybeInstance} MaybeInstance */
 
 const DEFAULT = '__default';
 const DEFAULTS_CONTAINERS = new Map();
@@ -40,7 +40,18 @@ export function applyProps(instance, data)
     } = instance;
 
     /** @type {DiffSet} */
-    const { changes } = /** @type {*} */ (isDiffSet(data) ? data : diffProps(data, instanceProps));
+    let typedData;
+
+    if (isDiffSet(data))
+    {
+        typedData = /** @type {DiffSet} */ (data);
+    }
+    else
+    {
+        typedData = diffProps(/** @type {InstanceProps} */ (data), instanceProps);
+    }
+
+    const { changes } = typedData;
 
     let changeIndex = 0;
 

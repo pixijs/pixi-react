@@ -4,5 +4,9 @@
     ".eslintrc.js",
     "release.config.js",
     "wallaby.js",
+  ],
+  "include": [
+    "test/**/*",
+    "vitest.config.js"
   ]
 }

@@ -2,10 +2,10 @@ import { applyProps } from '../helpers/applyProps.js';
 import { log } from '../helpers/log.js';
 import { switchInstance } from './switchInstance.js';
 
-/** @typedef {import('../typedefs/DiffSet.js').DiffSet} DiffSet */
-/** @typedef {import('../typedefs/HostConfig.js').HostConfig} HostConfig */
-/** @typedef {import('../typedefs/Instance.js').Instance} Instance */
-/** @typedef {import('../typedefs/InstanceProps.js').InstanceProps} InstanceProps */
+/** @typedef {import('../typedefs/DiffSet.ts').DiffSet} DiffSet */
+/** @typedef {import('../typedefs/HostConfig.ts').HostConfig} HostConfig */
+/** @typedef {import('../typedefs/Instance.ts').Instance} Instance */
+/** @typedef {import('../typedefs/InstanceProps.ts').InstanceProps} InstanceProps */
 
 /**
  * @param {Instance} instance The instance to mutate.

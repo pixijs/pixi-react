@@ -6,7 +6,7 @@ import { createContext } from 'react';
  * @typedef {import('react').Context<T>} Context
  */
 
-/** @typedef {import('../typedefs/InternalState.js').InternalState} InternalState */
+/** @typedef {import('../typedefs/InternalState.ts').InternalState} InternalState */
 
 export const Context = /** @type {Context<InternalState | null>} */ (createContext(null));
 

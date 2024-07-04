@@ -1,7 +1,7 @@
 /** @typedef {import('pixi.js').Container} Container */
-/** @typedef {import('../typedefs/ContainerElement.js').ContainerElement} ContainerElement */
-/** @typedef {import('../typedefs/Instance.js').Instance} Instance */
-/** @typedef {import('../typedefs/InstanceState.js').InstanceState} InstanceState */
+/** @typedef {import('../typedefs/ContainerElement.ts').ContainerElement} ContainerElement */
+/** @typedef {import('../typedefs/Instance.ts').Instance} Instance */
+/** @typedef {import('../typedefs/InstanceState.ts').InstanceState} InstanceState */
 
 /**
  * Create the instance with the provided sate and attach the component to it.

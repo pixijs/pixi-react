@@ -1,7 +1,7 @@
 import { invariant } from './invariant.js';
 import { log } from './log.js';
 
-/** @typedef {import('../typedefs/Instance.js').Instance} Instance */
+/** @typedef {import('../typedefs/Instance.ts').Instance} Instance */
 
 /**
  * @param {Instance} parentInstance

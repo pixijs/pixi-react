@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { Context } from '../components/Context.js';
 import { invariant } from '../helpers/invariant';
 
-/** @typedef {import('../typedefs/InternalState.js').InternalState} InternalState */
+/** @typedef {import('../typedefs/InternalState.ts').InternalState} InternalState */
 
 export function useApp()
 {

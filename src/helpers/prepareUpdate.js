@@ -1,12 +1,12 @@
 import { diffProps } from './diffProps.js';
 import { log } from './log.js';
 
-/** @typedef {import('../typedefs/DiffSet.js').DiffSet} DiffSet */
-/** @typedef {import('../typedefs/InstanceProps.js').InstanceProps} InstanceProps */
+/** @typedef {import('../typedefs/DiffSet.ts').DiffSet} DiffSet */
+/** @typedef {import('../typedefs/InstanceProps.ts').InstanceProps} InstanceProps */
 
 /**
  *
- * @param {import('../typedefs/Instance.js').Instance} _instance Unused.
+ * @param {import('../typedefs/Instance.ts').Instance} _instance Unused.
  * @param {string} _type Unused.
  * @param {InstanceProps} oldProps Old props.
  * @param {InstanceProps} newProps New props.

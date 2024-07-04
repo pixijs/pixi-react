@@ -1,6 +1,6 @@
 import { log } from './log.js';
 
-/** @typedef {import('../typedefs/Instance.js').Instance} Instance */
+/** @typedef {import('../typedefs/Instance.ts').Instance} Instance */
 
 /**
  * Removes elements from our scene and disposes of them.

@@ -5,9 +5,9 @@ import {
 import { isEqual } from './compare.js';
 import { gentleCloneProps } from './gentleCloneProps.js';
 
-/** @typedef {import('../typedefs/Change.js').Change} Change */
-/** @typedef {import('../typedefs/DiffSet.js').DiffSet} DiffSet */
-/** @typedef {import('../typedefs/InstanceProps.js').InstanceProps} InstanceProps */
+/** @typedef {import('../typedefs/Change.ts').Change} Change */
+/** @typedef {import('../typedefs/DiffSet.ts').DiffSet} DiffSet */
+/** @typedef {import('../typedefs/InstanceProps.ts').InstanceProps} InstanceProps */
 
 const DEFAULT = '__default';
 

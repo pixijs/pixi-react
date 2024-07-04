@@ -2,8 +2,8 @@ import { appendChild } from './appendChild.js';
 import { createInstance } from './createInstance.js';
 import { removeChild } from './removeChild.js';
 
-/** @typedef {import('../typedefs/HostConfig.js').HostConfig} HostConfig */
-/** @typedef {import('../typedefs/Instance.js').Instance} Instance */
+/** @typedef {import('../typedefs/HostConfig.ts').HostConfig} HostConfig */
+/** @typedef {import('../typedefs/Instance.ts').Instance} Instance */
 
 /**
  * @param {HostConfig['instance']} instance

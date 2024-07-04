@@ -4,7 +4,7 @@
  */
 export function isDiffSet(input)
 {
-    const inputAsDiffSet = /** @type {import('../typedefs/DiffSet.js').DiffSet} */ input;
+    const inputAsDiffSet = /** @type {import('../typedefs/DiffSet.ts').DiffSet} */ input;
 
     if (!inputAsDiffSet)
     {

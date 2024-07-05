@@ -28,7 +28,7 @@ Pixi React is an open-source, production-ready library to render high performant
 
 ## Features
 
-- React 17 and 18 support
+- React v17 and v18 support
 - PixiJS v8 support
 
 ## Getting Started
@@ -60,7 +60,7 @@ extend({
   Graphics,
 })
 
-export function MyComponent() {
+const MyComponent = () => {
   const drawCallback = useCallback(graphics => {
     graphics.clear()
     graphics.setFillStyle({ color: 'red' })
@@ -74,6 +74,258 @@ export function MyComponent() {
         <graphics draw={drawCallback} />
       </container>
     </Application>
+  )
+}
+```
+
+## Docs
+
+### `extend`
+
+One of the most important concepts to understand with Pixi React v7 is `extend`. Normally, Pixi React would have to import all pf Pixi.js to be able to provide the full library as JSX components. Instead, we use an internal catalogue of components populated by the `extend` API. This allows you to define exactly which parts of Pixi.js you want to import, keeping your bundle sizes small.
+
+To allow Pixi React to use a Pixi.js component, pass it to the `extend` API:
+
+```jsx
+import { Container } from 'pixi.js'
+import { extend } from '@pixi/react'
+
+extend({ Container })
+
+const MyComponent = () => (
+  <container />
+)
+```
+
+> [!CAUTION]
+> Attempting to use components that haven't been passed to the `extend` API **will result in errors**.
+
+### Components
+
+#### `<Application>`
+
+The `<Application>` component is used to wrap your Pixi React app. The `<Application>` component can take [all props that can be set](https://pixijs.download/release/docs/app.ApplicationOptions.html) on [`PIXI.Application`](https://pixijs.download/release/docs/app.Application.html).
+
+##### Example Usage
+
+```jsx
+import { Application } from '@pixi/react'
+
+const MyComponent = () => {
+  return (
+    <Application
+      autoStart
+      sharedTicker />
+  )
+}
+```
+
+> [!NOTE]
+>
+> The `<Application>` component supports the `resizeTo` property, with some additional functionality: it can accept a React `ref`. As an example:
+>
+> ```jsx
+> import { Application } from '@pixi/react'
+> import { useRef } from 'react'
+>
+> const MyComponent = () => {
+>   const parentRef = useRef(null)
+>
+>   return (
+>     <div ref={parentRef}>
+>       <Application resizeTo={parentRef} />
+>     </div>
+>   )
+> }
+> ```
+
+#### All Other Components
+
+All other Pixi React components should be included in your IDE's intellisense/autocomplete once you've installed/imported `@pixi/react`. If it's exported from Pixi.js, it's supported as a component in Pixi React. The only difference is that Pixi React components will always start with lowercase characters. Here's a selection of commonly used components:
+
+```jsx
+<container />
+<graphics />
+<sprite />
+<animatedSprite />
+<text />
+<htmlText />
+<filter />
+```
+
+The only component with custom functionality is the `graphics` component. To avoid having to use a `ref` to draw to the [`Graphics`](https://pixijs.download/release/docs/scene.Graphics.html) context, the `<graphics>` component has an additional `draw` property. `draw` takes a callback which receives the `Graphics` context, allowing drawing to happen on every tick.
+
+```jsx
+const MyComponent = () => {
+  return (
+    <graphics draw={graphics => {
+      graphics.clear()
+      graphics.setFillStyle({ color: 'red' })
+      graphics.rect(0, 0, 100, 100)
+      graphics.fill()
+    }} />
+  )
+}
+```
+
+> [!IMPORTANT]
+> You may run into some components that conflict with others. For example, the `<text>` component often conflicts with the `<text>` component that's built-in to React for use in SVGs. To address this issue, all components are available with the `pixi` prefix. For example, you can replace the `<text>` component with the `<pixiText>` component. It will have the same functionality with none of the collisions.
+
+### Hooks
+
+#### `useApp`
+
+`useApp` allows access to the parent `PIXI.Application` created by the `<Application>` component. This hook _will not work_ outside of an `<Application>` component. Additionally, the parent application is passed via [React Context](https://react.dev/reference/react/useContext). This means `useApp` will only work appropriately in _child components_, and not directly in the component that contains the `<Application>` component.
+
+For example, the following example `useApp` **will not** be able to access the parent application:
+
+```jsx
+import {
+  Application,
+  useApp,
+} from '@pixi/react'
+
+const ParentComponent = () => {
+  // This will cause an invariant violation.
+  const app = useApp()
+
+  return (
+    <Application />
+  )
+}
+```
+
+Here's a working example where `useApp` **will** be able to access the parent application:
+
+```jsx
+import {
+  Application,
+  useApp,
+} from '@pixi/react'
+
+const ChildComponent = () => {
+  const app = useApp()
+
+  console.log(app)
+
+  return (
+    <container />
+  )
+}
+
+const ParentComponent = () => (
+  <Application>
+    <ChildComponent />
+  </Application>
+)
+```
+
+#### `useAsset`
+
+The `useAsset` hook wraps the functionality of [Pixi's Asset loader](https://pixijs.download/release/docs/assets.Assets.html) and cache into a convenient React hook. The hook can accept either an [`UnresolvedAsset`](https://pixijs.download/release/docs/assets.html#UnresolvedAsset) or a url.
+
+```jsx
+import { useAsset } from '@pixi/react'
+
+const MyComponent = () => {
+  const bunnyTexture = useAsset('https://pixijs.com/assets/bunny.png')
+  const bunnyTexture2 = useAsset({
+    alias: 'bunny',
+    src: 'https://pixijs.com/assets/bunny.png',
+  })
+
+  return (
+    <container>
+      <sprite texture={bunnyTexture}>
+      <sprite texture={bunnyTexture2}>
+    </container>
+  )
+}
+```
+
+##### Tracking Progress
+
+`useAsset` can optionally accept a [`ProgressCallback`](https://pixijs.download/release/docs/assets.html#ProgressCallback) as a second argument. This callback will be called by the asset loader as the asset is loaded.
+
+```jsx
+const bunnyTexture = useAsset('https://pixijs.com/assets/bunny.png', progress => {
+  console.log(`We have achieved ${progress * 100}% bunny.`)
+})
+```
+
+> [!TIP]
+> The `useAsset` hook also supports [React Suspense](https://react.dev/reference/react/Suspense)! If given a suspense boundary, it's possible to prevent components from rendering until they've finished loading their assets:
+> ```jsx
+> import {
+> 	Application,
+> 	useAsset,
+> } from '@pixi/react'
+>
+> import { Suspense } from 'react';
+>
+> const BunnySprite = () => {
+> 	const bunnyTexture = useAsset('https://pixijs.com/assets/bunny.png')
+>
+> 	return (
+> 		<sprite texture={bunnyTexture} />
+> 	)
+> }
+>
+> const LoadingText = () => (
+> 	<pixiText text={'Loading...'} />
+> )
+>
+> const MyApp = () => (
+> 	<Application>
+> 		<Suspense fallback={<LoadingText />}>
+> 			<BunnySprite />
+> 		</Suspense>
+> 	</Application>
+> )
+> ```
+
+#### `useExtend`
+
+`useExtend` allows the `extend` API to be used as a React hook. Additionally, the `useExtend` hook is memoised, while the `extend` function is not.
+
+```jsx
+import { Container } from 'pixi.js'
+import { useExtend } from '@pixi/react'
+
+const MyComponent = () => {
+  useExtend({ Container })
+
+  return (
+    <container />
+  )
+}
+```
+
+#### `useTick`
+
+`useTick` allows a callback to be attached to the [`Ticker`](https://pixijs.download/release/docs/ticker.Ticker.html) on the parent application.
+
+```jsx
+import { useTick } from '@pixi/react'
+
+const MyComponent = () => {
+  useTick(() => console.log('This will be logged on every tick'))
+}
+```
+
+`useTick` optionally takes a boolean as a second argument. Setting this boolean to `false` will cause the callback to be disabled until the argument is set to true again.
+
+```jsx
+import { useState } from 'react'
+import { useTick } from '@pixi/react'
+
+const MyComponent = () => {
+  const [isEnabled, setIsEnabled] = useState(false)
+
+  useTick(() => console.log('This will be logged on every tick as long as `isEnabled` is `true`'), )
+
+  return (
+    <sprite onClick={setIsEnabled(previousState => !previousState)}>
   )
 }
 ```

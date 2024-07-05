@@ -19,7 +19,7 @@
   <img src="https://img.shields.io/npm/dm/@pixi/react" alt="downloads" />
   <img src="https://img.shields.io/circleci/project/github/pixijs/pixi-react/master.svg" alt="ci tests" />
   <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="license" />
-  <img src="https://img.shields.io/badge/react-latest-ff69b4.svg" alt="react version" />
+  <img src="https://img.shields.io/badge/react-v18.0.0-ff69b4.svg" alt="react version" />
 </p>
 
 <br />

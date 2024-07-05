@@ -25,3 +25,55 @@
 <br />
 
 Pixi React is an open-source, production-ready library to render high performant PixiJS applications in React.
+
+## Features
+
+- React 17 and 18 support
+- PixiJS v8 support
+
+## Getting Started
+
+### Quick Start
+
+If you want to start a new React project from scratch then we recommend [Create React App](https://github.com/facebook/create-react-app), but Pixi React should work with any React application (Remix, Next.js, etc).
+To add to an existing React application, just install the dependencies:
+
+#### Install Pixi React Dependencies
+```bash
+npm install pixi.js@^8.2.1 @pixi/react
+```
+
+#### Pixie React Usage
+```jsx
+import {
+  Application,
+  extend,
+} from '@pixi/react'
+import {
+  Container,
+  Graphics,
+} from 'pixi.js'
+import { useCallback } from 'react'
+
+extend({
+  Container,
+  Graphics,
+})
+
+export function MyComponent() {
+  const drawCallback = useCallback(graphics => {
+    graphics.clear()
+    graphics.setFillStyle({ color: 'red' })
+    graphics.rect(0, 0, 100, 100)
+    graphics.fill()
+  }, [])
+
+  return (
+    <Application>
+      <container x={100} y={100}>
+        <graphics draw={drawCallback} />
+      </container>
+    </Application>
+  )
+}
+```

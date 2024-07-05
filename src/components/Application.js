@@ -115,6 +115,23 @@ export const ApplicationFunction = (props, forwardedRef) =>
         applicationRef.current = application;
         updateResizeTo();
         onInit?.(application);
+
+        if (attachToDevTools)
+        {
+            const globalScope = /** @type {*} */ (globalThis);
+
+            globalScope.__PIXI_APP__ = application;
+
+            import('pixi.js').then((pixi) =>
+            {
+                globalScope.__PIXI_DEVTOOLS__ = {
+                    app: application,
+                    pixi,
+                    renderer: application.renderer,
+                    stage: application.stage,
+                };
+            });
+        }
     }, [onInit]);
 
     useIsomorphicLayoutEffect(() =>
@@ -142,28 +159,6 @@ export const ApplicationFunction = (props, forwardedRef) =>
     {
         updateResizeTo();
     }, [resizeTo]);
-
-    useIsomorphicLayoutEffect(() =>
-    {
-        const application = applicationRef.current;
-
-        if (attachToDevTools && application)
-        {
-            const globalScope = /** @type {*} */ (globalThis);
-
-            globalScope.__PIXI_APP__ = application;
-
-            import('pixi.js').then((pixi) =>
-            {
-                globalScope.__PIXI_DEVTOOLS__ = {
-                    app: application,
-                    pixi,
-                    renderer: application.renderer,
-                    stage: application.stage,
-                };
-            });
-        }
-    }, [attachToDevTools]);
 
     return createElement('canvas', {
         ref: canvasRef,

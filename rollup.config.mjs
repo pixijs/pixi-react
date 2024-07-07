@@ -3,6 +3,7 @@ import esbuild from 'rollup-plugin-esbuild';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import repo from './package.json' assert { type: 'json' };
 import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
 
 const moduleTarget = 'es2020';
@@ -84,6 +85,7 @@ export default {
             preferBuiltins: false,
         }),
         commonjs(),
+        json(),
     ],
     external,
     treeshake: false

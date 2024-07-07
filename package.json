@@ -64,6 +64,7 @@
   "devDependencies": {
     "@pixi/extension-scripts": "^2.4.1",
     "@rollup/plugin-commonjs": "^25.0.8",
+    "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@types/eslint": "^8.56.10",
     "@types/react": "^18.3.2",

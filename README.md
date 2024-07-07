@@ -139,7 +139,7 @@ const MyComponent = () => {
 > }
 > ```
 
-#### All Other Components
+#### Pixi Components
 
 All other Pixi React components should be included in your IDE's intellisense/autocomplete once you've installed/imported `@pixi/react`. If it's exported from Pixi.js, it's supported as a component in Pixi React. The only difference is that Pixi React components will always start with lowercase characters. Here's a selection of commonly used components:
 
@@ -150,10 +150,11 @@ All other Pixi React components should be included in your IDE's intellisense/au
 <animatedSprite />
 <text />
 <htmlText />
-<filter />
 ```
 
-The only component with custom functionality is the `graphics` component. To avoid having to use a `ref` to draw to the [`Graphics`](https://pixijs.download/release/docs/scene.Graphics.html) context, the `<graphics>` component has an additional `draw` property. `draw` takes a callback which receives the `Graphics` context, allowing drawing to happen on every tick.
+##### `<graphics>`
+
+The `graphics` component has a special `draw` property. `draw` takes a callback which receives the `Graphics` context, allowing drawing to happen on every tick.
 
 ```jsx
 const MyComponent = () => {
@@ -169,7 +170,41 @@ const MyComponent = () => {
 ```
 
 > [!IMPORTANT]
-> You may run into some components that conflict with others. For example, the `<text>` component often conflicts with the `<text>` component that's built-in to React for use in SVGs. To address this issue, all components are available with the `pixi` prefix. For example, you can replace the `<text>` component with the `<pixiText>` component. It will have the same functionality with none of the collisions.
+> You may run into some components that conflict with others. For example, the `<text>` component conflicts with the `<text>` component that's built-in to React for use in SVGs. To address this issue, all components are available with the `pixi` prefix. For example, you can replace the `<text>` component with the `<pixiText>` component. It will have the same functionality with none of the collisions.
+
+#### Custom Components
+
+Pixi React supports custom components via the `extend` API. For example, you can create a `<viewport>` component using the [`pixi-viewport`](https://github.com/davidfig/pixi-viewport) library:
+
+```jsx
+import { extend } from '@pixi/react'
+import { Viewport } from 'pixi-viewport'
+
+extend({ viewport })
+
+const MyComponent = () => {
+  <viewport>
+    <container />
+  </viewport>
+}
+```
+
+##### For Typescript Users
+
+If you're using Typescript, this new `<viewport>` component will throw type errors. Pixi React exports a `PixiReactNode` type that can be used to solve this. You'll need to pass the `Viewport` into `PixiReactNode` and inject it into JSX:
+
+```ts
+import type { PixiReactNode } from '@pixi/react'
+import type { Viewport } from 'pixi-viewport'
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      viewport: PixiReactNode<typeof Viewport>;
+    }
+  }
+}
+```
 
 ### Hooks
 

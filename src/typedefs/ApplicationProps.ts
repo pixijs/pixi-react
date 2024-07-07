@@ -2,6 +2,7 @@ import type {
     Application,
     ApplicationOptions,
     TextStyle,
+    TextStyleOptions,
 } from 'pixi.js';
 import type {
     PropsWithChildren,
@@ -16,7 +17,7 @@ export interface BaseApplicationProps extends ApplicationOptions
     /** @description CSS classes to be applied to the Pixi Application's canvas element. */
     className?: string
     /** @description The default style to be applied to text nodes. */
-    defaultTextStyle?: TextStyle,
+    defaultTextStyle?: TextStyle | TextStyleOptions,
     /** @description Callback to be fired when the application finishes initializing. */
     onInit?: (app: Application) => void
 }

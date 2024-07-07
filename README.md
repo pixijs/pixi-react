@@ -120,24 +120,29 @@ const MyComponent = () => {
 }
 ```
 
+###### `defaultTextStyle`
+
+`defaultTextStyle` is a convenience property. Whatever is passed will automatically be assigned to Pixi.js's[`TextStyle.defaultTextStyle`](https://pixijs.download/release/docs/text.TextStyle.html#defaultTextStyle).
+
 > [!NOTE]
->
-> The `<Application>` component supports the `resizeTo` property, with some additional functionality: it can accept a React `ref`. As an example:
->
-> ```jsx
-> import { Application } from '@pixi/react'
-> import { useRef } from 'react'
->
-> const MyComponent = () => {
->   const parentRef = useRef(null)
->
->   return (
->     <div ref={parentRef}>
->       <Application resizeTo={parentRef} />
->     </div>
->   )
-> }
-> ```
+> This property **is not retroactive**. It will only apply to text components created after `defaultTextStyle` is set. Any text components created before setting `defaultTextStyle` will retain the base styles they had before `defaultTextStyle` was changed.
+
+###### `resizeTo`
+
+The `<Application>` component supports the `resizeTo` property, with some additional functionality: it can accept any HTML element **or** it can take a React `ref` directly.
+
+```jsx
+import { Application } from '@pixi/react'
+import { useRef } from 'react'
+const MyComponent = () => {
+  const parentRef = useRef(null)
+  return (
+    <div ref={parentRef}>
+      <Application resizeTo={parentRef} />
+    </div>
+  )
+}
+```
 
 #### Pixi Components
 

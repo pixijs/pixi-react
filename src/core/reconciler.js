@@ -17,6 +17,7 @@ import { getInstanceFromNode } from '../helpers/getInstanceFromNode.js';
 import { getInstanceFromScope } from '../helpers/getInstanceFromScope.js';
 import { getPublicInstance } from '../helpers/getPublicInstance.js';
 import { getRootHostContext } from '../helpers/getRootHostContext.js';
+import { hideInstance } from '../helpers/hideInstance.js';
 import { insertBefore } from '../helpers/insertBefore.js';
 import { prepareForCommit } from '../helpers/prepareForCommit.js';
 import { preparePortalMount } from '../helpers/preparePortalMount.js';
@@ -25,6 +26,7 @@ import { prepareUpdate } from '../helpers/prepareUpdate.js';
 import { removeChild } from '../helpers/removeChild.js';
 import { resetAfterCommit } from '../helpers/resetAfterCommit.js';
 import { shouldSetTextContent } from '../helpers/shouldSetTextContent.js';
+import { unhideInstance } from '../helpers/unhideInstance.js';
 
 /** @typedef {import('../typedefs/HostConfig.ts').HostConfig} HostConfig */
 /** @typedef {import('../typedefs/Instance.ts').Instance} Instance */
@@ -71,6 +73,7 @@ const reconcilerConfig = {
     getInstanceFromScope,
     getPublicInstance,
     getRootHostContext,
+    hideInstance,
     insertBefore,
     insertInContainerBefore: insertBefore,
     prepareForCommit,
@@ -82,6 +85,7 @@ const reconcilerConfig = {
     resetAfterCommit,
     scheduleTimeout: setTimeout,
     shouldSetTextContent,
+    unhideInstance,
 };
 
 const reconciler = Reconciler(reconcilerConfig);

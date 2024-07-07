@@ -1,4 +1,7 @@
-import { Application as PixiApplication } from 'pixi.js';
+import {
+    Application as PixiApplication,
+    TextStyle,
+} from 'pixi.js';
 import {
     createElement,
     forwardRef,
@@ -17,6 +20,8 @@ import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect.js
 /** @typedef {import('../typedefs/ApplicationProps.ts').ApplicationProps} ApplicationProps */
 /** @typedef {import('../typedefs/Root.ts').Root} Root */
 
+const originalDefaultTextStyle = { ...TextStyle.defaultTextStyle };
+
 /**
  * Creates a React root and renders a Pixi application.
  *
@@ -28,6 +33,7 @@ export const ApplicationFunction = (props, forwardedRef) =>
         attachToDevTools,
         children,
         className,
+        defaultTextStyle,
         onInit,
         resizeTo,
         ...applicationProps
@@ -128,6 +134,18 @@ export const ApplicationFunction = (props, forwardedRef) =>
     {
         updateResizeTo();
     }, [resizeTo]);
+
+    useIsomorphicLayoutEffect(() =>
+    {
+        if (defaultTextStyle)
+        {
+            Object.assign(TextStyle.defaultTextStyle, defaultTextStyle);
+        }
+        else
+        {
+            Object.assign(TextStyle.defaultTextStyle, originalDefaultTextStyle);
+        }
+    }, [defaultTextStyle]);
 
     return createElement('canvas', {
         ref: canvasRef,

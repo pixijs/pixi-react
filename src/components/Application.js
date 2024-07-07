@@ -6,7 +6,6 @@ import {
     createElement,
     forwardRef,
     useCallback,
-    useImperativeHandle,
     useRef,
 } from 'react';
 import { createRoot } from '../core/createRoot.js';
@@ -48,14 +47,6 @@ export const ApplicationFunction = (props, forwardedRef) =>
     /** @type {MutableRefObject<Root | null>} */
     const rootRef = useRef(null);
 
-    useImperativeHandle(forwardedRef, () =>
-    {
-        /** @type {PixiApplication} */
-        const typedApplication = /** @type {*} */ (applicationRef.current);
-
-        return typedApplication;
-    });
-
     const updateResizeTo = useCallback(() =>
     {
         const application = applicationRef.current;
@@ -87,6 +78,11 @@ export const ApplicationFunction = (props, forwardedRef) =>
     /** @type {(app: PixiApplication) => void} */
     const handleInit = useCallback((application) =>
     {
+        if (forwardedRef && ('current' in forwardedRef))
+        {
+            forwardedRef.current = application;
+        }
+
         applicationRef.current = application;
         updateResizeTo();
         onInit?.(application);

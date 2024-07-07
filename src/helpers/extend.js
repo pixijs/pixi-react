@@ -5,9 +5,7 @@ import { catalogue } from './catalogue.js';
 /**
  * Expose Pixi.js components for use in JSX.
  *
- * @param {{
- *  [K in AutoFilteredKeys]?: typeof import('pixi.js')[K]
- * }} objects The Pixi.js components to be exposed.
+ * @param {{ [key: string]: new (...args: any) => any }} objects Components to be exposed.
  */
 export function extend(objects)
 {

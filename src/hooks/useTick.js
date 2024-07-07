@@ -6,6 +6,7 @@ import { useApp } from './useApp.js';
  * @template T
  * @typedef {import('pixi.js').TickerCallback<T>} TickerCallback
  */
+
 /**
  * @template T
  * @typedef {import('../typedefs/TickCallbackOptions.ts').TickCallbackOptions<T>} TickCallbackOptions

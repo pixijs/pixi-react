@@ -9,49 +9,18 @@ import {
 import { createRoot } from '../core/createRoot.js';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect.js';
 
-/** @typedef {import('pixi.js').ApplicationOptions} PixiApplicationOptions */
 /**
  * @template T
  * @typedef {import('react').MutableRefObject<T>} MutableRefObject
  */
-/**
- * @template T
- * @typedef {import('react').PropsWithChildren<T>} PropsWithChildren
- */
-/**
- * @template T
- * @typedef {import('react').RefObject<T>} RefObject
- */
 
-/**
- * @template T
- * @typedef {import('../typedefs/OmitChildren.ts').OmitChildren<T>} OmitChildren
- */
-
+/** @typedef {import('../typedefs/ApplicationProps.ts').ApplicationProps} ApplicationProps */
 /** @typedef {import('../typedefs/Root.ts').Root} Root */
-
-/**
- * @template T
- * @typedef {T extends undefined ? never : Omit<T, 'resizeTo'>} OmitResizeTo
- */
-
-/**
- * @typedef {object} BaseApplicationProps
- * @property {boolean} [attachToDevTools] Whether this application chould be attached to the dev tools. NOTE: This should only be enabled on one application at a time.
- * @property {string} [className] CSS classes to be applied to the Pixi Application's canvas element.
- * @property {(app: PixiApplication) => void} [onInit] Callback to be fired when the application finishes initializing.
- */
-
-/** @typedef {{ resizeTo?: HTMLElement | Window | RefObject<HTMLElement> }} ResizeToProp */
-
-/** @typedef {PropsWithChildren<OmitChildren<Partial<PixiApplicationOptions>>>} ApplicationPropsWithChildren */
-/** @typedef {BaseApplicationProps & ApplicationPropsWithChildren} ApplicationProps */
-/** @typedef {BaseApplicationProps & OmitResizeTo<ApplicationPropsWithChildren> & ResizeToProp} ApplicationPropsWithResizeToRef */
 
 /**
  * Creates a React root and renders a Pixi application.
  *
- * @type {import('react').ForwardRefRenderFunction<PixiApplication, ApplicationPropsWithResizeToRef>}
+ * @type {import('react').ForwardRefRenderFunction<PixiApplication, ApplicationProps>}
  */
 export const ApplicationFunction = (props, forwardedRef) =>
 {

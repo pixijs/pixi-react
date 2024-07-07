@@ -1,10 +1,10 @@
 import type { Instance } from './Instance.ts';
-import type { NamespacedPixiElementsImpl } from './NamespacedPixiElementsImpl.ts';
-import type { PixiElementsImpl } from './PixiElementsImpl.ts';
+import type { NamespacedPixiElements } from './NamespacedPixiElements.ts';
+import type { PixiElements } from './PixiElements.ts';
 
 export interface HostConfig
 {
-    type: keyof PixiElementsImpl | keyof NamespacedPixiElementsImpl;
+    type: keyof PixiElements | keyof NamespacedPixiElements;
     props: Record<string, unknown>;
     container: Instance;
     instance: Instance;

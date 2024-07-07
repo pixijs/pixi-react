@@ -6,6 +6,6 @@ import type { Node } from './Node';
 
 type PixiType = typeof PIXI;
 
-export type PixiElementsImpl = {
+export type PixiElements = {
     [K in AutoFilteredKeys as K extends keyof typeof NameOverrides ? typeof NameOverrides[K] : Uncapitalize<K>]: Node<PixiType[K]>
 };

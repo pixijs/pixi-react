@@ -13,6 +13,6 @@ export interface BaseNodeProps<T extends abstract new (...args: any) => any>
     ref?: Ref<T>;
 }
 
-export type NodeProps<T extends abstract new (...args: any) => any> = T extends Graphics
+export type PixiReactNodeProps<T extends abstract new (...args: any) => any> = T extends Graphics
     ? BaseNodeProps<T> & EventHandlers & { draw?: (graphics: Graphics) => void; }
     : BaseNodeProps<T> & EventHandlers;

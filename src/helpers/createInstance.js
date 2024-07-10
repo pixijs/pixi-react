@@ -4,6 +4,7 @@ import { catalogue } from './catalogue.js';
 import { convertStringToPascalCase } from './convertStringToPascalCase.js';
 import { gentleCloneProps } from './gentleCloneProps.js';
 import { log } from './log.js';
+import { parseComponentType } from './parseComponentType.js';
 import { prepareInstance } from './prepareInstance.js';
 
 /** @typedef {import('../typedefs/HostConfig.ts').HostConfig} HostConfig */
@@ -20,7 +21,7 @@ export function createInstance(type, props, root)
 {
     log('info', 'lifecycle::createInstance');
 
-    const parsedType = type.startsWith('pixi') ? type.replace(/^pixi([A-Z])/, (_fullMatch, firstCharacter) => firstCharacter.toLowerCase()) : type;
+    const parsedType = parseComponentType(type);
 
     // Convert lowercase component name to PascalCase
     const name = convertStringToPascalCase(parsedType);
@@ -37,14 +38,15 @@ export function createInstance(type, props, root)
 
     let component;
 
-    if (name === 'Application')
+    switch (name)
     {
-        component = new PixiComponent();
-        component.init(pixiProps);
-    }
-    else
-    {
-        component = new PixiComponent(pixiProps);
+        case 'Application':
+            component = new PixiComponent();
+            component.init(pixiProps);
+            break;
+
+        default:
+            component = new PixiComponent(pixiProps);
     }
 
     const instance = prepareInstance(component, {

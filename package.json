@@ -59,7 +59,7 @@
     ]
   },
   "dependencies": {
-    "react-reconciler": "^0.29.2"
+    "react-reconciler": "0.29.2"
   },
   "devDependencies": {
     "@pixi/extension-scripts": "^2.4.1",
@@ -68,7 +68,7 @@
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@types/eslint": "^8.56.10",
     "@types/react": "^18.3.2",
-    "@types/react-reconciler": "^0.28.8",
+    "@types/react-reconciler": "0.28.8",
     "husky": "^8.0.0",
     "pixi.js": "8.2.1",
     "react": "^18.3.1",

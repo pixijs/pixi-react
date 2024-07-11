@@ -2,9 +2,9 @@ import { Application } from 'pixi.js';
 import { createElement } from 'react';
 import { ConcurrentRoot } from 'react-reconciler/constants.js';
 import { ContextProvider } from '../components/Context.js';
-import { isReadOnlyProperty } from '../helpers/isReadOnlyProperty.js';
-import { log } from '../helpers/log.js';
-import { prepareInstance } from '../helpers/prepareInstance.js';
+import { isReadOnlyProperty } from '../helpers/isReadOnlyProperty.ts';
+import { log } from '../helpers/log.ts';
+import { prepareInstance } from '../helpers/prepareInstance.ts';
 import { reconciler } from './reconciler.js';
 import { roots } from './roots.js';
 

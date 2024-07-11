@@ -2,31 +2,31 @@
 
 import Reconciler from 'react-reconciler';
 import { version } from '../../package.json' assert { type: 'json' };
-import { afterActiveInstanceBlur } from '../helpers/afterActiveInstanceBlur.js';
-import { appendChild } from '../helpers/appendChild.js';
-import { beforeActiveInstanceBlur } from '../helpers/beforeActiveInstanceBlur.js';
-import { clearContainer } from '../helpers/clearContainer.js';
-import { commitUpdate } from '../helpers/commitUpdate.js';
-import { createInstance } from '../helpers/createInstance.js';
-import { createTextInstance } from '../helpers/createTextInstance.js';
-import { detachDeletedInstance } from '../helpers/detachDeletedInstance.js';
-import { finalizeInitialChildren } from '../helpers/finalizeInitialChildren.js';
-import { getChildHostContext } from '../helpers/getChildHostContext.js';
-import { getCurrentEventPriority } from '../helpers/getCurrentEventPriority.js';
-import { getInstanceFromNode } from '../helpers/getInstanceFromNode.js';
-import { getInstanceFromScope } from '../helpers/getInstanceFromScope.js';
-import { getPublicInstance } from '../helpers/getPublicInstance.js';
-import { getRootHostContext } from '../helpers/getRootHostContext.js';
-import { hideInstance } from '../helpers/hideInstance.js';
-import { insertBefore } from '../helpers/insertBefore.js';
-import { prepareForCommit } from '../helpers/prepareForCommit.js';
-import { preparePortalMount } from '../helpers/preparePortalMount.js';
-import { prepareScopeUpdate } from '../helpers/prepareScopeUpdate.js';
-import { prepareUpdate } from '../helpers/prepareUpdate.js';
-import { removeChild } from '../helpers/removeChild.js';
-import { resetAfterCommit } from '../helpers/resetAfterCommit.js';
-import { shouldSetTextContent } from '../helpers/shouldSetTextContent.js';
-import { unhideInstance } from '../helpers/unhideInstance.js';
+import { afterActiveInstanceBlur } from '../helpers/afterActiveInstanceBlur.ts';
+import { appendChild } from '../helpers/appendChild.ts';
+import { beforeActiveInstanceBlur } from '../helpers/beforeActiveInstanceBlur.ts';
+import { clearContainer } from '../helpers/clearContainer.ts';
+import { commitUpdate } from '../helpers/commitUpdate.ts';
+import { createInstance } from '../helpers/createInstance.ts';
+import { createTextInstance } from '../helpers/createTextInstance.ts';
+import { detachDeletedInstance } from '../helpers/detachDeletedInstance.ts';
+import { finalizeInitialChildren } from '../helpers/finalizeInitialChildren.ts';
+import { getChildHostContext } from '../helpers/getChildHostContext.ts';
+import { getCurrentEventPriority } from '../helpers/getCurrentEventPriority.ts';
+import { getInstanceFromNode } from '../helpers/getInstanceFromNode.ts';
+import { getInstanceFromScope } from '../helpers/getInstanceFromScope.ts';
+import { getPublicInstance } from '../helpers/getPublicInstance.ts';
+import { getRootHostContext } from '../helpers/getRootHostContext.ts';
+import { hideInstance } from '../helpers/hideInstance.ts';
+import { insertBefore } from '../helpers/insertBefore.ts';
+import { prepareForCommit } from '../helpers/prepareForCommit.ts';
+import { preparePortalMount } from '../helpers/preparePortalMount.ts';
+import { prepareScopeUpdate } from '../helpers/prepareScopeUpdate.ts';
+import { prepareUpdate } from '../helpers/prepareUpdate.ts';
+import { removeChild } from '../helpers/removeChild.ts';
+import { resetAfterCommit } from '../helpers/resetAfterCommit.ts';
+import { shouldSetTextContent } from '../helpers/shouldSetTextContent.ts';
+import { unhideInstance } from '../helpers/unhideInstance.ts';
 
 /** @typedef {import('../typedefs/HostConfig.ts').HostConfig} HostConfig */
 /** @typedef {import('../typedefs/Instance.ts').Instance} Instance */

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { extend } from '../helpers/extend.js';
+import { extend } from '../helpers/extend.ts';
 
 /**
  * Expose Pixi.js components for use in JSX.

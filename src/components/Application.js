@@ -8,7 +8,7 @@ import {
     useCallback,
     useRef,
 } from 'react';
-import { createRoot } from '../core/createRoot.js';
+import { createRoot } from '../core/createRoot.ts';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect.js';
 
 /**

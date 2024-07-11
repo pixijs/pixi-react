@@ -1,5 +1,5 @@
 export { Application } from './components/Application.js';
-export { createRoot } from './core/createRoot.js';
+export { createRoot } from './core/createRoot.ts';
 export { extend } from './helpers/extend.ts';
 export { useApp } from './hooks/useApp.js';
 export { useAsset } from './hooks/useAsset.js';

@@ -5,28 +5,25 @@ import { ContextProvider } from '../components/Context.js';
 import { isReadOnlyProperty } from '../helpers/isReadOnlyProperty.ts';
 import { log } from '../helpers/log.ts';
 import { prepareInstance } from '../helpers/prepareInstance.ts';
-import { reconciler } from './reconciler.js';
-import { roots } from './roots.js';
+import { reconciler } from './reconciler.ts';
+import { roots } from './roots.ts';
 
-/** @typedef {import('pixi.js').ApplicationOptions} ApplicationOptions */
+import type { ApplicationOptions } from 'pixi.js';
+import type { ReactNode } from 'react';
+import type { Instance } from '../typedefs/Instance.ts';
+import type { InternalState } from '../typedefs/InternalState.ts';
 
-/** @typedef {import('../typedefs/InternalState.ts').InternalState} InternalState */
-/** @typedef {import('../typedefs/Root.ts').Root} Root */
-
-/**
- * Creates a new root for a Pixi React app.
- *
- * @param {HTMLElement | HTMLCanvasElement} target The target element into which the Pixi application will be rendered. Can be any element, but if a <canvas> is passed the application will be rendered to it directly.
- * @param {Partial<InternalState>} [options]
- * @param {(app: Application) => void} [onInit] Callback to be fired when the application finishes initializing.
- * @returns {Root}
- */
-export function createRoot(target, options = {}, onInit)
+/** Creates a new root for a Pixi React app. */
+export function createRoot(
+    target: HTMLElement | HTMLCanvasElement,
+    options: Partial<InternalState> = {},
+    onInit?: (app: Application) => void,
+)
 {
     // Check against mistaken use of createRoot
     let root = roots.get(target);
 
-    const state = /** @type {InternalState} */ (Object.assign((root?.state ?? {}), options));
+    const state = Object.assign((root?.state ?? {}), options) as InternalState;
 
     if (root)
     {
@@ -39,7 +36,7 @@ export function createRoot(target, options = {}, onInit)
     }
 
     const fiber = root?.fiber ?? reconciler.createContainer(
-        state.rootContainer,
+        state.rootContainer as Instance,
         ConcurrentRoot,
         null,
         false,
@@ -65,12 +62,10 @@ export function createRoot(target, options = {}, onInit)
             target.appendChild(canvas);
         }
 
-        /**
-         * @param {import('react').ReactNode} children
-         * @param {ApplicationOptions} applicationOptions
-         * @returns {Promise<Application>}
-         */
-        const render = async (children, applicationOptions) =>
+        const render = async (
+            children: ReactNode,
+            applicationOptions: ApplicationOptions,
+        ) =>
         {
             if (!state.app.renderer && !state.isInitialising)
             {

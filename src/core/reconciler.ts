@@ -28,27 +28,23 @@ import { resetAfterCommit } from '../helpers/resetAfterCommit.ts';
 import { shouldSetTextContent } from '../helpers/shouldSetTextContent.ts';
 import { unhideInstance } from '../helpers/unhideInstance.ts';
 
-/** @typedef {import('../typedefs/HostConfig.ts').HostConfig} HostConfig */
-/** @typedef {import('../typedefs/Instance.ts').Instance} Instance */
+import type { HostConfig } from '../typedefs/HostConfig.ts';
 
-/**
- * @type {Reconciler.HostConfig<
- * 	HostConfig['type'],
- * 	HostConfig['props'],
- * 	HostConfig['container'],
- * 	HostConfig['instance'],
- * 	HostConfig['textInstance'],
- * 	HostConfig['suspenseInstance'],
- * 	HostConfig['hydratableInstance'],
- * 	HostConfig['publicInstance'],
- * 	HostConfig['hostContext'],
- * 	HostConfig['updatePayload'],
- * 	HostConfig['childSet'],
- * 	HostConfig['timeoutHandle'],
- * 	HostConfig['noTimeout']
- * >}
- */
-const reconcilerConfig = {
+const reconcilerConfig: Reconciler.HostConfig<
+HostConfig['type'],
+HostConfig['props'],
+HostConfig['container'],
+HostConfig['instance'],
+HostConfig['textInstance'],
+HostConfig['suspenseInstance'],
+HostConfig['hydratableInstance'],
+HostConfig['publicInstance'],
+HostConfig['hostContext'],
+HostConfig['updatePayload'],
+HostConfig['childSet'],
+HostConfig['timeoutHandle'],
+HostConfig['noTimeout']
+> = {
     isPrimaryRenderer: false,
     noTimeout: -1,
     supportsHydration: false,

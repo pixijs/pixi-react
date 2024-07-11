@@ -4,21 +4,22 @@ import {
 } from 'pixi.js';
 import { getAssetKeyFromOptions } from '../helpers/getAssetKeyFromOptions.ts';
 
-/** @typedef {import('../typedefs/AssetRetryOptions.ts').AssetRetryOptions} AssetRetryOptions */
-/** @typedef {import('../typedefs/AssetRetryState.ts').AssetRetryState} AssetRetryState */
+import type {
+    ProgressCallback,
+    UnresolvedAsset,
+} from 'pixi.js';
+import type { AssetRetryOptions } from '../typedefs/AssetRetryOptions.ts';
+import type { AssetRetryState } from '../typedefs/AssetRetryState.ts';
 
-/** @type {Map<import('pixi.js').UnresolvedAsset | string, AssetRetryState>} */
-const errorCache = new Map();
+const errorCache: Map<UnresolvedAsset | string, AssetRetryState> = new Map();
 
-/**
- * Loads assets, returning a hash of assets once they're loaded.
- *
- * @template T
- * @param {(import('pixi.js').UnresolvedAsset<T> & AssetRetryOptions) | string} options Asset options.
- * @param {import('pixi.js').ProgressCallback} [onProgress] A function to be called when the asset loader reports loading progress.
- * @returns {T}
- */
-export function useAsset(options, onProgress)
+/** Loads assets, returning a hash of assets once they're loaded. */
+export function useAsset<T>(
+    /** @description Asset options. */
+    options: (UnresolvedAsset<T> & AssetRetryOptions) | string,
+    /** @description A function to be called when the asset loader reports loading progress. */
+    onProgress: ProgressCallback,
+)
 {
     if (typeof window === 'undefined')
     {
@@ -45,7 +46,7 @@ export function useAsset(options, onProgress)
         }
 
         throw Assets
-            .load(options, onProgress)
+            .load<T>(options, onProgress)
             .catch((error) =>
             {
                 if (!state)
@@ -64,5 +65,5 @@ export function useAsset(options, onProgress)
             });
     }
 
-    return Assets.get(assetKey);
+    return Assets.get<T>(assetKey);
 }

@@ -1,5 +1,5 @@
 import type * as PIXI from 'pixi.js';
-import type { NameOverrides } from '../constants/NameOverrides.js';
+import type { NameOverrides } from '../constants/NameOverrides.ts';
 import type { AutoFilteredKeys } from './AutoFilteredKeys.ts';
 import type { PixiReactNode } from './PixiReactNode.ts';
 

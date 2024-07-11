@@ -1,4 +1,4 @@
-import { type ReactToPixiEventPropNames } from '../constants/EventPropNames.js';
+import { type ReactToPixiEventPropNames } from '../constants/EventPropNames.ts';
 
 import type {
     FederatedPointerEvent,

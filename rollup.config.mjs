@@ -42,7 +42,7 @@ const external = Object.keys(dependencies)
     .map(convertPackageNameToRegExp);
 
 export default {
-    input: 'src/index.js',
+    input: 'src/index.ts',
     output: [
         {
             dir: paths.library,

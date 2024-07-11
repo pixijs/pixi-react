@@ -1,15 +1,12 @@
-import type {
-    Text,
-    TextOptions,
-} from 'pixi.js';
+import type { ConstructorOverrides } from './ConstructorOverrides';
 
-export type ConstructorOptions<T extends abstract new (...args: any) => any> =
-    /**
-     * We're adding a specific options type override for Text components because of the order of overloads.
-     * @see https://github.com/pixijs/pixi-react/issues/500
-     */
-    T extends typeof Text
-        ? TextOptions
-        : T extends new (...args: infer A) => any
-            ? A[0]
-            : never;
+/**
+ * We're adding a specific options type overrides for some components because their deprecated overloads get in the way.
+ * @see https://github.com/pixijs/pixi-react/issues/500
+ */
+export type ConstructorOptions<T extends abstract new (...args: any[]) => any> =
+    Extract<ConstructorOverrides, { 0: T }> extends [T, infer R]
+        ? unknown extends R
+            ? ConstructorParameters<T>[0]
+            : R
+        : never;

@@ -1,4 +1,4 @@
-import { PixiReactIgnoredProps } from '../constants/PixiReactIgnoredProps.js';
+import { PixiReactIgnoredProps } from '../constants/PixiReactIgnoredProps.ts';
 import { applyProps } from './applyProps.ts';
 import { catalogue } from './catalogue.ts';
 import { convertStringToPascalCase } from './convertStringToPascalCase.ts';

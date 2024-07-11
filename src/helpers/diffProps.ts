@@ -1,7 +1,7 @@
 import {
     PixiToReactEventPropNames,
     ReactToPixiEventPropNames,
-} from '../constants/EventPropNames.js';
+} from '../constants/EventPropNames.ts';
 import { isEqual } from './compare.ts';
 import { gentleCloneProps } from './gentleCloneProps.ts';
 

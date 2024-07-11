@@ -5,7 +5,7 @@ import {
 import {
     PixiToReactEventPropNames,
     ReactToPixiEventPropNames,
-} from '../constants/EventPropNames.js';
+} from '../constants/EventPropNames.ts';
 import { diffProps } from './diffProps.ts';
 import { isDiffSet } from './isDiffSet.ts';
 import { isReadOnlyProperty } from './isReadOnlyProperty.ts';

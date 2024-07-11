@@ -1,5 +1,5 @@
 import {
-    Application as PixiApplication,
+    type Application as PixiApplication,
     TextStyle,
 } from 'pixi.js';
 import {
@@ -9,24 +9,22 @@ import {
     useRef,
 } from 'react';
 import { createRoot } from '../core/createRoot.ts';
-import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect.js';
+import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect.ts';
 
-/**
- * @template T
- * @typedef {import('react').MutableRefObject<T>} MutableRefObject
- */
-
-/** @typedef {import('../typedefs/ApplicationProps.ts').ApplicationProps} ApplicationProps */
-/** @typedef {import('../typedefs/Root.ts').Root} Root */
+import type {
+    ForwardRefRenderFunction,
+    MutableRefObject,
+} from 'react';
+import type { ApplicationProps } from '../typedefs/ApplicationProps.ts';
+import type { Root } from '../typedefs/Root.ts';
 
 const originalDefaultTextStyle = { ...TextStyle.defaultTextStyle };
 
-/**
- * Creates a React root and renders a Pixi application.
- *
- * @type {import('react').ForwardRefRenderFunction<PixiApplication, ApplicationProps>}
- */
-export const ApplicationFunction = (props, forwardedRef) =>
+/** Creates a React root and renders a Pixi application. */
+export const ApplicationFunction: ForwardRefRenderFunction<PixiApplication, ApplicationProps> = (
+    props,
+    forwardedRef,
+) =>
 {
     const {
         attachToDevTools,
@@ -38,14 +36,9 @@ export const ApplicationFunction = (props, forwardedRef) =>
         ...applicationProps
     } = props;
 
-    /** @type {MutableRefObject<PixiApplication | null>} */
-    const applicationRef = useRef(null);
-
-    /** @type {MutableRefObject<HTMLCanvasElement | null>} */
-    const canvasRef = useRef(null);
-
-    /** @type {MutableRefObject<Root | null>} */
-    const rootRef = useRef(null);
+    const applicationRef: MutableRefObject<PixiApplication | null> = useRef(null);
+    const canvasRef: MutableRefObject<HTMLCanvasElement | null> = useRef(null);
+    const rootRef: MutableRefObject<Root | null> = useRef(null);
 
     const updateResizeTo = useCallback(() =>
     {
@@ -75,8 +68,7 @@ export const ApplicationFunction = (props, forwardedRef) =>
         }
     }, [resizeTo]);
 
-    /** @type {(app: PixiApplication) => void} */
-    const handleInit = useCallback((application) =>
+    const handleInit = useCallback((application: PixiApplication) =>
     {
         if (forwardedRef && ('current' in forwardedRef))
         {
@@ -89,7 +81,7 @@ export const ApplicationFunction = (props, forwardedRef) =>
 
         if (attachToDevTools)
         {
-            const globalScope = /** @type {*} */ (globalThis);
+            const globalScope = globalThis as any;
 
             globalScope.__PIXI_APP__ = application;
 
@@ -107,8 +99,7 @@ export const ApplicationFunction = (props, forwardedRef) =>
 
     useIsomorphicLayoutEffect(() =>
     {
-        /** @type {HTMLCanvasElement} */
-        const canvasElement = /** @type {*} */ (canvasRef.current);
+        const canvasElement = canvasRef.current as HTMLCanvasElement;
 
         if (canvasElement)
         {

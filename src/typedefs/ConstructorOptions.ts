@@ -3,7 +3,7 @@ import type {
     TextOptions,
 } from 'pixi.js';
 
-export type ConstructorParams<T extends abstract new (...args: any) => any> =
+export type ConstructorOptions<T extends abstract new (...args: any) => any> =
     /**
      * We're adding a specific options type override for Text components because of the order of overloads.
      * @see https://github.com/pixijs/pixi-react/issues/500

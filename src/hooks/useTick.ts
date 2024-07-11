@@ -1,35 +1,25 @@
 import { useEffect } from 'react';
 import { invariant } from '../helpers/invariant.ts';
-import { useApp } from './useApp.js';
+import { useApp } from './useApp.ts';
 
-/**
- * @template T
- * @typedef {import('pixi.js').TickerCallback<T>} TickerCallback
- */
+import type { TickerCallback } from 'pixi.js';
+import type { TickCallbackOptions } from '../typedefs/TickCallbackOptions.ts';
 
-/**
- * @template T
- * @typedef {import('../typedefs/TickCallbackOptions.ts').TickCallbackOptions<T>} TickCallbackOptions
- */
-
-/**
- * Attaches a callback to the application's Ticker.
- *
- * @template T
- * @param {TickerCallback<T> | TickCallbackOptions<T>} options The function to be called on each tick.
- * @param {boolean} [enabled] Whether this callback is currently enabled.
- */
-function useTick(options, enabled = true)
+/** Attaches a callback to the application's Ticker. */
+function useTick<T>(
+    /** @description The function to be called on each tick. */
+    options: TickerCallback<T> | TickCallbackOptions<T>,
+    /** @description Whether this callback is currently enabled. */
+    enabled = true,
+)
 {
     const app = useApp();
 
     let callback;
 
-    /** @type {*} */
-    let context;
+    let context: any;
 
-    /** @type {number | undefined} */
-    let priority;
+    let priority: number | undefined;
 
     if (typeof options === 'function')
     {
@@ -62,7 +52,10 @@ function useTick(options, enabled = true)
 
             return () =>
             {
-                wasEnabled && ticker?.remove(previousCallback, previousContext);
+                if (wasEnabled)
+                {
+                    ticker?.remove(previousCallback, previousContext);
+                }
             };
         }
     }, [

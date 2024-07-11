@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { invariant } from '../helpers/invariant.js';
+import { invariant } from '../helpers/invariant.ts';
 import { useApp } from './useApp.js';
 
 /**

@@ -2,7 +2,7 @@ import {
     Assets,
     Cache,
 } from 'pixi.js';
-import { getAssetKeyFromOptions } from '../helpers/getAssetKeyFromOptions.js';
+import { getAssetKeyFromOptions } from '../helpers/getAssetKeyFromOptions.ts';
 
 /** @typedef {import('../typedefs/AssetRetryOptions.ts').AssetRetryOptions} AssetRetryOptions */
 /** @typedef {import('../typedefs/AssetRetryState.ts').AssetRetryState} AssetRetryState */

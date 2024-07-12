@@ -1,17 +1,19 @@
-name: Release
+name: Publish Github Release
 
 on:
   push:
     branches:
       - 'alpha'
       - 'beta'
-      - 'master'
+      - 'main'
 
 jobs:
   release:
     runs-on: ubuntu-latest
     env:
+      BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
     steps:
@@ -28,3 +30,6 @@ jobs:
 
       - name: Semantic Release
         run: npx semantic-release
+
+      - name: Publish to npm
+        run: npm publish ./dist/*.tgz --tag ${{ env.BRANCH_NAME == 'main' && 'latest' || '$BRANCH_NAME' }}

@@ -2,12 +2,17 @@ import type { Graphics } from 'pixi.js';
 import type { ContainerElement } from './ContainerElement.ts';
 import type { EventHandlers } from './EventHandlers.ts';
 import type { InstanceState } from './InstanceState.ts';
+import type { PixiElement } from './PixiElement.ts';
 
-export type Instance = ContainerElement & EventHandlers &
+export type Instance<T = PixiElement> = T & EventHandlers &
 {
-    BaseInstance: object
-    __pixireact?: InstanceState
-    autoRemovedBeforeAppend?: boolean
-    children?: ContainerElement | ContainerElement[]
-    draw?: (graphics: Graphics) => void
+    __pixireact: InstanceState;
+    autoRemovedBeforeAppend?: boolean;
+    children?: T extends ContainerElement
+        ? ContainerElement | ContainerElement[]
+        : never;
+    draw?: T extends Graphics
+        ? (graphics: Graphics) => void
+        : null;
+    parent?: Instance<ContainerElement>,
 };

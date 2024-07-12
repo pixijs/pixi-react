@@ -24,7 +24,7 @@ runs:
         fetch-depth: 0
 
     - name: Setup Project
-      uses: ./setup
+      uses: ./.github/actions/setup
 
     - name: Build Project
       run: npm run build

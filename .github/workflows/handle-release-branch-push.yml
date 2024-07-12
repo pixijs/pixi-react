@@ -1,0 +1,25 @@
+name: Handle Release Branch Push
+
+on:
+  push:
+    branches:
+      - 'alpha'
+      - 'beta'
+      - 'main'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Project
+        uses: ./.github/actions/publish-release
+        with:
+          branchName: ${{ github.head_ref || github.ref_name }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          npmToken: ${{ secrets.NPM_TOKEN }}

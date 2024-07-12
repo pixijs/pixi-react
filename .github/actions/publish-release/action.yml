@@ -1,0 +1,39 @@
+name: "Publish Release"
+description: "Publishes a release to Github and npm"
+
+inputs:
+  branchName:
+    description: 'The branch name of from which this release was triggered'
+    required: false
+    default: 'latest'
+  githubToken:
+    description: 'The Github auth token'
+    required: false
+    default: 'latest'
+  npmToken:
+    description: 'The npm auth token'
+    required: false
+    default: 'latest'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup Project
+      uses: ./setup
+
+    - name: Build Project
+      run: npm run build
+
+    - name: Semantic Release
+      run: npx semantic-release
+      env:
+        GITHUB_TOKEN: ${{ inputs.githubToken }}
+
+    - name: Publish to npm
+      run: npm publish ./dist/*.tgz --tag ${{ inputs.tag }}
+        NODE_AUTH_TOKEN: ${{ inputs.npmToken }}

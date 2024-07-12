@@ -28,12 +28,16 @@ runs:
 
     - name: Build Project
       run: npm run build
+      shell: bash
 
     - name: Semantic Release
-      run: npx semantic-release
       env:
         GITHUB_TOKEN: ${{ inputs.githubToken }}
+      run: npx semantic-release
+      shell: bash
 
     - name: Publish to npm
-      run: npm publish ./dist/*.tgz --tag ${{ inputs.tag }}
+      env:
         NODE_AUTH_TOKEN: ${{ inputs.npmToken }}
+      run: npm publish ./dist/*.tgz --tag ${{ inputs.tag }}
+      shell: bash

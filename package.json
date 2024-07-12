@@ -1,6 +1,6 @@
 {
   "name": "@pixi/react",
-  "version": "8.0.0",
+  "version": "0.0.0-development",
   "description": "Write PixiJS applications using React declarative style.",
   "keywords": [
     "react",

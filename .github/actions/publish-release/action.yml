@@ -39,5 +39,5 @@ runs:
     - name: Publish to npm
       env:
         NODE_AUTH_TOKEN: ${{ inputs.npmToken }}
-      run: npm publish ./dist/*.tgz --tag ${{ inputs.tag }}
+      run: npm publish ./dist/*.tgz --tag ${{ inputs.branchName == 'main' && 'latest' || inputs.branchName }}
       shell: bash

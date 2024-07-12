@@ -12,7 +12,7 @@ export function prepareInstance<T extends Container | PixiElement>(
     const instance = component as Instance;
 
     instance.__pixireact = {
-        attachedChildren: [],
+        filters: [],
         parent: null,
         root: null as unknown as Instance,
         type: '',

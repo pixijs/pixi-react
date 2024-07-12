@@ -3,14 +3,14 @@ import { log } from '../helpers/log.ts';
 import { switchInstance } from './switchInstance.ts';
 
 import type { Fiber } from 'react-reconciler';
-import type { DiffSet } from '../typedefs/DiffSet.ts';
 import type { HostConfig } from '../typedefs/HostConfig.ts';
 import type { Instance } from '../typedefs/Instance.ts';
 import type { InstanceProps } from '../typedefs/InstanceProps.ts';
+import type { UpdatePayload } from '../typedefs/UpdatePayload.ts';
 
 export function commitUpdate(
     instance: Instance,
-    updatePayload: [boolean, DiffSet],
+    updatePayload: UpdatePayload,
     type: HostConfig['type'],
     _oldProps: InstanceProps,
     newProps: InstanceProps,
@@ -19,13 +19,16 @@ export function commitUpdate(
 {
     log('info', 'lifecycle::commitUpdate');
 
-    const [reconstruct, diff] = updatePayload;
+    const {
+        diff,
+        shouldReconstruct,
+    } = updatePayload;
 
-    if (reconstruct)
+    if (shouldReconstruct)
     {
         switchInstance(instance, type, newProps, fiber);
     }
-    else
+    else if (diff)
     {
         applyProps(instance, diff);
     }

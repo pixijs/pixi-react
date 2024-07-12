@@ -3,6 +3,7 @@ import { createInstance } from './createInstance.ts';
 import { removeChild } from './removeChild.ts';
 
 import type { Fiber } from 'react-reconciler';
+import type { ContainerElement } from '../typedefs/ContainerElement.ts';
 import type { HostConfig } from '../typedefs/HostConfig.ts';
 import type { Instance } from '../typedefs/Instance.ts';
 
@@ -33,7 +34,7 @@ export function switchInstance(
         newInstance.autoRemovedBeforeAppend = true;
     }
 
-    appendChild(parent, newInstance);
+    appendChild(parent as Instance<ContainerElement>, newInstance);
 
     // This evil hack switches the react-internal fiber node
     // https://github.com/facebook/react/issues/14983

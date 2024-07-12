@@ -33,10 +33,9 @@ const PIXI_EVENT_PROP_NAME_ERROR_HAS_BEEN_SHOWN: Record<string, boolean> = {};
  */
 export function applyProps(instance: MaybeInstance, data: InstanceProps | DiffSet)
 {
-    const localState = instance.__pixireact;
     const {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        __pixireact,
+        __pixireact: instanceState,
         ...instanceProps
     } = instance;
 
@@ -48,7 +47,7 @@ export function applyProps(instance: MaybeInstance, data: InstanceProps | DiffSe
     }
     else
     {
-        typedData = diffProps(data, instanceProps);
+        typedData = diffProps(data, instanceProps as InstanceProps);
     }
 
     const { changes } = typedData;
@@ -147,7 +146,7 @@ export function applyProps(instance: MaybeInstance, data: InstanceProps | DiffSe
             }
 
             // Deal with events ...
-            if (isEvent && localState)
+            if (isEvent && instanceState)
             {
                 const typedKey = key as keyof typeof ReactToPixiEventPropNames;
                 const pixiKey = ReactToPixiEventPropNames[typedKey];
@@ -163,7 +162,6 @@ export function applyProps(instance: MaybeInstance, data: InstanceProps | DiffSe
             }
             else if (!isReadOnlyProperty(currentInstance, key))
             {
-                // @ts-expect-error The key is cast to any property of Container, including read-only properties. The check above prevents us from setting read-only properties, but TS doesn't understand it. 🤷🏻‍♂️
                 currentInstance[key] = value;
             }
         }

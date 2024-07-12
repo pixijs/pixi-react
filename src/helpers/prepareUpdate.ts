@@ -3,6 +3,7 @@ import { log } from './log.ts';
 
 import type { Instance } from '../typedefs/Instance.ts';
 import type { InstanceProps } from '../typedefs/InstanceProps.ts';
+import type { UpdatePayload } from '../typedefs/UpdatePayload.ts';
 
 export function prepareUpdate(
     _instance: Instance,
@@ -13,7 +14,10 @@ export function prepareUpdate(
 {
     log('info', 'lifecycle::prepareUpdate');
 
-    // This is a data object, let's extract critical information about it
+    const updatePayload: UpdatePayload = {
+        shouldReconstruct: false,
+    };
+
     const {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         children: newChildren,
@@ -25,14 +29,12 @@ export function prepareUpdate(
         ...oldPropsRest
     } = oldProps;
 
-    // Create a diff-set, flag if there are any changes
     const diff = diffProps(newPropsRest, oldPropsRest, true);
 
     if (diff.changes.length)
     {
-        return [false, diff];
+        updatePayload.diff = diff;
     }
 
-    // Otherwise do not touch the instance
-    return null;
+    return updatePayload;
 }

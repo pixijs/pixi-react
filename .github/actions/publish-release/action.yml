@@ -31,21 +31,24 @@ runs:
       shell: bash
 
     - name: Get Next Release Version
-      id: tag_version
+      env:
+        GITHUB_TOKEN: ${{ inputs.githubToken }}
+      id: get_release_version
       run: |
         export NEXT_TAG_VERSION=$(npx semantic-release --dry-run | grep 'The next release version is' | sed -E 's/.* ([[:digit:].]+)$/\1/')
         echo "new_tag_version=${NEXT_TAG_VERSION}" >> $GITHUB_OUTPUT
+      shell: bash
 
     - name: Semantic Release
       env:
         GITHUB_TOKEN: ${{ inputs.githubToken }}
-      if: ${{ new_tag_version != '' }}
+      if: ${{ steps.get_release_version.outputs.new_tag_version != '' }}
       run: npx semantic-release
       shell: bash
 
     - name: Publish to npm
       env:
         NODE_AUTH_TOKEN: ${{ inputs.npmToken }}
-      if: ${{ new_tag_version != '' }}
+      if: ${{ steps.get_release_version.outputs.new_tag_version != '' }}
       run: npm publish ./dist/*.tgz --tag ${{ inputs.branchName == 'main' && 'latest' || inputs.branchName }}
       shell: bash

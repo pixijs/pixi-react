@@ -30,15 +30,22 @@ runs:
       run: npm run build
       shell: bash
 
+    - name: Get Next Release Version
+      id: tag_version
+      run: |
+        export NEXT_TAG_VERSION=$(npx semantic-release --dry-run | grep 'The next release version is' | sed -E 's/.* ([[:digit:].]+)$/\1/')
+        echo "new_tag_version=${NEXT_TAG_VERSION}" >> $GITHUB_OUTPUT
+
     - name: Semantic Release
       env:
         GITHUB_TOKEN: ${{ inputs.githubToken }}
-      id: semanticRelease
-      uses: cycjimmy/semantic-release-action@v4
+      if: ${{ new_tag_version != '' }}
+      run: npx semantic-release
+      shell: bash
 
     - name: Publish to npm
       env:
         NODE_AUTH_TOKEN: ${{ inputs.npmToken }}
-      if: steps.semanticRelease.outputs.new_release_published == 'true'
+      if: ${{ new_tag_version != '' }}
       run: npm publish ./dist/*.tgz --tag ${{ inputs.branchName == 'main' && 'latest' || inputs.branchName }}
       shell: bash

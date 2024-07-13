@@ -17,7 +17,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Project
+      - name: Publish Release
         uses: ./.github/actions/publish-release
         with:
           branchName: ${{ github.head_ref || github.ref_name }}

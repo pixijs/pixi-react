@@ -120,6 +120,10 @@ const MyComponent = () => {
 }
 ```
 
+###### `attachToDevtools`
+
+Setting `attachToDevtools` to `true` will automatically attach the application to the [Official Pixi.js Devtools](https://chromewebstore.google.com/detail/pixijs-devtools/dlkffcaaoccbofklocbjcmppahjjboce).
+
 ###### `defaultTextStyle`
 
 `defaultTextStyle` is a convenience property. Whatever is passed will automatically be assigned to Pixi.js's[`TextStyle.defaultTextStyle`](https://pixijs.download/release/docs/text.TextStyle.html#defaultTextStyle).

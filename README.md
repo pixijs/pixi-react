@@ -82,7 +82,7 @@ const MyComponent = () => {
 
 ### `extend`
 
-One of the most important concepts to understand with Pixi React v7 is `extend`. Normally, Pixi React would have to import all pf Pixi.js to be able to provide the full library as JSX components. Instead, we use an internal catalogue of components populated by the `extend` API. This allows you to define exactly which parts of Pixi.js you want to import, keeping your bundle sizes small.
+One of the most important concepts to understand with Pixi React v8 is `extend`. Normally, Pixi React would have to import all pf Pixi.js to be able to provide the full library as JSX components. Instead, we use an internal catalogue of components populated by the `extend` API. This allows you to define exactly which parts of Pixi.js you want to import, keeping your bundle sizes small.
 
 To allow Pixi React to use a Pixi.js component, pass it to the `extend` API:
 

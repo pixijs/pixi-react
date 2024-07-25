@@ -29,6 +29,6 @@ export type PixiReactNode<T extends new (...args: any) => any = typeof Container
     & EventHandlers
     & {
         [K in keyof InstanceType<T> as K]: K extends keyof BaseNodeProps<InstanceType<T>>
-            ? BaseNodeProps<InstanceType<T>>[K]
+            ? never
             : InstanceType<T>[K];
     };

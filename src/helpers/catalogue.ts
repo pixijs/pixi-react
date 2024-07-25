@@ -1,7 +1,7 @@
-import type { Instance } from '../typedefs/Instance';
+import type { HostConfig } from '../typedefs/HostConfig.ts';
 
 export const catalogue: {
     [name: string]: {
-        new (...args: any): Instance
+        new (...args: any): HostConfig['instance'],
     }
 } = {};

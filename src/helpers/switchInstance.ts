@@ -3,12 +3,10 @@ import { createInstance } from './createInstance.ts';
 import { removeChild } from './removeChild.ts';
 
 import type { Fiber } from 'react-reconciler';
-import type { ContainerElement } from '../typedefs/ContainerElement.ts';
 import type { HostConfig } from '../typedefs/HostConfig.ts';
-import type { Instance } from '../typedefs/Instance.ts';
 
 export function switchInstance(
-    instance: Instance,
+    instance: HostConfig['instance'],
     type: HostConfig['type'],
     newProps: HostConfig['props'],
     fiber: Fiber,
@@ -21,20 +19,20 @@ export function switchInstance(
         return;
     }
 
-    const root = instance.__pixireact?.root as Instance;
+    const root = instance.__pixireact.root as HostConfig['instance'];
     const newInstance = createInstance(type, newProps, root);
 
-    if (!instance.autoRemovedBeforeAppend)
+    if (!instance.__pixireact.autoRemovedBeforeAppend)
     {
         removeChild(parent, instance);
     }
 
     if (newInstance.parent)
     {
-        newInstance.autoRemovedBeforeAppend = true;
+        newInstance.__pixireact.autoRemovedBeforeAppend = true;
     }
 
-    appendChild(parent as Instance<ContainerElement>, newInstance);
+    appendChild(parent as HostConfig['containerInstance'], newInstance);
 
     // This evil hack switches the react-internal fiber node
     // https://github.com/facebook/react/issues/14983

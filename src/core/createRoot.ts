@@ -10,7 +10,7 @@ import { roots } from './roots.ts';
 
 import type { ApplicationOptions } from 'pixi.js';
 import type { ReactNode } from 'react';
-import type { Instance } from '../typedefs/Instance.ts';
+import type { HostConfig } from '../typedefs/HostConfig.ts';
 import type { InternalState } from '../typedefs/InternalState.ts';
 
 /** Creates a new root for a Pixi React app. */
@@ -36,7 +36,7 @@ export function createRoot(
     }
 
     const fiber = root?.fiber ?? reconciler.createContainer(
-        state.rootContainer as Instance,
+        state.rootContainer as HostConfig['containerInstance'],
         ConcurrentRoot,
         null,
         false,
@@ -82,7 +82,10 @@ export function createRoot(
             {
                 const typedKey = /** @type {keyof ApplicationOptions} */ (key);
 
-                if (isReadOnlyProperty(applicationOptions, typedKey))
+                if (isReadOnlyProperty(
+                    applicationOptions as unknown as Record<string, unknown>,
+                    typedKey,
+                ))
                 {
                     return;
                 }

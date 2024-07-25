@@ -8,13 +8,11 @@ import { parseComponentType } from './parseComponentType.ts';
 import { prepareInstance } from './prepareInstance.ts';
 
 import type { HostConfig } from '../typedefs/HostConfig.ts';
-import type { Instance } from '../typedefs/Instance.ts';
-import type { InstanceProps } from '../typedefs/InstanceProps.ts';
 
 export function createInstance(
     type: HostConfig['type'],
-    props: InstanceProps,
-    root: Instance,
+    props: HostConfig['props'],
+    root: HostConfig['containerInstance'],
 )
 {
     log('info', 'lifecycle::createInstance');

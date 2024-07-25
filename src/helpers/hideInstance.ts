@@ -1,22 +1,20 @@
-import { catalogue } from './catalogue.ts';
+import {
+    Container,
+    Filter,
+} from 'pixi.js';
 
-import type { ContainerElement } from '../typedefs/ContainerElement.ts';
-import type { FilterElement } from '../typedefs/FilterElement.ts';
-import type { Instance } from '../typedefs/Instance.ts';
+import type { HostConfig } from '../typedefs/HostConfig.ts';
 
-export function hideInstance(instance: Instance)
+export function hideInstance(
+    instance: HostConfig['instance']
+)
 {
-    const {
-        Container,
-        Filter,
-    } = catalogue;
-
-    if (Container && instance instanceof Container)
+    if (instance instanceof Container)
     {
-        (instance as ContainerElement).visible = false;
+        (instance as HostConfig['containerInstance']).visible = false;
     }
-    else if (Filter && instance instanceof Filter)
+    else if (instance instanceof Filter)
     {
-        (instance as FilterElement).enabled = false;
+        (instance as HostConfig['filterInstance']).enabled = false;
     }
 }

@@ -6,13 +6,13 @@ import { isEqual } from './compare.ts';
 import { gentleCloneProps } from './gentleCloneProps.ts';
 
 import type { Change } from '../typedefs/Change.ts';
-import type { InstanceProps } from '../typedefs/InstanceProps.ts';
+import type { HostConfig } from '../typedefs/HostConfig.ts';
 
 const DEFAULT = '__default';
 
 export function diffProps(
-    newProps: InstanceProps,
-    oldProps: InstanceProps = {},
+    newProps: HostConfig['props'],
+    oldProps: HostConfig['props'] = {},
     remove = false,
 )
 {

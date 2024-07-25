@@ -4,8 +4,7 @@ import type {
     FederatedWheelEvent,
 } from 'pixi.js';
 import type { PixiToReactEventPropNames } from '../constants/EventPropNames.ts';
-import type { Instance } from './Instance.ts';
-import type { PartialBy } from './PartialBy.ts';
+import type { PixiReactNode } from './PixiReactNode.ts';
 
 export type StupidEventHandlers = {
     -readonly [K in keyof typeof PixiToReactEventPropNames]?:
@@ -14,4 +13,4 @@ export type StupidEventHandlers = {
     | null
 };
 
-export type MaybeInstance = PartialBy<Instance, '__pixireact'> & Partial<StupidEventHandlers>;
+export type MaybePixiReactNode = Partial<PixiReactNode> & Partial<StupidEventHandlers>;

@@ -1,5 +1,5 @@
 import type { Application } from 'pixi.js';
-import type { Instance } from './Instance.ts';
+import type { HostConfig } from './HostConfig.ts';
 
 export interface InternalState
 {
@@ -7,5 +7,5 @@ export interface InternalState
     canvas?: HTMLCanvasElement;
     debug?: boolean;
     isInitialising?: boolean;
-    rootContainer: Instance;
+    rootContainer: HostConfig['containerInstance'];
 }

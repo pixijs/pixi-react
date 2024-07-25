@@ -3,18 +3,18 @@ import {
     Filter,
 } from 'pixi.js';
 
-import type { ContainerElement } from '../typedefs/ContainerElement.ts';
-import type { FilterElement } from '../typedefs/FilterElement.ts';
-import type { Instance } from '../typedefs/Instance.ts';
+import type { HostConfig } from '../typedefs/HostConfig.ts';
 
-export function unhideInstance(instance: Instance)
+export function unhideInstance(
+    instance: HostConfig['instance'],
+)
 {
-    if (Container && instance instanceof Container)
+    if (instance instanceof Container)
     {
-        (instance as ContainerElement).visible = true;
+        (instance as HostConfig['containerInstance']).visible = true;
     }
-    else if (Filter && instance instanceof Filter)
+    else if (instance instanceof Filter)
     {
-        (instance as FilterElement).enabled = true;
+        (instance as HostConfig['filterInstance']).enabled = true;
     }
 }

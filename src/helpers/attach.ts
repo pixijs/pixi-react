@@ -1,17 +1,16 @@
 import { Filter } from 'pixi.js';
 
-import type { ContainerElement } from '../typedefs/ContainerElement.ts';
-import type { Instance } from '../typedefs/Instance.ts';
+import type { HostConfig } from '../typedefs/HostConfig.ts';
 
 export function attach(
-    parentInstance: Instance<ContainerElement>,
-    childInstance: Instance,
+    parentInstance: HostConfig['containerInstance'],
+    childInstance: HostConfig['instance'],
     targetIndex?: number
 )
 {
     if (childInstance instanceof Filter)
     {
-        childInstance.__pixireact.parent = parentInstance;
+        (childInstance as HostConfig['filterInstance']).__pixireact.parent = parentInstance;
 
         if (typeof targetIndex === 'number')
         {

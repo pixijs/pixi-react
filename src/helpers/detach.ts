@@ -1,13 +1,14 @@
 import { Filter } from 'pixi.js';
 
-import type { ContainerElement } from 'typedefs/ContainerElement.ts';
-import type { Instance } from '../typedefs/Instance.ts';
+import type { HostConfig } from '../typedefs/HostConfig.ts';
 
-export function detach(childInstance: Instance)
+export function detach(
+    childInstance: HostConfig['instance'],
+)
 {
     if (childInstance instanceof Filter)
     {
-        const parentInstance = childInstance.__pixireact.parent as Instance<ContainerElement>;
+        const parentInstance = childInstance.__pixireact.parent as HostConfig['instance'];
 
         if (parentInstance)
         {

@@ -16,26 +16,34 @@ import type {
     FederatedWheelEvent,
 } from 'pixi.js';
 import type { DiffSet } from '../typedefs/DiffSet.ts';
-import type { Instance } from '../typedefs/Instance.ts';
-import type { InstanceProps } from '../typedefs/InstanceProps.ts';
-import type { MaybeInstance } from '../typedefs/MaybeInstance.ts';
+import type { HostConfig } from '../typedefs/HostConfig.ts';
+import type { MaybePixiReactNode } from '../typedefs/MaybePixiReactNode.ts';
+import type { NodeState } from '../typedefs/NodeState.ts';
 
 const DEFAULT = '__default';
 const DEFAULTS_CONTAINERS = new Map();
 
 const PIXI_EVENT_PROP_NAME_ERROR_HAS_BEEN_SHOWN: Record<string, boolean> = {};
 
-/**
- * Apply properties to Pixi.js instance.
- *
- * @param {MaybeInstance} instance An instance?
- * @param {InstanceProps | DiffSet} data New props.
- */
-export function applyProps(instance: MaybeInstance, data: InstanceProps | DiffSet)
+function targetKeyReducer(accumulator: MaybePixiReactNode, key: string)
+{
+    if (key in accumulator)
+    {
+        return accumulator[key as keyof MaybePixiReactNode];
+    }
+
+    return accumulator;
+}
+
+/** Apply properties to Pixi.js instance. */
+export function applyProps(
+    instance: MaybePixiReactNode,
+    data: HostConfig['props'] | DiffSet,
+)
 {
     const {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        __pixireact: instanceState,
+        __pixireact: instanceState = {} as NodeState,
         ...instanceProps
     } = instance;
 
@@ -47,7 +55,7 @@ export function applyProps(instance: MaybeInstance, data: InstanceProps | DiffSe
     }
     else
     {
-        typedData = diffProps(data, instanceProps as InstanceProps);
+        typedData = diffProps(data, instanceProps as HostConfig['props']);
     }
 
     const { changes } = typedData;
@@ -58,11 +66,11 @@ export function applyProps(instance: MaybeInstance, data: InstanceProps | DiffSe
     {
         const change = changes[changeIndex];
         let hasError = false;
-        let key = change[0] as keyof Instance;
+        let key = change[0] as keyof HostConfig['instance'];
         let value = change[1];
         const isEvent = change[2];
 
-        const keys = change[3] as (keyof Instance)[];
+        const keys = change[3];
 
         let currentInstance = instance;
         let targetProp = currentInstance[key];
@@ -76,7 +84,7 @@ export function applyProps(instance: MaybeInstance, data: InstanceProps | DiffSe
             else
             {
                 hasError = true;
-                log('warn', `The \`draw\` prop was used on a \`${instance.type}\` component, but it's only valid on \`graphics\` components.`);
+                log('warn', `The \`draw\` prop was used on a \`${instanceState.type}\` component, but it's only valid on \`graphics\` components.`);
             }
         }
 
@@ -99,17 +107,16 @@ export function applyProps(instance: MaybeInstance, data: InstanceProps | DiffSe
             // Resolve dashed props
             if (keys.length)
             {
-                targetProp = keys.reduce((accumulator, key) => accumulator[key], currentInstance);
+                targetProp = keys.reduce(targetKeyReducer, currentInstance);
 
                 // If the target is atomic, it forces us to switch the root
                 if (!(targetProp && targetProp.set))
                 {
                     const [name, ...reverseEntries] = keys.reverse();
 
-                    currentInstance = reverseEntries.reverse().reduce((accumulator, key) =>
-                        accumulator[key], currentInstance);
+                    currentInstance = reverseEntries.reverse().reduce(targetKeyReducer, currentInstance);
 
-                    key = name;
+                    key = name as keyof MaybePixiReactNode;
                 }
             }
 
@@ -160,8 +167,9 @@ export function applyProps(instance: MaybeInstance, data: InstanceProps | DiffSe
                     delete currentInstance[pixiKey];
                 }
             }
-            else if (!isReadOnlyProperty(currentInstance, key))
+            else if (!isReadOnlyProperty(currentInstance as Record<string, unknown>, key))
             {
+                // @ts-expect-error Typescript is grumpy because this could be setting a readonly key, but we're already handling that in the conditional above. 🤷🏻‍♂️
                 currentInstance[key] = value;
             }
         }

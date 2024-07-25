@@ -13,7 +13,7 @@ import type { NodeState } from './NodeState.ts';
 export interface BaseNodeProps<T extends new (...args: any) => any = typeof Container>
 {
     __pixireact: NodeState,
-    children?: T extends PixiReactNode<typeof Container>
+    children?: T extends Container
         ? PixiReactNode | PixiReactNode[]
         : never;
     draw?: T extends Graphics
@@ -29,6 +29,6 @@ export type PixiReactNode<T extends new (...args: any) => any = typeof Container
     & EventHandlers
     & {
         [K in keyof InstanceType<T> as K]: K extends keyof BaseNodeProps<InstanceType<T>>
-            ? never
+            ? BaseNodeProps<InstanceType<T>>[K]
             : InstanceType<T>[K];
     };

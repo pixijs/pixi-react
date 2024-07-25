@@ -1,7 +1,8 @@
-import type {
-    Container,
-    Filter,
+import {
+    type Container,
+    type Filter,
 } from 'pixi.js';
+
 import type { HostConfig } from '../typedefs/HostConfig.ts';
 import type { NodeState } from '../typedefs/NodeState.ts';
 
@@ -13,13 +14,12 @@ export function prepareInstance<T extends Container | Filter | HostConfig['insta
 {
     const instance = component as HostConfig['instance'];
 
-    instance.__pixireact = {
+    instance.__pixireact = Object.assign({
         filters: [],
         parent: null,
         root: null as unknown as HostConfig['containerInstance'],
         type: '',
-        ...state,
-    };
+    }, state);
 
     return instance;
 }

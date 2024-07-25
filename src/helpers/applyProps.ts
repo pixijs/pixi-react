@@ -6,6 +6,10 @@ import {
     PixiToReactEventPropNames,
     ReactToPixiEventPropNames,
 } from '../constants/EventPropNames.ts';
+import {
+    isNull,
+    isUndefined,
+} from './compare.ts';
 import { diffProps } from './diffProps.ts';
 import { isDiffSet } from './isDiffSet.ts';
 import { isReadOnlyProperty } from './isReadOnlyProperty.ts';
@@ -25,11 +29,16 @@ const DEFAULTS_CONTAINERS = new Map();
 
 const PIXI_EVENT_PROP_NAME_ERROR_HAS_BEEN_SHOWN: Record<string, boolean> = {};
 
-function targetKeyReducer(accumulator: MaybePixiReactNode, key: string)
+function targetKeyReducer(accumulator: any, key: string)
 {
-    if (key in accumulator)
+    if (accumulator)
     {
-        return accumulator[key as keyof MaybePixiReactNode];
+        const value = accumulator[key];
+
+        if (!isUndefined(value) && !isNull(value))
+        {
+            return value;
+        }
     }
 
     return accumulator;
@@ -110,7 +119,7 @@ export function applyProps(
                 targetProp = keys.reduce(targetKeyReducer, currentInstance);
 
                 // If the target is atomic, it forces us to switch the root
-                if (!(targetProp && targetProp.set))
+                if (!(targetProp && (targetProp as unknown as Record<string, unknown>).set))
                 {
                     const [name, ...reverseEntries] = keys.reverse();
 

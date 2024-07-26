@@ -1,4 +1,7 @@
-export function isReadOnlyProperty(objectInstance: Record<any, any>, propertyKey: string)
+export function isReadOnlyProperty(
+    objectInstance: Record<string, unknown>,
+    propertyKey: string,
+)
 {
     const prototype = Object.getPrototypeOf(objectInstance);
     const propertyDescriptor = Object.getOwnPropertyDescriptor(prototype, propertyKey);

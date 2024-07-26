@@ -1,11 +1,11 @@
 /** Whether the input is an array. */
-export function isArray(input: any)
+export function isArray(input: any): input is []
 {
     return Array.isArray(input);
 }
 
 /** Whether the input is a boolean. */
-export function isBoolean(input: any)
+export function isBoolean(input: any): input is boolean
 {
     return typeof input === 'boolean';
 }
@@ -130,19 +130,25 @@ export function isEqual(
 }
 
 /** Whether the input is a function. */
-export function isFunction(input: any)
+export function isFunction(input: any): input is (...args: any) => any
 {
     return typeof input === 'function';
 }
 
+/** Whether the input is null. */
+export function isNull(input: any): input is null
+{
+    return input === null;
+}
+
 /** Whether the input is a number. */
-export function isNumber(input: any)
+export function isNumber(input: any): input is number
 {
     return typeof input === 'number';
 }
 
 /** Whether the input is an object. */
-export function isObject(input: any)
+export function isObject(input: any): input is Record<string, unknown>
 {
     if (input !== Object(input))
     {
@@ -163,13 +169,13 @@ export function isObject(input: any)
 }
 
 /** Whether the input is a string. */
-export function isString(input: any)
+export function isString(input: any): input is string
 {
     return typeof input === 'string';
 }
 
 /** Whether the input is undefined. */
-export function isUndefined(input: any)
+export function isUndefined(input: any): input is undefined
 {
     // eslint-disable-next-line no-void
     return input === void 0;

@@ -1,15 +1,14 @@
 import { diffProps } from './diffProps.ts';
 import { log } from './log.ts';
 
-import type { Instance } from '../typedefs/Instance.ts';
-import type { InstanceProps } from '../typedefs/InstanceProps.ts';
+import type { HostConfig } from '../typedefs/HostConfig.ts';
 import type { UpdatePayload } from '../typedefs/UpdatePayload.ts';
 
 export function prepareUpdate(
-    _instance: Instance,
-    _type: string,
-    oldProps: InstanceProps,
-    newProps: InstanceProps,
+    _instance: HostConfig['instance'],
+    _type: HostConfig['type'],
+    oldProps: HostConfig['props'],
+    newProps: HostConfig['props'],
 )
 {
     log('info', 'lifecycle::prepareUpdate');

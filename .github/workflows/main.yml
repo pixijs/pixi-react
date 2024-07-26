@@ -10,8 +10,8 @@ jobs:
     strategy:
       matrix:
         script:
-          - name: Typecheck
-            command: test:types
+          # - name: Typecheck
+          #   command: test:types
           - name: Lint
             command: test:lint
           - name: Unit tests

@@ -4,16 +4,14 @@ import { switchInstance } from './switchInstance.ts';
 
 import type { Fiber } from 'react-reconciler';
 import type { HostConfig } from '../typedefs/HostConfig.ts';
-import type { Instance } from '../typedefs/Instance.ts';
-import type { InstanceProps } from '../typedefs/InstanceProps.ts';
 import type { UpdatePayload } from '../typedefs/UpdatePayload.ts';
 
 export function commitUpdate(
-    instance: Instance,
+    instance: HostConfig['instance'],
     updatePayload: UpdatePayload,
     type: HostConfig['type'],
-    _oldProps: InstanceProps,
-    newProps: InstanceProps,
+    _oldProps: HostConfig['props'],
+    newProps: HostConfig['props'],
     fiber: Fiber,
 )
 {

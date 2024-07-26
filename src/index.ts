@@ -6,4 +6,5 @@ export { useApp } from './hooks/useApp.ts';
 export { useAsset } from './hooks/useAsset.ts';
 export { useAssets } from './hooks/useAssets.ts';
 export { useExtend } from './hooks/useExtend.ts';
+export { useSuspenseAssets } from './hooks/useSuspenseAssets.ts';
 export { useTick } from './hooks/useTick.ts';

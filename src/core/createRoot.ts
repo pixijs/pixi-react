@@ -5,6 +5,7 @@ import { ContextProvider } from '../components/Context.ts';
 import { isReadOnlyProperty } from '../helpers/isReadOnlyProperty.ts';
 import { log } from '../helpers/log.ts';
 import { prepareInstance } from '../helpers/prepareInstance.ts';
+import { getIsCanvasElement } from '../helpers/canvas.ts';
 import { reconciler } from './reconciler.ts';
 import { roots } from './roots.ts';
 
@@ -50,7 +51,7 @@ export function createRoot(
     {
         let canvas;
 
-        if (target instanceof HTMLCanvasElement)
+        if (getIsCanvasElement(target))
         {
             canvas = target;
         }

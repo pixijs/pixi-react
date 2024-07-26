@@ -21,13 +21,14 @@ import type {
 } from 'pixi.js';
 import type { DiffSet } from '../typedefs/DiffSet.ts';
 import type { HostConfig } from '../typedefs/HostConfig.ts';
-import type { MaybePixiReactNode } from '../typedefs/MaybePixiReactNode.ts';
 import type { NodeState } from '../typedefs/NodeState.ts';
 
 const DEFAULT = '__default';
 const DEFAULTS_CONTAINERS = new Map();
 
 const PIXI_EVENT_PROP_NAME_ERROR_HAS_BEEN_SHOWN: Record<string, boolean> = {};
+
+export type MaybeInstance = Partial<HostConfig['instance']>;
 
 function targetKeyReducer(accumulator: any, key: string)
 {
@@ -46,7 +47,7 @@ function targetKeyReducer(accumulator: any, key: string)
 
 /** Apply properties to Pixi.js instance. */
 export function applyProps(
-    instance: MaybePixiReactNode,
+    instance: MaybeInstance,
     data: HostConfig['props'] | DiffSet,
 )
 {
@@ -125,7 +126,7 @@ export function applyProps(
 
                     currentInstance = reverseEntries.reverse().reduce(targetKeyReducer, currentInstance);
 
-                    key = name as keyof MaybePixiReactNode;
+                    key = name as keyof MaybeInstance;
                 }
             }
 

@@ -3,7 +3,7 @@ import {
     expect,
     it,
 } from 'vitest';
-import * as PixiReact from '../../src/index.js';
+import * as PixiReact from '../../src/index.ts';
 
 describe('exports', () =>
 {

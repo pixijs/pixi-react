@@ -33,7 +33,7 @@ import type { HostConfig } from '../typedefs/HostConfig.ts';
 const reconcilerConfig: Reconciler.HostConfig<
 HostConfig['type'],
 HostConfig['props'],
-HostConfig['container'],
+HostConfig['containerInstance'],
 HostConfig['instance'],
 HostConfig['textInstance'],
 HostConfig['suspenseInstance'],

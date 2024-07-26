@@ -19,7 +19,7 @@ export function useAsset<T>(
     /** @description Asset options. */
     options: (UnresolvedAsset<T> & AssetRetryOptions) | string,
     /** @description A function to be called when the asset loader reports loading progress. */
-    onProgress: ProgressCallback,
+    onProgress?: ProgressCallback,
     /** @description A function to be called when the asset loader reports loading progress. */
     onError?: ErrorCallback,
 )

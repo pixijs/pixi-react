@@ -69,6 +69,7 @@
     "@types/eslint": "^8.56.10",
     "@types/react": "^18.3.2",
     "@types/react-reconciler": "0.28.8",
+    "canvas": "^2.11.2",
     "husky": "^8.0.0",
     "pixi.js": "8.2.1",
     "react": "^18.3.1",

@@ -1,7 +1,4 @@
-import {
-    type Application as PixiApplication,
-    TextStyle,
-} from 'pixi.js';
+import { TextStyle } from 'pixi.js';
 import {
     createElement,
     forwardRef,
@@ -11,6 +8,7 @@ import {
 import { createRoot } from '../core/createRoot.ts';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect.ts';
 
+import type { Application as PixiApplication } from 'pixi.js';
 import type {
     ForwardRefRenderFunction,
     MutableRefObject,

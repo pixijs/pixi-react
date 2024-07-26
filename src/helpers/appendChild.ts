@@ -5,25 +5,27 @@ import {
 import { attach } from './attach.ts';
 import { log } from './log.ts';
 
-import type { ContainerElement } from '../typedefs/ContainerElement.ts';
-import type { Instance } from '../typedefs/Instance.ts';
+import type { HostConfig } from '../typedefs/HostConfig.ts';
 
 /** Adds elements to our application. */
-export function appendChild(parentInstance: Instance<ContainerElement>, childInstance: Instance | null)
+export function appendChild(
+    parentNode: HostConfig['containerInstance'],
+    childNode: HostConfig['instance'] | null,
+)
 {
     log('info', 'lifecycle::appendChild');
 
-    if (!childInstance)
+    if (!childNode)
     {
         return;
     }
 
-    if (childInstance instanceof Container)
+    if (childNode instanceof Container)
     {
-        parentInstance.addChild(childInstance);
+        parentNode.addChild(childNode);
     }
-    else if (childInstance instanceof Filter)
+    else if (childNode instanceof Filter)
     {
-        attach(parentInstance, childInstance);
+        attach(parentNode, childNode);
     }
 }

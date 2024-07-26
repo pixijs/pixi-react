@@ -8,6 +8,7 @@
   "include": [
     "test/**/*",
     "rollup.config.mjs",
-    "vitest.config.js",
+    "vitest.config.ts",
+    "vitest.workspace.ts",
   ]
 }

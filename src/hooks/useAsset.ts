@@ -2,7 +2,7 @@ import {
     Assets,
     Cache,
 } from 'pixi.js';
-import { getAssetKeyFromOptions } from '../helpers/getAssetKeyFromOptions.ts';
+import { getAssetKey } from '../helpers/getAssetKey.ts';
 
 import type {
     ProgressCallback,
@@ -14,7 +14,10 @@ import type { ErrorCallback } from '../typedefs/ErrorCallback.ts';
 
 const errorCache: Map<UnresolvedAsset | string, AssetRetryState> = new Map();
 
-/** Loads assets, returning a hash of assets once they're loaded. */
+/**
+ * Loads assets, returning a hash of assets once they're loaded.
+ * @deprecated Use `useAssets` instead.
+ */
 export function useAsset<T>(
     /** @description Asset options. */
     options: (UnresolvedAsset<T> & AssetRetryOptions) | string,
@@ -43,7 +46,7 @@ export function useAsset<T>(
         retryOnFailure = true,
     } = typeof options !== 'string' ? options : {};
 
-    const assetKey = getAssetKeyFromOptions(options);
+    const assetKey = getAssetKey(options);
 
     if (!Cache.has(assetKey))
     {

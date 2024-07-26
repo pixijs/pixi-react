@@ -32,11 +32,11 @@ export function createRoot(
     else
     {
         state.app = new Application();
-        state.rootContainer = prepareInstance(state.app.stage);
+        state.rootContainer = prepareInstance(state.app.stage) as HostConfig['containerInstance'];
     }
 
     const fiber = root?.fiber ?? reconciler.createContainer(
-        state.rootContainer as HostConfig['containerInstance'],
+        state.rootContainer,
         ConcurrentRoot,
         null,
         false,

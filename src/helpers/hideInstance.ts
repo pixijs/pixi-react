@@ -11,10 +11,10 @@ export function hideInstance(
 {
     if (instance instanceof Container)
     {
-        (instance as HostConfig['containerInstance']).visible = false;
+        instance.visible = false;
     }
     else if (instance instanceof Filter)
     {
-        (instance as HostConfig['filterInstance']).enabled = false;
+        instance.enabled = false;
     }
 }

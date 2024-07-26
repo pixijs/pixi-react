@@ -35,7 +35,7 @@ export function insertBefore(
     }
     else if (childInstance instanceof Filter)
     {
-        const childFilterInstance = childInstance as HostConfig['filterInstance'];
+        const childFilterInstance = childInstance;
         const instanceState = childFilterInstance.__pixireact;
 
         const targetIndex = instanceState.filters.indexOf(beforeChildInstance as unknown as Filter);

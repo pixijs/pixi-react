@@ -19,7 +19,7 @@ export function switchInstance(
         return;
     }
 
-    const root = instance.__pixireact.root as HostConfig['instance'];
+    const root = instance.__pixireact.root as HostConfig['containerInstance'];
     const newInstance = createInstance(type, newProps, root);
 
     if (!instance.__pixireact.autoRemovedBeforeAppend)

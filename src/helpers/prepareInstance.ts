@@ -1,8 +1,7 @@
-import {
-    type Container,
-    type Filter,
+import type {
+    Container,
+    Filter,
 } from 'pixi.js';
-
 import type { HostConfig } from '../typedefs/HostConfig.ts';
 import type { NodeState } from '../typedefs/NodeState.ts';
 

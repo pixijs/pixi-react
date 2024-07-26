@@ -10,7 +10,7 @@ export function attach(
 {
     if (childInstance instanceof Filter)
     {
-        (childInstance as HostConfig['filterInstance']).__pixireact.parent = parentInstance;
+        (childInstance as unknown as HostConfig['filterInstance']).__pixireact.parent = parentInstance;
 
         if (typeof targetIndex === 'number')
         {

@@ -4,8 +4,11 @@ import type {
     TextStyle,
     TextStyleOptions,
 } from 'pixi.js';
-import type { RefObject } from 'react';
-import type { HostConfig } from './HostConfig.ts';
+import type {
+    Key,
+    RefObject,
+} from 'react';
+import type { PixiReactChildNode } from './PixiReactChildNode.ts';
 
 export interface BaseApplicationProps
 {
@@ -16,10 +19,13 @@ export interface BaseApplicationProps
     className?: string
 
     /** @description Child components. */
-    children?: HostConfig['instance'] | HostConfig['instance'][];
+    children: PixiReactChildNode;
 
     /** @description The default style to be applied to text nodes. */
     defaultTextStyle?: TextStyle | TextStyleOptions,
+
+    /** @description A unique key which allows React to manage this component across changes in parent state. */
+    key?: Key,
 
     /** @description Callback to be fired when the application finishes initializing. */
     onInit?: (app: Application) => void

@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
 import { invariant } from '../helpers/invariant.ts';
 import { useApp } from './useApp.ts';
+import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect.ts';
 
 import type { TickerCallback } from 'pixi.js';
 import type { TickCallbackOptions } from '../typedefs/TickCallbackOptions.ts';
@@ -35,7 +35,7 @@ function useTick<T>(
     invariant(typeof callback === 'function', '`useTick` needs a callback function.');
 
     // eslint-disable-next-line consistent-return
-    useEffect(() =>
+    useIsomorphicLayoutEffect(() =>
     {
         const ticker = app?.ticker;
 

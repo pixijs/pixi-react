@@ -4,6 +4,10 @@ module.exports = {
     globals: {
         globalThis: 'readonly',
     },
+    ignorePatterns: [
+        'dist/**/*',
+        'lib/**/*',
+    ],
     parserOptions: {
         project: './tsconfig.eslint.json',
         ecmaVersion: 2020,

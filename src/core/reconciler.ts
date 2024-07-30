@@ -1,7 +1,7 @@
 /* eslint-disable no-empty-function */
 
 import Reconciler from 'react-reconciler';
-import { version } from '../../package.json' assert { type: 'json' };
+import packageData from '../../package.json' assert { type: 'json' };
 import { afterActiveInstanceBlur } from '../helpers/afterActiveInstanceBlur.ts';
 import { appendChild } from '../helpers/appendChild.ts';
 import { beforeActiveInstanceBlur } from '../helpers/beforeActiveInstanceBlur.ts';
@@ -89,7 +89,7 @@ const reconciler = Reconciler(reconcilerConfig);
 reconciler.injectIntoDevTools({
     bundleType: process.env.NODE_ENV === 'production' ? 0 : 1,
     rendererPackageName: '@pixi/react',
-    version,
+    version: packageData.version,
 });
 
 export { reconciler };

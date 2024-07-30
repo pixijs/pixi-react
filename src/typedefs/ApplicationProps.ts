@@ -19,7 +19,7 @@ export interface BaseApplicationProps
     className?: string
 
     /** @description Child components. */
-    children: PixiReactChildNode;
+    children?: PixiReactChildNode;
 
     /** @description The default style to be applied to text nodes. */
     defaultTextStyle?: TextStyle | TextStyleOptions,

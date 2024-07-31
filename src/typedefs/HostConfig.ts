@@ -1,20 +1,25 @@
-import type { Instance } from './Instance.ts';
+import type {
+    Container,
+    Filter,
+} from 'pixi.js';
 import type { NamespacedPixiElements } from './NamespacedPixiElements.ts';
 import type { PixiElements } from './PixiElements.ts';
+import type { PixiReactNode } from './PixiReactNode.ts';
 
 export interface HostConfig
 {
-    type: keyof PixiElements | keyof NamespacedPixiElements;
-    props: Record<string, unknown>;
-    container: Instance;
-    instance: Instance;
-    textInstance: Instance;
-    suspenseInstance: Instance;
-    hydratableInstance: never;
-    publicInstance: Instance;
-    hostContext: null;
-    updatePayload: object;
     childSet: never;
-    timeoutHandle: number;
+    containerInstance: PixiReactNode<typeof Container>;
+    filterInstance: PixiReactNode<typeof Filter>;
+    hostContext: null;
+    hydratableInstance: never;
+    instance: PixiReactNode;
     noTimeout: -1;
+    props: Record<string, unknown>;
+    publicInstance: PixiReactNode;
+    suspenseInstance: PixiReactNode;
+    textInstance: PixiReactNode;
+    timeoutHandle: number;
+    type: keyof PixiElements | keyof NamespacedPixiElements;
+    updatePayload: object;
 }

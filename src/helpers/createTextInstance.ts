@@ -1,11 +1,11 @@
 import { log } from './log.ts';
 
-import type { Instance } from '../typedefs/Instance.ts';
+import type { HostConfig } from '../typedefs/HostConfig.ts';
 
 /** Always throws, because we don't support this (yet). */
 export function createTextInstance(
     _text: string,
-    _rootContainer: Instance,
+    _rootContainer: HostConfig['containerInstance'],
     _hostContext: null,
     _internalHandle: any,
 )

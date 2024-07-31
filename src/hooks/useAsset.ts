@@ -22,9 +22,9 @@ export function useAsset<T>(
     /** @description Asset options. */
     options: (UnresolvedAsset<T> & AssetRetryOptions) | string,
     /** @description A function to be called when the asset loader reports loading progress. */
-    onProgress: ProgressCallback,
-    /** @description A function to be called when the asset loader reports loading progress. */
     onError?: ErrorCallback,
+    /** @description A function to be called if the asset loader encounters an error. */
+    onProgress?: ProgressCallback,
 )
 {
     if (typeof window === 'undefined')

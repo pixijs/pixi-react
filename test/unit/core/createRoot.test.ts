@@ -1,7 +1,4 @@
-import {
-    Application,
-    Container,
-} from 'pixi.js';
+import { Application } from 'pixi.js';
 import {
     describe,
     expect,
@@ -21,10 +18,8 @@ describe('createRoot', () =>
             .to.have.property('render')
             .and.to.be.a('function');
         expect(root).to.have.property('state');
-        expect(root.state).to.have.property('rootContainer');
-        // expect(root.state.app).to.be.instanceOf(Application)
-        expect(root.state.app).to.have.all.keys(Object.keys(new Application()));
-        // expect(root.state.rootContainer).to.be.instanceOf(Container)
-        expect(root.state.rootContainer).to.have.all.keys(Object.keys(new Container()).concat('__pixireact'));
+        expect(root.internalState).to.have.property('rootContainer');
+        expect(root.applicationState.app).to.be.instanceOf(Application);
+        expect(root.internalState).to.equal(root.applicationState.app.stage);
     });
 });

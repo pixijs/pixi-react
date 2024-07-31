@@ -23,13 +23,14 @@ export function insertBefore(
     {
         const childContainerInstance = childInstance as HostConfig['containerInstance'];
         const childContainer = childInstance as unknown as Container;
+        const beforeChildContainer = beforeChildInstance as unknown as Container;
 
         if (childContainerInstance.parent === parentInstance)
         {
             parentInstance.removeChild(childContainer);
         }
 
-        const index = parentInstance.getChildIndex(childContainer);
+        const index = parentInstance.getChildIndex(beforeChildContainer);
 
         parentInstance.addChildAt(childContainer, index);
     }

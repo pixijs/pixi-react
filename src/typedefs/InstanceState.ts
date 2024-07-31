@@ -1,7 +1,7 @@
 import type { Filter } from 'pixi.js';
 import type { HostConfig } from './HostConfig.ts';
 
-export interface NodeState
+export interface InstanceState
 {
     autoRemovedBeforeAppend?: boolean;
     filters: Filter[],

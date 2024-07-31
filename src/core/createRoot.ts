@@ -10,20 +10,34 @@ import { roots } from './roots.ts';
 
 import type { ApplicationOptions } from 'pixi.js';
 import type { ReactNode } from 'react';
+import type { ApplicationState } from '../typedefs/ApplicationState.ts';
+import type { CreateRootOptions } from '../typedefs/CreateRootOptions.ts';
 import type { HostConfig } from '../typedefs/HostConfig.ts';
 import type { InternalState } from '../typedefs/InternalState.ts';
 
 /** Creates a new root for a Pixi React app. */
 export function createRoot(
+    /** @description The DOM node which will serve as the root for this tree. */
     target: HTMLElement | HTMLCanvasElement,
-    options: Partial<InternalState> = {},
+
+    /** @description Options to configure the tree. */
+    options: CreateRootOptions = {},
+
+    /**
+     * @deprecated
+     * @description Callback to be fired when the application finishes initializing.
+     */
     onInit?: (app: Application) => void,
 )
 {
     // Check against mistaken use of createRoot
     let root = roots.get(target);
+    let applicationState = (root?.applicationState ?? {
+        isInitialised: false,
+        isInitialising: false,
+    }) as ApplicationState;
 
-    const state = Object.assign((root?.state ?? {}), options) as InternalState;
+    const internalState = root?.internalState ?? {} as InternalState;
 
     if (root)
     {
@@ -31,12 +45,12 @@ export function createRoot(
     }
     else
     {
-        state.app = new Application();
-        state.rootContainer = prepareInstance(state.app.stage) as HostConfig['containerInstance'];
+        applicationState.app = new Application();
+        internalState.rootContainer = prepareInstance(applicationState.app.stage) as HostConfig['containerInstance'];
     }
 
     const fiber = root?.fiber ?? reconciler.createContainer(
-        state.rootContainer,
+        internalState.rootContainer,
         ConcurrentRoot,
         null,
         false,
@@ -67,15 +81,17 @@ export function createRoot(
             applicationOptions: ApplicationOptions,
         ) =>
         {
-            if (!state.app.renderer && !state.isInitialising)
+            if (!applicationState.app.renderer && !applicationState.isInitialised && !applicationState.isInitialising)
             {
-                state.isInitialising = true;
-                await state.app.init({
+                applicationState.isInitialising = true;
+                await applicationState.app.init({
                     ...applicationOptions,
                     canvas,
                 });
-                onInit?.(state.app);
-                state.isInitialising = false;
+                applicationState.isInitialising = false;
+                applicationState.isInitialised = true;
+                applicationState = { ...applicationState };
+                (options.onInit ?? onInit)?.(applicationState.app);
             }
 
             Object.entries(applicationOptions).forEach(([key, value]) =>
@@ -91,24 +107,25 @@ export function createRoot(
                 }
 
                 // @ts-expect-error Typescript doesn't realise it, but we're already verifying that this isn't a readonly key.
-                state.app[typedKey] = value;
+                applicationState.app[typedKey] = value;
             });
 
             // Update fiber and expose Pixi.js state to children
             reconciler.updateContainer(
-                createElement(ContextProvider, { value: state }, children),
+                createElement(ContextProvider, { value: applicationState }, children),
                 fiber,
                 null,
-                () => undefined
+                () => undefined,
             );
 
-            return state.app;
+            return applicationState.app;
         };
 
         root = {
+            applicationState,
             fiber,
+            internalState,
             render,
-            state,
         };
 
         roots.set(canvas, root);

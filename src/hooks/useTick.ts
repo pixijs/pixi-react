@@ -3,21 +3,30 @@ import { useApp } from './useApp.ts';
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect.ts';
 
 import type { TickerCallback } from 'pixi.js';
-import type { TickCallbackOptions } from '../typedefs/TickCallbackOptions.ts';
+import type { UseTickOptions } from '../typedefs/UseTickOptions.ts';
 
 /** Attaches a callback to the application's Ticker. */
-function useTick<T>(
+export function useTick<T>(
     /** @description The function to be called on each tick. */
-    options: TickerCallback<T> | TickCallbackOptions<T>,
-    /** @description Whether this callback is currently enabled. */
+    options: TickerCallback<T> | UseTickOptions<T>,
+
+    /**
+     * @deprecated
+     * @description Whether this callback is currently enabled.
+     */
     enabled = true,
 )
 {
-    const app = useApp();
+    const {
+        app,
+        isInitialised,
+    } = useApp();
 
     let callback;
 
     let context: any;
+
+    let isEnabled = enabled;
 
     let priority: number | undefined;
 
@@ -29,6 +38,7 @@ function useTick<T>(
     {
         callback = options.callback;
         context = options.context;
+        isEnabled = options.isEnabled;
         priority = options.priority;
     }
 
@@ -37,15 +47,14 @@ function useTick<T>(
     // eslint-disable-next-line consistent-return
     useIsomorphicLayoutEffect(() =>
     {
-        const ticker = app?.ticker;
-
-        if (ticker)
+        if (isInitialised)
         {
-            const wasEnabled = enabled;
+            const ticker = app?.ticker;
+            const wasEnabled = isEnabled;
             const previousContext = context;
             const previousCallback = callback;
 
-            if (enabled && ticker)
+            if (isEnabled && ticker)
             {
                 ticker.add(callback, context, priority);
             }
@@ -61,9 +70,7 @@ function useTick<T>(
     }, [
         callback,
         context,
-        enabled,
+        isEnabled,
         priority,
     ]);
 }
-
-export { useTick };

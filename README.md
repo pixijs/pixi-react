@@ -40,7 +40,7 @@ To add to an existing React application, just install the dependencies:
 
 #### Install Pixi React Dependencies
 ```bash
-npm install pixi.js@^8.2.1 @pixi/react
+npm install pixi.js@^8.2.1 @pixi/react@beta
 ```
 
 #### Pixie React Usage

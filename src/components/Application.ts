@@ -97,7 +97,7 @@ export const ApplicationFunction: ForwardRefRenderFunction<PixiApplication, Appl
 
     useIsomorphicLayoutEffect(() =>
     {
-        const canvasElement = canvasRef.current as HTMLCanvasElement;
+        const canvasElement = canvasRef.current;
 
         if (canvasElement)
         {

@@ -2,22 +2,45 @@ name: Handle Release Branch Push
 
 on:
   push:
-    branches:
-      - 'alpha'
-      - 'beta'
-      - 'main'
 
 jobs:
-  release:
+  verify:
+    name: Verify
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        script:
+          # - name: Typecheck
+          #   command: test:types
+          - name: Lint
+            command: test:lint
+          - name: Unit tests
+            command: test
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Publish Release
+      - name: Setup
+        uses: ./.github/actions/setup
+
+      - name: ${{ matrix.script.name }}
+        run: npm run ${{ matrix.script.command }}
+
+  publish:
+    name: Publish
+    needs:
+      - verify
+    if: contains(fromJson('["refs/heads/alpha", "refs/heads/beta", "refs/heads/main"]'), github.ref)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Publish release
         uses: ./.github/actions/publish-release
         with:
           branchName: ${{ github.head_ref || github.ref_name }}

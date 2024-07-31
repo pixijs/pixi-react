@@ -10,7 +10,7 @@ import type { PixiToReactEventPropNames } from '../constants/EventPropNames.ts';
 import type { ConstructorOptions } from './ConstructorOptions.ts';
 import type { DrawCallback } from './DrawCallback.ts';
 import type { EventHandlers } from './EventHandlers.ts';
-import type { NodeState } from './NodeState.ts';
+import type { InstanceState } from './InstanceState.ts';
 import type { PixiReactChildNode } from './PixiReactChildNode.ts';
 
 export interface BaseNodeProps<T extends new (...args: any) => any = typeof Container>
@@ -27,7 +27,7 @@ export interface BaseNodeProps<T extends new (...args: any) => any = typeof Cont
 
 export interface NodeProps<T extends new (...args: any) => any = typeof Container> extends BaseNodeProps<T>
 {
-    __pixireact: NodeState,
+    __pixireact: InstanceState,
     parent?: PixiReactNode<typeof Container>;
 }
 

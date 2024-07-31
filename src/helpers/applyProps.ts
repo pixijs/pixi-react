@@ -21,7 +21,7 @@ import type {
 } from 'pixi.js';
 import type { DiffSet } from '../typedefs/DiffSet.ts';
 import type { HostConfig } from '../typedefs/HostConfig.ts';
-import type { NodeState } from '../typedefs/NodeState.ts';
+import type { InstanceState } from '../typedefs/InstanceState.ts';
 
 const DEFAULT = '__default';
 const DEFAULTS_CONTAINERS = new Map();
@@ -53,7 +53,7 @@ export function applyProps(
 {
     const {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        __pixireact: instanceState = {} as NodeState,
+        __pixireact: instanceState = {} as InstanceState,
         ...instanceProps
     } = instance;
 

@@ -189,7 +189,7 @@ Pixi React supports custom components via the `extend` API. For example, you can
 import { extend } from '@pixi/react'
 import { Viewport } from 'pixi-viewport'
 
-extend({ viewport })
+extend({ Viewport })
 
 const MyComponent = () => {
   <viewport>
@@ -219,19 +219,23 @@ declare global {
 
 #### `useApp`
 
-`useApp` allows access to the parent `PIXI.Application` created by the `<Application>` component. This hook _will not work_ outside of an `<Application>` component. Additionally, the parent application is passed via [React Context](https://react.dev/reference/react/useContext). This means `useApp` will only work appropriately in _child components_, and not directly in the component that contains the `<Application>` component.
+**DEPRECATED.** Use `useApplication` hook instead.
 
-For example, the following example `useApp` **will not** be able to access the parent application:
+#### `useApplication`
+
+`useApplication` allows access to the parent `PIXI.Application` created by the `<Application>` component. This hook _will not work_ outside of an `<Application>` component. Additionally, the parent application is passed via [React Context](https://react.dev/reference/react/useContext). This means `useApplication` will only work appropriately in _child components_, and in the same component that creates the `<Application>`.
+
+For example, the following example `useApplication` **will not** be able to access the parent application:
 
 ```jsx
 import {
   Application,
-  useApp,
+  useApplication,
 } from '@pixi/react'
 
 const ParentComponent = () => {
   // This will cause an invariant violation.
-  const app = useApp()
+  const { app } = useApplication()
 
   return (
     <Application />
@@ -239,16 +243,16 @@ const ParentComponent = () => {
 }
 ```
 
-Here's a working example where `useApp` **will** be able to access the parent application:
+Here's a working example where `useApplication` **will** be able to access the parent application:
 
 ```jsx
 import {
   Application,
-  useApp,
+  useApplication,
 } from '@pixi/react'
 
 const ChildComponent = () => {
-  const app = useApp()
+  const { app } = useApplication()
 
   console.log(app)
 
@@ -357,7 +361,7 @@ const MyComponent = () => {
 }
 ```
 
-`useTick` optionally takes a boolean as a second argument. Setting this boolean to `false` will cause the callback to be disabled until the argument is set to true again.
+`useTick` optionally takes an options object. This allows control of all [`ticker.add`](https://pixijs.download/release/docs/ticker.Ticker.html#add) options, as well as adding the `isEnabled` option. Setting `isEnabled` to `false` will cause the callback to be disabled until the argument is changed to true again.
 
 ```jsx
 import { useState } from 'react'
@@ -373,3 +377,34 @@ const MyComponent = () => {
   )
 }
 ```
+
+> [!CAUTION]
+> The callback passed to `useTick` **is not memoised**. This can cause issues where your callback is being removed and added back to the ticker on every frame if you're mutating state in a component where `useTick` is using a non-memoised function. For example, this issue would affect the component below because we are mutating the state, causing the component to re-render constantly:
+> ```jsx
+> import { useState } from 'react'
+> import { useTick } from '@pixi/react'
+>
+> const MyComponent = () => {
+>   const [count, setCount] = useState(0)
+>
+>   useTick(() => setCount(previousCount => previousCount + 1))
+>
+>   return null
+> }
+> ```
+> This issue can be solved by memoising the callback passed to `useTick`:
+> ```jsx
+> import {
+>   useCallback,
+>   useState,
+> } from 'react'
+> import { useTick } from '@pixi/react'
+>
+> const MyComponent = () => {
+>   const [count, setCount] = useState(0)
+>
+>   const updateCount = useCallback(() => setCount(previousCount => previousCount + 1), [])
+>
+>   useTick(updateCount)
+> }
+> ```

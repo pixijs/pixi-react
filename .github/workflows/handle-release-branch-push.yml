@@ -2,10 +2,6 @@ name: Handle Release Branch Push
 
 on:
   push:
-    branches:
-      - 'alpha'
-      - 'beta'
-      - 'main'
 
 jobs:
   verify:
@@ -42,6 +38,7 @@ jobs:
     name: Publish release
     needs:
       - verify
+    if: contains(fromJson('["refs/heads/alpha", "refs/heads/beta", "refs/heads/main"]'), github.ref)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

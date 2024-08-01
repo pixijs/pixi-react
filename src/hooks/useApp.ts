@@ -1,6 +1,6 @@
 import { Application } from 'pixi.js';
 import { useContext } from 'react';
-import { Context } from '../components/Context.ts';
+import { Context } from '../components/Context';
 import { invariant } from '../helpers/invariant';
 
 /**

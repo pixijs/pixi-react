@@ -1,13 +1,13 @@
-import { PixiReactIgnoredProps } from '../constants/PixiReactIgnoredProps.ts';
-import { applyProps } from './applyProps.ts';
-import { catalogue } from './catalogue.ts';
-import { convertStringToPascalCase } from './convertStringToPascalCase.ts';
-import { gentleCloneProps } from './gentleCloneProps.ts';
-import { log } from './log.ts';
-import { parseComponentType } from './parseComponentType.ts';
-import { prepareInstance } from './prepareInstance.ts';
+import { PixiReactIgnoredProps } from '../constants/PixiReactIgnoredProps';
+import { applyProps } from './applyProps';
+import { catalogue } from './catalogue';
+import { convertStringToPascalCase } from './convertStringToPascalCase';
+import { gentleCloneProps } from './gentleCloneProps';
+import { log } from './log';
+import { parseComponentType } from './parseComponentType';
+import { prepareInstance } from './prepareInstance';
 
-import type { HostConfig } from '../typedefs/HostConfig.ts';
+import type { HostConfig } from '../typedefs/HostConfig';
 
 export function createInstance(
     type: HostConfig['type'],

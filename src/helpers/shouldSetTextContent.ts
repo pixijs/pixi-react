@@ -1,4 +1,4 @@
-import { log } from './log.ts';
+import { log } from './log';
 
 /** Determines whether to set the text content of a node. */
 export function shouldSetTextContent()

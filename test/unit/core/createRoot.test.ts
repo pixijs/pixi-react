@@ -4,7 +4,7 @@ import {
     expect,
     it,
 } from 'vitest';
-import { createRoot } from '../../../src/core/createRoot.ts';
+import { createRoot } from '../../../src/core/createRoot';
 
 describe('createRoot', () =>
 {

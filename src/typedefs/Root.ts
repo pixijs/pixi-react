@@ -1,7 +1,7 @@
 import type { Container } from 'pixi.js';
 import type { Fiber } from 'react-reconciler';
-import type { ApplicationState } from './ApplicationState.ts';
-import type { InternalState } from './InternalState.ts';
+import type { ApplicationState } from './ApplicationState';
+import type { InternalState } from './InternalState';
 
 export interface Root
 {

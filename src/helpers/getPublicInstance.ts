@@ -1,4 +1,4 @@
-import { log } from './log.ts';
+import { log } from './log';
 
 export function getPublicInstance<T>(instance: T)
 {

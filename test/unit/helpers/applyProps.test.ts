@@ -4,8 +4,8 @@ import {
     expect,
     it,
 } from 'vitest';
-import { applyProps } from '../../../src/helpers/applyProps.ts';
-import { prepareInstance } from '../../../src/helpers/prepareInstance.ts';
+import { applyProps } from '../../../src/helpers/applyProps';
+import { prepareInstance } from '../../../src/helpers/prepareInstance';
 
 describe('applyProps', () =>
 {

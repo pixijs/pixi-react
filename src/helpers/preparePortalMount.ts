@@ -1,4 +1,4 @@
-import { log } from './log.ts';
+import { log } from './log';
 
 /** Called if the container is being used as a portal target. */
 export function preparePortalMount()

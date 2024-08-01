@@ -3,13 +3,13 @@ import {
     Cache,
 } from 'pixi.js';
 import { useState } from 'react';
-import { UseAssetsStatus } from '../constants/UseAssetsStatus.ts';
-import { getAssetKey } from '../helpers/getAssetKey.ts';
+import { UseAssetsStatus } from '../constants/UseAssetsStatus';
+import { getAssetKey } from '../helpers/getAssetKey';
 
-import type { AssetRetryState } from '../typedefs/AssetRetryState.ts';
-import type { UnresolvedAsset } from '../typedefs/UnresolvedAsset.ts';
-import type { UseAssetsOptions } from '../typedefs/UseAssetsOptions.ts';
-import type { UseAssetsResult } from '../typedefs/UseAssetsResult.ts';
+import type { AssetRetryState } from '../typedefs/AssetRetryState';
+import type { UnresolvedAsset } from '../typedefs/UnresolvedAsset';
+import type { UseAssetsOptions } from '../typedefs/UseAssetsOptions';
+import type { UseAssetsResult } from '../typedefs/UseAssetsResult';
 
 const errorCache: Map<UnresolvedAsset, AssetRetryState> = new Map();
 

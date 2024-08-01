@@ -71,6 +71,7 @@ export function useTick<T>(
         callback,
         context,
         isEnabled,
+        isInitialised,
         priority,
     ]);
 }

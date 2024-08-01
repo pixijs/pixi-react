@@ -1,4 +1,4 @@
-import { log } from './log.ts';
+import { log } from './log';
 
 /** Retrieves the host context from the root container. */
 export function getRootHostContext()

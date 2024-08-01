@@ -1,4 +1,4 @@
-import { log } from './log.ts';
+import { log } from './log';
 
 /** Applies final mutations during the render phase. */
 export function finalizeInitialChildren()

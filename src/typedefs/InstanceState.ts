@@ -1,5 +1,5 @@
 import type { Filter } from 'pixi.js';
-import type { HostConfig } from './HostConfig.ts';
+import type { HostConfig } from './HostConfig';
 
 export interface InstanceState
 {

@@ -3,7 +3,7 @@ import type {
     FederatedPointerEvent,
     FederatedWheelEvent,
 } from 'pixi.js';
-import type { ReactToPixiEventPropNames } from '../constants/EventPropNames.ts';
+import type { ReactToPixiEventPropNames } from '../constants/EventPropNames';
 
 export type EventHandlers = {
     -readonly [K in keyof typeof ReactToPixiEventPropNames]?:

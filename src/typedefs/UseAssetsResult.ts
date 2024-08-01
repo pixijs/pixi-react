@@ -1,4 +1,4 @@
-import type { UseAssetsStatus } from '../constants/UseAssetsStatus.ts';
+import type { UseAssetsStatus } from '../constants/UseAssetsStatus';
 
 export interface UseAssetsResult<T>
 {

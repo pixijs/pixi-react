@@ -3,18 +3,18 @@ import {
     expect,
     it,
 } from 'vitest';
-import { Application } from '../../src/components/Application.ts';
-import { UseAssetsStatus } from '../../src/constants/UseAssetsStatus.ts';
-import { createRoot } from '../../src/core/createRoot.ts';
-import { extend } from '../../src/helpers/extend.ts';
-import { useApp } from '../../src/hooks/useApp.ts';
-import { useApplication } from '../../src/hooks/useApplication.ts';
-import { useAsset } from '../../src/hooks/useAsset.ts';
-import { useAssets } from '../../src/hooks/useAssets.ts';
-import { useExtend } from '../../src/hooks/useExtend.ts';
-import { useSuspenseAssets } from '../../src/hooks/useSuspenseAssets.ts';
-import { useTick } from '../../src/hooks/useTick.ts';
-import * as PixiReact from '../../src/index.ts';
+import { Application } from '../../src/components/Application';
+import { UseAssetsStatus } from '../../src/constants/UseAssetsStatus';
+import { createRoot } from '../../src/core/createRoot';
+import { extend } from '../../src/helpers/extend';
+import { useApp } from '../../src/hooks/useApp';
+import { useApplication } from '../../src/hooks/useApplication';
+import { useAsset } from '../../src/hooks/useAsset';
+import { useAssets } from '../../src/hooks/useAssets';
+import { useExtend } from '../../src/hooks/useExtend';
+import { useSuspenseAssets } from '../../src/hooks/useSuspenseAssets';
+import { useTick } from '../../src/hooks/useTick';
+import * as PixiReact from '../../src/index';
 
 describe('exports', () =>
 {

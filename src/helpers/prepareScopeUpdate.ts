@@ -1,4 +1,4 @@
-import { log } from './log.ts';
+import { log } from './log';
 
 /** No idea what this actually does. 🤷🏻‍♂️ */
 export function prepareScopeUpdate()

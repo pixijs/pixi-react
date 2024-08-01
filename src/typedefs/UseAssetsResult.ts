@@ -1,4 +1,4 @@
-import { type UseAssetsStatus } from './UseAssetsStatus.ts';
+import type { UseAssetsStatus } from '../constants/UseAssetsStatus.ts';
 
 export interface UseAssetsResult<T>
 {
@@ -18,5 +18,5 @@ export interface UseAssetsResult<T>
     isSuccess: boolean;
 
     /** @description The current loading status of these assets. */
-    status: UseAssetsStatus;
+    status: Lowercase<keyof typeof UseAssetsStatus>;
 }

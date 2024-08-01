@@ -1,4 +1,4 @@
-import { store } from '../store.ts';
+import { store } from '../store';
 
 export type LogType = 'error' | 'info' | 'log' | 'warn';
 

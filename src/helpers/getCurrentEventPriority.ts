@@ -3,7 +3,7 @@ import {
     DefaultEventPriority,
     DiscreteEventPriority,
 } from 'react-reconciler/constants.js';
-import { log } from './log.ts';
+import { log } from './log';
 
 export function getCurrentEventPriority()
 {

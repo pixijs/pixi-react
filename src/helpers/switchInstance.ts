@@ -1,9 +1,9 @@
-import { appendChild } from './appendChild.ts';
-import { createInstance } from './createInstance.ts';
-import { removeChild } from './removeChild.ts';
+import { appendChild } from './appendChild';
+import { createInstance } from './createInstance';
+import { removeChild } from './removeChild';
 
 import type { Fiber } from 'react-reconciler';
-import type { HostConfig } from '../typedefs/HostConfig.ts';
+import type { HostConfig } from '../typedefs/HostConfig';
 
 export function switchInstance(
     instance: HostConfig['instance'],

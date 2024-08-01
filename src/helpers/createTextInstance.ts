@@ -1,6 +1,6 @@
-import { log } from './log.ts';
+import { log } from './log';
 
-import type { HostConfig } from '../typedefs/HostConfig.ts';
+import type { HostConfig } from '../typedefs/HostConfig';
 
 /** Always throws, because we don't support this (yet). */
 export function createTextInstance(

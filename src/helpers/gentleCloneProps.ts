@@ -1,5 +1,5 @@
-import { ReactIgnoredProps } from '../constants/ReactIgnoredProps.ts';
-import { gentleClone } from './gentleClone.ts';
+import { ReactIgnoredProps } from '../constants/ReactIgnoredProps';
+import { gentleClone } from './gentleClone';
 
 /** Clones a props object, excluding keys that are special to React and Pixi React. */
 export function gentleCloneProps(

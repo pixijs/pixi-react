@@ -1,4 +1,4 @@
-import type { HostConfig } from '../typedefs/HostConfig.ts';
+import type { HostConfig } from '../typedefs/HostConfig';
 
 export const catalogue: {
     [name: string]: {

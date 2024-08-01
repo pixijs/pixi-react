@@ -6,12 +6,12 @@ import type {
     Key,
     Ref,
 } from 'react';
-import type { PixiToReactEventPropNames } from '../constants/EventPropNames.ts';
-import type { ConstructorOptions } from './ConstructorOptions.ts';
-import type { DrawCallback } from './DrawCallback.ts';
-import type { EventHandlers } from './EventHandlers.ts';
-import type { InstanceState } from './InstanceState.ts';
-import type { PixiReactChildNode } from './PixiReactChildNode.ts';
+import type { PixiToReactEventPropNames } from '../constants/EventPropNames';
+import type { ConstructorOptions } from './ConstructorOptions';
+import type { DrawCallback } from './DrawCallback';
+import type { EventHandlers } from './EventHandlers';
+import type { InstanceState } from './InstanceState';
+import type { PixiReactChildNode } from './PixiReactChildNode';
 
 export interface BaseNodeProps<T extends new (...args: any) => any = typeof Container>
 {

@@ -2,15 +2,15 @@ import {
     Assets,
     Cache,
 } from 'pixi.js';
-import { getAssetKey } from '../helpers/getAssetKey.ts';
+import { getAssetKey } from '../helpers/getAssetKey';
 
 import type {
     ProgressCallback,
     UnresolvedAsset,
 } from 'pixi.js';
-import type { AssetRetryOptions } from '../typedefs/AssetRetryOptions.ts';
-import type { AssetRetryState } from '../typedefs/AssetRetryState.ts';
-import type { ErrorCallback } from '../typedefs/ErrorCallback.ts';
+import type { AssetRetryOptions } from '../typedefs/AssetRetryOptions';
+import type { AssetRetryState } from '../typedefs/AssetRetryState';
+import type { ErrorCallback } from '../typedefs/ErrorCallback';
 
 const errorCache: Map<UnresolvedAsset | string, AssetRetryState> = new Map();
 

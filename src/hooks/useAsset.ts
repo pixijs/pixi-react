@@ -14,10 +14,7 @@ import type { ErrorCallback } from '../typedefs/ErrorCallback.ts';
 
 const errorCache: Map<UnresolvedAsset | string, AssetRetryState> = new Map();
 
-/**
- * Loads assets, returning a hash of assets once they're loaded.
- * @deprecated Use `useAssets` instead.
- */
+/** @deprecated Use `useAssets` instead. */
 export function useAsset<T>(
     /** @description Asset options. */
     options: (UnresolvedAsset<T> & AssetRetryOptions) | string,

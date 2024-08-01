@@ -39,8 +39,5 @@
   ],
   "include": [
     "./src/**/*",
-    "./test/**/*",
-    "./vitest.setup.ts",
-    "./vitest.workspace.ts",
-  ]
+  ],
 }

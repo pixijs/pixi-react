@@ -3,5 +3,10 @@
   "files": [
     ".eslintrc.js",
     "release.config.js",
+  ],
+  "include": [
+    "./test/**/*",
+    "./vitest.setup.ts",
+    "./vitest.workspace.ts"
   ]
 }

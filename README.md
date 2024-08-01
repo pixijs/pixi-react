@@ -40,7 +40,7 @@ To add to an existing React application, just install the dependencies:
 
 #### Install Pixi React Dependencies
 ```bash
-npm install pixi.js@^8.2.1 @pixi/react
+npm install pixi.js@^8.2.1 @pixi/react@beta
 ```
 
 #### Pixie React Usage
@@ -189,7 +189,7 @@ Pixi React supports custom components via the `extend` API. For example, you can
 import { extend } from '@pixi/react'
 import { Viewport } from 'pixi-viewport'
 
-extend({ viewport })
+extend({ Viewport })
 
 const MyComponent = () => {
   <viewport>
@@ -219,19 +219,23 @@ declare global {
 
 #### `useApp`
 
-`useApp` allows access to the parent `PIXI.Application` created by the `<Application>` component. This hook _will not work_ outside of an `<Application>` component. Additionally, the parent application is passed via [React Context](https://react.dev/reference/react/useContext). This means `useApp` will only work appropriately in _child components_, and not directly in the component that contains the `<Application>` component.
+**DEPRECATED.** Use `useApplication` hook instead.
 
-For example, the following example `useApp` **will not** be able to access the parent application:
+#### `useApplication`
+
+`useApplication` allows access to the parent `PIXI.Application` created by the `<Application>` component. This hook _will not work_ outside of an `<Application>` component. Additionally, the parent application is passed via [React Context](https://react.dev/reference/react/useContext). This means `useApplication` will only work appropriately in _child components_, and in the same component that creates the `<Application>`.
+
+For example, the following example `useApplication` **will not** be able to access the parent application:
 
 ```jsx
 import {
   Application,
-  useApp,
+  useApplication,
 } from '@pixi/react'
 
 const ParentComponent = () => {
   // This will cause an invariant violation.
-  const app = useApp()
+  const { app } = useApplication()
 
   return (
     <Application />
@@ -239,16 +243,16 @@ const ParentComponent = () => {
 }
 ```
 
-Here's a working example where `useApp` **will** be able to access the parent application:
+Here's a working example where `useApplication` **will** be able to access the parent application:
 
 ```jsx
 import {
   Application,
-  useApp,
+  useApplication,
 } from '@pixi/react'
 
 const ChildComponent = () => {
-  const app = useApp()
+  const { app } = useApplication()
 
   console.log(app)
 
@@ -266,22 +270,36 @@ const ParentComponent = () => (
 
 #### `useAsset`
 
-The `useAsset` hook wraps the functionality of [Pixi's Asset loader](https://pixijs.download/release/docs/assets.Assets.html) and cache into a convenient React hook. The hook can accept either an [`UnresolvedAsset`](https://pixijs.download/release/docs/assets.html#UnresolvedAsset) or a url.
+**DEPRECATED.** Use `useAssets` of `useSuspenseAssets` instead.
+
+#### `useAssets`
+
+The `useAssets` hook wraps the functionality of [Pixi's Asset loader](https://pixijs.download/release/docs/assets.Assets.html) and [Cache](https://pixijs.download/release/docs/assets.Cache.html) into a convenient React hook. The hook can accept an array of items which are either an [`UnresolvedAsset`](https://pixijs.download/release/docs/assets.html#UnresolvedAsset) or a url.
 
 ```jsx
-import { useAsset } from '@pixi/react'
+import { useAssets } from '@pixi/react'
 
 const MyComponent = () => {
-  const bunnyTexture = useAsset('https://pixijs.com/assets/bunny.png')
-  const bunnyTexture2 = useAsset({
-    alias: 'bunny',
-    src: 'https://pixijs.com/assets/bunny.png',
-  })
+  const {
+    assets: [
+      bunnyTexture1,
+      bunnyTexture2,
+    ],
+    isSuccess,
+  } = useAssets([
+    'https://pixijs.com/assets/bunny.png',
+    {
+      alias: 'bunny',
+      src: 'https://pixijs.com/assets/bunny.png',
+    }
+  ])
 
   return (
     <container>
-      <sprite texture={bunnyTexture}>
-      <sprite texture={bunnyTexture2}>
+      {isSuccess && (
+        <sprite texture={bunnyTexture}>
+        <sprite texture={bunnyTexture2}>
+      )}
     </container>
   )
 }
@@ -289,26 +307,27 @@ const MyComponent = () => {
 
 ##### Tracking Progress
 
-`useAsset` can optionally accept a [`ProgressCallback`](https://pixijs.download/release/docs/assets.html#ProgressCallback) as a second argument. This callback will be called by the asset loader as the asset is loaded.
+`useAssets` can optionally accept a [`ProgressCallback`](https://pixijs.download/release/docs/assets.html#ProgressCallback) as a second argument. This callback will be called by the asset loader as the asset is loaded.
 
 ```jsx
-const bunnyTexture = useAsset('https://pixijs.com/assets/bunny.png', progress => {
+const bunnyTexture = useAssets('https://pixijs.com/assets/bunny.png', progress => {
   console.log(`We have achieved ${progress * 100}% bunny.`)
 })
 ```
 
-> [!TIP]
-> The `useAsset` hook also supports [React Suspense](https://react.dev/reference/react/Suspense)! If given a suspense boundary, it's possible to prevent components from rendering until they've finished loading their assets:
+#### `useSuspenseAssets`
+
+`useSuspenseAssets` is similar to the `useAssets` hook, except that it supports [React Suspense](https://react.dev/reference/react/Suspense). `useSuspenseAssets` accepts the same parameters as `useAssets`, but it only returns an array of the loaded assets. This is because given a suspense boundary it's possible to prevent components from rendering until they've finished loading their assets.
 > ```jsx
 > import {
 > 	Application,
-> 	useAsset,
+> 	useSuspenseAssets,
 > } from '@pixi/react'
 >
-> import { Suspense } from 'react';
+> import { Suspense } from 'react'
 >
 > const BunnySprite = () => {
-> 	const bunnyTexture = useAsset('https://pixijs.com/assets/bunny.png')
+> 	const [bunnyTexture] = useSuspenseAssets(['https://pixijs.com/assets/bunny.png'])
 >
 > 	return (
 > 		<sprite texture={bunnyTexture} />
@@ -357,7 +376,7 @@ const MyComponent = () => {
 }
 ```
 
-`useTick` optionally takes a boolean as a second argument. Setting this boolean to `false` will cause the callback to be disabled until the argument is set to true again.
+`useTick` optionally takes an options object. This allows control of all [`ticker.add`](https://pixijs.download/release/docs/ticker.Ticker.html#add) options, as well as adding the `isEnabled` option. Setting `isEnabled` to `false` will cause the callback to be disabled until the argument is changed to true again.
 
 ```jsx
 import { useState } from 'react'
@@ -373,3 +392,34 @@ const MyComponent = () => {
   )
 }
 ```
+
+> [!CAUTION]
+> The callback passed to `useTick` **is not memoised**. This can cause issues where your callback is being removed and added back to the ticker on every frame if you're mutating state in a component where `useTick` is using a non-memoised function. For example, this issue would affect the component below because we are mutating the state, causing the component to re-render constantly:
+> ```jsx
+> import { useState } from 'react'
+> import { useTick } from '@pixi/react'
+>
+> const MyComponent = () => {
+>   const [count, setCount] = useState(0)
+>
+>   useTick(() => setCount(previousCount => previousCount + 1))
+>
+>   return null
+> }
+> ```
+> This issue can be solved by memoising the callback passed to `useTick`:
+> ```jsx
+> import {
+>   useCallback,
+>   useState,
+> } from 'react'
+> import { useTick } from '@pixi/react'
+>
+> const MyComponent = () => {
+>   const [count, setCount] = useState(0)
+>
+>   const updateCount = useCallback(() => setCount(previousCount => previousCount + 1), [])
+>
+>   useTick(updateCount)
+> }
+> ```

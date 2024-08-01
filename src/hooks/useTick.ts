@@ -1,5 +1,5 @@
 import { invariant } from '../helpers/invariant.ts';
-import { useApp } from './useApp.ts';
+import { useApplication } from './useApplication.ts';
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect.ts';
 
 import type { TickerCallback } from 'pixi.js';
@@ -20,7 +20,7 @@ export function useTick<T>(
     const {
         app,
         isInitialised,
-    } = useApp();
+    } = useApplication();
 
     let callback;
 
@@ -71,6 +71,7 @@ export function useTick<T>(
         callback,
         context,
         isEnabled,
+        isInitialised,
         priority,
     ]);
 }

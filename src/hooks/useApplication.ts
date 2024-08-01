@@ -4,10 +4,9 @@ import { Context } from '../components/Context.ts';
 import { invariant } from '../helpers/invariant';
 
 /**
- * @deprecated
  * @description Retrieves the nearest Pixi.js Application from the Pixi React context.
  */
-export function useApp()
+export function useApplication()
 {
     const appContext = useContext(Context);
 

@@ -17,9 +17,10 @@ describe('createRoot', () =>
         expect(root)
             .to.have.property('render')
             .and.to.be.a('function');
-        expect(root).to.have.property('state');
+        expect(root).to.have.property('applicationState');
+        expect(root).to.have.property('internalState');
         expect(root.internalState).to.have.property('rootContainer');
         expect(root.applicationState.app).to.be.instanceOf(Application);
-        expect(root.internalState).to.equal(root.applicationState.app.stage);
+        expect(root.internalState.rootContainer).to.equal(root.applicationState.app.stage);
     });
 });

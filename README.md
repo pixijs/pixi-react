@@ -270,22 +270,36 @@ const ParentComponent = () => (
 
 #### `useAsset`
 
-The `useAsset` hook wraps the functionality of [Pixi's Asset loader](https://pixijs.download/release/docs/assets.Assets.html) and cache into a convenient React hook. The hook can accept either an [`UnresolvedAsset`](https://pixijs.download/release/docs/assets.html#UnresolvedAsset) or a url.
+**DEPRECATED.** Use `useAssets` of `useSuspenseAssets` instead.
+
+#### `useAssets`
+
+The `useAssets` hook wraps the functionality of [Pixi's Asset loader](https://pixijs.download/release/docs/assets.Assets.html) and [Cache](https://pixijs.download/release/docs/assets.Cache.html) into a convenient React hook. The hook can accept an array of items which are either an [`UnresolvedAsset`](https://pixijs.download/release/docs/assets.html#UnresolvedAsset) or a url.
 
 ```jsx
-import { useAsset } from '@pixi/react'
+import { useAssets } from '@pixi/react'
 
 const MyComponent = () => {
-  const bunnyTexture = useAsset('https://pixijs.com/assets/bunny.png')
-  const bunnyTexture2 = useAsset({
-    alias: 'bunny',
-    src: 'https://pixijs.com/assets/bunny.png',
-  })
+  const {
+    assets: [
+      bunnyTexture1,
+      bunnyTexture2,
+    ],
+    isSuccess,
+  } = useAssets([
+    'https://pixijs.com/assets/bunny.png',
+    {
+      alias: 'bunny',
+      src: 'https://pixijs.com/assets/bunny.png',
+    }
+  ])
 
   return (
     <container>
-      <sprite texture={bunnyTexture}>
-      <sprite texture={bunnyTexture2}>
+      {isSuccess && (
+        <sprite texture={bunnyTexture}>
+        <sprite texture={bunnyTexture2}>
+      )}
     </container>
   )
 }
@@ -293,26 +307,27 @@ const MyComponent = () => {
 
 ##### Tracking Progress
 
-`useAsset` can optionally accept a [`ProgressCallback`](https://pixijs.download/release/docs/assets.html#ProgressCallback) as a second argument. This callback will be called by the asset loader as the asset is loaded.
+`useAssets` can optionally accept a [`ProgressCallback`](https://pixijs.download/release/docs/assets.html#ProgressCallback) as a second argument. This callback will be called by the asset loader as the asset is loaded.
 
 ```jsx
-const bunnyTexture = useAsset('https://pixijs.com/assets/bunny.png', progress => {
+const bunnyTexture = useAssets('https://pixijs.com/assets/bunny.png', progress => {
   console.log(`We have achieved ${progress * 100}% bunny.`)
 })
 ```
 
-> [!TIP]
-> The `useAsset` hook also supports [React Suspense](https://react.dev/reference/react/Suspense)! If given a suspense boundary, it's possible to prevent components from rendering until they've finished loading their assets:
+#### `useSuspenseAssets`
+
+`useSuspenseAssets` is similar to the `useAssets` hook, except that it supports [React Suspense](https://react.dev/reference/react/Suspense). `useSuspenseAssets` accepts the same parameters as `useAssets`, but it only returns an array of the loaded assets. This is because given a suspense boundary it's possible to prevent components from rendering until they've finished loading their assets.
 > ```jsx
 > import {
 > 	Application,
-> 	useAsset,
+> 	useSuspenseAssets,
 > } from '@pixi/react'
 >
-> import { Suspense } from 'react';
+> import { Suspense } from 'react'
 >
 > const BunnySprite = () => {
-> 	const bunnyTexture = useAsset('https://pixijs.com/assets/bunny.png')
+> 	const [bunnyTexture] = useSuspenseAssets(['https://pixijs.com/assets/bunny.png'])
 >
 > 	return (
 > 		<sprite texture={bunnyTexture} />

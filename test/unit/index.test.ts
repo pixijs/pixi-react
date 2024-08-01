@@ -4,12 +4,15 @@ import {
     it,
 } from 'vitest';
 import { Application } from '../../src/components/Application.ts';
+import { UseAssetsStatus } from '../../src/constants/UseAssetsStatus.ts';
 import { createRoot } from '../../src/core/createRoot.ts';
 import { extend } from '../../src/helpers/extend.ts';
 import { useApp } from '../../src/hooks/useApp.ts';
 import { useApplication } from '../../src/hooks/useApplication.ts';
 import { useAsset } from '../../src/hooks/useAsset.ts';
+import { useAssets } from '../../src/hooks/useAssets.ts';
 import { useExtend } from '../../src/hooks/useExtend.ts';
+import { useSuspenseAssets } from '../../src/hooks/useSuspenseAssets.ts';
 import { useTick } from '../../src/hooks/useTick.ts';
 import * as PixiReact from '../../src/index.ts';
 
@@ -51,10 +54,28 @@ describe('exports', () =>
             .and.to.equal(useAsset);
     });
 
+    it('exports the `useAssets()` hook', () =>
+    {
+        expect(PixiReact).to.have.property('useAssets')
+            .and.to.equal(useAssets);
+    });
+
+    it('exports the `UseAssetsStatus()` hook', () =>
+    {
+        expect(PixiReact).to.have.property('UseAssetsStatus')
+            .and.to.equal(UseAssetsStatus);
+    });
+
     it('exports the `useExtend()` hook', () =>
     {
         expect(PixiReact).to.have.property('useExtend')
             .and.to.equal(useExtend);
+    });
+
+    it('exports the `useSuspenseAssets()` hook', () =>
+    {
+        expect(PixiReact).to.have.property('useSuspenseAssets')
+            .and.to.equal(useSuspenseAssets);
     });
 
     it('exports the `useTick()` hook', () =>
@@ -72,8 +93,11 @@ describe('exports', () =>
             'useApp',
             'useApplication',
             'useAsset',
+            'useAssets',
+            'UseAssetsStatus',
             'useExtend',
             'useTick',
+            'useSuspenseAssets',
         );
     });
 });

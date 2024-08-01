@@ -3,12 +3,10 @@
   "files": [
     ".eslintrc.js",
     "release.config.js",
-    "wallaby.js",
   ],
   "include": [
-    "test/**/*",
-    "rollup.config.mjs",
-    "vitest.config.ts",
-    "vitest.workspace.ts",
+    "./test/**/*",
+    "./vitest.setup.ts",
+    "./vitest.workspace.ts"
   ]
 }

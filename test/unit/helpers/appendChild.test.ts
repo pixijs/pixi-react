@@ -4,8 +4,8 @@ import {
     expect,
     it,
 } from 'vitest';
-import { appendChild } from '../../../src/helpers/appendChild.ts';
-import { prepareInstance } from '../../../src/helpers/prepareInstance.ts';
+import { appendChild } from '../../../src/helpers/appendChild';
+import { prepareInstance } from '../../../src/helpers/prepareInstance';
 
 describe('appendChild', () =>
 {

@@ -1,10 +1,10 @@
-import { applyProps } from '../helpers/applyProps.ts';
-import { log } from '../helpers/log.ts';
-import { switchInstance } from './switchInstance.ts';
+import { applyProps } from '../helpers/applyProps';
+import { log } from '../helpers/log';
+import { switchInstance } from './switchInstance';
 
 import type { Fiber } from 'react-reconciler';
-import type { HostConfig } from '../typedefs/HostConfig.ts';
-import type { UpdatePayload } from '../typedefs/UpdatePayload.ts';
+import type { HostConfig } from '../typedefs/HostConfig';
+import type { UpdatePayload } from '../typedefs/UpdatePayload';
 
 export function commitUpdate(
     instance: HostConfig['instance'],

@@ -5,23 +5,23 @@ import {
 import {
     PixiToReactEventPropNames,
     ReactToPixiEventPropNames,
-} from '../constants/EventPropNames.ts';
+} from '../constants/EventPropNames';
 import {
     isNull,
     isUndefined,
-} from './compare.ts';
-import { diffProps } from './diffProps.ts';
-import { isDiffSet } from './isDiffSet.ts';
-import { isReadOnlyProperty } from './isReadOnlyProperty.ts';
-import { log } from './log.ts';
+} from './compare';
+import { diffProps } from './diffProps';
+import { isDiffSet } from './isDiffSet';
+import { isReadOnlyProperty } from './isReadOnlyProperty';
+import { log } from './log';
 
 import type {
     FederatedPointerEvent,
     FederatedWheelEvent,
 } from 'pixi.js';
-import type { DiffSet } from '../typedefs/DiffSet.ts';
-import type { HostConfig } from '../typedefs/HostConfig.ts';
-import type { InstanceState } from '../typedefs/InstanceState.ts';
+import type { DiffSet } from '../typedefs/DiffSet';
+import type { HostConfig } from '../typedefs/HostConfig';
+import type { InstanceState } from '../typedefs/InstanceState';
 
 const DEFAULT = '__default';
 const DEFAULTS_CONTAINERS = new Map();

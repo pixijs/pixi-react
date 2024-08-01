@@ -1,4 +1,4 @@
-import { log } from './log.ts';
+import { log } from './log';
 
 /** Restore anything stored in `prepareForCommit`. */
 export function resetAfterCommit()

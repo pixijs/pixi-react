@@ -3,7 +3,7 @@ import {
     Filter,
 } from 'pixi.js';
 
-import type { HostConfig } from '../typedefs/HostConfig.ts';
+import type { HostConfig } from '../typedefs/HostConfig';
 
 export function hideInstance(
     instance: HostConfig['instance']

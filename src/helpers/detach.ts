@@ -1,6 +1,6 @@
 import { Filter } from 'pixi.js';
 
-import type { HostConfig } from '../typedefs/HostConfig.ts';
+import type { HostConfig } from '../typedefs/HostConfig';
 
 export function detach(
     childInstance: HostConfig['instance'],

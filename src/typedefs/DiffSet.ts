@@ -1,4 +1,4 @@
-import type { Change } from './Change.ts';
+import type { Change } from './Change';
 
 export interface DiffSet
 {

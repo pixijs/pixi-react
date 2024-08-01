@@ -2,11 +2,11 @@ import {
     Assets,
     Cache,
 } from 'pixi.js';
-import { getAssetKey } from '../helpers/getAssetKey.ts';
+import { getAssetKey } from '../helpers/getAssetKey';
 
-import type { AssetRetryState } from '../typedefs/AssetRetryState.ts';
-import type { UnresolvedAsset } from '../typedefs/UnresolvedAsset.ts';
-import type { UseAssetsOptions } from '../typedefs/UseAssetsOptions.ts';
+import type { AssetRetryState } from '../typedefs/AssetRetryState';
+import type { UnresolvedAsset } from '../typedefs/UnresolvedAsset';
+import type { UseAssetsOptions } from '../typedefs/UseAssetsOptions';
 
 const errorCache: Map<UnresolvedAsset, AssetRetryState> = new Map();
 

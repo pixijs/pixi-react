@@ -1,8 +1,8 @@
-import { diffProps } from './diffProps.ts';
-import { log } from './log.ts';
+import { diffProps } from './diffProps';
+import { log } from './log';
 
-import type { HostConfig } from '../typedefs/HostConfig.ts';
-import type { UpdatePayload } from '../typedefs/UpdatePayload.ts';
+import type { HostConfig } from '../typedefs/HostConfig';
+import type { UpdatePayload } from '../typedefs/UpdatePayload';
 
 export function prepareUpdate(
     _instance: HostConfig['instance'],

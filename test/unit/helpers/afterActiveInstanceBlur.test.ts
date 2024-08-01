@@ -3,7 +3,7 @@ import {
     expect,
     it,
 } from 'vitest';
-import { afterActiveInstanceBlur } from '../../../src/helpers/afterActiveInstanceBlur.ts';
+import { afterActiveInstanceBlur } from '../../../src/helpers/afterActiveInstanceBlur';
 
 describe('afterActiveInstanceBlur', () =>
 {

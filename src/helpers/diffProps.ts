@@ -1,12 +1,12 @@
 import {
     PixiToReactEventPropNames,
     ReactToPixiEventPropNames,
-} from '../constants/EventPropNames.ts';
-import { isEqual } from './compare.ts';
-import { gentleCloneProps } from './gentleCloneProps.ts';
+} from '../constants/EventPropNames';
+import { isEqual } from './compare';
+import { gentleCloneProps } from './gentleCloneProps';
 
-import type { Change } from '../typedefs/Change.ts';
-import type { HostConfig } from '../typedefs/HostConfig.ts';
+import type { Change } from '../typedefs/Change';
+import type { HostConfig } from '../typedefs/HostConfig';
 
 const DEFAULT = '__default';
 

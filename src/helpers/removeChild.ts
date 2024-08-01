@@ -1,8 +1,8 @@
 import { Filter } from 'pixi.js';
-import { detach } from './detach.ts';
-import { log } from './log.ts';
+import { detach } from './detach';
+import { log } from './log';
 
-import type { HostConfig } from '../typedefs/HostConfig.ts';
+import type { HostConfig } from '../typedefs/HostConfig';
 
 /** Removes elements from our scene and disposes of them. */
 export function removeChild(

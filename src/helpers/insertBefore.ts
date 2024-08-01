@@ -2,12 +2,12 @@ import {
     Container,
     Filter,
 } from 'pixi.js';
-import { attach } from './attach.ts';
-import { detach } from './detach.ts';
-import { invariant } from './invariant.ts';
-import { log } from './log.ts';
+import { attach } from './attach';
+import { detach } from './detach';
+import { invariant } from './invariant';
+import { log } from './log';
 
-import type { HostConfig } from '../typedefs/HostConfig.ts';
+import type { HostConfig } from '../typedefs/HostConfig';
 
 export function insertBefore(
     parentInstance: HostConfig['containerInstance'],

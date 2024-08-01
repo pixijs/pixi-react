@@ -1,4 +1,4 @@
-import { catalogue } from './catalogue.ts';
+import { catalogue } from './catalogue';
 
 export function extend(objects: { [key: string]: new (...args: any) => any })
 {

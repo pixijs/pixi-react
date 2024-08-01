@@ -1,5 +1,5 @@
-import type { NamespacedPixiElements } from './typedefs/NamespacedPixiElements.ts';
-import type { PixiElements } from './typedefs/PixiElements.ts';
+import type { NamespacedPixiElements } from './typedefs/NamespacedPixiElements';
+import type { PixiElements } from './typedefs/PixiElements';
 
 declare global
 {

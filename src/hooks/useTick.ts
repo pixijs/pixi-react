@@ -1,9 +1,9 @@
-import { invariant } from '../helpers/invariant.ts';
-import { useApplication } from './useApplication.ts';
-import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect.ts';
+import { invariant } from '../helpers/invariant';
+import { useApplication } from './useApplication';
+import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
 import type { TickerCallback } from 'pixi.js';
-import type { UseTickOptions } from '../typedefs/UseTickOptions.ts';
+import type { UseTickOptions } from '../typedefs/UseTickOptions';
 
 /** Attaches a callback to the application's Ticker. */
 export function useTick<T>(

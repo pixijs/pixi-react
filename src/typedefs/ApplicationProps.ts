@@ -8,7 +8,7 @@ import type {
     Key,
     RefObject,
 } from 'react';
-import type { PixiReactChildNode } from './PixiReactChildNode.ts';
+import type { PixiReactChildNode } from './PixiReactChildNode';
 
 export interface BaseApplicationProps
 {

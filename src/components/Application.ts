@@ -5,16 +5,16 @@ import {
     useCallback,
     useRef,
 } from 'react';
-import { createRoot } from '../core/createRoot.ts';
-import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect.ts';
+import { createRoot } from '../core/createRoot';
+import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 
 import type { Application as PixiApplication } from 'pixi.js';
 import type {
     ForwardRefRenderFunction,
     MutableRefObject,
 } from 'react';
-import type { ApplicationProps } from '../typedefs/ApplicationProps.ts';
-import type { Root } from '../typedefs/Root.ts';
+import type { ApplicationProps } from '../typedefs/ApplicationProps';
+import type { Root } from '../typedefs/Root';
 
 const originalDefaultTextStyle = { ...TextStyle.defaultTextStyle };
 

@@ -3,8 +3,8 @@ import {
     Cache,
 } from 'pixi.js';
 import { useState } from 'react';
+import { UseAssetsStatus } from '../constants/UseAssetsStatus.ts';
 import { getAssetKey } from '../helpers/getAssetKey.ts';
-import { UseAssetsStatus } from '../typedefs/UseAssetsStatus.ts';
 
 import type { AssetRetryState } from '../typedefs/AssetRetryState.ts';
 import type { UnresolvedAsset } from '../typedefs/UnresolvedAsset.ts';
@@ -32,7 +32,7 @@ export function useAssets<T = any>(
         isError: false,
         isPending: true,
         isSuccess: false,
-        status: UseAssetsStatus.Pending,
+        status: UseAssetsStatus.PENDING,
     });
 
     if (typeof window === 'undefined')
@@ -67,12 +67,11 @@ export function useAssets<T = any>(
                 isError: true,
                 isPending: false,
                 isSuccess: false,
-                status: UseAssetsStatus.Error,
+                status: UseAssetsStatus.ERROR,
             }));
         }
 
-        Assets
-            .load<T>(assets, (progressValue) =>
+        Assets.load<T>(assets, (progressValue) =>
         {
             if (typeof onProgress === 'function')
             {
@@ -90,7 +89,7 @@ export function useAssets<T = any>(
                     isError: false,
                     isPending: false,
                     isSuccess: true,
-                    status: UseAssetsStatus.Success,
+                    status: UseAssetsStatus.SUCCESS,
                 }));
             })
             .catch((error) =>

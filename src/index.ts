@@ -6,6 +6,7 @@ Be aware that you are using a beta version of Pixi React.
 `);
 
 export { Application } from './components/Application.ts';
+export { UseAssetsStatus } from './constants/UseAssetsStatus.ts';
 export { createRoot } from './core/createRoot.ts';
 export * from './global.ts';
 export { extend } from './helpers/extend.ts';

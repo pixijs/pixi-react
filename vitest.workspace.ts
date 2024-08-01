@@ -24,5 +24,5 @@ export default defineWorkspace([
                 './vitest.setup.ts'
             ],
         },
-    }
+    },
 ]);

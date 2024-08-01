@@ -47,25 +47,18 @@ jobs:
         run: npm run build
         shell: bash
 
-      - name: Get Next Release Version
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        id: get_release_version
-        run: |
-          export NEXT_TAG_VERSION=$(npx semantic-release --dry-run | grep 'The next release version is' | sed -E 's/.* ([[:digit:].]+)$/\1/')
-          echo "new_tag_version=${NEXT_TAG_VERSION}" >> $GITHUB_OUTPUT
-        shell: bash
-
       - name: Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ steps.get_release_version.outputs.new_tag_version != '' }}
-        run: npx semantic-release
+        id: release
+        run: |
+          export NEXT_TAG_VERSION=$(npx semantic-release | tee /dev/tty | grep 'The next release version is' | sed -E 's/.* ([[:digit:].]+)$/\1/')
+          echo "new_tag_version=${NEXT_TAG_VERSION}" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        if: ${{ steps.get_release_version.outputs.new_tag_version != '' }}
+        if: ${{ steps.release.outputs.new_tag_version != '' }}
         run: npm publish ./dist/*.tgz --tag ${{ (github.head_ref || github.ref_name) == 'main' && 'latest' || github.head_ref || github.ref_name }}
         shell: bash

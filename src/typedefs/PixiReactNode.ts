@@ -1,3 +1,7 @@
+import { type PixiToReactEventPropNames } from '../constants/EventPropNames';
+import { type ConstructorOptions } from './ConstructorOptions';
+import { type ExcludeFunctionProps, type OmitKeys } from './UtilityTypes';
+
 import type {
     Container,
     Graphics,
@@ -6,8 +10,6 @@ import type {
     Key,
     Ref,
 } from 'react';
-import type { PixiToReactEventPropNames } from '../constants/EventPropNames';
-import type { ConstructorOptions } from './ConstructorOptions';
 import type { DrawCallback } from './DrawCallback';
 import type { EventHandlers } from './EventHandlers';
 import type { InstanceState } from './InstanceState';
@@ -15,7 +17,7 @@ import type { PixiReactChildNode } from './PixiReactChildNode';
 
 export interface BaseNodeProps<T extends new (...args: any) => any = typeof Container>
 {
-    children: T extends Container
+    children?: T extends Container
         ? PixiReactChildNode
         : never;
     draw?: T extends Graphics
@@ -42,17 +44,5 @@ export type PixiReactNode<T extends new (...args: any) => any = typeof Container
 
 export type PixiReactElementProps<T extends new (...args: any) => any = typeof Container> =
     BaseNodeProps<InstanceType<T>>
-    & EventHandlers
-    & {
-        [
-        K in keyof ConstructorOptions<T> as (
-            K extends keyof typeof PixiToReactEventPropNames
-                ? never
-                : K extends keyof NodeProps<InstanceType<T>>
-                    ? ConstructorOptions<T>[K] extends NodeProps<InstanceType<T>>[K]
-                        ? never
-                        : K
-                    : K
-        )
-        ]: ConstructorOptions<T>[K];
-    };
+    & OmitKeys<ExcludeFunctionProps<ConstructorOptions<T>>, NodeProps<T> & typeof PixiToReactEventPropNames>
+    & EventHandlers;

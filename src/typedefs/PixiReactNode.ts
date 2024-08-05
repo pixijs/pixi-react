@@ -20,12 +20,12 @@ export interface BaseNodeProps<T extends new (...args: any) => any = typeof Cont
     children?: T extends Container
         ? PixiReactChildNode
         : never;
-    draw?: T extends Graphics
-        ? DrawCallback
-        : null;
     key?: Key;
     ref?: Ref<T>;
 }
+
+export type GraphicsProps<T> = T extends Graphics ?
+    { draw: DrawCallback } : unknown;
 
 export interface NodeProps<T extends new (...args: any) => any = typeof Container> extends BaseNodeProps<T>
 {
@@ -44,5 +44,6 @@ export type PixiReactNode<T extends new (...args: any) => any = typeof Container
 
 export type PixiReactElementProps<T extends new (...args: any) => any = typeof Container> =
     BaseNodeProps<InstanceType<T>>
+    & GraphicsProps<InstanceType<T>>
     & OmitKeys<ExcludeFunctionProps<ConstructorOptions<T>>, NodeProps<T> & typeof PixiToReactEventPropNames>
     & EventHandlers;

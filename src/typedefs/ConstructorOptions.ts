@@ -5,8 +5,8 @@ import type { ConstructorOverrides } from './ConstructorOverrides';
  * @see https://github.com/pixijs/pixi-react/issues/500
  */
 export type ConstructorOptions<T extends new (...args: any[]) => any> =
-    Extract<ConstructorOverrides, { 0: T }> extends [T, infer R]
-        ? unknown extends R
-            ? ConstructorParameters<T>[0]
-            : R
-        : never;
+    T extends new (...args: any[]) => infer Instance
+        ? Instance extends keyof ConstructorOverrides
+            ? ConstructorOverrides[Instance]
+            : ConstructorParameters<T>[0]
+        : unknown;

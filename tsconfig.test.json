@@ -1,13 +1,14 @@
+
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "allowJs": true,
     "allowImportingTsExtensions": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./src",
     "checkJs": true,
-    "declaration": true,
-    "declarationDir": "./types",
-    "emitDeclarationOnly": true,
+    "noEmit": true,
+    "emitDeclarationOnly": false,
     "esModuleInterop": true,
     "jsx": "react-jsx",
     "lib": [
@@ -28,10 +29,6 @@
   "exclude": [
     "dist",
     "node_modules",
-    "types",
-  ],
-  "include": [
-    "./src/**/*",
-    "./test/**/*"
+    "types"
   ],
 }

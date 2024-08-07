@@ -4,7 +4,7 @@ export default defineWorkspace([
     {
         test: {
             environment: 'jsdom',
-            include: ['test/unit/**/*.test.ts'],
+            include: ['test/unit/**/*.test.ts?(x)'],
             pool: 'forks',
         },
     },

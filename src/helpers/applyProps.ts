@@ -85,7 +85,7 @@ export function applyProps(
         let currentInstance = instance;
         let targetProp = currentInstance[key];
 
-        if ((key === 'draw') && (typeof value === 'function'))
+        if ((key as string === 'draw') && (typeof value === 'function'))
         {
             if (instance instanceof Graphics)
             {

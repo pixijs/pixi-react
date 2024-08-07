@@ -22,4 +22,5 @@ export type ConstructorOverrides =
     | [typeof DisplacementFilter, DisplacementFilterOptions]
     | [typeof Filter, FilterOptions]
     | [typeof NoiseFilter, NoiseFilterOptions]
-    | [typeof Text, TextOptions];
+    | [typeof Text, TextOptions]
+    | unknown;

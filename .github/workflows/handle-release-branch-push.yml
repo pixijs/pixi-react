@@ -52,7 +52,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         id: release
         run: |
-          export NEXT_TAG_VERSION=$(npx semantic-release | tee /dev/tty | grep 'The next release version is' | sed -E 's/.* ([[:digit:].]+)$/\1/')
+          export NEXT_TAG_VERSION=$(npx semantic-release | tee >(cat >&2) | grep 'The next release version is' | sed -E 's/.* ([[:digit:].]+)$/\1/')
           echo "new_tag_version=${NEXT_TAG_VERSION}" >> $GITHUB_OUTPUT
         shell: bash
 

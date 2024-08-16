@@ -1,25 +1,35 @@
-import type {
-    AlphaFilter,
-    AlphaFilterOptions,
-    BlurFilter,
-    BlurFilterOptions,
-    BlurFilterPass,
-    BlurFilterPassOptions,
-    DisplacementFilter,
-    DisplacementFilterOptions,
-    Filter,
-    FilterOptions,
-    NoiseFilter,
-    NoiseFilterOptions,
-    Text,
-    TextOptions,
+import {
+    type BitmapText,
+    type BlurFilter,
+    type BlurFilterOptions,
+    type DisplacementFilter,
+    type DisplacementFilterOptions,
+    type HTMLText,
+    type HTMLTextOptions,
+    type Mesh,
+    type MeshGeometry,
+    type MeshGeometryOptions,
+    type MeshOptions,
+    type NineSliceSprite,
+    type NineSliceSpriteOptions,
+    type PlaneGeometry,
+    type PlaneGeometryOptions,
+    type Text,
+    type TextOptions,
+    type Texture,
+    type TilingSprite,
+    type TilingSpriteOptions,
 } from 'pixi.js';
 
 export type ConstructorOverrides =
-    | [typeof AlphaFilter, AlphaFilterOptions]
+    | [typeof BitmapText, TextOptions]
     | [typeof BlurFilter, BlurFilterOptions]
-    | [typeof BlurFilterPass, BlurFilterPassOptions]
     | [typeof DisplacementFilter, DisplacementFilterOptions]
-    | [typeof Filter, FilterOptions]
-    | [typeof NoiseFilter, NoiseFilterOptions]
+    | [typeof HTMLText, HTMLTextOptions]
+    | [typeof Mesh, MeshOptions]
+    | [typeof MeshGeometry, MeshGeometryOptions]
+    | [typeof NineSliceSprite, NineSliceSpriteOptions | Texture]
+    | [typeof PlaneGeometry, PlaneGeometryOptions]
+    | [typeof TilingSprite, TilingSpriteOptions | Texture]
     | [typeof Text, TextOptions];
+

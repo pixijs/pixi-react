@@ -2,6 +2,8 @@ import {
     type BitmapText,
     type BlurFilter,
     type BlurFilterOptions,
+    type DisplacementFilter,
+    type DisplacementFilterOptions,
     type HTMLText,
     type HTMLTextOptions,
     type Mesh,
@@ -22,6 +24,7 @@ import {
 export type ConstructorOverrides =
     | [typeof BitmapText, TextOptions]
     | [typeof BlurFilter, BlurFilterOptions]
+    | [typeof DisplacementFilter, DisplacementFilterOptions]
     | [typeof HTMLText, HTMLTextOptions]
     | [typeof Mesh, MeshOptions]
     | [typeof MeshGeometry, MeshGeometryOptions]

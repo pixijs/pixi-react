@@ -270,7 +270,7 @@ const ParentComponent = () => (
 
 #### `useAsset`
 
-**DEPRECATED.** Use `useAssets` of `useSuspenseAssets` instead.
+**DEPRECATED.** Use `useAssets` or `useSuspenseAssets` instead.
 
 #### `useAssets`
 

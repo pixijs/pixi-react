@@ -89,4 +89,26 @@ describe('useAssets', async () =>
         expect(isTexture(texture)).toBe(true);
         expect(getData(texture)).toBe('test');
     });
+
+    it('is properly typed with data', async () =>
+    {
+        type Data = { data: { test: string } };
+        const { result } = renderHook(() => useAssets([
+            { src: 'test.png', data: { test: 'test' } },
+        ]));
+
+        expect(result.current.isPending).toBe(true);
+        await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+        const { assets: [texture], isSuccess } = result.current;
+
+        expect(isSuccess).toBe(true);
+        expect(texture?.data.test).toBe('test');
+
+        const isTexture = (texture?: Texture) => texture && texture instanceof Texture;
+        const getData = (texture?: Texture & Data) => texture?.data.test;
+
+        expect(isTexture(texture)).toBe(true);
+        expect(getData(texture)).toBe('test');
+    });
 });

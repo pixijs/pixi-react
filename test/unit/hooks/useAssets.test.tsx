@@ -15,7 +15,7 @@ describe('useAssets', async () =>
     const get = vi.spyOn(Assets, 'get');
     const has = vi.spyOn(Cache, 'has');
 
-    // Mock the Assets.load to populate the loaded record, and resolve after 100ms
+    // Mock the Assets.load to populate the loaded record, and resolve after 1ms
     load.mockImplementation((urls) =>
     {
         const assets = urls as UnresolvedAsset[];
@@ -27,7 +27,7 @@ describe('useAssets', async () =>
             {
                 loaded = { ...loaded, ...result };
                 resolve(result);
-            }, 10);
+            }, 1);
         });
     });
 

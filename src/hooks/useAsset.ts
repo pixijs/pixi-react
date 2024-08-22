@@ -15,9 +15,9 @@ import type { ErrorCallback } from '../typedefs/ErrorCallback';
 const errorCache: Map<UnresolvedAsset | string, AssetRetryState> = new Map();
 
 /** @deprecated Use `useAssets` instead. */
-export function useAsset<T>(
+export function useAsset<T = any>(
     /** @description Asset options. */
-    options: (UnresolvedAsset<T> & AssetRetryOptions) | string,
+    options: (UnresolvedAsset & AssetRetryOptions) | string,
     /** @description A function to be called when the asset loader reports loading progress. */
     onProgress?: ProgressCallback,
     /** @description A function to be called when the asset loader reports loading progress. */

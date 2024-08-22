@@ -21,14 +21,14 @@ function assetsLoadedTest<T>(asset: UnresolvedAsset<T>)
 /** Loads assets, returning a hash of assets once they're loaded. */
 export function useAssets<T = any>(
     /** @description Assets to be loaded. */
-    assets: UnresolvedAsset<T>[],
+    assets: UnresolvedAsset[],
 
     /** @description Asset options. */
     options: UseAssetsOptions = {},
 ): UseAssetsResult<T>
 {
     const [state, setState] = useState<UseAssetsResult<T>>({
-        assets: Array(assets.length).fill(null),
+        assets: Array(assets.length).fill(undefined),
         isError: false,
         isPending: true,
         isSuccess: false,

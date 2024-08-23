@@ -2,8 +2,8 @@ import type { UseAssetsStatus } from '../constants/UseAssetsStatus';
 
 export interface UseAssetsResult<T>
 {
-    /** @description An array of resolved assets, or `null` for assets that are still loading. */
-    assets: (T | null)[];
+    /** @description An array of resolved assets, or `undefined` for assets that are still loading. */
+    assets: (T | undefined)[];
 
     /** @description The error that was encountered. */
     error?: Error;

@@ -1,6 +1,7 @@
 import type {
     Application,
     ApplicationOptions,
+    ExtensionFormatLoose,
     TextStyle,
     TextStyleOptions,
 } from 'pixi.js';
@@ -25,7 +26,7 @@ export interface BaseApplicationProps
     defaultTextStyle?: TextStyle | TextStyleOptions,
 
     /** @description An array of Pixi extensions to be loaded before initialisation. */
-    extensions?: any[],
+    extensions?: ExtensionFormatLoose[],
 
     /** @description A unique key which allows React to manage this component across changes in parent state. */
     key?: Key,

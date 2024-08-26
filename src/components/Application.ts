@@ -105,19 +105,23 @@ export const ApplicationFunction: ForwardRefRenderFunction<PixiApplication, Appl
             const extensionsToHandle = [...extensions];
             const extensionsState = extensionsRef.current;
 
+            // Check for extensions that have been removed from the array
             for (const extension of extensionsState.values())
             {
                 const extensionIndex = extensionsToHandle.indexOf(extension);
 
+                // If the extension is no longer in the array, we'll remove it from Pixi.js
                 if (extensionIndex === -1)
                 {
                     PixiExtensions.remove(extension);
                     extensionsState.delete(extension);
                 }
 
+                // Since the extension already existed in the state, we can remove it to prevent any further handling
                 extensionsToHandle.splice(extensionIndex, 1);
             }
 
+            // Load any remaining extensions.
             for (const extension in extensionsToHandle)
             {
                 PixiExtensions.add(extension);

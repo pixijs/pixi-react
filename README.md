@@ -126,10 +126,14 @@ Setting `attachToDevtools` to `true` will automatically attach the application t
 
 ###### `defaultTextStyle`
 
-`defaultTextStyle` is a convenience property. Whatever is passed will automatically be assigned to Pixi.js's[`TextStyle.defaultTextStyle`](https://pixijs.download/release/docs/text.TextStyle.html#defaultTextStyle).
+`defaultTextStyle` is a convenience property. Whatever is passed will automatically be assigned to Pixi.js's [`TextStyle.defaultTextStyle`](https://pixijs.download/release/docs/text.TextStyle.html#defaultTextStyle).
 
 > [!NOTE]
 > This property **is not retroactive**. It will only apply to text components created after `defaultTextStyle` is set. Any text components created before setting `defaultTextStyle` will retain the base styles they had before `defaultTextStyle` was changed.
+
+###### `extensions`
+
+`extensions` is an array of extensions to be loaded. Adding and removing items from this array will automatically load/unload the extensions. The first time this is handled happens before the application is initialised. See Pixi.js's [`extensions`](https://pixijs.download/release/docs/extensions.html) documentation for more info on extensions.
 
 ###### `resizeTo`
 

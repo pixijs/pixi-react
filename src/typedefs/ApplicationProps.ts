@@ -24,6 +24,9 @@ export interface BaseApplicationProps
     /** @description The default style to be applied to text nodes. */
     defaultTextStyle?: TextStyle | TextStyleOptions,
 
+    /** @description An array of Pixi extensions to be loaded before initialisation. */
+    extensions?: any[],
+
     /** @description A unique key which allows React to manage this component across changes in parent state. */
     key?: Key,
 

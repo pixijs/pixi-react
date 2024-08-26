@@ -1,20 +1,21 @@
-import { TextStyle } from 'pixi.js';
+import {
+    extensions as PixiExtensions,
+    TextStyle,
+} from 'pixi.js';
 import {
     createElement,
     forwardRef,
+    type ForwardRefRenderFunction,
+    type MutableRefObject,
     useCallback,
     useRef,
 } from 'react';
 import { createRoot } from '../core/createRoot';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
+import { type ApplicationProps } from '../typedefs/ApplicationProps';
+import { type Root } from '../typedefs/Root';
 
 import type { Application as PixiApplication } from 'pixi.js';
-import type {
-    ForwardRefRenderFunction,
-    MutableRefObject,
-} from 'react';
-import type { ApplicationProps } from '../typedefs/ApplicationProps';
-import type { Root } from '../typedefs/Root';
 
 const originalDefaultTextStyle = { ...TextStyle.defaultTextStyle };
 
@@ -29,6 +30,7 @@ export const ApplicationFunction: ForwardRefRenderFunction<PixiApplication, Appl
         children,
         className,
         defaultTextStyle,
+        extensions,
         onInit,
         resizeTo,
         ...applicationProps
@@ -36,6 +38,7 @@ export const ApplicationFunction: ForwardRefRenderFunction<PixiApplication, Appl
 
     const applicationRef: MutableRefObject<PixiApplication | null> = useRef(null);
     const canvasRef: MutableRefObject<HTMLCanvasElement | null> = useRef(null);
+    const extensionsRef: MutableRefObject<Set<any>> = useRef(new Set());
     const rootRef: MutableRefObject<Root | null> = useRef(null);
 
     const updateResizeTo = useCallback(() =>
@@ -94,6 +97,34 @@ export const ApplicationFunction: ForwardRefRenderFunction<PixiApplication, Appl
             });
         }
     }, [onInit]);
+
+    useIsomorphicLayoutEffect(() =>
+    {
+        if (extensions)
+        {
+            const extensionsToHandle = [...extensions];
+            const extensionsState = extensionsRef.current;
+
+            for (const extension of extensionsState.values())
+            {
+                const extensionIndex = extensionsToHandle.indexOf(extension);
+
+                if (extensionIndex === -1)
+                {
+                    PixiExtensions.remove(extension);
+                    extensionsState.delete(extension);
+                }
+
+                extensionsToHandle.splice(extensionIndex, 1);
+            }
+
+            for (const extension in extensionsToHandle)
+            {
+                PixiExtensions.add(extension);
+                extensionsState.add(extension);
+            }
+        }
+    }, [extensions]);
 
     useIsomorphicLayoutEffect(() =>
     {

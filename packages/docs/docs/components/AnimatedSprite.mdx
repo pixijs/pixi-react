@@ -18,10 +18,40 @@ https://pixijs.download/v7.x/docs/PIXI.AnimatedSprite.html
 ```jsx live noInline
 // import { render } from 'react-dom';
 // import { Stage, Container, AnimatedSprite } from '@pixi/react';
+// import { Assets, Texture } from 'pixi.js';
+
+async function makeAnimatedSpriteTextures() {
+  await Assets.load('https://pixijs.com/assets/spritesheet/mc.json');
+  // create an array to store the textures
+  const explosionTextures = [];
+  let i;
+
+  for (i = 0; i < 26; i++) {
+    const texture = Texture.from(`Explosion_Sequence_A ${i + 1}.png`);
+
+    explosionTextures.push(texture);
+  }
+
+  return explosionTextures;
+}
 
 const textures = makeAnimatedSpriteTextures();
 
-render(
+export const AnimatedExplosion() {
+  const [textures, setTextures] = React.useState<Texture[]>([]);
+
+  React.useEffect(() => {
+    (async () => {
+      const newTextures = await makeAnimatedSpriteTextures();
+      setTextures(newTextures);
+    })();
+  }, []);
+
+  if (textures.length === 0) {
+    return null; // or a loading indicator
+  }
+
+return(
   <Stage width={300} height={300} options={{ backgroundColor: 0xeef1f5 }}>
     <Container position={[150, 150]}>
       <AnimatedSprite
@@ -34,6 +64,7 @@ render(
     </Container>
   </Stage>,
 );
+}
 ```
 
 ## Example

@@ -57,11 +57,11 @@ export function applyProps(
         ...instanceProps
     } = instance;
 
-    let typedData: DiffSet;
+    let typedData;
 
     if (isDiffSet(data))
     {
-        typedData = data;
+        typedData = data as DiffSet;
     }
     else
     {

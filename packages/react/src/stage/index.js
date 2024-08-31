@@ -46,6 +46,8 @@ const propTypes = {
 
     children: PropTypes.node,
 
+    fiber: PropTypes.any,
+
     // PIXI options, see https://pixijs.download/v7.x/docs/PIXI.Application.html
     options: PropTypes.shape({
         autoStart: PropTypes.bool,
@@ -97,6 +99,7 @@ const defaultProps = {
     onUnmount: noop,
     raf: true,
     renderOnComponentChange: true,
+    fiber: PixiFiber
 };
 
 export function getCanvasProps(props)
@@ -117,6 +120,7 @@ class Stage extends React.Component
     _mediaQuery = null;
     _ticker = null;
     _needsUpdate = true;
+    _fiber = PixiFiber;
     app = null;
 
     componentDidMount()
@@ -128,7 +132,11 @@ class Stage extends React.Component
             options,
             raf,
             renderOnComponentChange,
+            fiber,
         } = this.props;
+
+        // We save the fiber from props because we can't support changing it
+        this._fiber = fiber;
 
         this.app = new Application({
             width,
@@ -152,8 +160,19 @@ class Stage extends React.Component
         this.app.ticker[raf ? 'start' : 'stop']();
 
         this.app.stage.__reactpixi = { root: this.app.stage };
-        this.mountNode = PixiFiber.createContainer(this.app.stage);
-        PixiFiber.updateContainer(this.getChildren(), this.mountNode, this);
+
+        this.mountNode = this._fiber.createContainer(
+            this.app.stage,
+            0,
+            null,
+            false,
+            null,
+            '',
+            (error) => console.error('React recoverable error:', error),
+            null
+        );
+
+        this._fiber.updateContainer(this.getChildren(), this.mountNode, this);
 
         onMount(this.app);
 
@@ -219,7 +238,7 @@ class Stage extends React.Component
         }
 
         // flush fiber
-        PixiFiber.updateContainer(this.getChildren(), this.mountNode, this);
+        this._fiber.updateContainer(this.getChildren(), this.mountNode, this);
 
         if (
             prevProps.width !== width
@@ -306,7 +325,7 @@ class Stage extends React.Component
             this.needsRenderUpdate
         );
 
-        PixiFiber.updateContainer(null, this.mountNode, this);
+        this._fiber.updateContainer(null, this.mountNode, this);
 
         if (this._mediaQuery)
         {

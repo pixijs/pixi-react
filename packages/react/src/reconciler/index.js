@@ -2,6 +2,7 @@ import Reconciler from 'react-reconciler';
 import pkg from '../../../../package.json';
 import hostconfig from './hostconfig';
 
+export { hostconfig, Reconciler };
 export const PixiFiber = Reconciler(hostconfig);
 
 export const VERSION = pkg.version;

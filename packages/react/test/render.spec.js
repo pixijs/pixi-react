@@ -53,9 +53,6 @@ describe('render', () =>
     {
         renderElementToStage();
         expect(PixiFiber.createContainer).toHaveBeenCalledTimes(1);
-        expect(PixiFiber.createContainer).toHaveBeenLastCalledWith(
-            app.stage,
-        );
     });
 
     test('call updateContainer', () =>

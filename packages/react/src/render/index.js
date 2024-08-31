@@ -1,6 +1,7 @@
 import { Container } from '@pixi/display';
 import invariant from '../utils/invariant';
 import { PixiFiber } from '../reconciler';
+import { Reconciler } from 'react-reconciler';
 
 // cache both root PixiFiber containers and React roots
 export const roots = new Map();
@@ -8,7 +9,7 @@ export const roots = new Map();
 /**
  * @param {Container} container
  */
-function unmountComponent(container)
+function unmountComponent(container, fiber = PixiFiber)
 {
     invariant(
         Container.prototype.isPrototypeOf(container),
@@ -20,7 +21,7 @@ function unmountComponent(container)
         const { pixiFiberContainer } = roots.get(container);
 
         // unmount component
-        PixiFiber.updateContainer(null, pixiFiberContainer, undefined, () =>
+        fiber.updateContainer(null, pixiFiberContainer, undefined, () =>
         {
             roots.delete(container);
         });
@@ -32,9 +33,10 @@ function unmountComponent(container)
  * Use this without React-DOM
  *
  * @param {Container} container
+ * @param {Reconciler} custom fiber
  * @returns {{ render: Function, unmount: Function}}
  */
-export function createRoot(container)
+export function createRoot(container, fiber = PixiFiber)
 {
     invariant(
         Container.prototype.isPrototypeOf(container),
@@ -47,23 +49,32 @@ export function createRoot(container)
 
     if (!root)
     {
-        const pixiFiberContainer = PixiFiber.createContainer(container);
+        const pixiFiberContainer = fiber.createContainer(
+            container,
+            0,
+            null,
+            false,
+            null,
+            '',
+            (error) => console.error('React recoverable error:', error),
+            null
+        );
 
         const reactRoot = {
             render(element)
             {
                 // schedules a top level update
-                PixiFiber.updateContainer(
+                fiber.updateContainer(
                     element,
                     pixiFiberContainer,
                     undefined
                 );
 
-                return PixiFiber.getPublicRootInstance(pixiFiberContainer);
+                return fiber.getPublicRootInstance(pixiFiberContainer);
             },
             unmount()
             {
-                unmountComponent(container);
+                unmountComponent(container, fiber);
                 roots.delete(container);
             },
         };
@@ -116,7 +127,7 @@ export function render(element, container, callback)
  * @deprecated use root.unmount() instead
  * @param {Container} container
  */
-export function unmountComponentAtNode(container)
+export function unmountComponentAtNode(container, fiber)
 {
-    unmountComponent(container);
+    unmountComponent(container, fiber);
 }

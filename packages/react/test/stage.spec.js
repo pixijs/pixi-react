@@ -1,9 +1,11 @@
 import React from 'react';
+import Reconciler from 'react-reconciler';
 import { Application } from '@pixi/app';
 import { Container as PixiContainer } from '@pixi/display';
 import renderer, { act } from 'react-test-renderer';
 import * as reactTest from '@testing-library/react';
 import { PixiFiber } from '../src';
+import hostconfig from '../src/reconciler/hostconfig';
 import { Container, Stage, Text } from '../src';
 import { Context } from '../src/stage/provider';
 import { getCanvasProps } from '../src/stage';
@@ -194,7 +196,6 @@ describe('stage', () =>
         const stage = el.getInstance().app.stage;
 
         expect(PixiFiber.createContainer).toHaveBeenCalledTimes(1);
-        expect(PixiFiber.createContainer).toHaveBeenCalledWith(stage);
     });
 
     test('call PixiFiber.updateContainer on componentDidMount', () =>
@@ -239,6 +240,22 @@ describe('stage', () =>
 
         expect(PixiFiber.updateContainer).toHaveBeenCalledTimes(1);
         expect(PixiFiber.updateContainer).toHaveBeenCalledWith(null, instance.mountNode, instance);
+    });
+
+    test('using a custom fiber', () =>
+    {
+        const customHostconfig = {
+            ...hostconfig,
+            createInstance: jest.fn(hostconfig.createInstance)
+        };
+
+        const customFiber = Reconciler(customHostconfig);
+
+        const { unmount } = reactTest.render(<Stage fiber={customFiber}><Container></Container></Stage>);
+
+        unmount();
+
+        expect(customHostconfig.createInstance).toHaveBeenCalledTimes(1);
     });
 
     describe('pixi application', () =>

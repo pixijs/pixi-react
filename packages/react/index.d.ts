@@ -71,8 +71,11 @@ interface ReconcilerConfig
     mountEventComponent(): void;
     updateEventComponent(): void;
     handleEventTarget(): void;
+    noTimeout: any;
     scheduleTimeout(...args: any[]): any;
     cancelTimeout(...args: any[]): any;
+    supportsMicrotasks: boolean,
+    scheduleMicrotask(...args: any[]): any,
     appendChild(...args: any[]): any;
     appendChildToContainer(...args: any[]): any;
     removeChild(...args: any[]): any;
@@ -278,6 +281,11 @@ declare namespace _ReactPixi
       raf?: boolean;
 
       /**
+     * Use a custom reconciler.
+     */
+      fiber?: Reconciler<any, any, any, any>;
+
+      /**
      * Render the PIXI stage on React component changes.
      * You'll need to set raf={false}.
      */
@@ -391,7 +399,7 @@ export interface ReactPixiRoot {
     unmount(): void
 }
 
-export const createRoot: (container: PixiContainer) => ReactPixiRoot
+export const createRoot: (container: PixiContainer, fiber?: Reconciler<any, any, any, any>) => ReactPixiRoot
 
 // renderer
 export const render: (
@@ -401,7 +409,7 @@ export const render: (
 ) => any;
 
 // unmount component
-export const unmountComponentAtNode: (container: PixiContainer) => void;
+export const unmountComponentAtNode: (container: PixiContainer, fiber?: Reconciler<any, any, any, any>) => void;
 
 // context
 export const AppContext: React.Context<PixiApplication>;
@@ -409,9 +417,13 @@ export const AppProvider: React.ComponentType<React.ProviderProps<PixiApplicatio
 export const AppConsumer: React.ComponentType<React.ConsumerProps<PixiApplication>>;
 
 // fiber
-export const PixiFiber: (
-    eventsMap?: { [P in keyof ReconcilerConfig]: (...args: any) => void }
-) => Reconciler<any, any, any, any>;
+export const PixiFiber: Reconciler<any, any, any, any>;
+
+// re-exported reconciler from react
+export const Reconciler: (config: ReconcilerConfig) => Reconciler<any, any, any, any>;
+
+// default hostconfig
+export const hostconfig: ReconcilerConfig;
 
 // stage
 export class Stage extends React.Component<_ReactPixi.IStage> {}

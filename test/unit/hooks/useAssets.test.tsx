@@ -22,7 +22,7 @@ describe('useAssets', async () =>
 
     mockFetch.mockImplementation(() => new Promise<Response>((resolve) =>
     {
-        setTimeout(() => resolve(new Response(new Blob([new Uint8Array([137, 80, 78, 89, 13, 11, 8, 2, 255, 0, 1, 0, 5, 49, 137, 80, 78, 89, 13, 11, 8, 73, 69, 82, 1, 0, 255, 255, 255])], { type: 'image/png' }))), 1);
+        setTimeout(() => resolve(new Response()), 1);
     }));
 
     beforeEach(() =>
@@ -109,26 +109,29 @@ describe('useAssets', async () =>
 
         const isTexture = (texture?: Texture) => texture && texture instanceof Texture;
 
-        const { assets: [texture1, texture2] } = result.current;
-        const { assets: [texture3, texture4] } = result2.current;
-
-        expect(isTexture(texture1)).toBe(true);
-        expect(isTexture(texture2)).toBe(true);
-        expect(isTexture(texture3)).toBe(true);
-        expect(isTexture(texture4)).toBe(true);
+        expect(result.current.isSuccess).toBe(true);
+        expect(result2.current.isSuccess).toBe(true);
+        expect(isTexture(result.current.assets[0])).toBe(true);
+        expect(isTexture(result.current.assets[1])).toBe(true);
+        expect(isTexture(result2.current.assets[0])).toBe(true);
+        expect(isTexture(result2.current.assets[1])).toBe(true);
 
         rerender();
 
-        expect(isTexture(texture1)).toBe(true);
-        expect(isTexture(texture2)).toBe(true);
-        expect(isTexture(texture3)).toBe(true);
-        expect(isTexture(texture4)).toBe(true);
+        expect(result.current.isSuccess).toBe(true);
+        expect(result2.current.isSuccess).toBe(true);
+        expect(isTexture(result.current.assets[0])).toBe(true);
+        expect(isTexture(result.current.assets[1])).toBe(true);
+        expect(isTexture(result2.current.assets[0])).toBe(true);
+        expect(isTexture(result2.current.assets[1])).toBe(true);
 
         rerender2();
 
-        expect(isTexture(texture1)).toBe(true);
-        expect(isTexture(texture2)).toBe(true);
-        expect(isTexture(texture3)).toBe(true);
-        expect(isTexture(texture4)).toBe(true);
+        expect(result.current.isSuccess).toBe(true);
+        expect(result2.current.isSuccess).toBe(true);
+        expect(isTexture(result.current.assets[0])).toBe(true);
+        expect(isTexture(result.current.assets[1])).toBe(true);
+        expect(isTexture(result2.current.assets[0])).toBe(true);
+        expect(isTexture(result2.current.assets[1])).toBe(true);
     });
 });

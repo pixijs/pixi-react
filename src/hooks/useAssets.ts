@@ -18,6 +18,20 @@ function assetsLoadedTest<T>(asset: UnresolvedAsset<T>)
     return Cache.has(getAssetKey(asset));
 }
 
+function resolveAssets<T>(assets: UnresolvedAsset<T>[])
+{
+    const assetKeys = assets.map((asset: UnresolvedAsset<T>) => getAssetKey(asset));
+    const resolvedAssetsDictionary = Assets.get<T>(assetKeys) as Record<string, T>;
+
+    return {
+        assets: assets.map((_asset: UnresolvedAsset<T>, index: number) => resolvedAssetsDictionary[index]),
+        isError: false,
+        isPending: false,
+        isSuccess: true,
+        status: UseAssetsStatus.SUCCESS,
+    };
+}
+
 /** Loads assets, returning a hash of assets once they're loaded. */
 export function useAssets<T = any>(
     /** @description Assets to be loaded. */
@@ -27,18 +41,18 @@ export function useAssets<T = any>(
     options: UseAssetsOptions = {},
 ): UseAssetsResult<T>
 {
-    const [state, setState] = useState<UseAssetsResult<T>>({
-        assets: Array(assets.length).fill(undefined),
-        isError: false,
-        isPending: true,
-        isSuccess: false,
-        status: UseAssetsStatus.PENDING,
-    });
+    const allAssetsAreLoaded = assets.reduce((acc, cur) => acc && assetsLoadedTest<T>(cur), true);
 
-    if (typeof window === 'undefined')
-    {
-        return state;
-    }
+    const [state, setState] = useState<UseAssetsResult<T>>(
+        typeof window !== 'undefined' && allAssetsAreLoaded
+            ? resolveAssets(assets)
+            : {
+                assets: Array(assets.length).fill(undefined),
+                isError: false,
+                isPending: true,
+                isSuccess: false,
+                status: UseAssetsStatus.PENDING,
+            });
 
     const {
         maxRetries = 3,
@@ -46,8 +60,6 @@ export function useAssets<T = any>(
         onProgress,
         retryOnFailure = true,
     } = options;
-
-    const allAssetsAreLoaded = assets.some(assetsLoadedTest<T>);
 
     if (!allAssetsAreLoaded)
     {
@@ -80,16 +92,9 @@ export function useAssets<T = any>(
         })
             .then(() =>
             {
-                const assetKeys = assets.map((asset: UnresolvedAsset<T>) => getAssetKey(asset));
-                const resolvedAssetsDictionary = Assets.get<T>(assetKeys) as Record<string, T>;
-
                 setState((previousState) => ({
                     ...previousState,
-                    assets: assets.map((_asset: UnresolvedAsset<T>, index: number) => resolvedAssetsDictionary[index]),
-                    isError: false,
-                    isPending: false,
-                    isSuccess: true,
-                    status: UseAssetsStatus.SUCCESS,
+                    ...resolveAssets(assets),
                 }));
             })
             .catch((error) =>

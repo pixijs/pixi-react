@@ -1,4 +1,5 @@
 import { ReactToPixiEventPropNames } from '../constants/EventPropNames';
+import { PixiReactIgnoredProps } from '../constants/PixiReactIgnoredProps';
 import { applyProps } from './applyProps';
 import { catalogue } from './catalogue';
 import { convertStringToPascalCase } from './convertStringToPascalCase';
@@ -30,7 +31,7 @@ export function createInstance(
     // Get the class from an imported Pixi.js namespace
     const PixiComponent = catalogue[name];
 
-    const pixiProps = gentleCloneProps(props);
+    const pixiProps = gentleCloneProps(props, PixiReactIgnoredProps);
 
     // Clone event props
     Object.entries(props).forEach(([key, value]) =>

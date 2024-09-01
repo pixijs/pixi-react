@@ -1,4 +1,3 @@
-import { PixiReactIgnoredProps } from '../constants/PixiReactIgnoredProps';
 import { ReactIgnoredProps } from '../constants/ReactIgnoredProps';
 import { gentleClone } from './gentleClone';
 
@@ -8,5 +7,5 @@ export function gentleCloneProps(
     additionalIgnoredProps: readonly string[] = [],
 )
 {
-    return gentleClone(props, ReactIgnoredProps.concat(PixiReactIgnoredProps, additionalIgnoredProps));
+    return gentleClone(props, ReactIgnoredProps.concat(additionalIgnoredProps));
 }

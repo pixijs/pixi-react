@@ -104,9 +104,6 @@ describe('useAssets', async () =>
 
         await waitFor(() => expect(result2.current.isSuccess).toBe(true));
 
-        expect(result.current.isSuccess).toBe(true);
-        expect(result2.current.isSuccess).toBe(true);
-
         const isTexture = (texture?: Texture) => texture && texture instanceof Texture;
 
         expect(result.current.isSuccess).toBe(true);

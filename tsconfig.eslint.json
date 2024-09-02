@@ -5,6 +5,7 @@
     "release.config.js",
   ],
   "include": [
+    "./lib/**/*",
     "./test/**/*",
     "./vitest.setup.ts",
     "./vitest.workspace.ts"

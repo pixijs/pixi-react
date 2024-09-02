@@ -44,7 +44,7 @@
     "prepare": "husky install",
     "prerelease": "npm run test:lint && npm run build",
     "release": "xs bump,publish,git-push",
-    "test": "vitest run",
+    "test": "tsc --project tsconfig.test.json && vitest run",
     "test:lint": "xs lint",
     "test:watch": "vitest"
   },
@@ -95,6 +95,9 @@
     "react-dom": {
       "optional": true
     }
+  },
+  "overrides": {
+    "rollup": "^4.18.0"
   },
   "publishConfig": {
     "access": "public"

@@ -1,7 +1,4 @@
-import {
-    PixiToReactEventPropNames,
-    ReactToPixiEventPropNames,
-} from '../constants/EventPropNames';
+import { ReactToPixiEventPropNames } from '../constants/EventPropNames';
 import { isEqual } from './compare';
 import { gentleCloneProps } from './gentleCloneProps';
 
@@ -53,7 +50,7 @@ export function diffProps(
         }
 
         // Collect handlers and bail out
-        if ((key in PixiToReactEventPropNames) || (key in ReactToPixiEventPropNames))
+        if (key in ReactToPixiEventPropNames)
         {
             changes.push([key, value, true, []]);
 

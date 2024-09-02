@@ -6,8 +6,7 @@ export default defineWorkspace([
         plugins: [react()],
         test: {
             environment: 'jsdom',
-            globals: true,
-            include: ['test/unit/**/*.test.ts(x)'],
+            include: ['test/unit/**/*.test.ts?(x)'],
             pool: 'forks',
         },
     },

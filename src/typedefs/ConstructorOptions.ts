@@ -9,4 +9,5 @@ export type ConstructorOptions<T extends new (...args: any[]) => any> =
         ? unknown extends R
             ? ConstructorParameters<T>[0]
             : R
-        : never;
+        : unknown;
+

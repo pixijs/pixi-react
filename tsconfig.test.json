@@ -1,18 +1,19 @@
+
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "allowJs": true,
     "allowImportingTsExtensions": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./src",
     "checkJs": true,
-    "declaration": true,
-    "declarationDir": "./types",
-    "emitDeclarationOnly": true,
+    "noEmit": true,
+    "emitDeclarationOnly": false,
     "esModuleInterop": true,
     "jsx": "react-jsx",
     "lib": [
       "DOM",
-      "ESNext",
+      "ESNext"
     ],
     "module": "ESNext",
     "moduleResolution": "node",
@@ -23,20 +24,15 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ESNext",
-    "types": [
-      "@testing-library/jest-dom",
-      "react",
-      "vite/client",
-      "vitest",
-    ],
+    "target": "ESNext"
   },
   "exclude": [
     "dist",
     "node_modules",
-    "types",
+    "types"
   ],
   "include": [
     "./src/**/*",
-  ],
+    "./test/**/*",
+  ]
 }

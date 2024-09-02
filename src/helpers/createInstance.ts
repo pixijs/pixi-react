@@ -1,3 +1,4 @@
+import { ReactToPixiEventPropNames } from '../constants/EventPropNames';
 import { PixiReactIgnoredProps } from '../constants/PixiReactIgnoredProps';
 import { applyProps } from './applyProps';
 import { catalogue } from './catalogue';
@@ -31,6 +32,17 @@ export function createInstance(
     const PixiComponent = catalogue[name];
 
     const pixiProps = gentleCloneProps(props, PixiReactIgnoredProps);
+
+    // Clone event props
+    Object.entries(props).forEach(([key, value]) =>
+    {
+        if (key in ReactToPixiEventPropNames)
+        {
+            const pixiEventName = ReactToPixiEventPropNames[key as keyof typeof ReactToPixiEventPropNames];
+
+            pixiProps[pixiEventName] = value;
+        }
+    });
 
     const instance = prepareInstance(new PixiComponent(pixiProps), {
         root,

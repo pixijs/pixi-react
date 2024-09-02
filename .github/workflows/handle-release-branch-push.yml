@@ -40,9 +40,25 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Publish release
-        uses: ./.github/actions/publish-release
-        with:
-          branchName: ${{ github.head_ref || github.ref_name }}
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          npmToken: ${{ secrets.NPM_TOKEN }}
+      - name: Setup Project
+        uses: ./.github/actions/setup
+
+      - name: Build Project
+        run: npm run build
+        shell: bash
+
+      - name: Semantic Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        id: release
+        run: |
+          export NEXT_TAG_VERSION=$(npx semantic-release | tee >(cat >&2) | grep 'The next release version is' | sed -E 's/.* ([[:digit:].]+)$/\1/')
+          echo "new_tag_version=${NEXT_TAG_VERSION}" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Publish to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        if: ${{ steps.release.outputs.new_tag_version != '' }}
+        run: npm publish ./dist/*.tgz --tag ${{ (github.head_ref || github.ref_name) == 'main' && 'latest' || github.head_ref || github.ref_name }}
+        shell: bash

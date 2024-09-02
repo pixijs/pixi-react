@@ -9,7 +9,7 @@ export interface UseTickOptions<T>
     context?: T
 
     /** @description Whether this callback is currently enabled. */
-    isEnabled: true,
+    isEnabled?: true,
 
     /** @description The priority of this callback compared to other callbacks on the ticker. */
     priority?: number

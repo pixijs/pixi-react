@@ -15,7 +15,9 @@ jobs:
           - name: Lint
             command: test:lint
           - name: Unit tests
-            command: test
+            command: test:unit
+          - name: E2E tests
+            command: test:e2e
     steps:
       - name: Checkout
         uses: actions/checkout@v4

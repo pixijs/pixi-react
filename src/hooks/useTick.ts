@@ -38,7 +38,7 @@ export function useTick<T>(
     {
         callback = options.callback;
         context = options.context;
-        isEnabled = options.isEnabled;
+        isEnabled = options.isEnabled ?? true;
         priority = options.priority;
     }
 

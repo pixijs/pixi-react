@@ -1,4 +1,5 @@
 import {
+    type Application as PixiApplication,
     extensions as PixiExtensions,
     TextStyle,
 } from 'pixi.js';
@@ -8,14 +9,16 @@ import {
     type ForwardRefRenderFunction,
     type MutableRefObject,
     useCallback,
+    useEffect,
     useRef,
 } from 'react';
 import { createRoot } from '../core/createRoot';
+import { roots } from '../core/roots';
+import { queueForUnmount } from '../helpers/queueForUnmount';
+import { unmountApplications } from '../helpers/unmountApplications';
+import { unqueueForUnmount } from '../helpers/unqueueForUnmount';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { type ApplicationProps } from '../typedefs/ApplicationProps';
-import { type Root } from '../typedefs/Root';
-
-import type { Application as PixiApplication } from 'pixi.js';
 
 const originalDefaultTextStyle = { ...TextStyle.defaultTextStyle };
 
@@ -39,7 +42,6 @@ export const ApplicationFunction: ForwardRefRenderFunction<PixiApplication, Appl
     const applicationRef: MutableRefObject<PixiApplication | null> = useRef(null);
     const canvasRef: MutableRefObject<HTMLCanvasElement | null> = useRef(null);
     const extensionsRef: MutableRefObject<Set<any>> = useRef(new Set());
-    const rootRef: MutableRefObject<Root | null> = useRef(null);
 
     const updateResizeTo = useCallback(() =>
     {
@@ -71,6 +73,8 @@ export const ApplicationFunction: ForwardRefRenderFunction<PixiApplication, Appl
 
     const handleInit = useCallback((application: PixiApplication) =>
     {
+        unmountApplications();
+
         if (forwardedRef && ('current' in forwardedRef))
         {
             forwardedRef.current = application;
@@ -136,12 +140,14 @@ export const ApplicationFunction: ForwardRefRenderFunction<PixiApplication, Appl
 
         if (canvasElement)
         {
-            if (!rootRef.current)
+            let root = roots.get(canvasElement);
+
+            if (!root)
             {
-                rootRef.current = createRoot(canvasElement, {}, handleInit);
+                root = createRoot(canvasElement, {}, handleInit);
             }
 
-            rootRef.current.render(children, applicationProps);
+            root.render(children, applicationProps);
         }
     }, [
         applicationProps,
@@ -167,9 +173,25 @@ export const ApplicationFunction: ForwardRefRenderFunction<PixiApplication, Appl
         }
     }, [defaultTextStyle]);
 
+    // eslint-disable-next-line consistent-return
+    useEffect(() =>
+    {
+        const canvasElement = canvasRef.current;
+
+        if (canvasElement)
+        {
+            unqueueForUnmount(canvasElement);
+
+            return () =>
+            {
+                queueForUnmount(canvasElement);
+            };
+        }
+    }, []);
+
     return createElement('canvas', {
-        ref: canvasRef,
         className,
+        ref: canvasRef,
     });
 };
 

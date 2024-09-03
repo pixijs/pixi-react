@@ -14,10 +14,13 @@ jobs:
           #   command: test:types
           - name: Lint
             command: test:lint
+            installPlaywright: false
           - name: Unit tests
             command: test:unit
+            installPlaywright: false
           - name: E2E tests
             command: test:e2e
+            installPlaywright: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,6 +29,10 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup
+
+      - name: Install Playwright browsers
+        if: ${{ matrix.script.installPlaywright }}
+        run: npx playwright install
 
       - name: ${{ matrix.script.name }}
         run: npm run ${{ matrix.script.command }}

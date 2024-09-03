@@ -45,8 +45,8 @@
     "prerelease": "npm run test:lint && npm run build",
     "release": "xs bump,publish,git-push",
     "test": "tsc --project tsconfig.test.json && vitest run",
-    "test:e2e": "tsc --project tsconfig.test.json && vitest run --project e2e",
-    "test:unit": "tsc --project tsconfig.test.json && vitest run --project unit",
+    "test:e2e": "tsc --project tsconfig.test.json && vitest run e2e",
+    "test:unit": "tsc --project tsconfig.test.json && vitest run unit",
     "test:lint": "xs lint",
     "test:watch": "vitest"
   },

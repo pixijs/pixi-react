@@ -98,6 +98,7 @@ describe('exports', () =>
             'useExtend',
             'useTick',
             'useSuspenseAssets',
+            'PixiReactElementProps'
         );
     });
 });

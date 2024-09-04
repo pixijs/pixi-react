@@ -14,8 +14,8 @@ import {
 } from 'react';
 import { createRoot } from '../core/createRoot';
 import { roots } from '../core/roots';
+import { processUnmountQueue } from '../helpers/processUnmountQueue';
 import { queueForUnmount } from '../helpers/queueForUnmount';
-import { unmountApplications } from '../helpers/unmountApplications';
 import { unqueueForUnmount } from '../helpers/unqueueForUnmount';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { type ApplicationProps } from '../typedefs/ApplicationProps';
@@ -73,7 +73,7 @@ export const ApplicationFunction: ForwardRefRenderFunction<PixiApplication, Appl
 
     const handleInit = useCallback((application: PixiApplication) =>
     {
-        unmountApplications();
+        processUnmountQueue();
 
         if (forwardedRef && ('current' in forwardedRef))
         {

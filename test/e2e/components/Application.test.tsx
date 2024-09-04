@@ -4,82 +4,86 @@ import {
     it,
     vi,
 } from 'vitest'
-import { type Application as PixiApplication } from 'pixi.js'
-import { render } from '@testing-library/react'
-import { useEffect } from 'react'
+import { type Application as PixiApplication } from 'pixi.js';
+import { render } from '@testing-library/react';
+import { useEffect } from 'react';
 
-import { Application } from '../../../src/components/Application'
-import { useApplication } from '../../../src/hooks/useApplication'
+import { Application } from '../../../src/components/Application';
+import { useApplication } from '../../../src/hooks/useApplication';
 
 describe('Application', () => {
-    it('runs the `onInit` callback', async () => {
-        const onInitSpy = vi.fn()
+    describe('onInit', () => {
+        it('runs the callback once', async () => {
+            const onInitSpy = vi.fn();
 
-        const TestComponent = () => (
-            <Application onInit={onInitSpy} />
-        )
+            const TestComponent = () => (
+                <Application onInit={onInitSpy} />
+            );
 
-        render(<TestComponent />)
+            render(<TestComponent />);
 
-        await expect.poll(() => onInitSpy.mock.calls.length).toEqual(1)
+            await expect.poll(() => onInitSpy.mock.calls.length).toEqual(1);
+        });
     });
 
-    it('unmounts after init', async () => {
-        let testApp: PixiApplication | null = null
+    describe('unmount', () => {
+        it('unmounts after init', async () => {
+            let testApp: PixiApplication | null = null;
 
-        const TestChildComponent = () => {
-            const { app } = useApplication()
+            const TestChildComponent = () => {
+                const { app } = useApplication();
 
-            useEffect(() => {
-                testApp = app
+                useEffect(() => {
+                    testApp = app;
 
-                return () => {
-                    testApp = app
-                }
-            }, [app])
+                    return () => {
+                        testApp = app;
+                    }
+                }, [app]);
 
-            return null
-        }
+                return null;
+            };
 
-        const TestComponent = () => (
-            <Application>
-                <TestChildComponent />
-            </Application>
-        )
+            const TestComponent = () => (
+                <Application>
+                    <TestChildComponent />
+                </Application>
+            );
 
-        const { unmount } = render(<TestComponent />)
+            const { unmount } = render(<TestComponent />);
 
-        await expect.poll(() => Boolean(testApp?.renderer)).toBeTruthy()
+            await expect.poll(() => Boolean(testApp?.renderer)).toBeTruthy();
 
-        unmount()
+            unmount();
 
-        await expect.poll(() => !testApp?.renderer).toBeFalsy()
-        await expect.poll(() => !testApp?.stage).toBeFalsy()
-    })
+            await expect.poll(() => !testApp?.renderer).toBeFalsy();
+            await expect.poll(() => !testApp?.stage).toBeFalsy();
+        });
 
-    it('unmounts during init', async () => {
-        let testApp: PixiApplication | null = null
+        it('unmounts during init', async () => {
+            let testApp: PixiApplication | null = null;
 
-        const TestChildComponent = () => {
-            testApp = useApplication().app
+            const TestChildComponent = () => {
+                testApp = useApplication().app;
 
-            return null
-        }
+                return null;
+            };
 
-        const TestComponent = () => (
-            <Application>
-                <TestChildComponent />
-            </Application>
-        )
+            const TestComponent = () => (
+                <Application>
+                    <TestChildComponent />
+                </Application>
+            );
 
-        const { unmount } = render(<TestComponent />)
+            const { unmount } = render(<TestComponent />);
 
-        await expect.poll(() => !testApp?.renderer).toBeFalsy()
-        await expect.poll(() => !testApp?.stage).toBeFalsy()
+            await expect.poll(() => !testApp?.renderer).toBeFalsy();
+            await expect.poll(() => !testApp?.stage).toBeFalsy();
 
-        unmount()
+            unmount();
 
-        await expect.poll(() => !testApp?.renderer).toBeFalsy()
-        await expect.poll(() => !testApp?.stage).toBeFalsy()
+            await expect.poll(() => !testApp?.renderer).toBeFalsy();
+            await expect.poll(() => !testApp?.stage).toBeFalsy();
+        });
     });
-})
+});

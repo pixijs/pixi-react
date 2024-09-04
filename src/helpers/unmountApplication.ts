@@ -12,15 +12,12 @@ export function unmountApplication(root: Root)
         {
             reconciler.updateContainer(null, fiber, null, () =>
             {
-                try
+                if (root.applicationState.app)
                 {
                     root.applicationState.app.destroy();
-                    roots.delete(root.internalState.canvas!);
                 }
-                catch (error)
-                {
-                    /* ... */
-                }
+
+                roots.delete(root.internalState.canvas!);
             });
         }
     }

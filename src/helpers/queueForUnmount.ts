@@ -1,4 +1,5 @@
 import { roots } from '../core/roots';
+import { store } from '../store';
 import { unmountApplication } from './unmountApplication';
 
 export function queueForUnmount(canvas: HTMLCanvasElement)
@@ -13,7 +14,7 @@ export function queueForUnmount(canvas: HTMLCanvasElement)
         }
         else
         {
-            root.internalState.queuedForUnmount = true;
+            store.unmountQueue.add(root);
         }
     }
 }

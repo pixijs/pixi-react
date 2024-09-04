@@ -28,18 +28,27 @@ describe('Application', () => {
 
     describe('unmount', () => {
         it('unmounts after init', async () => {
-            let testApp: PixiApplication | null = null;
+            let testApp = null as any as PixiApplication;
+            let testAppIsInitialised = false;
 
             const TestChildComponent = () => {
-                const { app } = useApplication();
+                const {
+                    app,
+                    isInitialised,
+                } = useApplication();
 
                 useEffect(() => {
-                    testApp = app;
+                    testApp = app
+                    testAppIsInitialised = isInitialised
 
                     return () => {
-                        testApp = app;
+                        testApp = app
+                        testAppIsInitialised = isInitialised
                     }
-                }, [app]);
+                }, [
+                    app,
+                    isInitialised,
+                ])
 
                 return null;
             };
@@ -52,19 +61,35 @@ describe('Application', () => {
 
             const { unmount } = render(<TestComponent />);
 
-            await expect.poll(() => Boolean(testApp?.renderer)).toBeTruthy();
+            await expect.poll(() => testAppIsInitialised).toEqual(true);
 
             unmount();
 
-            await expect.poll(() => !testApp?.renderer).toBeFalsy();
-            await expect.poll(() => !testApp?.stage).toBeFalsy();
+            await expect.poll(() => Boolean(testApp.renderer && testApp.stage)).toBeFalsy();
         });
 
         it('unmounts during init', async () => {
-            let testApp: PixiApplication | null = null;
+            let testApp = null as any as PixiApplication;
+            let testAppIsInitialised = false;
 
             const TestChildComponent = () => {
-                testApp = useApplication().app;
+                const {
+                    app,
+                    isInitialised,
+                } = useApplication();
+
+                useEffect(() => {
+                    testApp = app
+                    testAppIsInitialised = isInitialised
+
+                    return () => {
+                        testApp = app
+                        testAppIsInitialised = isInitialised
+                    }
+                }, [
+                    app,
+                    isInitialised,
+                ])
 
                 return null;
             };
@@ -77,13 +102,11 @@ describe('Application', () => {
 
             const { unmount } = render(<TestComponent />);
 
-            await expect.poll(() => !testApp?.renderer).toBeFalsy();
-            await expect.poll(() => !testApp?.stage).toBeFalsy();
+            expect(testAppIsInitialised).to.be.false;
 
             unmount();
 
-            await expect.poll(() => !testApp?.renderer).toBeFalsy();
-            await expect.poll(() => !testApp?.stage).toBeFalsy();
+            await expect.poll(() => Boolean(testApp.renderer && testApp.stage)).toBeFalsy();
         });
     });
 });

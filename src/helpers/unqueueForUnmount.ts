@@ -1,4 +1,5 @@
 import { roots } from '../core/roots';
+import { store } from '../store';
 
 export function unqueueForUnmount(canvas: HTMLCanvasElement)
 {
@@ -6,6 +7,6 @@ export function unqueueForUnmount(canvas: HTMLCanvasElement)
 
     if (root)
     {
-        root.internalState.queuedForUnmount = false;
+        store.unmountQueue.delete(root);
     }
 }

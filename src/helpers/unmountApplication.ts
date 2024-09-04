@@ -6,7 +6,7 @@ export function unmountApplication(root: Root)
 {
     if (root.internalState.queuedForUnmount)
     {
-        const fiber = root?.fiber;
+        const fiber = root.fiber;
 
         if (fiber)
         {

@@ -9,6 +9,7 @@ import { render } from '@testing-library/react';
 import { useEffect } from 'react';
 
 import { Application } from '../../../src/components/Application';
+import { isAppMounted } from '../../utils/isAppMounted';
 import { useApplication } from '../../../src/hooks/useApplication';
 
 describe('Application', () => {
@@ -65,7 +66,7 @@ describe('Application', () => {
 
             unmount();
 
-            await expect.poll(() => Boolean(testApp.renderer && testApp.stage)).toBeFalsy();
+            await expect.poll(() => isAppMounted(testApp)).toBeFalsy();
         });
 
         it('unmounts during init', async () => {
@@ -106,7 +107,7 @@ describe('Application', () => {
 
             unmount();
 
-            await expect.poll(() => Boolean(testApp.renderer && testApp.stage)).toBeFalsy();
+            await expect.poll(() => isAppMounted(testApp)).toBeFalsy();
         });
     });
 });

@@ -3,7 +3,7 @@ import { roots } from '../core/roots';
 import { store } from '../store';
 import { type Root } from '../typedefs/Root';
 
-export function unmountApplication(root: Root)
+export function unmountRoot(root: Root)
 {
     store.unmountQueue.delete(root);
 

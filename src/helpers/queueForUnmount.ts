@@ -1,6 +1,6 @@
 import { roots } from '../core/roots';
 import { store } from '../store';
-import { unmountApplication } from './unmountApplication';
+import { unmountRoot } from './unmountRoot';
 
 export function queueForUnmount(canvas: HTMLCanvasElement)
 {
@@ -10,7 +10,7 @@ export function queueForUnmount(canvas: HTMLCanvasElement)
     {
         if (root.applicationState.isInitialised)
         {
-            unmountApplication(root);
+            unmountRoot(root);
         }
         else
         {

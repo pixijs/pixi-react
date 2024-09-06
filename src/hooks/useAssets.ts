@@ -41,7 +41,7 @@ export function useAssets<T = any>(
     options: UseAssetsOptions = {},
 ): UseAssetsResult<T>
 {
-    const allAssetsAreLoaded = assets.reduce((acc, cur) => acc && assetsLoadedTest<T>(cur), true);
+    const allAssetsAreLoaded = assets.every((asset) => assetsLoadedTest<T>(asset));
 
     const [state, setState] = useState<UseAssetsResult<T>>(
         typeof window !== 'undefined' && allAssetsAreLoaded

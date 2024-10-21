@@ -151,6 +151,15 @@ export const ApplicationFunction: ForwardRefRenderFunction<PixiApplication, Appl
     ]);
 
     useIsomorphicLayoutEffect(() =>
+        () =>
+        {
+            if (rootRef.current)
+            {
+                rootRef.current.unmount();
+            }
+        }, []);
+
+    useIsomorphicLayoutEffect(() =>
     {
         updateResizeTo();
     }, [resizeTo]);

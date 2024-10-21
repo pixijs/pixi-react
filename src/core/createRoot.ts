@@ -121,11 +121,23 @@ export function createRoot(
             return applicationState.app;
         };
 
+        const unmount = () =>
+        {
+            reconciler.updateContainer(
+                null,
+                fiber,
+                null,
+                null,
+            );
+            roots.delete(target);
+        };
+
         root = {
             applicationState,
             fiber,
             internalState,
             render,
+            unmount,
         };
 
         roots.set(canvas, root);

@@ -8,6 +8,7 @@ export interface Root
     fiber: Fiber;
     root?: Container;
     render: (...args: any[]) => any;
+    unmount: () => void;
     applicationState: ApplicationState;
     internalState: InternalState;
 }

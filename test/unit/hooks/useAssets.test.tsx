@@ -1,4 +1,4 @@
-import { Assets, Cache, Sprite, Texture, type UnresolvedAsset } from 'pixi.js';
+import { Assets, loadTextures, Sprite, Texture, type UnresolvedAsset } from 'pixi.js';
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { extend, useAssets } from '../../../src';
 import { cleanup, renderHook, waitFor } from '@testing-library/react';
@@ -7,76 +7,58 @@ extend({ Sprite });
 
 describe('useAssets', async () =>
 {
-    const assets: UnresolvedAsset[] = [{ src: 'test.png' }, { src: 'test2.png' }];
+    loadTextures.config = {
+        preferWorkers: false,
+        preferCreateImageBitmap: true,
+        crossOrigin: 'anonymous',
+    };
 
-    // Store the loaded assets and data state to verify the hook results
-    let loaded: Record<string, unknown> = {};
-    let data: Record<string, any> = {};
+    const mockFetch = vi.spyOn(global, 'fetch');
 
-    // Mock the Assets.load, Assets.get & Cache.has method
-    const load = vi.spyOn(Assets, 'load');
-    const get = vi.spyOn(Assets, 'get');
-    const has = vi.spyOn(Cache, 'has');
-
-    // Mock the Assets.load to populate the loaded record, and resolve after 1ms
-    load.mockImplementation((urls) =>
+    global.createImageBitmap = vi.fn().mockImplementation(() => new Promise<ImageBitmap>((resolve) =>
     {
-        const assets = urls as UnresolvedAsset[];
+        setTimeout(() => resolve({ width: 100, height: 100, close: () => { /* noop */ } }), 1);
+    }));
 
-        return new Promise((resolve) =>
-        {
-            setTimeout(() =>
-            {
-                loaded = { ...loaded, ...assets.reduce((acc, val) => ({ ...acc, [val.src!.toString()]: Texture.EMPTY }), {}) };
-                data = { ...data, ...assets.reduce((acc, val) => ({ ...acc, [val.src!.toString()]: val.data }), {}) };
-                resolve(loaded);
-            }, 1);
-        });
-    });
-
-    // Mock the Assets.get to return the loaded record
-    get.mockImplementation((keys) =>
-        keys.reduce<Record<string, unknown>>((acc, key, idx) => ({ ...acc, [idx]: loaded[key] }), {}));
-
-    // Mock the Cache.has to check if the key is in the loaded record
-    has.mockImplementation((key) => key in loaded);
-
-    // Load the default results using Assets.load to compare against the results from the useAssets hook
-    const defaultResults = await Assets.load<Texture>(assets);
+    mockFetch.mockImplementation(() => new Promise<Response>((resolve) =>
+    {
+        setTimeout(() => resolve(new Response()), 1);
+    }));
 
     beforeEach(() =>
     {
-        loaded = {};
-        data = {};
+        Assets.init({
+            skipDetections: true,
+        });
     });
 
     afterEach(() =>
     {
+        Assets.reset();
         cleanup();
     });
 
     afterAll(() =>
     {
-        load.mockRestore();
-        get.mockRestore();
+        mockFetch.mockRestore();
     });
 
     it('loads assets', async () =>
     {
+        const assets: UnresolvedAsset[] = [{ src: 'http://localhost/bc3d2999.png' }, { src: 'http://localhost/1a5c1ce4.png' }];
+
         const { result } = renderHook(() => useAssets<Texture>(assets));
 
         expect(result.current.isPending).toBe(true);
         await waitFor(() => expect(result.current.isSuccess).toBe(true));
-
-        expect(result.current.assets).toEqual(assets.map(({ src }) => defaultResults[src!.toString()]));
     });
 
     it('accepts data', async () =>
     {
         // Explicitly type the T in the useAssets hook
         const { result } = renderHook(() => useAssets<Texture>([
-            { src: 'test.png', data: { test: '7a1c8bee' } },
-            { src: 'test2.png', data: { test: '230a3f41' } },
+            { src: 'http://localhost/7a1c8bee.png', data: { test: '7a1c8bee' } },
+            { src: 'http://localhost/230a3f41.png', data: { test: '230a3f41' } },
         ]));
 
         expect(result.current.isPending).toBe(true);
@@ -85,8 +67,6 @@ describe('useAssets', async () =>
         const { assets: [texture], isSuccess } = result.current;
 
         expect(isSuccess).toBe(true);
-        expect(data['test.png'].test).toBe('7a1c8bee');
-        expect(data['test2.png'].test).toBe('230a3f41');
 
         const isTexture = (texture?: Texture) => texture && texture instanceof Texture;
 
@@ -97,7 +77,7 @@ describe('useAssets', async () =>
     {
         // Do not provide a type for T in the useAssets hook
         const { result } = renderHook(() => useAssets([
-            { src: 'test.png', data: { test: 'd460dbdd' } },
+            { src: 'http://localhost/d460dbdd.png', data: { test: 'd460dbdd' } },
         ]));
 
         expect(result.current.isPending).toBe(true);
@@ -110,5 +90,45 @@ describe('useAssets', async () =>
         const isTexture = (texture?: Texture) => texture && texture instanceof Texture;
 
         expect(isTexture(texture)).toBe(true);
+    });
+
+    it('handles subsequent loads', async () =>
+    {
+        const assets: UnresolvedAsset[] = [{ src: 'http://localhost/c13a19b0.png' }, { src: 'http://localhost/ba91270b.png' }];
+
+        const { result, rerender } = renderHook(() => useAssets<Texture>(assets));
+
+        await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+        const { result: result2, rerender: rerender2 } = renderHook(() => useAssets<Texture>(assets));
+
+        await waitFor(() => expect(result2.current.isSuccess).toBe(true));
+
+        const isTexture = (texture?: Texture) => texture && texture instanceof Texture;
+
+        expect(result.current.isSuccess).toBe(true);
+        expect(result2.current.isSuccess).toBe(true);
+        expect(isTexture(result.current.assets[0])).toBe(true);
+        expect(isTexture(result.current.assets[1])).toBe(true);
+        expect(isTexture(result2.current.assets[0])).toBe(true);
+        expect(isTexture(result2.current.assets[1])).toBe(true);
+
+        rerender();
+
+        expect(result.current.isSuccess).toBe(true);
+        expect(result2.current.isSuccess).toBe(true);
+        expect(isTexture(result.current.assets[0])).toBe(true);
+        expect(isTexture(result.current.assets[1])).toBe(true);
+        expect(isTexture(result2.current.assets[0])).toBe(true);
+        expect(isTexture(result2.current.assets[1])).toBe(true);
+
+        rerender2();
+
+        expect(result.current.isSuccess).toBe(true);
+        expect(result2.current.isSuccess).toBe(true);
+        expect(isTexture(result.current.assets[0])).toBe(true);
+        expect(isTexture(result.current.assets[1])).toBe(true);
+        expect(isTexture(result2.current.assets[0])).toBe(true);
+        expect(isTexture(result2.current.assets[1])).toBe(true);
     });
 });

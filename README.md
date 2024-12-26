@@ -204,16 +204,16 @@ const MyComponent = () => {
 
 ##### For Typescript Users
 
-If you're using Typescript, this new `<viewport>` component will throw type errors. Pixi React exports a `PixiReactNode` type that can be used to solve this. You'll need to pass the `Viewport` into `PixiReactNode` and inject it into JSX:
+If you're using Typescript, this new `<viewport>` component will throw type errors. Pixi React exports a `PixiReactElementProps` type that can be used to solve this. You'll need to pass the `Viewport` into `PixiReactElementProps` and inject it into JSX:
 
 ```ts
-import type { PixiReactNode } from '@pixi/react'
+import type { PixiReactElementProps } from '@pixi/react'
 import type { Viewport } from 'pixi-viewport'
 
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      viewport: PixiReactNode<typeof Viewport>;
+      viewport: PixiReactElementProps<typeof Viewport>;
     }
   }
 }

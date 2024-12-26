@@ -17,3 +17,4 @@ export { useAssets } from './hooks/useAssets';
 export { useExtend } from './hooks/useExtend';
 export { useSuspenseAssets } from './hooks/useSuspenseAssets';
 export { useTick } from './hooks/useTick';
+export type { PixiReactElementProps } from './typedefs/PixiReactNode';

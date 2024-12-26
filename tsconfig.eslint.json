@@ -3,6 +3,7 @@
   "files": [
     ".eslintrc.js",
     "release.config.js",
+    "rollup.config.mjs",
   ],
   "include": [
     "./lib/**/*",

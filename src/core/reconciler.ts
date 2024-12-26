@@ -1,7 +1,7 @@
 /* eslint-disable no-empty-function */
 
 import Reconciler from 'react-reconciler';
-import packageData from '../../package.json' assert { type: 'json' };
+import packageData from '../../package.json' with { type: 'json' };
 import { afterActiveInstanceBlur } from '../helpers/afterActiveInstanceBlur';
 import { appendChild } from '../helpers/appendChild';
 import { beforeActiveInstanceBlur } from '../helpers/beforeActiveInstanceBlur';

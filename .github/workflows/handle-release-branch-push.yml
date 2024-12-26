@@ -38,7 +38,7 @@ jobs:
         run: npm run ${{ matrix.script.command }}
 
   publish:
-    name: Publish
+    name: 'Publish: Release'
     needs:
       - verify
     if: contains(fromJson('["refs/heads/alpha", "refs/heads/beta", "refs/heads/main"]'), github.ref)
@@ -49,14 +49,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Project
+      - name: Setup project
         uses: ./.github/actions/setup
 
       - name: Build Project
         run: npm run build
         shell: bash
 
-      - name: Semantic Release
+      - name: Semantic release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         id: release
@@ -71,3 +71,34 @@ jobs:
         if: ${{ steps.release.outputs.new_tag_version != '' }}
         run: npm publish ./dist/*.tgz --tag ${{ (github.head_ref || github.ref_name) == 'main' && 'latest' || github.head_ref || github.ref_name }}
         shell: bash
+
+  # dev-publish:
+  #   name: 'Publish: Dev'
+  #   needs:
+  #     - verify
+  #   if: contains(fromJson('["refs/heads/alpha", "refs/heads/beta", "refs/heads/main"]'), github.ref) == 'false'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
+
+  #     - name: Setup project
+  #       uses: ./.github/actions/setup
+
+  #     - name: Build project
+  #       run: npm run build
+  #       shell: bash
+
+  #     - name: Get current version
+  #       run: echo "PACKAGE_VERSION=$(npm pkg get version | tr -d '"')" >> $GITHUB_ENV
+
+  #     - name: Setup dev version
+  #       run: echo "BRANCH_VERSION=$PACKAGE_VERSION-$BRANCH_NAME.${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+  #     - name: Bump version
+  #       run: npm version $BRANCH_VERSION --no-git-tag-version --force
+
+  #     - name: Publish a dev release
+  #       run: npm publish --tag dev

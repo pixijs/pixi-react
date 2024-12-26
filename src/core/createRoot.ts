@@ -76,6 +76,8 @@ export function createRoot(
             target.appendChild(canvas);
         }
 
+        internalState.canvas = canvas;
+
         const render = async (
             children: ReactNode,
             applicationOptions: ApplicationOptions,

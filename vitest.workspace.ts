@@ -20,9 +20,7 @@ export default defineWorkspace([
             },
             globals: true,
             include: ['test/e2e/**/*.test.ts(x)'],
-            setupFiles: [
-                './vitest.setup.ts'
-            ],
+            setupFiles: ['./vitest.setup.ts'],
         },
     },
 ]);

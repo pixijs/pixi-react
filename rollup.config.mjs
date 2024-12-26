@@ -1,7 +1,7 @@
 import path from 'node:path';
 import esbuild from 'rollup-plugin-esbuild';
 import sourcemaps from 'rollup-plugin-sourcemaps';
-import repo from './package.json' assert { type: 'json' };
+import repo from './package.json' with { type: 'json' };
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';

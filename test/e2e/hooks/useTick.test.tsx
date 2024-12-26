@@ -12,7 +12,6 @@ import { Ticker } from 'pixi.js';
 
 import { Application } from '../../../src/components/Application'
 import { useTick } from '../../../src/hooks/useTick'
-import { wait } from '../../utils/wait'
 
 describe('useTick', () =>
 {
@@ -28,9 +27,7 @@ describe('useTick', () =>
 
             render(<TestComponent />, { wrapper: Application })
 
-            await wait(100)
-
-            expect(useTickSpy.mock.lastCall?.[0]).to.be.instanceOf(Ticker)
+            await expect.poll(() => useTickSpy.mock.lastCall?.[0]).toBeInstanceOf(Ticker)
         });
     })
 
@@ -46,9 +43,7 @@ describe('useTick', () =>
 
             render(<TestComponent />, { wrapper: Application })
 
-            await wait(100)
-
-            expect(useTickSpy.mock.lastCall?.[0]).to.be.instanceOf(Ticker)
+            await expect.poll(() => useTickSpy.mock.lastCall?.[0]).toBeInstanceOf(Ticker)
         });
     })
 

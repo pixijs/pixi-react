@@ -1,19 +1,20 @@
+import { type Application as PixiApplication } from 'pixi.js';
+import { useEffect } from 'react';
 import {
     describe,
     expect,
     it,
     vi,
 } from 'vitest'
-import { type Application as PixiApplication } from 'pixi.js';
-import { render } from '@testing-library/react';
-import { useEffect } from 'react';
-
 import { Application } from '../../../src/components/Application';
-import { isAppMounted } from '../../utils/isAppMounted';
+import { roots } from '../../../src/core/roots';
 import { useApplication } from '../../../src/hooks/useApplication';
+import { isAppMounted } from '../../utils/isAppMounted';
+import { render } from '@testing-library/react';
 
 describe('Application', () => {
-    describe('onInit', () => {
+    describe('onInit', () =>
+    {
         it('runs the callback once', async () => {
             const onInitSpy = vi.fn();
 
@@ -28,7 +29,8 @@ describe('Application', () => {
     });
 
     describe('unmount', () => {
-        it('unmounts after init', async () => {
+        it('unmounts after init', async () =>
+        {
             let testApp = null as any as PixiApplication;
             let testAppIsInitialised = false;
 
@@ -38,18 +40,19 @@ describe('Application', () => {
                     isInitialised,
                 } = useApplication();
 
-                useEffect(() => {
-                    testApp = app
-                    testAppIsInitialised = isInitialised
+                useEffect(() =>
+                {
+                    testApp = app;
+                    testAppIsInitialised = isInitialised;
 
                     return () => {
-                        testApp = app
-                        testAppIsInitialised = isInitialised
-                    }
+                        testApp = app;
+                        testAppIsInitialised = isInitialised;
+                    };
                 }, [
                     app,
                     isInitialised,
-                ])
+                ]);
 
                 return null;
             };
@@ -60,37 +63,46 @@ describe('Application', () => {
                 </Application>
             );
 
+            expect(roots.size).toEqual(0);
+
             const { unmount } = render(<TestComponent />);
+
+            expect(roots.size).toEqual(1);
 
             await expect.poll(() => testAppIsInitialised).toEqual(true);
 
             unmount();
 
+            expect(roots.size).toEqual(0);
+
             await expect.poll(() => isAppMounted(testApp)).toBeFalsy();
         });
 
-        it('unmounts during init', async () => {
+        it('unmounts during init', async () =>
+        {
             let testApp = null as any as PixiApplication;
             let testAppIsInitialised = false;
 
-            const TestChildComponent = () => {
+            const TestChildComponent = () =>
+            {
                 const {
                     app,
                     isInitialised,
                 } = useApplication();
 
-                useEffect(() => {
-                    testApp = app
-                    testAppIsInitialised = isInitialised
+                useEffect(() =>
+                {
+                    testApp = app;
+                    testAppIsInitialised = isInitialised;
 
                     return () => {
-                        testApp = app
-                        testAppIsInitialised = isInitialised
-                    }
+                        testApp = app;
+                        testAppIsInitialised = isInitialised;
+                    };
                 }, [
                     app,
                     isInitialised,
-                ])
+                ]);
 
                 return null;
             };
@@ -101,13 +113,19 @@ describe('Application', () => {
                 </Application>
             );
 
+            expect(roots.size).toEqual(0);
+
             const { unmount } = render(<TestComponent />);
+
+            expect(roots.size).toEqual(1);
 
             expect(testAppIsInitialised).to.be.false;
 
             unmount();
 
             await expect.poll(() => isAppMounted(testApp)).toBeFalsy();
+
+            expect(roots.size).toEqual(0);
         });
     });
 });

@@ -29,7 +29,7 @@ runs:
       shell: bash
       run: npm ci --ignore-scripts --no-audit --no-fund
 
-    - name: Rebuild binaries
-      if: steps.node-modules-cache.outputs.cache-hit != 'true'
-      shell: bash
-      run: npm rebuild
+    # - name: Rebuild binaries
+    #   if: steps.node-modules-cache.outputs.cache-hit != 'true'
+    #   shell: bash
+    #   run: npm rebuild

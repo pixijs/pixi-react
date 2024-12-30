@@ -3,9 +3,16 @@ import {
     Graphics,
 } from 'pixi.js';
 import {
+    type FederatedPointerEvent,
+    type FederatedWheelEvent,
+} from 'pixi.js';
+import {
     PixiToReactEventPropNames,
     ReactToPixiEventPropNames,
 } from '../constants/EventPropNames';
+import { type DiffSet } from '../typedefs/DiffSet';
+import { type HostConfig } from '../typedefs/HostConfig';
+import { type InstanceState } from '../typedefs/InstanceState';
 import {
     isNull,
     isUndefined,
@@ -14,14 +21,6 @@ import { diffProps } from './diffProps';
 import { isDiffSet } from './isDiffSet';
 import { isReadOnlyProperty } from './isReadOnlyProperty';
 import { log } from './log';
-
-import type {
-    FederatedPointerEvent,
-    FederatedWheelEvent,
-} from 'pixi.js';
-import type { DiffSet } from '../typedefs/DiffSet';
-import type { HostConfig } from '../typedefs/HostConfig';
-import type { InstanceState } from '../typedefs/InstanceState';
 
 const DEFAULT = '__default';
 const DEFAULTS_CONTAINERS = new Map();

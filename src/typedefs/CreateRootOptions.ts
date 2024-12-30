@@ -1,4 +1,4 @@
-import type { Application } from 'pixi.js';
+import { type Application } from 'pixi.js';
 
 export interface CreateRootOptions
 {

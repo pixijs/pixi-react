@@ -1,15 +1,15 @@
-import type {
-    Application,
-    ApplicationOptions,
-    ExtensionFormatLoose,
-    TextStyle,
-    TextStyleOptions,
+import {
+    type Application,
+    type ApplicationOptions,
+    type ExtensionFormatLoose,
+    type TextStyle,
+    type TextStyleOptions,
 } from 'pixi.js';
-import type {
-    Key,
-    RefObject,
+import {
+    type Key,
+    type RefObject,
 } from 'react';
-import type { PixiReactChildNode } from './PixiReactChildNode';
+import { type PixiReactChildNode } from './PixiReactChildNode';
 
 export interface BaseApplicationProps
 {

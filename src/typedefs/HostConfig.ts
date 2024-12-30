@@ -2,10 +2,9 @@ import {
     type Container,
     type Filter,
 } from 'pixi.js';
-
-import type { NamespacedPixiElements } from './NamespacedPixiElements';
-import type { PixiElements } from './PixiElements';
-import type { PixiReactNode } from './PixiReactNode';
+import { type NamespacedPixiElements } from './NamespacedPixiElements';
+import { type PixiElements } from './PixiElements';
+import { type PixiReactNode } from './PixiReactNode';
 
 export interface HostConfig
 {

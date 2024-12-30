@@ -1,16 +1,17 @@
 import { type Application as PixiApplication } from 'pixi.js';
-import { type ReactNode } from 'react';
 import {
     describe,
     expect,
     it,
 } from 'vitest';
-import { Application } from '../../../src/components/Application';
-import { useApplication } from '../../../src/hooks/useApplication';
+import { Application } from '../../../src/components/Application.ts';
+import { useApplication } from '../../../src/hooks/useApplication.ts';
 import {
     render,
     renderHook,
 } from '@testing-library/react';
+
+import type { ReactNode } from 'react';
 
 describe('useApplication', () =>
 {

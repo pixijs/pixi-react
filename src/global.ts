@@ -1,8 +1,9 @@
+import { type NamespacedPixiElements } from './typedefs/NamespacedPixiElements';
+import { type PixiElements } from './typedefs/PixiElements';
+
 import type {} from 'react';
 import type {} from 'react/jsx-dev-runtime';
 import type {} from 'react/jsx-runtime';
-import type { NamespacedPixiElements } from './typedefs/NamespacedPixiElements';
-import type { PixiElements } from './typedefs/PixiElements';
 
 declare module 'react'
 {

@@ -1,6 +1,5 @@
+import { type ProgressCallback } from 'pixi.js';
 import { type ErrorCallback } from './ErrorCallback';
-
-import type { ProgressCallback } from 'pixi.js';
 
 export interface UseAssetsOptions
 {

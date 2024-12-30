@@ -14,7 +14,6 @@ export function log(logType: LogType, ...args: any[])
 
     if (!(logMethod instanceof Function))
     {
-        // eslint-disable-next-line no-console
         console.warn(`Attempted to create an invalid log type: "${logType}"`);
 
         return;

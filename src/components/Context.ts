@@ -1,6 +1,5 @@
 import { createContext } from 'react';
-
-import type { ApplicationState } from '../typedefs/ApplicationState';
+import { type ApplicationState } from '../typedefs/ApplicationState';
 
 export const Context = createContext<ApplicationState>({} as ApplicationState);
 

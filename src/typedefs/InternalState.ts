@@ -1,4 +1,4 @@
-import type { HostConfig } from './HostConfig';
+import { type HostConfig } from './HostConfig';
 
 export interface InternalState
 {

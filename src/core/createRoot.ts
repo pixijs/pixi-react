@@ -1,19 +1,18 @@
 import { Application } from 'pixi.js';
+import { type ApplicationOptions } from 'pixi.js';
 import { createElement } from 'react';
+import { type ReactNode } from 'react';
 import { ConcurrentRoot } from 'react-reconciler/constants.js';
 import { ContextProvider } from '../components/Context';
 import { isReadOnlyProperty } from '../helpers/isReadOnlyProperty';
 import { log } from '../helpers/log';
 import { prepareInstance } from '../helpers/prepareInstance';
+import { type ApplicationState } from '../typedefs/ApplicationState';
+import { type CreateRootOptions } from '../typedefs/CreateRootOptions';
+import { type HostConfig } from '../typedefs/HostConfig';
+import { type InternalState } from '../typedefs/InternalState';
 import { reconciler } from './reconciler';
 import { roots } from './roots';
-
-import type { ApplicationOptions } from 'pixi.js';
-import type { ReactNode } from 'react';
-import type { ApplicationState } from '../typedefs/ApplicationState';
-import type { CreateRootOptions } from '../typedefs/CreateRootOptions';
-import type { HostConfig } from '../typedefs/HostConfig';
-import type { InternalState } from '../typedefs/InternalState';
 
 /** Creates a new root for a Pixi React app. */
 export function createRoot(

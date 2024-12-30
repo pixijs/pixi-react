@@ -1,32 +1,25 @@
 import { applyProps } from '../helpers/applyProps';
 import { log } from '../helpers/log';
-import { switchInstance } from './switchInstance';
-
-import type { Fiber } from 'react-reconciler';
-import type { HostConfig } from '../typedefs/HostConfig';
-import type { UpdatePayload } from '../typedefs/UpdatePayload';
+import { type HostConfig } from '../typedefs/HostConfig';
+import { prepareUpdate } from './prepareUpdate';
 
 export function commitUpdate(
     instance: HostConfig['instance'],
-    updatePayload: UpdatePayload,
     type: HostConfig['type'],
-    _oldProps: HostConfig['props'],
+    oldProps: HostConfig['props'],
     newProps: HostConfig['props'],
-    fiber: Fiber,
 )
 {
     log('info', 'lifecycle::commitUpdate');
 
-    const {
-        diff,
-        shouldReconstruct,
-    } = updatePayload;
+    const diff = prepareUpdate(
+        instance,
+        type,
+        oldProps,
+        newProps,
+    );
 
-    if (shouldReconstruct)
-    {
-        switchInstance(instance, type, newProps, fiber);
-    }
-    else if (diff)
+    if (diff)
     {
         applyProps(instance, diff);
     }

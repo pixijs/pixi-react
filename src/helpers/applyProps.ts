@@ -52,7 +52,6 @@ export function applyProps(
 )
 {
     const {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         __pixireact: instanceState = {} as InstanceState,
         ...instanceProps
     } = instance;
@@ -144,8 +143,7 @@ export function applyProps(
 
                     if (!ctor)
                     {
-                        /** @type {Container} */
-                        ctor = /** @type {*} */ (currentInstance.constructor);
+                        ctor = currentInstance.constructor;
 
                         // eslint-disable-next-line new-cap
                         ctor = new ctor();

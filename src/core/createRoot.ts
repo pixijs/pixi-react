@@ -49,15 +49,17 @@ export function createRoot(
         internalState.rootContainer = prepareInstance(applicationState.app.stage) as HostConfig['containerInstance'];
     }
 
-    const fiber = root?.fiber ?? reconciler.createContainer(
-        internalState.rootContainer,
-        ConcurrentRoot,
-        null,
-        false,
-        null,
-        '',
-        console.error,
-        null,
+    const fiber = root?.fiber ?? (reconciler as any).createContainer(
+        internalState.rootContainer, // container
+        ConcurrentRoot, // tag
+        null, // hydration callbacks
+        false, // isStrictMode
+        null, // concurrentUpdatesByDefaultOverride
+        '', // identifierPrefix
+        console.error, // onUncaughtError
+        console.error, // onCaughtError
+        console.error, // onRecoverableError
+        null, // transitionCallbacks
     );
 
     if (!root)
@@ -98,7 +100,7 @@ export function createRoot(
 
             Object.entries(applicationOptions).forEach(([key, value]) =>
             {
-                const typedKey = /** @type {keyof ApplicationOptions} */ (key);
+                const typedKey = key as keyof ApplicationOptions;
 
                 if (isReadOnlyProperty(
                     applicationOptions as unknown as Record<string, unknown>,

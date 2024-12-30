@@ -12,10 +12,11 @@ export interface HostConfig
     childSet: never;
     containerInstance: PixiReactNode<typeof Container>;
     filterInstance: PixiReactNode<typeof Filter>;
-    hostContext: null;
+    formInstance: never,
+    hostContext: Record<string, unknown>;
     hydratableInstance: never;
     instance: PixiReactNode;
-    noTimeout: -1;
+    noTimeout: number;
     props: Record<string, unknown>;
     publicInstance: PixiReactNode;
     suspenseInstance: PixiReactNode;
@@ -23,4 +24,5 @@ export interface HostConfig
     timeoutHandle: number;
     type: keyof PixiElements | keyof NamespacedPixiElements;
     updatePayload: object;
+    transitionStatus: null,
 }

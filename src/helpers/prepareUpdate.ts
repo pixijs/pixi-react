@@ -1,8 +1,6 @@
+import { type HostConfig } from '../typedefs/HostConfig';
 import { diffProps } from './diffProps';
 import { log } from './log';
-
-import type { HostConfig } from '../typedefs/HostConfig';
-import type { UpdatePayload } from '../typedefs/UpdatePayload';
 
 export function prepareUpdate(
     _instance: HostConfig['instance'],
@@ -13,17 +11,11 @@ export function prepareUpdate(
 {
     log('info', 'lifecycle::prepareUpdate');
 
-    const updatePayload: UpdatePayload = {
-        shouldReconstruct: false,
-    };
-
     const {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         children: newChildren,
         ...newPropsRest
     } = newProps;
     const {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         children: oldChildren,
         ...oldPropsRest
     } = oldProps;
@@ -32,8 +24,8 @@ export function prepareUpdate(
 
     if (diff.changes.length)
     {
-        updatePayload.diff = diff;
+        return diff;
     }
 
-    return updatePayload;
+    return null;
 }

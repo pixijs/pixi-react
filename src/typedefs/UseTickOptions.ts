@@ -1,4 +1,4 @@
-import type { TickerCallback } from 'pixi.js';
+import { type TickerCallback } from 'pixi.js';
 
 export interface UseTickOptions<T>
 {

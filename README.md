@@ -120,10 +120,6 @@ const MyComponent = () => {
 }
 ```
 
-###### `attachToDevtools`
-
-Setting `attachToDevtools` to `true` will automatically attach the application to the [Official Pixi.js Devtools](https://chromewebstore.google.com/detail/pixijs-devtools/dlkffcaaoccbofklocbjcmppahjjboce).
-
 ###### `defaultTextStyle`
 
 `defaultTextStyle` is a convenience property. Whatever is passed will automatically be assigned to Pixi.js's [`TextStyle.defaultTextStyle`](https://pixijs.download/release/docs/text.TextStyle.html#defaultTextStyle).
@@ -207,8 +203,8 @@ const MyComponent = () => {
 If you're using Typescript, this new `<viewport>` component will throw type errors. Pixi React exports a `PixiReactElementProps` type that can be used to solve this. You'll need to pass the `Viewport` into `PixiReactElementProps` and inject it into JSX:
 
 ```ts
-import type { PixiReactElementProps } from '@pixi/react'
-import type { Viewport } from 'pixi-viewport'
+import { type PixiReactElementProps } from '@pixi/react'
+import { type Viewport } from 'pixi-viewport'
 
 declare global {
   namespace JSX {

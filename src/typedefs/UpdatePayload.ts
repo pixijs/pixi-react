@@ -1,4 +1,4 @@
-import type { DiffSet } from './DiffSet';
+import { type DiffSet } from './DiffSet';
 
 export interface UpdatePayload
 {

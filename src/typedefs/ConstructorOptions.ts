@@ -1,4 +1,4 @@
-import type { ConstructorOverrides } from './ConstructorOverrides';
+import { type ConstructorOverrides } from './ConstructorOverrides';
 
 /**
  * We're adding a specific options type overrides for some components because their deprecated overloads get in the way.
@@ -10,4 +10,3 @@ export type ConstructorOptions<T extends new (...args: any[]) => any> =
             ? ConstructorParameters<T>[0]
             : R
         : unknown;
-

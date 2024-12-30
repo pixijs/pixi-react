@@ -1,5 +1,6 @@
 import { ReactToPixiEventPropNames } from '../constants/EventPropNames';
 import { PixiReactIgnoredProps } from '../constants/PixiReactIgnoredProps';
+import { type HostConfig } from '../typedefs/HostConfig';
 import { applyProps } from './applyProps';
 import { catalogue } from './catalogue';
 import { convertStringToPascalCase } from './convertStringToPascalCase';
@@ -7,8 +8,6 @@ import { gentleCloneProps } from './gentleCloneProps';
 import { log } from './log';
 import { parseComponentType } from './parseComponentType';
 import { prepareInstance } from './prepareInstance';
-
-import type { HostConfig } from '../typedefs/HostConfig';
 
 export function createInstance(
     type: HostConfig['type'],

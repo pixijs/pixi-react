@@ -6,10 +6,10 @@ import {
 import {
     createElement,
     forwardRef,
-    type ForwardRefRenderFunction,
-    type MutableRefObject,
+    type RefObject,
     useCallback,
     useEffect,
+    useImperativeHandle,
     useRef,
 } from 'react';
 import { createRoot } from '../core/createRoot';
@@ -19,17 +19,16 @@ import { queueForUnmount } from '../helpers/queueForUnmount';
 import { unqueueForUnmount } from '../helpers/unqueueForUnmount';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { type ApplicationProps } from '../typedefs/ApplicationProps';
+import { type ApplicationRef } from '../typedefs/ApplicationRef';
 
 const originalDefaultTextStyle = { ...TextStyle.defaultTextStyle };
 
-/** Creates a React root and renders a Pixi application. */
-export const ApplicationFunction: ForwardRefRenderFunction<PixiApplication, ApplicationProps> = (
+export const Application = forwardRef<ApplicationRef, ApplicationProps>(function Application(
     props,
     forwardedRef,
-) =>
+)
 {
     const {
-        attachToDevTools,
         children,
         className,
         defaultTextStyle,
@@ -39,9 +38,20 @@ export const ApplicationFunction: ForwardRefRenderFunction<PixiApplication, Appl
         ...applicationProps
     } = props;
 
-    const applicationRef: MutableRefObject<PixiApplication | null> = useRef(null);
-    const canvasRef: MutableRefObject<HTMLCanvasElement | null> = useRef(null);
-    const extensionsRef: MutableRefObject<Set<any>> = useRef(new Set());
+    const applicationRef: RefObject<PixiApplication | null> = useRef(null);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const extensionsRef = useRef<Set<any>>(new Set());
+
+    useImperativeHandle(forwardedRef, () => ({
+        getApplication()
+        {
+            return applicationRef.current;
+        },
+        getCanvas()
+        {
+            return canvasRef.current;
+        },
+    }));
 
     const updateResizeTo = useCallback(() =>
     {
@@ -75,31 +85,9 @@ export const ApplicationFunction: ForwardRefRenderFunction<PixiApplication, Appl
     {
         processUnmountQueue();
 
-        if (forwardedRef && ('current' in forwardedRef))
-        {
-            forwardedRef.current = application;
-        }
-
         applicationRef.current = application;
         updateResizeTo();
         onInit?.(application);
-
-        if (attachToDevTools)
-        {
-            const globalScope = globalThis as any;
-
-            globalScope.__PIXI_APP__ = application;
-
-            import('pixi.js').then((pixi) =>
-            {
-                globalScope.__PIXI_DEVTOOLS__ = {
-                    app: application,
-                    pixi,
-                    renderer: application.renderer,
-                    stage: application.stage,
-                };
-            });
-        }
     }, [onInit]);
 
     useIsomorphicLayoutEffect(() =>
@@ -193,8 +181,4 @@ export const ApplicationFunction: ForwardRefRenderFunction<PixiApplication, Appl
         className,
         ref: canvasRef,
     });
-};
-
-ApplicationFunction.displayName = 'Application';
-
-export const Application = forwardRef(ApplicationFunction);
+});

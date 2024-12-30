@@ -2,12 +2,18 @@ import {
     ContinuousEventPriority,
     DefaultEventPriority,
     DiscreteEventPriority,
-} from 'react-reconciler/constants.js';
+} from 'react-reconciler/constants';
+import { store } from '../store';
 import { log } from './log';
 
-export function getCurrentEventPriority()
+export function resolveUpdatePriority()
 {
-    log('info', 'lifecycle::getCurrentEventPriority');
+    log('info', 'lifecycle::resolveUpdatePriority');
+
+    if (store.currentUpdatePriority)
+    {
+        return store.currentUpdatePriority;
+    }
 
     const globalScope = (typeof self !== 'undefined' && self) || (typeof window !== 'undefined' && window);
 

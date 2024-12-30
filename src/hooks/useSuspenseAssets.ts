@@ -3,10 +3,9 @@ import {
     Cache,
 } from 'pixi.js';
 import { getAssetKey } from '../helpers/getAssetKey';
-
-import type { AssetRetryState } from '../typedefs/AssetRetryState';
-import type { UnresolvedAsset } from '../typedefs/UnresolvedAsset';
-import type { UseAssetsOptions } from '../typedefs/UseAssetsOptions';
+import { type AssetRetryState } from '../typedefs/AssetRetryState';
+import { type UnresolvedAsset } from '../typedefs/UnresolvedAsset';
+import { type UseAssetsOptions } from '../typedefs/UseAssetsOptions';
 
 const errorCache: Map<UnresolvedAsset, AssetRetryState> = new Map();
 
@@ -58,12 +57,12 @@ export function useSuspenseAssets<T = any>(
 
         throw Assets
             .load<T>(assets, (progressValue) =>
-        {
-            if (typeof onProgress === 'function')
             {
-                onProgress(progressValue);
-            }
-        })
+                if (typeof onProgress === 'function')
+                {
+                    onProgress(progressValue);
+                }
+            })
             .catch((error) =>
             {
                 if (!cachedState)

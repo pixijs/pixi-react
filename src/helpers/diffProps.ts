@@ -1,9 +1,8 @@
 import { ReactToPixiEventPropNames } from '../constants/EventPropNames';
+import { type Change } from '../typedefs/Change';
+import { type HostConfig } from '../typedefs/HostConfig';
 import { isEqual } from './compare';
 import { gentleCloneProps } from './gentleCloneProps';
-
-import type { Change } from '../typedefs/Change';
-import type { HostConfig } from '../typedefs/HostConfig';
 
 const DEFAULT = '__default';
 

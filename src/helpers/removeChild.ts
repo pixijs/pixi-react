@@ -1,8 +1,7 @@
 import { Filter } from 'pixi.js';
+import { type HostConfig } from '../typedefs/HostConfig';
 import { detach } from './detach';
 import { log } from './log';
-
-import type { HostConfig } from '../typedefs/HostConfig';
 
 /** Removes elements from our scene and disposes of them. */
 export function removeChild(

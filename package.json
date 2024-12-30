@@ -61,7 +61,7 @@
     ]
   },
   "dependencies": {
-    "react-reconciler": "0.29.2"
+    "react-reconciler": "0.31.0"
   },
   "devDependencies": {
     "@pixi/extension-scripts": "^4.0.0",
@@ -69,18 +69,18 @@
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@testing-library/jest-dom": "^6.4.8",
-    "@testing-library/react": "^16.0.0",
+    "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^14.5.2",
-    "@types/react": "^18.3.2",
-    "@types/react-reconciler": "0.28.8",
+    "@types/react": "^19.0.0",
+    "@types/react-reconciler": "^0.28.9",
     "@vitejs/plugin-react": "^4.3.1",
     "@vitest/browser": "^2.0.4",
     "husky": "^8.0.0",
     "jsdom": "^25.0.0",
     "pixi.js": "8.2.6",
     "playwright": "^1.45.3",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "rollup": "^4.18.0",
     "rollup-plugin-esbuild": "^6.1.1",
     "rollup-plugin-sourcemaps": "^0.6.3",
@@ -89,13 +89,7 @@
   },
   "peerDependencies": {
     "pixi.js": "^8.2.6",
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
-  },
-  "peerDependenciesMeta": {
-    "react-dom": {
-      "optional": true
-    }
+    "react": ">=19.0.0"
   },
   "overrides": {
     "rollup": "^4.18.0"

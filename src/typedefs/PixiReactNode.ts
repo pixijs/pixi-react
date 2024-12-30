@@ -1,19 +1,21 @@
+import {
+    type Container,
+    type Graphics,
+} from 'pixi.js';
+import {
+    type Key,
+    type Ref,
+} from 'react';
 import { type PixiToReactEventPropNames } from '../constants/EventPropNames';
 import { type ConstructorOptions } from './ConstructorOptions';
-import { type ExcludeFunctionProps, type OmitKeys } from './UtilityTypes';
-
-import type {
-    Container,
-    Graphics,
-} from 'pixi.js';
-import type {
-    Key,
-    Ref,
-} from 'react';
-import type { DrawCallback } from './DrawCallback';
-import type { EventHandlers } from './EventHandlers';
-import type { InstanceState } from './InstanceState';
-import type { PixiReactChildNode } from './PixiReactChildNode';
+import { type DrawCallback } from './DrawCallback';
+import { type EventHandlers } from './EventHandlers';
+import { type InstanceState } from './InstanceState';
+import { type PixiReactChildNode } from './PixiReactChildNode';
+import {
+    type ExcludeFunctionProps,
+    type OmitKeys,
+} from './UtilityTypes';
 
 export interface BaseNodeProps<T extends new (...args: any) => any = typeof Container>
 {

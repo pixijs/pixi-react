@@ -5,11 +5,10 @@ import {
 import { useState } from 'react';
 import { UseAssetsStatus } from '../constants/UseAssetsStatus';
 import { getAssetKey } from '../helpers/getAssetKey';
-
-import type { AssetRetryState } from '../typedefs/AssetRetryState';
-import type { UnresolvedAsset } from '../typedefs/UnresolvedAsset';
-import type { UseAssetsOptions } from '../typedefs/UseAssetsOptions';
-import type { UseAssetsResult } from '../typedefs/UseAssetsResult';
+import { type AssetRetryState } from '../typedefs/AssetRetryState';
+import { type UnresolvedAsset } from '../typedefs/UnresolvedAsset';
+import { type UseAssetsOptions } from '../typedefs/UseAssetsOptions';
+import { type UseAssetsResult } from '../typedefs/UseAssetsResult';
 
 const errorCache: Map<UnresolvedAsset, AssetRetryState> = new Map();
 

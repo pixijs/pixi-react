@@ -2,10 +2,9 @@ import {
     Container,
     Filter,
 } from 'pixi.js';
+import { type HostConfig } from '../typedefs/HostConfig';
 import { attach } from './attach';
 import { log } from './log';
-
-import type { HostConfig } from '../typedefs/HostConfig';
 
 /** Adds elements to our application. */
 export function appendChild(

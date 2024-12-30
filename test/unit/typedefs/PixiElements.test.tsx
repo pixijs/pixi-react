@@ -17,19 +17,19 @@ describe('PixiElements', () =>
             </container>
         );
 
-        expect(elements.props.children).to.have.length(4);
+        expect(elements.props.children).toHaveLength(4);
 
-        expect(elements.props.children[0].type).to.equal('graphics');
-        expect(elements.props.children[0].props.draw).to.be.a('function');
+        expect(elements.props.children[0].type).toEqual('graphics');
+        expect(elements.props.children[0].props.draw).toBeTypeOf('function');
 
-        expect(elements.props.children[1].type).to.equal('sprite');
-        expect(elements.props.children[1].props.draw).to.be.undefined;
-        expect(elements.props.children[1].props.texture).to.be.instanceOf(Texture);
+        expect(elements.props.children[1].type).toEqual('sprite');
+        expect(elements.props.children[1].props.draw).toBeUndefined();
+        expect(elements.props.children[1].props.texture).toBeInstanceOf(Texture);
 
-        expect(elements.props.children[2].type).to.equal('alphaFilter');
-        expect(elements.props.children[2].props.alpha).to.equal(0.5);
+        expect(elements.props.children[2].type).toEqual('alphaFilter');
+        expect(elements.props.children[2].props.alpha).toEqual(0.5);
 
-        expect(elements.props.children[3].type).to.equal('pixiText');
-        expect(elements.props.children[3].props.text).to.equal('Hello, World!');
+        expect(elements.props.children[3].type).toEqual('pixiText');
+        expect(elements.props.children[3].props.text).toEqual('Hello, World!');
     });
 });

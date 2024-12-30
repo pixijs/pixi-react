@@ -13,15 +13,15 @@ describe('applyProps', () =>
     {
         it('updates the target instance', () =>
         {
-            expect(applyProps).to.be.a('function');
+            expect(applyProps).toBeTypeOf('function');
             const instance = prepareInstance(new Container());
 
-            expect(instance.x).to.equal(0);
+            expect(instance.x).toEqual(0);
 
             const result = applyProps(instance, { x: 100 });
 
-            expect(result).to.equal(instance);
-            expect(instance.x).to.equal(100);
+            expect(result).toEqual(instance);
+            expect(instance.x).toEqual(100);
         });
     });
 
@@ -29,10 +29,10 @@ describe('applyProps', () =>
     {
         it('updates the target instance', () =>
         {
-            expect(applyProps).to.be.a('function');
+            expect(applyProps).toBeTypeOf('function');
             const instance = prepareInstance(new Container());
 
-            expect(instance.x).to.equal(0);
+            expect(instance.x).toEqual(0);
 
             const result = applyProps(instance, {
                 changes: [
@@ -45,8 +45,8 @@ describe('applyProps', () =>
                 ],
             });
 
-            expect(result).to.equal(instance);
-            expect(instance.x).to.equal(100);
+            expect(result).toEqual(instance);
+            expect(instance.x).toEqual(100);
         });
     });
 });

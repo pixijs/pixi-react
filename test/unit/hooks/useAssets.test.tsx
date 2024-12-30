@@ -25,11 +25,9 @@ describe('useAssets', async () =>
         setTimeout(() => resolve(new Response()), 1);
     }));
 
-    beforeEach(() =>
+    beforeEach(async () =>
     {
-        Assets.init({
-            skipDetections: true,
-        });
+        await Assets.init({ skipDetections: true });
     });
 
     afterEach(() =>

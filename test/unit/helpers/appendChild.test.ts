@@ -11,30 +11,30 @@ describe('appendChild', () =>
 {
     it('appends a child instance to a parent instance', () =>
     {
-        expect(appendChild).to.be.a('function');
+        expect(appendChild).toBeTypeOf('function');
 
         const parentInstance = prepareInstance(new Container());
         const childInstance = prepareInstance(new Container());
 
-        expect(parentInstance.children).to.be.empty;
+        expect(parentInstance.children as []).toHaveLength(0);
 
         const result = appendChild(parentInstance, childInstance);
 
-        expect(parentInstance.children).to.include(childInstance);
-        expect(result).to.be.undefined;
+        expect(parentInstance.children).toContain(childInstance);
+        expect(result).toBeUndefined();
     });
 
     it('does nothing if child instance doesn\'t exist', () =>
     {
-        expect(appendChild).to.be.a('function');
+        expect(appendChild).toBeTypeOf('function');
 
         const parentInstance = prepareInstance(new Container());
 
-        expect(parentInstance.children).to.be.empty;
+        expect(parentInstance.children as []).toHaveLength(0);
 
         const result = appendChild(parentInstance, null);
 
-        expect(parentInstance.children).to.be.empty;
-        expect(result).to.be.undefined;
+        expect(parentInstance.children as []).toHaveLength(0);
+        expect(result).toBeUndefined();
     });
 });

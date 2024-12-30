@@ -1,67 +1,73 @@
-import type { ReactNode } from 'react'
+import { type Application as PixiApplication } from 'pixi.js';
 import {
     describe,
     expect,
     it,
 } from 'vitest';
+import { Application } from '../../../src/components/Application.ts';
+import { useApplication } from '../../../src/hooks/useApplication.ts';
 import {
     render,
     renderHook,
-} from '@testing-library/react'
-import { Application as PixiApplication } from 'pixi.js';
+} from '@testing-library/react';
 
-import { Application } from '../../../src/components/Application.ts'
-import { useApplication } from '../../../src/hooks/useApplication.ts'
+import type { ReactNode } from 'react';
 
 describe('useApplication', () =>
 {
     it('returns the nearest application', async () =>
     {
-        let initApp: PixiApplication | null = null
-        let testApp: PixiApplication | null = null
+        let initApp: PixiApplication | null = null;
+        let testApp: PixiApplication | null = null;
 
         const TestComponentWrapper = (props: {
             children?: ReactNode,
-        }) => {
-            const { children } = props
+        }) =>
+        {
+            const { children } = props;
 
-            const handleInit = (app: PixiApplication) => (initApp = app)
+            const handleInit = (app: PixiApplication) => (initApp = app);
 
             return (
                 <Application onInit={handleInit}>
                     {children}
                 </Application>
-            )
-        }
+            );
+        };
 
-        const TestComponent = () => {
-            const { app } = useApplication()
+        const TestComponent = () =>
+        {
+            const { app } = useApplication();
 
-            if (app) {
-                testApp = app
+            if (app)
+            {
+                testApp = app;
             }
 
-            return null
-        }
+            return null;
+        };
 
         render(<TestComponent />, {
             wrapper: TestComponentWrapper,
-        })
+        });
 
-        await new Promise<void>(resolve => {
-            let intervalID = setInterval(() => {
-                if (initApp) {
-                    clearInterval(intervalID)
-                    setTimeout(resolve, 10)
+        await new Promise<void>((resolve) =>
+        {
+            const intervalID = setInterval(() =>
+            {
+                if (initApp)
+                {
+                    clearInterval(intervalID);
+                    setTimeout(resolve, 10);
                 }
-            }, 10)
-        })
+            }, 10);
+        });
 
-        expect(testApp).to.equal(initApp)
-    })
+        expect(testApp).toEqual(initApp);
+    });
 
     it('throws when not in a React Pixi tree', () =>
     {
-        expect(() => renderHook(() => useApplication())).to.throw(Error, /no context found/i)
+        expect(() => renderHook(() => useApplication())).toThrowError(/no context found/i);
     });
 });

@@ -20,84 +20,82 @@ describe('exports', () =>
 {
     it('exports the `<Application>` component', () =>
     {
-        expect(PixiReact).to.have.property('Application')
-            .and.to.equal(Application);
+        expect(PixiReact).toHaveProperty('Application');
+        expect(PixiReact.Application).toEqual(Application);
     });
 
     it('exports the `createRoot()` function', () =>
     {
-        expect(PixiReact).to.have.property('createRoot')
-            .and.to.equal(createRoot);
+        expect(PixiReact).toHaveProperty('createRoot');
+        expect(PixiReact.createRoot).toEqual(createRoot);
     });
 
     it('exports the `extend()` function', () =>
     {
-        expect(PixiReact).to.have.property('extend')
-            .and.to.equal(extend);
+        expect(PixiReact).toHaveProperty('extend');
+        expect(PixiReact.extend).toEqual(extend);
     });
 
     it('exports the `useApp()` hook', () =>
     {
-        expect(PixiReact).to.have.property('useApp')
-            .and.to.equal(useApp);
+        expect(PixiReact).toHaveProperty('useApp');
+        expect(PixiReact.useApp).toEqual(useApp);
     });
 
     it('exports the `useApplication()` hook', () =>
     {
-        expect(PixiReact).to.have.property('useApplication')
-            .and.to.equal(useApplication);
+        expect(PixiReact).toHaveProperty('useApplication');
+        expect(PixiReact.useApplication).toEqual(useApplication);
     });
 
     it('exports the `useAsset()` hook', () =>
     {
-        expect(PixiReact).to.have.property('useAsset')
-            .and.to.equal(useAsset);
+        expect(PixiReact).toHaveProperty('useAsset');
+        expect(PixiReact.useAsset).toEqual(useAsset);
     });
 
     it('exports the `useAssets()` hook', () =>
     {
-        expect(PixiReact).to.have.property('useAssets')
-            .and.to.equal(useAssets);
+        expect(PixiReact).toHaveProperty('useAssets');
+        expect(PixiReact.useAssets).toEqual(useAssets);
     });
 
     it('exports the `UseAssetsStatus()` hook', () =>
     {
-        expect(PixiReact).to.have.property('UseAssetsStatus')
-            .and.to.equal(UseAssetsStatus);
+        expect(PixiReact).toHaveProperty('UseAssetsStatus');
+        expect(PixiReact.UseAssetsStatus).toEqual(UseAssetsStatus);
     });
 
     it('exports the `useExtend()` hook', () =>
     {
-        expect(PixiReact).to.have.property('useExtend')
-            .and.to.equal(useExtend);
+        expect(PixiReact).toHaveProperty('useExtend');
+        expect(PixiReact.useExtend).toEqual(useExtend);
     });
 
     it('exports the `useSuspenseAssets()` hook', () =>
     {
-        expect(PixiReact).to.have.property('useSuspenseAssets')
-            .and.to.equal(useSuspenseAssets);
+        expect(PixiReact).toHaveProperty('useSuspenseAssets');
+        expect(PixiReact.useSuspenseAssets).toEqual(useSuspenseAssets);
     });
 
     it('exports the `useTick()` hook', () =>
     {
-        expect(PixiReact).to.have.property('useTick')
-            .and.to.equal(useTick);
+        expect(PixiReact).toHaveProperty('useTick');
+        expect(PixiReact.useTick).toEqual(useTick);
     });
 
     it('doesn\'t export extraneous keys', () =>
     {
-        expect(PixiReact).to.have.all.keys(
-            'Application',
-            'createRoot',
-            'extend',
-            'useApp',
-            'useApplication',
-            'useAsset',
-            'useAssets',
-            'UseAssetsStatus',
-            'useExtend',
-            'useTick',
-            'useSuspenseAssets',
-        );
+        expect(PixiReact).toHaveProperty('Application');
+        expect(PixiReact).toHaveProperty('createRoot');
+        expect(PixiReact).toHaveProperty('extend');
+        expect(PixiReact).toHaveProperty('useApp');
+        expect(PixiReact).toHaveProperty('useApplication');
+        expect(PixiReact).toHaveProperty('useAsset');
+        expect(PixiReact).toHaveProperty('useAssets');
+        expect(PixiReact).toHaveProperty('UseAssetsStatus');
+        expect(PixiReact).toHaveProperty('useExtend');
+        expect(PixiReact).toHaveProperty('useTick');
+        expect(PixiReact).toHaveProperty('useSuspenseAssets');
     });
 });

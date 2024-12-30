@@ -5,17 +5,19 @@ import {
     expect,
     it,
     vi,
-} from 'vitest'
+} from 'vitest';
 import { Application } from '../../../src/components/Application';
 import { roots } from '../../../src/core/roots';
 import { useApplication } from '../../../src/hooks/useApplication';
 import { isAppMounted } from '../../utils/isAppMounted';
 import { render } from '@testing-library/react';
 
-describe('Application', () => {
+describe('Application', () =>
+{
     describe('onInit', () =>
     {
-        it('runs the callback once', async () => {
+        it('runs the callback once', async () =>
+        {
             const onInitSpy = vi.fn();
 
             const TestComponent = () => (
@@ -28,13 +30,15 @@ describe('Application', () => {
         });
     });
 
-    describe('unmount', () => {
+    describe('unmount', () =>
+    {
         it('unmounts after init', async () =>
         {
             let testApp = null as any as PixiApplication;
             let testAppIsInitialised = false;
 
-            const TestChildComponent = () => {
+            const TestChildComponent = () =>
+            {
                 const {
                     app,
                     isInitialised,
@@ -45,7 +49,8 @@ describe('Application', () => {
                     testApp = app;
                     testAppIsInitialised = isInitialised;
 
-                    return () => {
+                    return () =>
+                    {
                         testApp = app;
                         testAppIsInitialised = isInitialised;
                     };
@@ -95,7 +100,8 @@ describe('Application', () => {
                     testApp = app;
                     testAppIsInitialised = isInitialised;
 
-                    return () => {
+                    return () =>
+                    {
                         testApp = app;
                         testAppIsInitialised = isInitialised;
                     };
@@ -119,7 +125,7 @@ describe('Application', () => {
 
             expect(roots.size).toEqual(1);
 
-            expect(testAppIsInitialised).to.be.false;
+            expect(testAppIsInitialised).toBeFalsy();
 
             unmount();
 

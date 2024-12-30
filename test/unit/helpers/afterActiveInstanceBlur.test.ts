@@ -9,7 +9,7 @@ describe('afterActiveInstanceBlur', () =>
 {
     it('does nothing', () =>
     {
-        expect(afterActiveInstanceBlur).to.be.a('function');
-        expect(afterActiveInstanceBlur()).to.be.undefined;
+        expect(afterActiveInstanceBlur).toBeTypeOf('function');
+        expect(afterActiveInstanceBlur()).toBeUndefined();
     });
 });

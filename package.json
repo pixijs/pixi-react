@@ -64,14 +64,13 @@
     "react-reconciler": "0.31.0"
   },
   "devDependencies": {
-    "@pixi/extension-scripts": "^2.4.1",
+    "@pixi/extension-scripts": "^4.0.0",
     "@rollup/plugin-commonjs": "^25.0.8",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^14.5.2",
-    "@types/eslint": "^8.56.10",
     "@types/react": "^18.3.2",
     "@types/react-reconciler": "0.28.8",
     "@vitejs/plugin-react": "^4.3.1",

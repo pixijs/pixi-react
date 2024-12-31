@@ -1,5 +1,4 @@
-import { type Application as PixiApplication } from 'pixi.js';
-import { useEffect } from 'react';
+import { Application as PixiApplication } from 'pixi.js';
 import {
     createContext,
     createRef,
@@ -17,7 +16,10 @@ import { roots } from '../../../src/core/roots';
 import { useApplication } from '../../../src/hooks/useApplication';
 import { type ApplicationRef } from '../../../src/typedefs/ApplicationRef';
 import { isAppMounted } from '../../utils/isAppMounted';
-import { render } from '@testing-library/react';
+import {
+    act,
+    render,
+} from '@testing-library/react';
 
 describe('Application', () =>
 {
@@ -81,7 +83,9 @@ describe('Application', () =>
                 <Application onInit={onInitSpy} />
             );
 
-            render(<TestComponent />);
+            await act(async () => render((
+                <TestComponent />
+            )));
 
             await expect.poll(() => onInitSpy.mock.calls.length).toEqual(1);
         });
@@ -127,7 +131,7 @@ describe('Application', () =>
 
             expect(roots.size).toEqual(0);
 
-            const { unmount } = render(<TestComponent />);
+            const { unmount } = await act(() => render(<TestComponent />));
 
             expect(roots.size).toEqual(1);
 
@@ -178,7 +182,7 @@ describe('Application', () =>
 
             expect(roots.size).toEqual(0);
 
-            const { unmount } = render(<TestComponent />);
+            const { unmount } = await act(() => render(<TestComponent />));
 
             expect(roots.size).toEqual(1);
 

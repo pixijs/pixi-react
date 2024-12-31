@@ -12,6 +12,12 @@ export default [
     {
         rules: {
             'max-len': 0,
+            '@typescript-eslint/no-empty-object-type': [
+                0,
+                {
+                    allowInterfaces: 'with-single-extends',
+                },
+            ],
         },
     },
     {
@@ -20,7 +26,6 @@ export default [
             '*.test.tsx',
         ],
         rules: {
-            '@typescript-eslint/no-unused-expressions': 0,
             '@typescript-eslint/dot-notation': [
                 0,
                 {
@@ -29,6 +34,7 @@ export default [
                     allowIndexSignaturePropertyAccess: true,
                 },
             ],
+            '@typescript-eslint/no-unused-expressions': 0,
             'dot-notation': 0,
         },
     },

@@ -1,6 +1,5 @@
 import { Application } from 'pixi.js';
 import { type ApplicationOptions } from 'pixi.js';
-import { createElement } from 'react';
 import { type ReactNode } from 'react';
 import { ConcurrentRoot } from 'react-reconciler/constants.js';
 import { ContextProvider } from '../components/Context';
@@ -115,7 +114,11 @@ export function createRoot(
 
             // Update fiber and expose Pixi.js state to children
             reconciler.updateContainer(
-                createElement(ContextProvider, { value: applicationState }, children),
+                (
+                    <ContextProvider value={applicationState}>
+                        {children}
+                    </ContextProvider>
+                ),
                 fiber,
                 null,
                 () => undefined,

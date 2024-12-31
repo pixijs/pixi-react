@@ -1,5 +1,10 @@
-import { type Application as PixiApplication } from 'pixi.js';
-import { useEffect } from 'react';
+import { Application as PixiApplication } from 'pixi.js';
+import {
+    createContext,
+    createRef,
+    useContext,
+    useEffect,
+} from 'react';
 import {
     describe,
     expect,
@@ -9,11 +14,65 @@ import {
 import { Application } from '../../../src/components/Application';
 import { roots } from '../../../src/core/roots';
 import { useApplication } from '../../../src/hooks/useApplication';
+import { type ApplicationRef } from '../../../src/typedefs/ApplicationRef';
 import { isAppMounted } from '../../utils/isAppMounted';
-import { render } from '@testing-library/react';
+import {
+    act,
+    render,
+} from '@testing-library/react';
 
 describe('Application', () =>
 {
+    it('mounts correctly', async () =>
+    {
+        const renderer = await act(async () => render(<Application />));
+
+        expect(renderer.container).toMatchSnapshot();
+    });
+
+    it('forwards its ref', async () =>
+    {
+        const onInitSpy = vi.fn();
+        const ref = createRef<ApplicationRef>();
+
+        await act(async () => render((
+            <Application
+                ref={ref}
+                onInit={onInitSpy} />
+        )));
+
+        await expect.poll(() => onInitSpy.mock.calls.length).toEqual(1);
+
+        expect(ref.current?.getApplication()).toBeInstanceOf(PixiApplication);
+        expect(ref.current?.getCanvas()).toBeInstanceOf(HTMLCanvasElement);
+    });
+
+    it('forwards context', async () =>
+    {
+        const onInitSpy = vi.fn();
+        const ParentContext = createContext<boolean>(null!);
+        let receivedValue!: boolean;
+
+        function Test()
+        {
+            receivedValue = useContext(ParentContext);
+
+            return null;
+        }
+
+        await act(async () => render((
+            <ParentContext.Provider value={true}>
+                <Application onInit={onInitSpy}>
+                    <Test />
+                </Application>
+            </ParentContext.Provider>
+        )));
+
+        await expect.poll(() => onInitSpy.mock.calls.length).toEqual(1);
+
+        expect(receivedValue).toBe(true);
+    });
+
     describe('onInit', () =>
     {
         it('runs the callback once', async () =>
@@ -24,7 +83,9 @@ describe('Application', () =>
                 <Application onInit={onInitSpy} />
             );
 
-            render(<TestComponent />);
+            await act(async () => render((
+                <TestComponent />
+            )));
 
             await expect.poll(() => onInitSpy.mock.calls.length).toEqual(1);
         });
@@ -70,7 +131,7 @@ describe('Application', () =>
 
             expect(roots.size).toEqual(0);
 
-            const { unmount } = render(<TestComponent />);
+            const { unmount } = await act(() => render(<TestComponent />));
 
             expect(roots.size).toEqual(1);
 
@@ -121,7 +182,7 @@ describe('Application', () =>
 
             expect(roots.size).toEqual(0);
 
-            const { unmount } = render(<TestComponent />);
+            const { unmount } = await act(() => render(<TestComponent />));
 
             expect(roots.size).toEqual(1);
 

@@ -1,10 +1,13 @@
 import {
+    FiberProvider,
+    useContextBridge,
+} from 'its-fine'
+import {
     type Application as PixiApplication,
     extensions as PixiExtensions,
     TextStyle,
 } from 'pixi.js';
 import {
-    createElement,
     forwardRef,
     type RefObject,
     useCallback,
@@ -23,7 +26,7 @@ import { type ApplicationRef } from '../typedefs/ApplicationRef';
 
 const originalDefaultTextStyle = { ...TextStyle.defaultTextStyle };
 
-export const Application = forwardRef<ApplicationRef, ApplicationProps>(function Application(
+const ApplicationImplementation = forwardRef<ApplicationRef, ApplicationProps>(function Application(
     props,
     forwardedRef,
 )
@@ -37,6 +40,8 @@ export const Application = forwardRef<ApplicationRef, ApplicationProps>(function
         resizeTo,
         ...applicationProps
     } = props;
+
+    const Bridge = useContextBridge();
 
     const applicationRef: RefObject<PixiApplication | null> = useRef(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -135,7 +140,8 @@ export const Application = forwardRef<ApplicationRef, ApplicationProps>(function
                 root = createRoot(canvasElement, {}, handleInit);
             }
 
-            root.render(children, applicationProps);
+            // @ts-expect-error The value of `children` is fine, but `PixiReactChildNode` doesn't strictly adhere to the `ReactNode` structure.
+            root.render((<Bridge>{children}</Bridge>), applicationProps);
         }
     }, [
         applicationProps,
@@ -177,8 +183,20 @@ export const Application = forwardRef<ApplicationRef, ApplicationProps>(function
         }
     }, []);
 
-    return createElement('canvas', {
-        className,
-        ref: canvasRef,
-    });
+    return (
+        <canvas
+            ref={canvasRef}
+            className={className} />
+    );
+});
+
+export const Application = forwardRef<ApplicationRef, ApplicationProps>(function ApplicationWrapper(props, ref)
+{
+    return (
+        <FiberProvider>
+            <ApplicationImplementation
+                ref={ref}
+                {...props} />
+        </FiberProvider>
+    );
 });

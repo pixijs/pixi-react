@@ -7,6 +7,7 @@ import {
 import { Application } from '../../../src/components/Application';
 import { useApplication } from '../../../src/hooks/useApplication';
 import {
+    act,
     render,
     renderHook,
 } from '@testing-library/react';
@@ -47,9 +48,9 @@ describe('useApplication', () =>
             return null;
         };
 
-        render(<TestComponent />, {
+        await act(async () => render(<TestComponent />, {
             wrapper: TestComponentWrapper,
-        });
+        }));
 
         await new Promise<void>((resolve) =>
         {
@@ -68,6 +69,8 @@ describe('useApplication', () =>
 
     it('throws when not in a React Pixi tree', () =>
     {
-        expect(() => renderHook(() => useApplication())).toThrowError(/no context found/i);
+        const renderer = () => act(() => renderHook(() => useApplication()));
+
+        expect(renderer).toThrowError(/no context found/i);
     });
 });

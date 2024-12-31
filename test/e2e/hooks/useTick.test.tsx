@@ -8,6 +8,7 @@ import {
 import { Application } from '../../../src/components/Application';
 import { useTick } from '../../../src/hooks/useTick';
 import {
+    act,
     render,
     renderHook,
 } from '@testing-library/react';
@@ -27,7 +28,7 @@ describe('useTick', () =>
                 return null;
             };
 
-            render(<TestComponent />, { wrapper: Application });
+            act(() => render(<TestComponent />, { wrapper: Application }));
 
             await expect.poll(() => useTickSpy.mock.lastCall?.[0]).toBeInstanceOf(Ticker);
         });
@@ -46,7 +47,7 @@ describe('useTick', () =>
                 return null;
             };
 
-            render(<TestComponent />, { wrapper: Application });
+            act(() => render(<TestComponent />, { wrapper: Application }));
 
             await expect.poll(() => useTickSpy.mock.lastCall?.[0]).toBeInstanceOf(Ticker);
         });
@@ -54,8 +55,8 @@ describe('useTick', () =>
 
     it('throws when not in a React Pixi tree', () =>
     {
-        const result = () => renderHook(() => useTick(() => { /* noop */ }));
+        const renderer = () => act(() => renderHook(() => useTick(() => { /* noop */ })));
 
-        expect(result).toThrowError(/no context found/i);
+        expect(renderer).toThrowError(/no context found/i);
     });
 });

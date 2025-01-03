@@ -38,7 +38,7 @@ export interface BaseApplicationProps
     onInit?: (app: Application) => void
 
     /** @description An element (or React ref) to which the application's canvas will be resized. */
-    resizeTo?: HTMLElement | Window | RefObject<HTMLElement>
+    resizeTo?: HTMLElement | Window | RefObject<HTMLElement | null>
 }
 
 export type ApplicationProps = BaseApplicationProps & Partial<{

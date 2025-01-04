@@ -1,4 +1,7 @@
+import { type GraphicsContext, type Texture } from 'pixi.js';
 import { type ConstructorOverrides } from './ConstructorOverrides';
+
+type ConstructorOptionExcludes = GraphicsContext | Texture;
 
 /**
  * We're adding a specific options type overrides for some components because their deprecated overloads get in the way.
@@ -7,6 +10,6 @@ import { type ConstructorOverrides } from './ConstructorOverrides';
 export type ConstructorOptions<T extends new (...args: any[]) => any> =
     Extract<ConstructorOverrides, { 0: T }> extends [T, infer R]
         ? unknown extends R
-            ? ConstructorParameters<T>[0]
+            ? NonNullable<Exclude<ConstructorParameters<T>[0], ConstructorOptionExcludes>>
             : R
         : unknown;

@@ -16,7 +16,6 @@ import {
     type PlaneGeometryOptions,
     type Text,
     type TextOptions,
-    type Texture,
     type TilingSprite,
     type TilingSpriteOptions,
 } from 'pixi.js';
@@ -28,8 +27,8 @@ export type ConstructorOverrides =
     | [typeof HTMLText, HTMLTextOptions]
     | [typeof Mesh, MeshOptions]
     | [typeof MeshGeometry, MeshGeometryOptions]
-    | [typeof NineSliceSprite, NineSliceSpriteOptions | Texture]
+    | [typeof NineSliceSprite, NineSliceSpriteOptions]
     | [typeof PlaneGeometry, PlaneGeometryOptions]
-    | [typeof TilingSprite, TilingSpriteOptions | Texture]
+    | [typeof TilingSprite, TilingSpriteOptions]
     | [typeof Text, TextOptions];
 

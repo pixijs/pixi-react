@@ -2,7 +2,6 @@ import {
     type Container,
     type Filter,
 } from 'pixi.js';
-import { type NamespacedPixiElements } from './NamespacedPixiElements';
 import { type PixiElements } from './PixiElements';
 import { type PixiReactNode } from './PixiReactNode';
 
@@ -21,7 +20,7 @@ export interface HostConfig
     suspenseInstance: PixiReactNode;
     textInstance: PixiReactNode;
     timeoutHandle: number;
-    type: keyof PixiElements | keyof NamespacedPixiElements;
+    type: keyof PixiElements;
     updatePayload: object;
     transitionStatus: null,
 }

@@ -3,7 +3,7 @@
 </p>
 
 <h1 align="center">
-  Pixi React
+  <code>@pixi/react</code>
 </h1>
 
 <p align="center">
@@ -24,23 +24,23 @@
 
 <br />
 
-Pixi React is an open-source, production-ready library to render high performant PixiJS applications in React.
+`@pixi/react` is an open-source, production-ready library to render high performant PixiJS applications in React.
 
 ## Features
 
-- React v17 and v18 support
+- React v19 support
 - PixiJS v8 support
 
 ## Getting Started
 
 ### Quick Start
 
-If you want to start a new React project from scratch then we recommend [Create React App](https://github.com/facebook/create-react-app), but Pixi React should work with any React application (Remix, Next.js, etc).
-To add to an existing React application, just install the dependencies:
+If you want to start a new React project from scratch then we recommend [Create React App](https://github.com/facebook/create-react-app), but `@pixi/react` should work with any React application (Remix, Next.js, etc).
+To add `@pixi/react` to an existing React application, just install the dependencies:
 
-#### Install Pixi React Dependencies
+#### Install Dependencies
 ```bash
-npm install pixi.js@^8.2.1 @pixi/react@beta
+npm install pixi.js@^8.2.6 @pixi/react@beta
 ```
 
 #### Pixie React Usage
@@ -70,9 +70,9 @@ const MyComponent = () => {
 
   return (
     <Application>
-      <container x={100} y={100}>
-        <graphics draw={drawCallback} />
-      </container>
+      <pixiContainer x={100} y={100}>
+        <pixiGraphics draw={drawCallback} />
+      </pixiContainer>
     </Application>
   )
 }
@@ -82,9 +82,9 @@ const MyComponent = () => {
 
 ### `extend`
 
-One of the most important concepts to understand with Pixi React v8 is `extend`. Normally, Pixi React would have to import all pf Pixi.js to be able to provide the full library as JSX components. Instead, we use an internal catalogue of components populated by the `extend` API. This allows you to define exactly which parts of Pixi.js you want to import, keeping your bundle sizes small.
+One of the most important concepts to understand with v8 is `extend`. Normally `@pixi/react` would have to import all pf Pixi.js to be able to provide the full library as JSX components. Instead, we use an internal catalogue of components populated by the `extend` API. This allows you to define exactly which parts of Pixi.js you want to import, keeping your bundle sizes small.
 
-To allow Pixi React to use a Pixi.js component, pass it to the `extend` API:
+To allow `@pixi/react` to use a Pixi.js component, pass it to the `extend` API:
 
 ```jsx
 import { Container } from 'pixi.js'
@@ -93,7 +93,7 @@ import { extend } from '@pixi/react'
 extend({ Container })
 
 const MyComponent = () => (
-  <container />
+  <pixiContainer />
 )
 ```
 
@@ -104,7 +104,7 @@ const MyComponent = () => (
 
 #### `<Application>`
 
-The `<Application>` component is used to wrap your Pixi React app. The `<Application>` component can take [all props that can be set](https://pixijs.download/release/docs/app.ApplicationOptions.html) on [`PIXI.Application`](https://pixijs.download/release/docs/app.Application.html).
+The `<Application>` component is used to wrap your `@pixi/react` app. The `<Application>` component can take [all props that can be set](https://pixijs.download/release/docs/app.ApplicationOptions.html) on [`PIXI.Application`](https://pixijs.download/release/docs/app.Application.html).
 
 ##### Example Usage
 
@@ -150,25 +150,25 @@ const MyComponent = () => {
 
 #### Pixi Components
 
-All other Pixi React components should be included in your IDE's intellisense/autocomplete once you've installed/imported `@pixi/react`. If it's exported from Pixi.js, it's supported as a component in Pixi React. The only difference is that Pixi React components will always start with lowercase characters. Here's a selection of commonly used components:
+All other components should be included in your IDE's intellisense/autocomplete once you've installed/imported `@pixi/react`. If it's exported from Pixi.js, it's supported as a component with the `pixi` prefix. Here's a selection of commonly used components:
 
 ```jsx
-<container />
-<graphics />
-<sprite />
-<animatedSprite />
-<text />
-<htmlText />
+<pixiContainer />
+<pixiGraphics />
+<pixiSprite />
+<pixiAnimatedSprite />
+<pixiText />
+<pixiHtmlText />
 ```
 
-##### `<graphics>`
+##### `<pixiGraphics>`
 
-The `graphics` component has a special `draw` property. `draw` takes a callback which receives the `Graphics` context, allowing drawing to happen on every tick.
+The `pixiGraphics` component has a special `draw` property. `draw` takes a callback which receives the `Graphics` context, allowing drawing to happen on every tick.
 
 ```jsx
 const MyComponent = () => {
   return (
-    <graphics draw={graphics => {
+    <pixiGraphics draw={graphics => {
       graphics.clear()
       graphics.setFillStyle({ color: 'red' })
       graphics.rect(0, 0, 100, 100)
@@ -178,12 +178,9 @@ const MyComponent = () => {
 }
 ```
 
-> [!IMPORTANT]
-> You may run into some components that conflict with others. For example, the `<text>` component conflicts with the `<text>` component that's built-in to React for use in SVGs. To address this issue, all components are available with the `pixi` prefix. For example, you can replace the `<text>` component with the `<pixiText>` component. It will have the same functionality with none of the collisions.
-
 #### Custom Components
 
-Pixi React supports custom components via the `extend` API. For example, you can create a `<viewport>` component using the [`pixi-viewport`](https://github.com/davidfig/pixi-viewport) library:
+`@pixi/react` supports custom components via the `extend` API. For example, you can create a `<viewport>` component using the [`pixi-viewport`](https://github.com/davidfig/pixi-viewport) library:
 
 ```jsx
 import { extend } from '@pixi/react'
@@ -193,33 +190,14 @@ extend({ Viewport })
 
 const MyComponent = () => {
   <viewport>
-    <container />
+    <pixiContainer />
   </viewport>
 }
 ```
 
-##### For Typescript Users
-
-If you're using Typescript, this new `<viewport>` component will throw type errors. Pixi React exports a `PixiReactElementProps` type that can be used to solve this. You'll need to pass the `Viewport` into `PixiReactElementProps` and inject it into JSX:
-
-```ts
-import { type PixiReactElementProps } from '@pixi/react'
-import { type Viewport } from 'pixi-viewport'
-
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      viewport: PixiReactElementProps<typeof Viewport>;
-    }
-  }
-}
-```
+The `extend` API will teach `@pixi/react` about your components, but TypeScript won't know about them nor their props. If you're using Typescript, check out our [docs for Typescript Users](#for-typescript-users).
 
 ### Hooks
-
-#### `useApp`
-
-**DEPRECATED.** Use `useApplication` hook instead.
 
 #### `useApplication`
 
@@ -267,10 +245,6 @@ const ParentComponent = () => (
   </Application>
 )
 ```
-
-#### `useAsset`
-
-**DEPRECATED.** Use `useAssets` or `useSuspenseAssets` instead.
 
 #### `useAssets`
 
@@ -423,3 +397,55 @@ const MyComponent = () => {
 >   useTick(updateCount)
 > }
 > ```
+
+### For Typescript Users
+
+#### Custom Components
+
+`@pixi/react` already offers types for built-in components, but custom components need to be added to the library's type catalogue so it knows how to handle them. This can be achieved by adding your custom components to the `PixiElements` interface. Here's what it may look like to add the `viewport` component from our earlier `extend` example:
+
+```ts
+// global.d.ts
+import { type PixiReactElementProps } from '@pixi/react'
+import { type Viewport } from 'pixi-viewport'
+
+declare module '@pixi/react' {
+  interface PixiElements {
+    viewport: PixiReactElementProps<typeof Viewport>;
+  }
+}
+```
+
+Now you'll be able to use your custom component in your project without any type errors!
+
+#### Unprefixed Elements
+
+If you like to live life on the wild side, you can enable unprefixed Pixi elements (i.e. `<container>` instead of `<pixiContainer>`) by adding the `UnprefixedPixiElements` interface to the `PixiElements` interface.
+
+```ts
+// global.d.ts
+import { type UnprefixedPixiElements } from '@pixi/react'
+
+declare module '@pixi/react' {
+  interface PixiElements extends UnprefixedPixiElements {}
+}
+```
+
+The prefixed and unprefixed elements have the same functionality, but we recommend sticking to the prefixed components to avoid collisions with other libraries that add intrinsic elements to JSX (such as [`react-dom`](https://www.npmjs.com/package/react-dom) and [`@react-three/fiber`](https://www.npmjs.com/package/@react-three/fiber)).
+
+> [!IMPORTANT]
+> Some components conflict with other libaries, such as `<svg>` in `react-dom` and `<color>` in `@react-three/fiber`. To address this the `pixi` prefixed elements are always available, even after injecting the unprefixed elements.
+
+
+#### Extending Built-in Components
+
+The props for built-in components are available on the `PixiElements` type and can be used to extend the built-in types.
+
+```ts
+import { type PixiElements } from '@pixi/react'
+
+export type TilingSpriteProps = PixiElements['pixiTilingSprite'] & {
+  image?: string;
+  texture?: Texture;
+};
+```

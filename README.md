@@ -435,3 +435,17 @@ The prefixed and unprefixed elements have the same functionality, but we recomme
 
 > [!IMPORTANT]
 > Some components conflict with other libaries, such as `<svg>` in `react-dom` and `<color>` in `@react-three/fiber`. To address this the `pixi` prefixed elements are always available, even after injecting the unprefixed elements.
+
+
+#### Extending Built-in Components
+
+The props for built-in components are available on the `PixiElements` type and can be used to extend the built-in types.
+
+```ts
+import { type PixiElements } from '@pixi/react'
+
+export type TilingSpriteProps = PixiElements['pixiTilingSprite'] & {
+  image?: string;
+  texture?: Texture;
+};
+```

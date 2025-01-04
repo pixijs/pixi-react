@@ -1,6 +1,8 @@
 name: Handle Release Branch Push
 
 on:
+  merge_group:
+  pull_request:
   push:
 
 jobs:

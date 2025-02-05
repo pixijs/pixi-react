@@ -284,7 +284,7 @@ import { useTick } from '@pixi/react'
 const MyComponent = () => {
   const [isEnabled, setIsEnabled] = useState(false)
 
-  useTick(() => console.log('This will be logged on every tick as long as `isEnabled` is `true`'), )
+  useTick(() => console.log('This will be logged on every tick as long as `isEnabled` is `true`'), isEnabled)
 
   return (
     <sprite onClick={setIsEnabled(previousState => !previousState)}>

@@ -19,7 +19,7 @@ export function useTick<T>(
 
     let context: any;
 
-    let isEnabled: boolean;
+    let isEnabled: boolean = true;
 
     let priority: number | undefined;
 

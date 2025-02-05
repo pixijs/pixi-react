@@ -1,10 +1,3 @@
-console.warn(`
-Be aware that you are using a beta version of Pixi React.
-- Things may be broken.
-- Things may (but shouldn't) change.
-- All functionality that's deprecated in the beta version WILL BE REMOVED for the production release.
-`);
-
 export { Application } from './components/Application';
 export { createRoot } from './core/createRoot';
 export * from './global';

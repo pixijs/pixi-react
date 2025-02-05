@@ -6,5 +6,5 @@ export function isReadOnlyProperty(
     const prototype = Object.getPrototypeOf(objectInstance);
     const propertyDescriptor = Object.getOwnPropertyDescriptor(prototype, propertyKey);
 
-    return !(typeof propertyDescriptor === 'undefined' || propertyDescriptor.set);
+    return !(typeof propertyDescriptor === 'undefined' || propertyDescriptor.writable || propertyDescriptor.set);
 }

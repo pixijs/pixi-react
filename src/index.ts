@@ -2,7 +2,6 @@ export { Application } from './components/Application';
 export { createRoot } from './core/createRoot';
 export * from './global';
 export { extend } from './helpers/extend';
-export { useApp } from './hooks/useApp';
 export { useApplication } from './hooks/useApplication';
 export { useExtend } from './hooks/useExtend';
 export { useTick } from './hooks/useTick';

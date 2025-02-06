@@ -1,0 +1,104 @@
+import { EmbeddedEditor } from '@site/src/components/Editor/EmbeddedEditor';
+import IndexFile from '!!raw-loader!./Graphics';
+
+# Graphics
+
+https://pixijs.download/v7.x/docs/PIXI.Graphics.html
+
+## Props
+
+| prop     | description            |
+| -------- | ---------------------- |
+| draw     | Draw callback function |
+| geometry | Graphics object        |
+
+## Usage
+
+<EmbeddedEditor height={350} files={{ 'App.js': IndexFile }} />
+
+### The `draw` prop
+
+Note that the `draw` callback gets called everytime the prop changes, make sure to memoize the callback
+with `React.useCallback`:
+
+```jsx
+import React, { useCallback } from 'react';
+import { Graphics } from '@pixi/react';
+
+function Rectangle(props) {
+  const draw = useCallback(
+    (g) => {
+      g.clear();
+      g.beginFill(props.color);
+      g.drawRect(props.x, props.y, props.width, props.height);
+      g.endFill();
+    },
+    [props],
+  );
+
+  return <Graphics draw={draw} />;
+}
+```
+
+### The `geometry` prop
+
+Provides another Graphics object as a template. Helps in reducing memory footprint if the same shapes are used repeatedly.
+
+```jsx
+import React, { useCallback } from 'react';
+import { Graphics } from '@pixi/react';
+
+function Rectangle(props) {
+  const draw = useCallback((g) => {
+    g.clear();
+    g.lineStyle(props.lineWidth, props.color);
+    g.drawRect(
+      props.lineWidth,
+      props.lineWidth,
+      props.width - 2 * props.lineWidth,
+      props.height - 2 * props.lineWidth
+    );
+  }, [props]);
+
+  return <Graphics draw={draw} />
+}
+
+function Grid(props) {
+  const rect = useRef();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  return (
+    <>
+      {/* create the graphics component here */}
+      <Rectangle ref={rect}>
+
+      {/* make sure to wait till `Rectangle` is mounted */}
+      {/* geometry can only be set during component creation */}
+      {mounted && (
+        <>
+          <Graphics x={0} y={0} geometry={rect.current} />
+          <Graphics x={props.width} y={0} geometry={rect.current} />
+          <Graphics x={0} y={props.height} geometry={rect.current} />
+          <Graphics x={props.width} y={props.height} geometry={rect.current} />
+        </>
+      )}
+    </>
+  );
+}
+```
+
+## Example
+
+<iframe
+  height={500}
+  scrolling="no"
+  title="Graphics"
+  src="//codepen.io/inlet/embed/d3b1be3b908b1d890442ee0c8baceaaf/?height=300&theme-id=33987&default-tab=result&embed-version=2"
+  frameBorder="no"
+  allowFullScreen={true}
+  style={{ width: '100%' }}
+/>

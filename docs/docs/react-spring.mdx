@@ -1,0 +1,42 @@
+import { EmbeddedEditor } from '@site/src/components/Editor/EmbeddedEditor';
+import SpringFile from '!!raw-loader!./react-spring';
+import TintFile from '!!raw-loader!./react-spring-tint';
+
+# React Spring
+
+Use `"@pixi/react-animated"` to import react-spring animated components.
+
+## Usage
+
+```jsx
+import React from 'react';
+import { Spring } from 'react-spring';
+import { Texture } from 'pixi.js';
+import { Stage, Sprite } from '@pixi/react-animated';
+
+const App = () => (
+    <Stage>
+        <Spring native from={{ x: 0, y: 0 }} to={{ x: 200, y: 200 }}>
+            {(props) => <Sprite texture={Texture.WHITE} tint={0xff0000} {...props} />}
+        </Spring>
+    </Stage>
+);
+```
+
+## Example
+
+Click anywhere to animate
+
+<EmbeddedEditor
+    height={500}
+    files={{ 'App.js': SpringFile }}
+    dependencies={{ '@pixi/react-animated': '^7', 'react-spring': '^9', 'pixi.js': '^7', '@pixi/react': '^7' }}
+/>
+
+## Animating `tint` values
+
+<EmbeddedEditor
+    height={500}
+    files={{ 'App.js': TintFile }}
+    dependencies={{ '@pixi/react-animated': '^7', 'react-spring': '^9', 'pixi.js': '^7', '@pixi/react': '^7' }}
+/>

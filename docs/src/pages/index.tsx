@@ -13,7 +13,7 @@ function HomepageHeader()
             <div className="container">
                 <Heading as="h1">
                     <img
-                        src="/react/img/logo-main.svg"
+                        src="/pixi-react/img/logo-main.svg"
                         alt="Logo"
                         width={'100%'}
                         style={{ maxHeight: 150 }}
@@ -55,7 +55,7 @@ export default function Home(): JSX.Element
                     }}
                 >
                     <img
-                        src="/react/img/demo.gif"
+                        src="/pixi-react/img/demo.gif"
                         alt="Demo GIF"
                         style={{
                             width: '100%',

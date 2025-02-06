@@ -10,12 +10,12 @@ const config: Config = {
 
     // Set the production url of your site here
     url: 'https://pixijs.io',
-    baseUrl: '/react/',
+    baseUrl: '/pixi-react/',
 
     // GitHub pages deployment config.
     // If you aren't using GitHub pages, you don't need these.
     organizationName: 'pixijs', // Usually your GitHub org/user name.
-    projectName: 'react', // Usually your repo name.
+    projectName: 'pixi-react', // Usually your repo name.
     deploymentBranch: 'gh-pages', // Branch that GitHub pages will deploy to.
     trailingSlash: true,
 
@@ -40,18 +40,19 @@ const config: Config = {
             'classic',
       {
           docs: {
+              routeBasePath: '/',
               sidebarPath: './sidebars.ts',
               // Please change this to your repo.
               // Remove this to remove the "edit this page" links.
               editUrl:
-            'https://github.com/pixijs/react/tree/main/packages/docs/',
+            'https://github.com/pixijs/pixi-react/tree/main/docs/',
           },
           blog: {
               showReadingTime: true,
               // Please change this to your repo.
               // Remove this to remove the "edit this page" links.
               editUrl:
-            'https://github.com/pixijs/react/tree/main/packages/docs/',
+            'https://github.com/pixijs/pixi-react/tree/main/docs/',
           },
           theme: {
               customCss: './src/css/custom.css',
@@ -69,7 +70,7 @@ const config: Config = {
             respectPrefersColorScheme: false,
         },
         navbar: {
-            title: 'Create',
+            title: 'React',
             logo: {
                 alt: 'PixiJS Logo',
                 src: 'img/logo.svg',
@@ -77,7 +78,7 @@ const config: Config = {
             items: [
                 {
                     type: 'docSidebar',
-                    sidebarId: 'guide',
+                    sidebarId: 'tutorialSidebar',
                     position: 'left',
                     label: 'Guide',
                 },
@@ -100,7 +101,7 @@ const config: Config = {
                     'aria-label': 'Discord server',
                 },
                 {
-                    href: 'https://github.com/pixijs/react',
+                    href: 'https://github.com/pixijs/pixi-react',
                     position: 'right',
                     className: 'header-link header-github-link',
                     'aria-label': 'GitHub repository',

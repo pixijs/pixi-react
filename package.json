@@ -35,8 +35,14 @@
     "dist",
     "types"
   ],
+  "workspaces": [
+    "docs"
+  ],
   "scripts": {
     "build": "rimraf dist lib types && npm run lint:fix && rollup -c && tsc",
+    "build:docs": "npm run --workspace docs build",
+    "deploy": "npm run deploy --workspace docs",
+    "start:docs": "npm run --workspace docs start",
     "clean": "xs clean",
     "docs": "xs docs",
     "lint": "xs lint",
@@ -48,7 +54,8 @@
     "test:e2e": "tsc --project tsconfig.test.json && vitest run e2e",
     "test:unit": "tsc --project tsconfig.test.json && vitest run unit",
     "test:lint": "xs lint",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:types": "tsc --noEmit --emitDeclarationOnly false"
   },
   "husky": {
     "hooks": {
@@ -101,7 +108,8 @@
   "extensionConfig": {
     "lint": [
       "test",
-      "lib"
+      "src",
+      "docs"
     ],
     "environments": [
       "node"

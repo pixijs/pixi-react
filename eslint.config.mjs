@@ -6,6 +6,8 @@ export default [
             'dist/**/*',
             'lib/**/*',
             'types/**/*',
+            'docs/build/**/*',
+            'docs/.docusaurus/**/*',
         ],
     },
     ...pixiConfig,

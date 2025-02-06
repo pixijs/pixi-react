@@ -12,8 +12,9 @@ jobs:
     strategy:
       matrix:
         script:
-          # - name: Typecheck
-          #   command: test:types
+          - name: Typecheck
+            command: test:types
+            installPlaywright: false
           - name: Lint
             command: test:lint
             installPlaywright: false

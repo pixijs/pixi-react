@@ -1,0 +1,46 @@
+import { EmbeddedEditor } from '@site/src/components/Editor/EmbeddedEditor';
+import IndexFile from '!!raw-loader!./BitmapText';
+import ExampleAssetLoaderFile from '!!raw-loader!./ExampleAssetLoader';
+
+# BitmapText
+
+## Props
+
+https://pixijs.download/v7.x/docs/PIXI.BitmapText.html
+
+## Usage
+
+<EmbeddedEditor height={350} files={{ 'App.js': IndexFile, 'ExampleAssetLoader.js': ExampleAssetLoaderFile }} />
+
+## Example
+
+Make sure to load the bitmap font data before mounting.
+
+See https://pixijs.io/examples/#/demos/text-demo.js
+
+```js
+import { render } from 'react-dom'
+import { Stage, BitmapText } from '@pixi/react'
+import { Loader } from 'pixi.js'
+
+Loader.shared
+  .add('desyrel', './assets/desyrel.xml')
+  .load(onAssetsLoaded)
+
+// If using v7 or later, use the following code:
+// import { Assets } from 'pixi.js'
+//
+// Assets
+//  .load('./assets/desyrel.xml')
+//  .then(onAssetsLoaded)
+
+const App = () => (
+  <Stage>
+    <BitmapText text="Hello World" style={{ fontName: 'Desyrel', fontSize: 35 }}>
+  </Stage>
+)
+
+function onAssetsLoaded() {
+  render(<App />, document.getElementById('root'))
+}
+```

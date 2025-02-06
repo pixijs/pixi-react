@@ -78,9 +78,9 @@ const config: Config = {
             items: [
                 {
                     type: 'docSidebar',
-                    sidebarId: 'tutorialSidebar',
+                    sidebarId: 'guides',
                     position: 'left',
-                    label: 'Guide',
+                    label: 'Guides',
                 },
                 {
                     href: 'https://opencollective.com/pixijs',

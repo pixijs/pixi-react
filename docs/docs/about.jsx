@@ -1,36 +1,25 @@
-import React, { useMemo } from 'react';
-import { Container, Sprite, Stage, Text } from '@pixi/react';
-import { BlurFilter, TextStyle } from 'pixi.js';
+import { Application, extend } from '@pixi/react';
+import { Container, Graphics } from 'pixi.js';
+import { useCallback } from 'react';
+
+extend({
+    Container,
+    Graphics,
+});
 
 export default function App() {
-    const blurFilter = useMemo(() => new BlurFilter(2), []);
-    const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
-    return (
-        <Stage width={800} height={600} options={{ background: 0x1099bb }}>
-            <Sprite image={bunnyUrl} x={300} y={150} />
-            <Sprite image={bunnyUrl} x={500} y={150} />
-            <Sprite image={bunnyUrl} x={400} y={200} />
+    const drawCallback = useCallback((graphics) => {
+        graphics.clear();
+        graphics.setFillStyle({ color: 'red' });
+        graphics.rect(0, 0, 100, 100);
+        graphics.fill();
+    }, []);
 
-            <Container x={200} y={200}>
-                <Text
-                    text='Hello World'
-                    anchor={0.5}
-                    x={220}
-                    y={150}
-                    filters={[blurFilter]}
-                    style={
-                        new TextStyle({
-                            align: 'center',
-                            fill: '0xffffff',
-                            fontSize: 50,
-                            letterSpacing: 20,
-                            dropShadow: true,
-                            dropShadowColor: '#E72264',
-                            dropShadowDistance: 6,
-                        })
-                    }
-                />
-            </Container>
-        </Stage>
+    return (
+        <Application>
+            <pixiContainer x={100} y={100}>
+                <pixiGraphics draw={drawCallback} />
+            </pixiContainer>
+        </Application>
     );
 }

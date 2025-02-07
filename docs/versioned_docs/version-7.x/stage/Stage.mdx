@@ -36,7 +36,7 @@ render(<App />, document.getElementById('root'))
 
 ## Example
 
-<EmbeddedEditor
+<EmbeddedEditor version={'v7'}
     height={350}
     files={{ 'App.js': StageFile }}
     dependencies={{
@@ -60,13 +60,13 @@ If you want to know when components have changed, you can listen to the `__REACT
 
 > Disable `raf` and enable `renderOnComponentChange`:
 
-<EmbeddedEditor height={350} files={{ 'App.js': RAFFile }} />
+<EmbeddedEditor version={'v7'} height={350} files={{ 'App.js': RAFFile }} />
 
 ### Update stage manually
 
 > Disable `raf` and `renderOnComponentChange`:
 
-<EmbeddedEditor height={400} files={{ 'App.js': RAF2File }} />
+<EmbeddedEditor version={'v7'} height={400} files={{ 'App.js': RAF2File }} />
 
 ## Accessing Application
 

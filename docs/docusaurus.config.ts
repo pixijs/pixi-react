@@ -46,6 +46,22 @@ const config: Config = {
               // Remove this to remove the "edit this page" links.
               editUrl:
             'https://github.com/pixijs/pixi-react/tree/main/docs/',
+              lastVersion: 'current',
+              versions: {
+                  '7.x': {
+                      label: 'v7.x',
+                      path: '7.x',
+                      banner: 'none',
+                      badge: true,
+                  },
+                  current: {
+                      label: 'v8.x',
+                      path: '/',
+                      banner: 'none',
+                      badge: false,
+                  },
+              },
+              breadcrumbs: false
           },
           blog: {
               showReadingTime: true,
@@ -81,6 +97,11 @@ const config: Config = {
                     sidebarId: 'guides',
                     position: 'left',
                     label: 'Guides',
+                },
+                {
+                    type: 'docsVersionDropdown',
+                    position: 'right',
+                    dropdownActiveClassDisabled: true,
                 },
                 {
                     href: 'https://opencollective.com/pixijs',

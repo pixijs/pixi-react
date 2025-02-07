@@ -39,7 +39,7 @@
     "docs"
   ],
   "scripts": {
-    "build": "rimraf dist lib types && npm run lint:fix && rollup -c && tsc",
+    "build": "rimraf dist lib types && rollup -c && tsc",
     "build:docs": "npm run --workspace docs build",
     "deploy": "npm run deploy --workspace docs",
     "start:docs": "npm run --workspace docs start",

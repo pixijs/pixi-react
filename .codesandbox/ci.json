@@ -1,7 +1,0 @@
-{
-  "sandboxes": ["/.codesandbox/sandbox"],
-  "node": "18",
-  "publishDirectory": {
-    "@pixi/react": "lib"
-  }
-}

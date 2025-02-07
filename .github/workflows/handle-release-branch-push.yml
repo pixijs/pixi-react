@@ -12,8 +12,9 @@ jobs:
     strategy:
       matrix:
         script:
-          # - name: Typecheck
-          #   command: test:types
+          - name: Typecheck
+            command: test:types
+            installPlaywright: false
           - name: Lint
             command: test:lint
             installPlaywright: false
@@ -23,6 +24,9 @@ jobs:
           - name: E2E tests
             command: test:e2e
             installPlaywright: true
+          - name: Docs
+            command: build:docs
+            installPlaywright: false
     steps:
       - name: Checkout
         uses: actions/checkout@v4

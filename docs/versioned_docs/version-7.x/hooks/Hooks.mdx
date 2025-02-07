@@ -1,0 +1,52 @@
+# Hooks
+
+Pixi React now support [React hooks](https://reactjs.org/docs/hooks-reference.html) 🌟
+
+Pixi Hooks rely on [React Context](https://reactjs.org/docs/context.html) and must be called inside an `AppProvider`. This provider is created automatically for you when using the `Stage` component, but will need to be added manually if using the [createRoot](https://reactjs.org/docs/react-dom-client.html#createroot) or render APIs.
+
+## useApp
+
+Access the `PIXI.Application` in your component
+
+```jsx
+import { useApp } from '@pixi/react'
+
+function MyComponent () {
+  const app = useApp()
+  // app => PIXI.Application
+
+  return (
+    ...
+  )
+}
+```
+
+## useTick
+
+Bind listener to the `PIXI.Application` ticker event
+
+```jsx
+import { useTick } from '@pixi/react'
+
+function MyComponent () {
+  useTick(delta => {
+    // do something here
+  })
+
+  return (
+    ...
+  )
+}
+```
+
+Example:
+
+<iframe
+  height={500}
+  scrolling="no"
+  title="useTick"
+  src="//codepen.io/inlet/embed/EOMBer/?height=300&theme-id=33987&default-tab=result&embed-version=2"
+  frameBorder="no"
+  allowFullScreen={true}
+  style={{ width: '100%' }}
+/>

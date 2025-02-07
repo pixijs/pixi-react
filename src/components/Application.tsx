@@ -1,7 +1,7 @@
 import {
     FiberProvider,
     useContextBridge,
-} from 'its-fine'
+} from 'its-fine';
 import {
     type Application as PixiApplication,
     extensions as PixiExtensions,

@@ -1,0 +1,127 @@
+# Custom Components
+
+ReactPixi already covers a large set of PixiJS components (like `<Container>`, `<Sprite>`, `<Graphics>` and many more), but in some use cases you'd like to add new "reconciler primitive" components.
+
+To tap into the React reconciliation you can create custom components with `PixiComponent`.
+
+## API
+
+```jsx
+export default PixiComponent('ComponentName', {
+  create: (props) => {
+    // instantiate something and return it.
+    // for instance:
+    return new Graphics();
+  },
+  didMount: (instance, parent) => {
+    // apply custom logic on mount
+  },
+  willUnmount: (instance, parent) => {
+    // clean up before removal
+  },
+  applyProps: (instance, oldProps, newProps) => {
+    // props changed
+    // apply logic to the instance
+  },
+  config: {
+    // destroy instance on unmount?
+    // default true
+    destroy: true,
+
+    /// destroy its children on unmount?
+    // default true
+    destroyChildren: true,
+  },
+});
+```
+
+## Props helper
+
+ReactPixi comes with a handy utility method `applyDefaultProps` that can help you applying props directly to a PixiJS
+primitive instance handling events, PixiJS props and point-like values.
+
+Here's an example to pass through every other DisplayObject props and handle prop `count` separately:
+
+```jsx
+import { Text } from 'pixi.js';
+import { Stage, applyDefaultProps, PixiComponent } from '@pixi/react';
+
+export default PixiComponent('Counter', {
+  create: ({ count }) => {
+    return new Text(count.toString());
+  },
+  applyProps: (instance, oldProps, newProps) => {
+    const { count, ...oldP } = oldProps;
+    const { count, ...newP } = newProps;
+
+    // apply rest props to PIXI.Text
+    applyDefaultProps(instance, oldP, newP);
+
+    // set new count
+    instance.text = count.toString();
+  },
+});
+```
+
+## Compose above Custom Components
+
+In most cases you can use simple React compositions. A rule of thumb is to use custom components for instances that are not present in ReactPixi components.
+
+Example, don't do:
+
+```jsx
+import { Sprite } from 'pixi.js';
+
+PixiComponent('Rectangle', {
+  create: () => new Sprite(),
+  applyProps: () => {...}
+});
+```
+
+Instead use a simple React composition as `<Sprite>` is already present in ReactPixi:
+
+```jsx
+const Rectangle = (props) => <Sprite {...props}>;
+```
+
+## Config
+
+By default components are destroyed automatically during unmount (reconciliation).
+However in some cases you'd like to have more control.
+
+Example:
+
+```jsx
+const Spine = PixiComponent('Spine', {
+  config: {
+    destroy: false, // we don't want to auto destroy the instance on unmount
+    destroyChildren: false, // we also don't want to destroy its children on unmount
+  },
+  create: () => new SpineInstance(),
+  ...
+});
+```
+
+## Example Viewport
+
+<iframe
+  height={650}
+  scrolling="no"
+  title="Rope"
+  src="//codepen.io/inlet/embed/yLVmPWv/?height=500&theme-id=33987&default-tab=result&embed-version=2"
+  frameBorder="no"
+  allowFullScreen={true}
+  style={{ width: '100%' }}
+/>
+
+## Example Particle Emitter
+
+<iframe
+  height={650}
+  scrolling="no"
+  title="Rope"
+  src="//codepen.io/inlet/embed/feddc8fa71e3b5afc6c3e4eda9cc83df/?height=500&theme-id=33987&default-tab=result&embed-version=2"
+  frameBorder="no"
+  allowFullScreen={true}
+  style={{ width: '100%' }}
+/>

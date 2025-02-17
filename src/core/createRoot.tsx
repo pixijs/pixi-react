@@ -1,7 +1,7 @@
 import { Application } from 'pixi.js';
 import { type ApplicationOptions } from 'pixi.js';
 import { type ReactNode } from 'react';
-import { ConcurrentRoot } from 'react-reconciler/constants.js';
+import { ConcurrentRoot } from 'react-reconciler/constants';
 import { ContextProvider } from '../components/Context';
 import { isReadOnlyProperty } from '../helpers/isReadOnlyProperty';
 import { log } from '../helpers/log';

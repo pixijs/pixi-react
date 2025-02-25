@@ -1,0 +1,38 @@
+import { EmbeddedEditor } from '@site/src/components/Editor/EmbeddedEditor';
+import ExampleApp from '!!raw-loader!../../src/examples/useTick/App';
+import ExampleAppMemoized from '!!raw-loader!../../src/examples/useTick-memoized/App';
+import ExampleAppUnmemoized from '!!raw-loader!../../src/examples/useTick-unmemoized/App';
+import ExampleAppWithOptions from '!!raw-loader!../../src/examples/useTick-options/App';
+
+`useTick` allows a callback to be attached to the [`Ticker`][pixi-ticker] on the parent application.
+
+<EmbeddedEditor
+    files={{ 'App.js': ExampleApp }}
+    viewType={'editor'}
+    width={'100%'} />
+
+`useTick` can also accept an options object. This allows control of all [`ticker.add`][pixi-ticker-add] options, as well as adding the `isEnabled` option. Setting `isEnabled` to `false` will cause the callback to be disabled until the argument is changed to true again.
+
+<EmbeddedEditor
+    files={{ 'App.js': ExampleAppWithOptions }}
+    viewType={'editor'}
+    width={'100%'} />
+
+## ⚠️ WARNING ⚠️
+
+The callback passed to `useTick` **is not memoised**. This can cause issues where your callback is being removed and added back to the ticker on every frame if you're mutating state in a component where `useTick` is using a non-memoised function. For example, this issue would affect the component below because we are mutating the state, causing the component to re-render constantly:
+
+<EmbeddedEditor
+    files={{ 'App.js': ExampleAppUnmemoized }}
+    viewType={'editor'}
+    width={'100%'} />
+
+This issue can be solved by memoising the callback passed to `useTick`:
+
+<EmbeddedEditor
+    files={{ 'App.js': ExampleAppMemoized }}
+    viewType={'editor'}
+    width={'100%'} />
+
+[pixi-ticker]: https://pixijs.download/release/docs/ticker.Ticker.html
+[pixi-ticker-add]: https://pixijs.download/release/docs/ticker.Ticker.html#add

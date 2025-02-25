@@ -28,8 +28,9 @@ const v7Dependencies = {
 };
 
 const v8Dependencies = {
-    'pixi.js': '^8',
     '@pixi/react': 'beta',
+    'pixi.js': '^8',
+    'pixi-viewport': '^6',
     react: '^19',
     'react-dom': '^19',
 };
@@ -41,7 +42,7 @@ export function Editor({
     height = '100%',
     version = 'v8',
     dependencies,
-    files = { 'App.js': '// Your code here' },
+    files = {},
     fontSize = 12,
     handleEditorCodeChanged,
 }: EditorProps)
@@ -50,16 +51,11 @@ export function Editor({
 
     const filesWithoutIndexJs = { ...files };
 
-    delete filesWithoutIndexJs['App.js'];
+    // delete filesWithoutIndexJs['App.js'];
 
     const [filesState] = useState({
         '/styles.css': { code: StylesFile, hidden: true },
         'sandbox.config.json': { code: `{"infiniteLoopProtection": false}`, hidden: true },
-        'App.js': {
-            code: (files['App.js'] as string) ?? '// Your code here',
-            hidden: false,
-            active: true,
-        },
         '/public/index.html': {
             code: `<!DOCTYPE html>
             <html lang="en">
@@ -101,19 +97,13 @@ export function Editor({
                     files={filesState}
                     customSetup={{ dependencies }}
                     style={{ height, width, margin: '0 auto', maxWidth: '100%' }}
-                    options={{
-                        recompileDelay: 500,
-                    }}
-                >
+                    options={{ recompileDelay: 500 }}>
                     <EditorLayout
-                        {...{
-                            handleEditorCodeChanged,
-                            viewType,
-                            showConsole,
-                            fontSize,
-                            pixiVersion: dependencies['pixi.js'],
-                        }}
-                    />
+                        fontSize={fontSize}
+                        handleEditorCodeChanged={handleEditorCodeChanged}
+                        pixiVersion={dependencies['pixi.js']}
+                        showConsole={showConsole}
+                        viewType={viewType} />
                 </SandpackProvider>
             )}
         </BrowserOnly>

@@ -1,0 +1,53 @@
+---
+sidebar_position: 1
+title: Application
+---
+
+The `<Application>` component is used to wrap your `@pixi/react` app. The `<Application>` component can take [all props that can be set][pixi-ApplicationOptions] on [`PIXI.Application`][pixi-Application].
+
+## Example Usage
+
+```jsx
+import { Application } from '@pixi/react';
+
+const MyComponent = () => (
+    <Application autoStart sharedTicker />
+);
+```
+
+## Props
+
+### `defaultTextStyle`
+
+`defaultTextStyle` is a convenience property. Whatever is passed will automatically be assigned to Pixi.js's [`TextStyle.defaultTextStyle`][pixi-defaultTextStyle].
+
+> [!NOTE]
+> This property **is not retroactive**. It will only apply to text components created after `defaultTextStyle` is set. Any text components created before setting `defaultTextStyle` will retain the base styles they had before `defaultTextStyle` was changed.
+
+### `extensions`
+
+`extensions` is an array of extensions to be loaded. Adding and removing items from this array will automatically load/unload the extensions. The first time this is handled happens before the application is initialised. See Pixi.js's [`extensions`][pixi-extensions] documentation for more info on extensions.
+
+### `resizeTo`
+
+The `<Application>` component supports the `resizeTo` property, with some additional functionality: it can accept any HTML element **or** it can take a React `ref` directly.
+
+```jsx
+import { Application } from '@pixi/react';
+import { useRef } from 'react';
+
+const MyComponent = () => {
+    const parentRef = useRef(null);
+
+    return (
+        <div ref={parentRef}>
+            <Application resizeTo={parentRef} />
+        </div>
+    );
+};
+```
+
+[pixi-Application]: https://pixijs.download/release/docs/app.Application.html
+[pixi-ApplicationOptions]: https://pixijs.download/release/docs/app.ApplicationOptions.html
+[pixi-defaultTextStyle]: https://pixijs.download/release/docs/text.TextStyle.html#defaultTextStyle
+[pixi-extensions]: https://pixijs.download/release/docs/extensions.html

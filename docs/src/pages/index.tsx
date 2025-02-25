@@ -1,7 +1,10 @@
 import clsx from 'clsx';
 import CTA from './CTA';
 import styles from './index.module.css';
+import ExampleApp from '!!raw-loader!../examples/basic/App';
+import ExampleBunnySprite from '!!raw-loader!../examples/basic/BunnySprite';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { EmbeddedEditor } from '@site/src/components/Editor/EmbeddedEditor';
 import Heading from '@theme/Heading';
 import Layout from '@theme/Layout';
 
@@ -37,29 +40,31 @@ export default function Home(): JSX.Element
                     flexDirection: 'column',
                     alignItems: 'center',
                     marginTop: -60,
-                }}
-            >
+                }}>
                 <section
                     style={{
                         textAlign: 'center',
                         maxWidth: 800,
                         width: '100%',
                         padding: 20,
-                    }}
-                >
-                    <img
-                        src="/pixi-react/v7/code.png"
-                        alt="Demo image"
+                    }}>
+                    <div
                         style={{
-                            width: '100%',
+                            border: '2px solid #676767',
+                            borderRadius: 10,
+                            marginBottom: 40,
                             maxWidth: 800,
-                            marginBottom: 20,
-                            borderRadius: 10, // Add this line for rounded borders
-                            border: '2px solid #676767', // Optional: Add a border
-                        }}
-                    />
-                    {/* add a getting started button that takes you to the guides */}
-                    <CTA label="Get Started" link="about" />
+                            width: '100%',
+                        }}>
+                        <EmbeddedEditor
+                            files={{
+                                'App.js': ExampleApp,
+                                'BunnySprite.js': ExampleBunnySprite,
+                            }}
+                            viewType={'both'}
+                            width={'100%'} />
+                    </div>
+                    <CTA label="Get Started" link="getting-started" />
                 </section>
             </main>
         </Layout>

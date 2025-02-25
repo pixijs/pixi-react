@@ -1,0 +1,21 @@
+`useExtend` allows the `extend` API to be used as a React hook. Additionally, the `useExtend` hook is memoised, while the `extend` function is not.
+
+```jsx
+import {
+    Application,
+    useExtend,
+} from '@pixi/react';
+import { Container } from 'pixi.js';
+
+function ChildComponent() {
+    useExtend({ Container });
+
+    return <pixiContainer />;
+};
+
+const MyComponent = () => (
+    <Application>
+        <ChildComponent />
+    </Application>
+);
+```

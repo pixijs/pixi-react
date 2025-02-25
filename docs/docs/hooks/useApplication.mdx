@@ -1,0 +1,40 @@
+`useApplication` allows access to the parent `PIXI.Application` created by the `<Application>` component. This hook _will not work_ outside of an `<Application>` component. Additionally, the parent application is passed via [React Context][react-useContext]. This means `useApplication` will only work appropriately in _child components_, and in the same component that creates the `<Application>`.
+
+For example, the following example `useApplication` **will not** be able to access the parent application:
+
+```jsx
+import {
+    Application,
+    useApplication,
+} from '@pixi/react';
+
+const MyComponent = () => {
+    // This will cause an invariant violation.
+    const { app } = useApplication();
+
+    return <Application />;
+};
+```
+
+Here's a working example where `useApplication` **will** be able to access the parent application:
+
+```jsx
+import {
+    Application,
+    useApplication,
+} from '@pixi/react';
+
+const ChildComponent = () => {
+    const { app } = useApplication();
+
+    return <container />;
+};
+
+const MyComponent = () => (
+    <Application>
+        <ChildComponent />
+    </Application>
+);
+```
+
+[react-useContext]: https://react.dev/reference/react/useContext

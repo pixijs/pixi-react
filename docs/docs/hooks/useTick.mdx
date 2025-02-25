@@ -1,0 +1,106 @@
+`useTick` allows a callback to be attached to the [`Ticker`][pixi-ticker] on the parent application.
+
+```jsx
+import {
+    Application,
+    useTick,
+} from '@pixi/react';
+
+const ChildComponent = () => {
+    useTick(() => console.log('This will be logged on every tick'));
+};
+
+const MyComponent = () => (
+    <Application>
+        <ChildComponent />
+    </Application>
+);
+```
+
+`useTick` can also accept an options object. This allows control of all [`ticker.add`][pixi-ticker-add] options, as well as adding the `isEnabled` option. Setting `isEnabled` to `false` will cause the callback to be disabled until the argument is changed to true again.
+
+```jsx
+import {
+    Application,
+    useTick,
+} from '@pixi/react';
+import { UPDATE_PRIORITY } from 'pixi.js'
+import { useRef } from 'react'
+
+const ChildComponent = () => {
+    const spriteRef = useRef(null)
+
+    useTick({
+        callback() {
+            // this === context
+            this.current.rotation += 1
+        },
+        context: spriteRef,
+        isEnabled: true,
+        priority: UPDATE_PRIORITY.HIGH,
+    })
+
+    return <pixiSprite ref={spriteRef} />
+};
+
+const MyComponent = () => (
+    <Application>
+        <ChildComponent />
+    </Application>
+);
+```
+
+## ⚠️ WARNING ⚠️
+
+The callback passed to `useTick` **is not memoised**. This can cause issues where your callback is being removed and added back to the ticker on every frame if you're mutating state in a component where `useTick` is using a non-memoised function. For example, this issue would affect the component below because we are mutating the state, causing the component to re-render constantly:
+
+```jsx
+import {
+    Application,
+    useTick,
+} from '@pixi/react';
+import { useState } from 'react'
+
+const ChildComponent = () => {
+    const [rotation, setRotation] = useState(0)
+
+    useTick(() => setRotation(previousState => previousState + 1));
+
+    return <pixiSprite rotation={rotation} />;
+};
+
+const MyComponent = () => (
+    <Application>
+        <ChildComponent />
+    </Application>
+);
+```
+
+This issue can be solved by memoising the callback passed to `useTick`:
+
+```jsx
+import {
+    Application,
+    useTick,
+} from '@pixi/react';
+import { useCallback, useState } from 'react'
+
+const ChildComponent = () => {
+    const [rotation, setRotation] = useState(0)
+
+    const animateRotation = useCallback(() => setRotation(previousState => previousState + 1), []);
+
+    useTick(animateRotation);
+
+    return <pixiSprite rotation={rotation} />;
+};
+
+const MyComponent = () => (
+    <Application>
+        <ChildComponent />
+    </Application>
+);
+```
+
+[pixi-ticker]: https://pixijs.download/release/docs/ticker.Ticker.html
+[pixi-ticker-add]: https://pixijs.download/release/docs/ticker.Ticker.html#add

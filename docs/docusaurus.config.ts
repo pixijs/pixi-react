@@ -38,47 +38,43 @@ const config: Config = {
     presets: [
         [
             'classic',
-      {
-          docs: {
-              routeBasePath: '/',
-              sidebarPath: './sidebars.ts',
-              // Please change this to your repo.
-              // Remove this to remove the "edit this page" links.
-              editUrl:
-            'https://github.com/pixijs/pixi-react/tree/main/docs/',
-              lastVersion: 'current',
-              versions: {
-                  '7.x': {
-                      label: 'v7.x',
-                      path: '7.x',
-                      banner: 'none',
-                      badge: true,
-                  },
-                  current: {
-                      label: 'v8.x',
-                      path: '/',
-                      banner: 'none',
-                      badge: false,
-                  },
-              },
-              breadcrumbs: false
-          },
-          blog: {
-              showReadingTime: true,
-              // Please change this to your repo.
-              // Remove this to remove the "edit this page" links.
-              editUrl:
-            'https://github.com/pixijs/pixi-react/tree/main/docs/',
-          },
-          theme: {
-              customCss: './src/css/custom.css',
-          },
-      } satisfies Preset.Options,
+            {
+                docs: {
+                    routeBasePath: '/',
+                    sidebarPath: './sidebars.ts',
+                    editUrl:
+                        'https://github.com/pixijs/pixi-react/tree/main/docs/',
+                    lastVersion: 'current',
+                    versions: {
+                        '7.x': {
+                            label: 'v7.x',
+                            path: '7.x',
+                            banner: 'none',
+                            badge: true,
+                        },
+                        current: {
+                            label: 'v8.x',
+                            path: '/',
+                            banner: 'none',
+                            badge: false,
+                        },
+                    },
+                    breadcrumbs: false
+                },
+                blog: {
+                    showReadingTime: true,
+                    editUrl:
+                        'https://github.com/pixijs/pixi-react/tree/main/docs/',
+                },
+                theme: {
+                    customCss: './src/css/custom.css',
+                },
+            } satisfies Preset.Options,
         ],
     ],
 
     themeConfig: {
-    // Replace with your project's social card
+        // Replace with your project's social card
         image: 'img/ogimage.jpg',
         colorMode: {
             defaultMode: 'dark',
@@ -94,9 +90,9 @@ const config: Config = {
             items: [
                 {
                     type: 'docSidebar',
-                    sidebarId: 'guides',
+                    sidebarId: 'docs',
                     position: 'left',
-                    label: 'Guides',
+                    label: 'Docs',
                 },
                 {
                     type: 'docsVersionDropdown',

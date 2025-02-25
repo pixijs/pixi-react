@@ -1,0 +1,25 @@
+---
+sidebar_position: 4
+---
+
+import { EmbeddedEditor } from '@site/src/components/Editor/EmbeddedEditor';
+import ExampleApp from '!!raw-loader!../src/examples/extend/App';
+
+One of the most important concepts to understand with v8 is `extend`. Normally `@pixi/react` would have to import all pf Pixi.js to be able to provide the full library as JSX components. Instead, we use an internal catalogue of components populated by the `extend` API. This allows you to define exactly which parts of Pixi.js you want to import, keeping your bundle sizes small.
+
+To allow `@pixi/react` to use a Pixi.js component, pass it to the `extend` API:
+
+<EmbeddedEditor
+    files={{
+        'App.js': {
+            code: ExampleApp,
+            active: true,
+        }
+    }}
+    viewType={'editor'}
+    width={'100%'} />
+
+## ⚠️ WARNING ⚠️
+Attempting to use components that haven't been passed to the [`extend`][extend] API **will result in errors**.
+
+[extend]: /extend

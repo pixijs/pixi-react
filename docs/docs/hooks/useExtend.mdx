@@ -1,0 +1,9 @@
+import { EmbeddedEditor } from '@site/src/components/Editor/EmbeddedEditor';
+import ExampleApp from '!!raw-loader!../../src/examples/useExtend/App';
+
+`useExtend` allows the `extend` API to be used as a React hook. Additionally, the `useExtend` hook is memoised, while the `extend` function is not.
+
+<EmbeddedEditor
+    files={{ 'App.js': ExampleApp }}
+    viewType={'editor'}
+    width={'100%'} />

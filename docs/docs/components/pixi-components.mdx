@@ -3,9 +3,6 @@ sidebar_position: 2
 title: Pixi.js Components
 ---
 
-import { EmbeddedEditor } from '@site/src/components/Editor/EmbeddedEditor';
-import ExampleAppGraphics from '!!raw-loader!../../src/examples/pixi-components-graphics/App';
-
 All Pixi.js classes should be available as components. They should also be included in your IDE's intellisense/autocomplete once you've installed/imported `@pixi/react`. So long as it's exported from Pixi.js, it's supported as a component with the `pixi` prefix. Here's a selection of commonly used components:
 
 ```jsx
@@ -35,7 +32,11 @@ Some components have special properties to support non-conforming APIs.
 
 `draw` takes a callback which receives the `Graphics` context. Drawing will happen on every tick.
 
-<EmbeddedEditor
-    files={{ 'App.js': ExampleAppGraphics }}
-    viewType={'editor'}
-    width={'100%'} />
+```jsx
+<pixiGraphics draw={(graphics) => {
+    graphics.clear();
+    graphics.setFillStyle({ color: 'red' });
+    graphics.rect(0, 0, 100, 100);
+    graphics.fill();
+}} />
+```

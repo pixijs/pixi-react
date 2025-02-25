@@ -3,15 +3,25 @@ sidebar_position: 3
 title: Custom Components
 ---
 
-import { EmbeddedEditor } from '@site/src/components/Editor/EmbeddedEditor';
-import ExampleApp from '!!raw-loader!../../src/examples/custom-components/App';
-
 Custom components are supported via the `extend` API. For example, you can create a `<viewport>` component using the [`pixi-viewport`][pixi-viewport] library:
 
-<EmbeddedEditor
-    files={{ 'App.js': ExampleApp }}
-    viewType={'editor'}
-    width={'100%'} />
+```jsx
+import {
+    Application,
+    extend,
+} from '@pixi/react';
+import { Viewport } from 'pixi-viewport';
+
+extend({ Viewport });
+
+const MyComponent = () => (
+    <Application>
+        <pixiViewport>
+            <pixiContainer />
+        </pixiViewport>
+    </Application>
+);
+```
 
 The `extend` API will teach `@pixi/react` about your components, but TypeScript won't know about them nor their props. If you're using Typescript, check out our [docs for Typescript Users][typescript].
 

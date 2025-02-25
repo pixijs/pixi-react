@@ -3,20 +3,17 @@ sidebar_position: 1
 title: Application
 ---
 
-import { EmbeddedEditor } from '@site/src/components/Editor/EmbeddedEditor';
-import ExampleAppBasic from '!!raw-loader!../../src/examples/application-basic/App';
-import ExampleAppResizeTo from '!!raw-loader!../../src/examples/application-resizeTo/App';
-
 The `<Application>` component is used to wrap your `@pixi/react` app. The `<Application>` component can take [all props that can be set][pixi-ApplicationOptions] on [`PIXI.Application`][pixi-Application].
 
 ## Example Usage
 
-<EmbeddedEditor
-    files={{
-        'App.js': ExampleAppBasic,
-    }}
-    viewType={'editor'}
-    width={'100%'} />
+```jsx
+import { Application } from '@pixi/react';
+
+const MyComponent = () => (
+    <Application autoStart sharedTicker />
+);
+```
 
 ## Props
 
@@ -35,10 +32,20 @@ The `<Application>` component is used to wrap your `@pixi/react` app. The `<Appl
 
 The `<Application>` component supports the `resizeTo` property, with some additional functionality: it can accept any HTML element **or** it can take a React `ref` directly.
 
-<EmbeddedEditor
-    files={{ 'App.js': ExampleAppResizeTo }}
-    viewType={'editor'}
-    width={'100%'} />
+```jsx
+import { Application } from '@pixi/react';
+import { useRef } from 'react';
+
+const MyComponent = () => {
+    const parentRef = useRef(null);
+
+    return (
+        <div ref={parentRef}>
+            <Application resizeTo={parentRef} />
+        </div>
+    );
+};
+```
 
 [pixi-Application]: https://pixijs.download/release/docs/app.Application.html
 [pixi-ApplicationOptions]: https://pixijs.download/release/docs/app.ApplicationOptions.html

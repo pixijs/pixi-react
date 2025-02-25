@@ -2,42 +2,37 @@
 title: Typescript
 ---
 
-import { EmbeddedEditor } from '@site/src/components/Editor/EmbeddedEditor';
-import ExampleAppBuiltinComponents from '!!raw-loader!../src/examples/typescript-builtin-components/App';
-import ExampleAppCustomComponents from '!!raw-loader!../src/examples/typescript-custom-components/global.d.ts';
-import ExampleAppUnprefixedComponents from '!!raw-loader!../src/examples/typescript-unprefixed-components/global.d.ts';
-
 ## Extending Built-in Components
 
 The props for built-in components are available on the `PixiElements` type and can be used to extend the built-in types.
 
-<EmbeddedEditor
-    files={{
-        'App.ts': {
-            active: true,
-            code: ExampleAppBuiltinComponents,
-        },
-        'tsconfig.json': {
-            code: '{"compilerOptions": {"moduleResolution": "nodenext" }}',
-            hidden: true,
-        },
-    }}
-    viewType={'editor'}
-    width={'100%'} />
+```tsx
+import { type Texture } from 'pixi.js';
+import { type PixiElements } from '@pixi/react';
+
+export type TilingSpriteProps = PixiElements['pixiTilingSprite'] & {
+    image?: string;
+    texture?: Texture;
+};
+```
 
 ## Custom Components
 
 `@pixi/react` already offers types for built-in components, but custom components need to be added to the library's type catalogue so it knows how to handle them. This can be achieved by adding your custom components to the `PixiElements` interface. Here's what it may look like to add the `viewport` component from our earlier `extend` example:
 
-<EmbeddedEditor
-    files={{
-        'global.d.ts': {
-            active: true,
-            code: ExampleAppCustomComponents,
-        },
-    }}
-    viewType={'editor'}
-    width={'100%'} />
+```tsx
+// global.d.ts
+import { type Viewport } from 'pixi-viewport';
+import { type PixiReactElementProps } from '@pixi/react';
+
+declare module '@pixi/react'
+{
+    interface PixiElements
+    {
+        viewport: PixiReactElementProps<typeof Viewport>;
+    }
+}
+```
 
 Now you'll be able to use your custom component in your project without any type errors!
 
@@ -45,15 +40,15 @@ Now you'll be able to use your custom component in your project without any type
 
 If you like to live life on the wild side, you can enable unprefixed Pixi elements (i.e. `<container>` instead of `<pixiContainer>`) by adding the `UnprefixedPixiElements` interface to the `PixiElements` interface.
 
-<EmbeddedEditor
-    files={{
-        'global.d.ts': {
-            active: true,
-            code: ExampleAppUnprefixedComponents,
-        },
-    }}
-    viewType={'editor'}
-    width={'100%'} />
+```tsx
+// global.d.ts
+import { type UnprefixedPixiElements } from '@pixi/react';
+
+declare module '@pixi/react'
+{
+    interface PixiElements extends UnprefixedPixiElements {}
+}
+```
 
 The prefixed and unprefixed elements have the same functionality, but we recommend sticking to the prefixed components to avoid collisions with other libraries that add intrinsic elements to JSX (such as [`react-dom`][react-dom] and [`@react-three/fiber`][react-three-fiber]).
 

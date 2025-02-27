@@ -6,7 +6,6 @@ import {
 import { Application } from '../../src/components/Application';
 import { createRoot } from '../../src/core/createRoot';
 import { extend } from '../../src/helpers/extend';
-import { useApp } from '../../src/hooks/useApp';
 import { useApplication } from '../../src/hooks/useApplication';
 import { useExtend } from '../../src/hooks/useExtend';
 import { useTick } from '../../src/hooks/useTick';
@@ -32,12 +31,6 @@ describe('exports', () =>
         expect(PixiReact.extend).toEqual(extend);
     });
 
-    it('exports the `useApp()` hook', () =>
-    {
-        expect(PixiReact).toHaveProperty('useApp');
-        expect(PixiReact.useApp).toEqual(useApp);
-    });
-
     it('exports the `useApplication()` hook', () =>
     {
         expect(PixiReact).toHaveProperty('useApplication');
@@ -61,7 +54,6 @@ describe('exports', () =>
         expect(PixiReact).toHaveProperty('Application');
         expect(PixiReact).toHaveProperty('createRoot');
         expect(PixiReact).toHaveProperty('extend');
-        expect(PixiReact).toHaveProperty('useApp');
         expect(PixiReact).toHaveProperty('useApplication');
         expect(PixiReact).toHaveProperty('useExtend');
         expect(PixiReact).toHaveProperty('useTick');

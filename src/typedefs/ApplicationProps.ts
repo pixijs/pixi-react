@@ -13,12 +13,6 @@ import { type PixiReactChildNode } from './PixiReactChildNode';
 
 export interface BaseApplicationProps
 {
-    /**
-     * @description Whether this application chould be attached to the dev tools. NOTE: This should only be enabled on one application at a time.
-     * @deprecated Pixi.js handles this automatically, making this option superfluous.
-     */
-    attachToDevTools?: boolean
-
     /** @description CSS classes to be applied to the Pixi Application's canvas element. */
     className?: string
 

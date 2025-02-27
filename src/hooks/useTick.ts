@@ -8,12 +8,6 @@ import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 export function useTick<T>(
     /** @description The function to be called on each tick. */
     options: TickerCallback<T> | UseTickOptions<T>,
-
-    /**
-     * @deprecated
-     * @description Whether this callback is currently enabled.
-     */
-    enabled = true,
 )
 {
     const {
@@ -25,7 +19,7 @@ export function useTick<T>(
 
     let context: any;
 
-    let isEnabled = enabled;
+    let isEnabled: boolean = true;
 
     let priority: number | undefined;
 
@@ -69,7 +63,6 @@ export function useTick<T>(
     }, [
         callback,
         context,
-        isEnabled,
         isInitialised,
         priority,
     ]);

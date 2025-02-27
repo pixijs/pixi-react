@@ -20,12 +20,6 @@ export function createRoot(
 
     /** @description Options to configure the tree. */
     options: CreateRootOptions = {},
-
-    /**
-     * @deprecated
-     * @description Callback to be fired when the application finishes initializing.
-     */
-    onInit?: (app: Application) => void,
 )
 {
     // Check against mistaken use of createRoot
@@ -93,7 +87,7 @@ export function createRoot(
                 applicationState.isInitialising = false;
                 applicationState.isInitialised = true;
                 applicationState = { ...applicationState };
-                (options.onInit ?? onInit)?.(applicationState.app);
+                options.onInit?.(applicationState.app);
             }
 
             Object.entries(applicationOptions).forEach(([key, value]) =>

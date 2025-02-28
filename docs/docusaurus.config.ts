@@ -9,8 +9,8 @@ const config: Config = {
     favicon: 'img/favicon.png',
 
     // Set the production url of your site here
-    url: 'https://pixijs.io',
-    baseUrl: '/pixi-react/',
+    url: 'https://react.pixijs.io',
+    baseUrl: '/',
 
     // GitHub pages deployment config.
     // If you aren't using GitHub pages, you don't need these.

@@ -1,6 +1,13 @@
 .idea
-node_modules/
-**/dist/
-packages/*/stats.html
 .eslintcache
 .DS_Store
+packages/*/stats.html
+node_modules/
+dist/
+lib/
+types/
+
+# Generated files
+.docusaurus
+.cache-loader
+docs/build

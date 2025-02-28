@@ -1,0 +1,110 @@
+name: Handle Release Branch Push
+
+on:
+  merge_group:
+  pull_request:
+  push:
+
+jobs:
+  verify:
+    name: Verify
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        script:
+          - name: Typecheck
+            command: test:types
+            installPlaywright: false
+          - name: Lint
+            command: test:lint
+            installPlaywright: false
+          - name: Unit tests
+            command: test:unit
+            installPlaywright: false
+          - name: E2E tests
+            command: test:e2e
+            installPlaywright: true
+          - name: Docs
+            command: build:docs
+            installPlaywright: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup
+        uses: ./.github/actions/setup
+
+      - name: Install Playwright browsers
+        if: ${{ matrix.script.installPlaywright }}
+        run: npx playwright install
+
+      - name: ${{ matrix.script.name }}
+        run: npm run ${{ matrix.script.command }}
+
+  publish:
+    name: 'Publish: Release'
+    needs:
+      - verify
+    if: contains(fromJson('["refs/heads/alpha", "refs/heads/beta", "refs/heads/main"]'), github.ref)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup project
+        uses: ./.github/actions/setup
+
+      - name: Build Project
+        run: npm run build
+        shell: bash
+
+      - name: Semantic release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        id: release
+        run: |
+          export NEXT_TAG_VERSION=$(npx semantic-release | tee >(cat >&2) | grep 'The next release version is' | sed -E 's/.* ([[:digit:].]+)$/\1/')
+          echo "new_tag_version=${NEXT_TAG_VERSION}" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Publish to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        if: ${{ steps.release.outputs.new_tag_version != '' }}
+        run: npm publish ./dist/*.tgz --tag ${{ (github.head_ref || github.ref_name) == 'main' && 'latest' || github.head_ref || github.ref_name }}
+        shell: bash
+
+  # dev-publish:
+  #   name: 'Publish: Dev'
+  #   needs:
+  #     - verify
+  #   if: contains(fromJson('["refs/heads/alpha", "refs/heads/beta", "refs/heads/main"]'), github.ref) == 'false'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
+
+  #     - name: Setup project
+  #       uses: ./.github/actions/setup
+
+  #     - name: Build project
+  #       run: npm run build
+  #       shell: bash
+
+  #     - name: Get current version
+  #       run: echo "PACKAGE_VERSION=$(npm pkg get version | tr -d '"')" >> $GITHUB_ENV
+
+  #     - name: Setup dev version
+  #       run: echo "BRANCH_VERSION=$PACKAGE_VERSION-$BRANCH_NAME.${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+  #     - name: Bump version
+  #       run: npm version $BRANCH_VERSION --no-git-tag-version --force
+
+  #     - name: Publish a dev release
+  #       run: npm publish --tag dev

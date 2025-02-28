@@ -1,0 +1,59 @@
+---
+title: Typescript
+---
+
+## Extending Built-in Components
+
+The props for built-in components are available on the `PixiElements` type and can be used to extend the built-in types.
+
+```tsx
+import { type Texture } from 'pixi.js';
+import { type PixiElements } from '@pixi/react';
+
+export type TilingSpriteProps = PixiElements['pixiTilingSprite'] & {
+    image?: string;
+    texture?: Texture;
+};
+```
+
+## Custom Components
+
+`@pixi/react` already offers types for built-in components, but custom components need to be added to the library's type catalogue so it knows how to handle them. This can be achieved by adding your custom components to the `PixiElements` interface. Here's what it may look like to add the `viewport` component from our earlier `extend` example:
+
+```tsx
+// global.d.ts
+import { type Viewport } from 'pixi-viewport';
+import { type PixiReactElementProps } from '@pixi/react';
+
+declare module '@pixi/react'
+{
+    interface PixiElements
+    {
+        viewport: PixiReactElementProps<typeof Viewport>;
+    }
+}
+```
+
+Now you'll be able to use your custom component in your project without any type errors!
+
+## Unprefixed Elements
+
+If you like to live life on the wild side, you can enable unprefixed Pixi elements (i.e. `<container>` instead of `<pixiContainer>`) by adding the `UnprefixedPixiElements` interface to the `PixiElements` interface.
+
+```tsx
+// global.d.ts
+import { type UnprefixedPixiElements } from '@pixi/react';
+
+declare module '@pixi/react'
+{
+    interface PixiElements extends UnprefixedPixiElements {}
+}
+```
+
+The prefixed and unprefixed elements have the same functionality, but we recommend sticking to the prefixed components to avoid collisions with other libraries that add intrinsic elements to JSX (such as [`react-dom`][react-dom] and [`@react-three/fiber`][react-three-fiber]).
+
+> [!IMPORTANT]
+> Some components conflict with other libaries, such as `<svg>` in `react-dom` and `<color>` in `@react-three/fiber`. To address this the `pixi` prefixed elements are always available, even after injecting the unprefixed elements.
+
+[react-dom]: https://www.npmjs.com/package/react-dom
+[react-three-fiber]: https://www.npmjs.com/package/@react-three/fiber

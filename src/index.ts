@@ -1,0 +1,11 @@
+export { Application } from './components/Application';
+export { createRoot } from './core/createRoot';
+export * from './global';
+export { extend } from './helpers/extend';
+export { useApplication } from './hooks/useApplication';
+export { useExtend } from './hooks/useExtend';
+export { useTick } from './hooks/useTick';
+export { type ApplicationRef } from './typedefs/ApplicationRef';
+export { type PixiElements } from './typedefs/PixiElements';
+export { type PixiReactElementProps } from './typedefs/PixiReactNode';
+export { type UnprefixedPixiElements } from './typedefs/UnprefixedPixiElements';

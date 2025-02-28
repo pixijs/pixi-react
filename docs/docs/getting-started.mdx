@@ -1,0 +1,38 @@
+---
+sidebar_position: 1
+title: Getting Started
+---
+
+import { EmbeddedEditor } from '@site/src/components/Editor/EmbeddedEditor';
+import ExampleApp from '!!raw-loader!../src/examples/basic/App';
+import ExampleBunnySprite from '!!raw-loader!../src/examples/basic/BunnySprite';
+
+To add `@pixi/react` to an existing React application, install the necessary dependencies:
+
+```bash
+npm install pixi.js@^8.2.6 @pixi/react@beta
+```
+
+## Does it have limitations?
+
+None. Everything that works in Pixi.js will work here without exception.
+
+{/* ## Is it slower than plain Threejs? */}
+{/* No. There is no overhead. Components render outside of React. It outperforms Threejs in scale due to React's scheduling abilities. */}
+
+## Can it keep up with frequent feature updates to Pixi.js?
+Yes. `@pixi/react` is a thin wrapper around Pixi.js, allowing it to be expressed via JSX. For example, `<pixiSprite>` is backed by a Pixi.js [`Sprite`][pixi-sprite]. If a feature is added, removed, or changed in Pixi.js, those changes will be available to you without updating `@pixi/react`.
+
+## What does it look like?
+
+Let's make a reusable component that has its own state, reacts to user-input and participates in the render-loop:
+
+<EmbeddedEditor
+    files={{
+        'App.js': ExampleApp,
+        'BunnySprite.js': ExampleBunnySprite,
+    }}
+    viewType={'both'}
+    width={'100%'} />
+
+[pixi-sprite]: https://pixijs.download/release/docs/scene.Sprite.html

@@ -1,31 +1,42 @@
 {
   "compilerOptions": {
+    "allowJs": true,
+    "allowImportingTsExtensions": true,
     "allowSyntheticDefaultImports": true,
+    "baseUrl": "./src",
+    "checkJs": true,
+    "declaration": true,
+    "declarationDir": "./types",
+    "emitDeclarationOnly": true,
     "esModuleInterop": true,
+    "jsx": "react-jsx",
     "lib": [
-      "ESNext"
+      "DOM",
+      "ESNext",
     ],
-    "module": "commonjs",
+    "module": "ESNext",
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "pretty": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
     "target": "ESNext",
-    "baseUrl": "./"
+    "types": [
+      "@testing-library/jest-dom",
+      "react",
+      "vite/client",
+      "vitest",
+    ],
   },
-  "files": [
-    "node_modules/jest-extended/types/index.d.ts"
-  ],
   "exclude": [
     "dist",
-    "node_modules"
+    "node_modules",
+    "types",
   ],
-  "ts-node": {
-    "files": true,
-    "compilerOptions": {
-      "esModuleInterop": true
-    }
-  }
+  "include": [
+    "./src/**/*",
+  ],
 }

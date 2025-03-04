@@ -1,7 +1,7 @@
 import { Container, Stage, Sprite } from '@pixi/react';
 
 export default function App() {
-    const url = 'https://pixijs.io/pixi-react/img/bunny.png';
+    const url = 'https://react.pixijs.io/img/bunny.png';
     return (
         <Stage width={300} height={300} options={{ backgroundColor: 0xeef1f5 }}>
             <Container position={[150, 150]}>

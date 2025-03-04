@@ -8,7 +8,7 @@ export default function SimpleMeshExample() {
     return (
         <Stage width={500} height={300} options={{ backgroundColor: 0xeef1f5 }}>
             <SimpleMesh
-                image='https://pixijs.io/pixi-react/img/mesh-placeholder.png'
+                image='https://react.pixijs.io/img/mesh-placeholder.png'
                 uvs={uvs}
                 vertices={vertices}
                 indices={indices}

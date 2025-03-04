@@ -14,7 +14,7 @@ export default function NineSlicePlaneExample() {
                 height={300}
                 x={250}
                 y={120}
-                image='https://pixijs.io/pixi-react/img/speech-bubble.png'
+                image='https://react.pixijs.io/img/speech-bubble.png'
             />
         </Stage>
     );

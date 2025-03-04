@@ -16,7 +16,7 @@ function HomepageHeader()
         <header className={clsx(styles.heroBanner)}>
             <div className="container">
                 <Heading as="h1">
-                    <img src="/pixi-react/img/logo-main.svg" alt="Logo" width={'100%'} style={{ maxHeight: 150 }} />
+                    <img src="/img/logo-main.svg" alt="Logo" width={'100%'} style={{ maxHeight: 150 }} />
                 </Heading>
                 <p className="hero__subtitle" style={{ marginTop: -30 }}>
                     {siteConfig.tagline}

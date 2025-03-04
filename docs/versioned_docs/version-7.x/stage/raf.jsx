@@ -39,7 +39,7 @@ export default function RAFExample() {
                 anchor={[-(2 + Math.sin(i / 5) * 2), 0.5]}
                 position={150}
                 rotation={(Math.PI / 180) * 90 + -i}
-                image='https://pixijs.io/pixi-react/img/bunny.png'
+                image='https://react.pixijs.io/img/bunny.png'
             />
         </Stage>
     );

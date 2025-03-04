@@ -12,7 +12,7 @@ export default function SimpleRopeExample() {
                     new Point(200, 100),
                     new Point(400, 150),
                 ]}
-                image={'https://pixijs.io/pixi-react/img/snake.png'}
+                image={'https://react.pixijs.io/img/snake.png'}
             />
         </Stage>
     );

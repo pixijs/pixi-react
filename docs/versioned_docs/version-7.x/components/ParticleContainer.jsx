@@ -3,7 +3,7 @@ import ExampleAssetLoader from './ExampleAssetLoader';
 
 export default function ParticleContainerExample() {
     return (
-        <ExampleAssetLoader name='bunny' url='https://pixijs.io/pixi-react/img/bunny.png'>
+        <ExampleAssetLoader name='bunny' url='https://react.pixijs.io/img/bunny.png'>
             <Stage width={300} height={300} options={{ backgroundColor: 0xffffff }}>
                 <ParticleContainer position={[150, 150]} properties={{ position: true }}>
                     <Sprite anchor={0.5} x={-75} y={-75} image='bunny' />

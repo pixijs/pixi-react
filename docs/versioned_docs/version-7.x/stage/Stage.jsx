@@ -19,7 +19,7 @@ export default function StageExample() {
             {lodash.times(count, (i) => (
                 <Sprite
                     key={i}
-                    image='https://pixijs.io/pixi-react/img/coin.png'
+                    image='https://react.pixijs.io/img/coin.png'
                     scale={(360 / count) * 0.004}
                     anchor={0.5}
                     rotation={i * (360 / count) * (Math.PI / 180)}

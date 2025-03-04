@@ -4,7 +4,7 @@ export default function TilingSpriteExample() {
     return (
         <Stage width={500} height={300}>
             <TilingSprite
-                image={'https://pixijs.io/pixi-react/img/tile.jpeg'}
+                image={'https://react.pixijs.io/img/tile.jpeg'}
                 width={500}
                 height={300}
                 tilePosition={{ x: 100, y: 150 }}

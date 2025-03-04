@@ -42,7 +42,7 @@ export default function RAFExample() {
                     anchor={0.5}
                     position={[150 + Math.cos(i) * 50, 150]}
                     rotation={i}
-                    image='https://pixijs.io/pixi-react/img/bunny.png'
+                    image='https://react.pixijs.io/img/bunny.png'
                 />
             </Stage>
             <button style={{ margin: '20px auto 0 0' }} onClick={() => app.renderer.render(app.stage)}>

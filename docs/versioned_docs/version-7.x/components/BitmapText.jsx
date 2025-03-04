@@ -11,7 +11,7 @@ export default function App() {
         <Stage width={500} height={300} options={{ backgroundColor: 0xffffff }}>
             <ExampleAssetLoader
                 name='desyrel'
-                url='https://pixijs.io/pixi-react/font/desyrel.xml'
+                url='https://react.pixijs.io/font/desyrel.xml'
                 loader={<Text {...position} text='⌛ Loading font...' style={{ fontFamily: 'Arial', fontSize: 15 }} />}
             >
                 <BitmapText {...position} text='Hello World!' style={{ fontName: 'Desyrel', fontSize: 50 }} />

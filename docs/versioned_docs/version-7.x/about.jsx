@@ -4,7 +4,7 @@ import { BlurFilter, TextStyle } from 'pixi.js';
 
 export default function App() {
     const blurFilter = useMemo(() => new BlurFilter(2), []);
-    const bunnyUrl = 'https://pixijs.io/pixi-react/img/bunny.png';
+    const bunnyUrl = 'https://react.pixijs.io/img/bunny.png';
     return (
         <Stage width={800} height={600} options={{ background: 0x1099bb }}>
             <Sprite image={bunnyUrl} x={300} y={150} />

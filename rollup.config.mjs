@@ -83,7 +83,10 @@ const targets = {
 
 export default ['lib', 'dist-dev', 'dist-prod'].map((target) =>
     ({
-        input: 'src/index.ts',
+        input: {
+            index: 'src/index.ts',
+            'motion/index': 'src/motion/index.ts'
+        },
         output: [
             {
                 dir: targets[target].path,

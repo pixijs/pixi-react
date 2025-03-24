@@ -3,6 +3,7 @@ import {
     MotionConfigContext,
     type ValueAnimationTransition,
 } from 'motion/react';
+import { type ObservablePoint } from 'pixi.js';
 import {
     type ComponentProps,
     createElement,
@@ -13,8 +14,8 @@ import {
     useImperativeHandle,
     useRef,
 } from 'react';
-import { useCompareEffect } from './useCompareEffect.js';
 import { useLatestFunction } from './useLatestFunction.js';
+import { usePointCompareEffect, usePointCompareMemo } from './usePointCompare.js';
 
 import type { PixiElements } from 'typedefs/PixiElements.js';
 
@@ -64,6 +65,9 @@ export type PixiMotionComponent<TagName extends SupportedElements> = (
     props: WithMotionProps<ComponentProps<TagName>>,
 ) => JSX.Element;
 
+/**
+ * filter out property keys from transitions so that we don't accidentally pass an empty transition to motion
+ */
 const filterTransition = (transition: ValueAnimationTransition | undefined) =>
 {
     if (transition === undefined) return undefined;
@@ -130,12 +134,46 @@ export function createMotionComponent<TagName extends SupportedElements>(
         );
 
         /**
-         * get the initial state for a property
+         * get the instant state for a property
          *
-         * the priority matters here: initial always wins, then prefer props over animate
+         * on first render, this is the initial values
+         * if the value passed directly to a prop ever changes, it will become the instant value for future renders
          */
-        const useInitialState = (key: SupportedProps) =>
-            useRef(initial?.[key] ?? props[key] ?? animate?.[key]).current;
+        const useInstantState = (key: SupportedProps) =>
+        {
+            const instantValue = props[key];
+            // the priority matters here: initial always wins, then prefer props over animate
+            const initialValue = useRef(initial?.[key] ?? instantValue ?? animate?.[key]).current;
+
+            return usePointCompareMemo(() =>
+            {
+                if (firstRenderRef.current) return initialValue;
+
+                return instantValue;
+            }, instantValue);
+        };
+
+        /**
+         * manage running animations so they don't continue to run after a value changes
+         */
+        const runningAnimations = useRef<
+            Partial<
+                Record<
+                    SupportedProps,
+                    ReturnType<typeof motionAnimate>[]
+                >
+            >
+        >({});
+        const saveAnimation = useCallback((key: SupportedProps, value: ReturnType<typeof motionAnimate>) =>
+        {
+            runningAnimations.current[key] ??= [];
+            runningAnimations.current[key].push(value);
+        }, []);
+        const clear = useCallback((key: SupportedProps) =>
+        {
+            runningAnimations.current[key]?.forEach((animation) => animation.stop());
+            runningAnimations.current[key] = [];
+        }, []);
 
         /**
          * animate to a certain state
@@ -150,59 +188,56 @@ export function createMotionComponent<TagName extends SupportedElements>(
 
                 if (typeof value === 'object')
                 {
+                    const nestedValue = ref.current?.[key] as ObservablePoint;
                     const { x, y } = value;
+
+                    if (!nestedValue) return;
 
                     if (x !== undefined)
                     {
-                        motionAnimate(ref.current[key], { x }, transition);
+                        saveAnimation(key, motionAnimate(nestedValue, {
+                            x: [
+                                nestedValue.x,
+                                x
+                            ]
+                        }, transition));
                     }
                     if (y !== undefined)
                     {
-                        motionAnimate(ref.current[key], { y }, transition);
+                        saveAnimation(key, motionAnimate(nestedValue, {
+                            y: [
+                                nestedValue.y, y
+                            ]
+                        }, transition));
                     }
                 }
                 else
                 {
-                    motionAnimate(ref.current, { [key]: value }, transition);
+                    saveAnimation(key, motionAnimate(ref.current, { [key]: value }, transition));
                 }
             },
             [getTransitionDetails],
         );
 
-        /**
-         * instantly jump to a certain state, interrupting any running animations
-         */
-        const set = useCallback(
-            <T extends SupportedProps>(key: T, value?: SupportedValues[T]) =>
-            {
-                if (value === undefined) return;
-                if (firstRenderRef.current) return;
-                if (!ref.current) return;
-
-                // @ts-expect-error propably not possible to narrow, but types will catch it
-                ref.current[key] = value;
-            },
-            [],
-        );
-
-        const initialProps: Partial<
+        const propsToPass = useRef<Partial<
             Record<SupportedProps, SupportedValues[SupportedProps]>
-        > = {};
+        >>({});
 
         for (const key of supportedProps)
         {
             /**
-             * track our initial values, which never change after mount
+             * track our initial/instant values
              */
-            initialProps[key] = useInitialState(key);
+            propsToPass.current[key] = useInstantState(key);
             /**
-             * instantly jump to a new value when that prop changes
+             * stop our animations when values jump
              */
-            useCompareEffect(() => set(key), [set, props[key]]);
+            usePointCompareEffect(() =>
+                () => clear(key), props[key]);
             /**
              * animate our values when they change
              */
-            useCompareEffect(() => to(key, animate?.[key]), [to, animate?.[key]]);
+            usePointCompareEffect(() => to(key, animate?.[key]), animate?.[key]);
         }
 
         /**
@@ -215,7 +250,7 @@ export function createMotionComponent<TagName extends SupportedElements>(
 
         return createElement(Component, {
             ...props,
-            ...initialProps,
+            ...propsToPass.current,
             ref,
         });
     };

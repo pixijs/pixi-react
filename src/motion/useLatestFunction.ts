@@ -1,6 +1,5 @@
 import { useCallback, useRef } from 'react';
 
-// biome-ignore lint/suspicious/noExplicitAny: generics
 export function useLatestFunction<T extends(...args: any) => any>(thing: T)
 {
     const latestFunctionRef = useRef(thing);

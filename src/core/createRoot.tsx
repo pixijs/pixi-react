@@ -13,6 +13,19 @@ import { type InternalState } from '../typedefs/InternalState';
 import { reconciler } from './reconciler';
 import { roots } from './roots';
 
+function getIsCanvas(target: HTMLElement) {
+    if (target instanceof HTMLCanvasElement) return true;
+
+    // It is possible that the app is rendered inside another window via react portals.
+    // If this is the case, it is owned by a different document, so will be instance of otherDocument.defaultView.HTMLCanvasElement instead of simply HTMLCanvasElement.
+    // (defaultView is the window object of the other document)
+    const ownerWindowHTMLCanvasElement = target?.ownerDocument?.defaultView?.HTMLCanvasElement;
+
+    if (!ownerWindowHTMLCanvasElement) return false;
+
+    return target instanceof ownerWindowHTMLCanvasElement;
+}
+
 /** Creates a new root for a Pixi React app. */
 export function createRoot(
     /** @description The DOM node which will serve as the root for this tree. */
@@ -58,7 +71,7 @@ export function createRoot(
     {
         let canvas;
 
-        if (target instanceof HTMLCanvasElement)
+        if (getIsCanvas(target))
         {
             canvas = target;
         }

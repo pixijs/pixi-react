@@ -78,7 +78,7 @@
     ]
   },
   "dependencies": {
-    "its-fine": "^1.2.5",
+    "its-fine": "^2.0.0",
     "react-reconciler": "0.31.0"
   },
   "devDependencies": {

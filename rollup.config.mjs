@@ -52,7 +52,7 @@ function convertPackageNameToRegExp(packageName)
     return new RegExp(`^${escapeRegExp(packageName)}(/.+)?$`);
 }
 
-const external = ({ bundleDeps = true } = {}) => (bundleDeps ? [] : Object.keys(dependencies).map(convertPackageNameToRegExp));
+const external = ({ bundleDeps = false } = {}) => (bundleDeps ? [] : Object.keys(dependencies).map(convertPackageNameToRegExp));
 
 const targets = {
     lib: {

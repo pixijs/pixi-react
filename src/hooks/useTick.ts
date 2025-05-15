@@ -61,8 +61,10 @@ export function useTick<T>(
             };
         }
     }, [
+        app?.ticker,
         callback,
         context,
+        isEnabled,
         isInitialised,
         priority,
     ]);

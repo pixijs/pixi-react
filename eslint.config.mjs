@@ -1,3 +1,4 @@
+import reactHooks from 'eslint-plugin-react-hooks';
 import pixiConfig from '@pixi/eslint-config';
 
 export default [
@@ -40,4 +41,13 @@ export default [
             'dot-notation': 0,
         },
     },
+    {
+        ...reactHooks.configs['recommended-latest'],
+        rules: {
+            ...reactHooks.configs['recommended-latest'].rules,
+            'react-hooks/exhaustive-deps': ['warn', {
+                additionalHooks: '(useIsomorphicLayoutEffect)'
+            }]
+        }
+    }
 ];

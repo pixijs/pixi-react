@@ -8,7 +8,8 @@ import { EmbeddedEditor } from '@site/src/components/Editor/EmbeddedEditor';
 import Heading from '@theme/Heading';
 import Layout from '@theme/Layout';
 
-function HomepageHeader() {
+function HomepageHeader()
+{
     const { siteConfig } = useDocusaurusContext();
 
     return (
@@ -25,7 +26,8 @@ function HomepageHeader() {
     );
 }
 
-export default function Home(): JSX.Element {
+export default function Home(): JSX.Element
+{
     const { siteConfig } = useDocusaurusContext();
 
     return (

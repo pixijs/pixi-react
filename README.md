@@ -197,6 +197,76 @@ const MyComponent = () => {
 
 The `extend` API will teach `@pixi/react` about your components, but TypeScript won't know about them nor their props. If you're using Typescript, check out our [docs for Typescript Users](#for-typescript-users).
 
+#### `createApplication`
+
+The `createApplication` function allows you to hook into an existing PixiJS Application and create multiple React-driven roots. This is useful when you want to integrate `@pixi/react` with existing PixiJS applications or when you need fine-grained control over the application lifecycle.
+
+```jsx
+import { createApplication } from '@pixi/react'
+import { Application, Container } from 'pixi.js'
+
+// Create your PixiJS application
+const app = new Application()
+await app.init({ width: 800, height: 600 })
+
+// Hook into it with React
+const { useApp, useTick, createRoot } = createApplication(app)
+
+// Create multiple roots that render into different containers
+const containerA = new Container()
+const containerB = new Container()
+app.stage.addChild(containerA, containerB)
+
+const rootA = createRoot(containerA, <MySpriteComponent />)
+const rootB = createRoot(containerB, <MyUIComponent />)
+
+// Each root can be unmounted independently
+rootA.unmount()
+rootB.unmount()
+```
+
+##### `useApp` Hook
+
+Within components rendered by `createRoot`, you can access the PixiJS application instance:
+
+```jsx
+const MyComponent = () => {
+  const app = useApp() // Returns the PixiJS Application
+  
+  useEffect(() => {
+    console.log('Canvas size:', app.canvas.width, app.canvas.height)
+  }, [app])
+  
+  return <pixiContainer />
+}
+```
+
+##### `useTick` Hook
+
+The `useTick` hook works the same as the global one, but is scoped to your specific application:
+
+```jsx
+const MyComponent = () => {
+  const [rotation, setRotation] = useState(0)
+  
+  useTick((delta) => {
+    setRotation(r => r + 0.01 * delta)
+  })
+  
+  return <pixiContainer rotation={rotation} />
+}
+```
+
+##### State Isolation
+
+Each root created with `createRoot` maintains its own React state and lifecycle, allowing for complete isolation between different parts of your application:
+
+```jsx
+// These two roots are completely independent
+const rootA = createRoot(containerA, <CounterComponent />)
+const rootB = createRoot(containerB, <CounterComponent />)
+```
+
 ### Hooks
 
 #### `useApplication`

@@ -4,6 +4,7 @@ import {
     it,
 } from 'vitest';
 import { Application } from '../../src/components/Application';
+import { createApplication } from '../../src/core/createApplication';
 import { createRoot } from '../../src/core/createRoot';
 import { extend } from '../../src/helpers/extend';
 import { useApplication } from '../../src/hooks/useApplication';
@@ -49,10 +50,17 @@ describe('exports', () =>
         expect(PixiReact.useTick).toEqual(useTick);
     });
 
+    it('exports the `createApplication()` function', () =>
+    {
+        expect(PixiReact).toHaveProperty('createApplication');
+        expect(PixiReact.createApplication).toEqual(createApplication);
+    });
+
     it('doesn\'t export extraneous keys', () =>
     {
         expect(PixiReact).toHaveProperty('Application');
         expect(PixiReact).toHaveProperty('createRoot');
+        expect(PixiReact).toHaveProperty('createApplication');
         expect(PixiReact).toHaveProperty('extend');
         expect(PixiReact).toHaveProperty('useApplication');
         expect(PixiReact).toHaveProperty('useExtend');

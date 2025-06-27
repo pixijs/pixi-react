@@ -3,6 +3,7 @@ import CTA from './CTA';
 import styles from './index.module.css';
 import ExampleApp from '!!raw-loader!../examples/basic/App';
 import ExampleBunnySprite from '!!raw-loader!../examples/basic/BunnySprite';
+import ExampleCreateApplication from '!!raw-loader!../examples/basic/CreateApplicationExample';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { EmbeddedEditor } from '@site/src/components/Editor/EmbeddedEditor';
 import Heading from '@theme/Heading';
@@ -60,6 +61,7 @@ export default function Home(): JSX.Element
                             files={{
                                 'App.js': ExampleApp,
                                 'BunnySprite.js': ExampleBunnySprite,
+                                'CreateApplicationExample.js': ExampleCreateApplication,
                             }}
                             viewType={'both'}
                             width={'100%'} />

@@ -1,4 +1,5 @@
 export { Application } from './components/Application';
+export { type ApplicationRoot, createApplication, type CreateApplicationRootOptions } from './core/createApplication';
 export { createRoot } from './core/createRoot';
 export * from './global';
 export { extend } from './helpers/extend';

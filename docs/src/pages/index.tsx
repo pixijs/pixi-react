@@ -57,7 +57,7 @@ export default function Home(): JSX.Element {
                         <EmbeddedEditor
                             files={{
                                 'App.js': ExampleApp,
-                                'BunnySprite.js': ExampleBunnySprite
+                                'BunnySprite.js': ExampleBunnySprite,
                             }}
                             viewType={'both'}
                             width={'100%'} />

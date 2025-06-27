@@ -6,7 +6,6 @@ title: Getting Started
 import { EmbeddedEditor } from '@site/src/components/Editor/EmbeddedEditor';
 import ExampleApp from '!!raw-loader!../src/examples/basic/App';
 import ExampleBunnySprite from '!!raw-loader!../src/examples/basic/BunnySprite';
-import ExampleCreateApplication from '!!raw-loader!../src/examples/basic/CreateApplicationExample';
 
 To add `@pixi/react` to an existing React application, install the necessary dependencies:
 
@@ -31,8 +30,7 @@ Let's make a reusable component that has its own state, reacts to user-input and
 <EmbeddedEditor
     files={{
         'App.js': ExampleApp,
-        'BunnySprite.js': ExampleBunnySprite,
-        'CreateApplicationExample.js': ExampleCreateApplication,
+        'BunnySprite.js': ExampleBunnySprite
     }}
     viewType={'both'}
     width={'100%'} />

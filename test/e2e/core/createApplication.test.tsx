@@ -129,10 +129,8 @@ describe('createApplication', () =>
             return null;
         };
 
-        expect(() =>
-        {
-            void act(() => render(<TestComponent />));
-        }).toThrow();
+        expect(() => act(() => render(<TestComponent />))
+        ).toThrow();
     });
 
     it('useTick integrates with application ticker', async () =>

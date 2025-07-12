@@ -93,7 +93,7 @@ const ApplicationImplementation = forwardRef<ApplicationRef, ApplicationProps>(f
         applicationRef.current = application;
         updateResizeTo();
         onInit?.(application);
-    }, [onInit]);
+    }, [onInit, updateResizeTo]);
 
     useIsomorphicLayoutEffect(() =>
     {
@@ -143,17 +143,12 @@ const ApplicationImplementation = forwardRef<ApplicationRef, ApplicationProps>(f
             // @ts-expect-error The value of `children` is fine, but `PixiReactChildNode` doesn't strictly adhere to the `ReactNode` structure.
             root.render((<Bridge>{children}</Bridge>), applicationProps);
         }
-    }, [
-        applicationProps,
-        children,
-        handleInit,
-        resizeTo,
-    ]);
+    }, [Bridge, applicationProps, children, handleInit, resizeTo]);
 
     useIsomorphicLayoutEffect(() =>
     {
         updateResizeTo();
-    }, [resizeTo]);
+    }, [resizeTo, updateResizeTo]);
 
     useIsomorphicLayoutEffect(() =>
     {

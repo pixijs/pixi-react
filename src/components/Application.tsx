@@ -119,7 +119,7 @@ const ApplicationImplementation = forwardRef<ApplicationRef, ApplicationProps>(f
             }
 
             // Load any remaining extensions.
-            for (const extension in extensionsToHandle)
+            for (const extension of extensionsToHandle)
             {
                 PixiExtensions.add(extension);
                 extensionsState.add(extension);

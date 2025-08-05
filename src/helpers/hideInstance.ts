@@ -1,18 +1,15 @@
-import {
-    Container,
-    Filter,
-} from 'pixi.js';
 import { type HostConfig } from '../typedefs/HostConfig';
+import { isContainer, isFilter } from './typeChecks';
 
 export function hideInstance(
     instance: HostConfig['instance']
 )
 {
-    if (instance instanceof Container)
+    if (isContainer(instance))
     {
         instance.visible = false;
     }
-    else if (instance instanceof Filter)
+    else if (isFilter(instance))
     {
         instance.enabled = false;
     }

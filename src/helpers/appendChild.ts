@@ -1,10 +1,7 @@
-import {
-    Container,
-    Filter,
-} from 'pixi.js';
 import { type HostConfig } from '../typedefs/HostConfig';
 import { attach } from './attach';
 import { log } from './log';
+import { isContainer, isFilter } from './typeChecks';
 
 /** Adds elements to our application. */
 export function appendChild(
@@ -19,11 +16,11 @@ export function appendChild(
         return;
     }
 
-    if (childNode instanceof Container)
+    if (isContainer(childNode))
     {
         parentNode.addChild(childNode);
     }
-    else if (childNode instanceof Filter)
+    else if (isFilter(childNode))
     {
         attach(parentNode, childNode);
     }

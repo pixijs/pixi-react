@@ -1,5 +1,5 @@
-import { Filter } from 'pixi.js';
 import { type HostConfig } from '../typedefs/HostConfig';
+import { isFilter } from './typeChecks';
 
 export function attach(
     parentInstance: HostConfig['containerInstance'],
@@ -7,7 +7,7 @@ export function attach(
     targetIndex?: number
 )
 {
-    if (childInstance instanceof Filter)
+    if (isFilter(childInstance))
     {
         (childInstance as unknown as HostConfig['filterInstance']).__pixireact.parent = parentInstance;
 

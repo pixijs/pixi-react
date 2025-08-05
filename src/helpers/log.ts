@@ -1,4 +1,5 @@
 import { store } from '../store';
+import { isFunction } from './typeChecks';
 
 export type LogType = 'error' | 'info' | 'log' | 'warn';
 
@@ -12,7 +13,7 @@ export function log(logType: LogType, ...args: any[])
     // eslint-disable-next-line no-console
     const logMethod = console[logType];
 
-    if (!(logMethod instanceof Function))
+    if (!isFunction(logMethod))
     {
         console.warn(`Attempted to create an invalid log type: "${logType}"`);
 

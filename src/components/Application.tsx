@@ -20,6 +20,7 @@ import { createRoot } from '../core/createRoot';
 import { roots } from '../core/roots';
 import { processUnmountQueue } from '../helpers/processUnmountQueue';
 import { queueForUnmount } from '../helpers/queueForUnmount';
+import { isHTMLElement } from '../helpers/typeChecks';
 import { unqueueForUnmount } from '../helpers/unqueueForUnmount';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { type ApplicationProps } from '../typedefs/ApplicationProps';
@@ -69,7 +70,7 @@ const ApplicationImplementation = forwardRef<ApplicationRef, ApplicationProps>(f
             {
                 if ('current' in resizeTo)
                 {
-                    if (resizeTo.current instanceof HTMLElement)
+                    if (isHTMLElement(resizeTo.current))
                     {
                         application.resizeTo = resizeTo.current;
                     }

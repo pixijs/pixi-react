@@ -103,9 +103,10 @@ export function isHTMLCanvasElement(obj: any): obj is HTMLCanvasElement
     if (typeof HTMLCanvasElement !== 'undefined' && obj instanceof HTMLCanvasElement) return true;
 
     // Fallback: check node properties and methods
-    return obj.nodeName === 'CANVAS'
-           && typeof obj.getContext === 'function'
-           && typeof obj.toDataURL === 'function';
+    return isHTMLElement(obj)
+           && obj.nodeName === 'CANVAS'
+           && typeof (obj as HTMLCanvasElement).getContext === 'function'
+           && typeof (obj as HTMLCanvasElement).toDataURL === 'function';
 }
 
 /**
@@ -119,10 +120,10 @@ export function isHTMLElement(obj: any): obj is HTMLElement
     if (typeof HTMLElement !== 'undefined' && obj instanceof HTMLElement) return true;
 
     // Fallback: check node properties
-    return typeof obj.nodeName === 'string'
-           && typeof obj.nodeType === 'number'
-           && obj.nodeType === 1 // Element node
-           && typeof obj.style === 'object';
+    return obj.nodeType === Node.ELEMENT_NODE || (
+        obj.nodeType === Node.TEXT_NODE
+        && obj.parentElement?.nodeType === Node.ELEMENT_NODE
+    );
 }
 
 /**
@@ -130,14 +131,5 @@ export function isHTMLElement(obj: any): obj is HTMLElement
  */
 export function isFunction(obj: any): obj is (...args: any[]) => any
 {
-    if (typeof obj === 'function') return true;
-
-    // Primary check: instanceof (works in same realm)
-    if (obj instanceof Function) return true;
-
-    // Fallback: check for function-like object
-    return typeof obj === 'object'
-           && obj !== null
-           && typeof obj.call === 'function'
-           && typeof obj.apply === 'function';
+    return typeof obj === 'function';
 }

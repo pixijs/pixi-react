@@ -347,6 +347,7 @@ describe('typeChecks', () =>
         {
             const mockCanvas = {
                 nodeName: 'CANVAS',
+                nodeType: 1,
                 getContext: vi.fn(),
                 toDataURL: vi.fn(),
             };
@@ -480,16 +481,6 @@ describe('typeChecks', () =>
         {
             expect(isFunction(Array.prototype.map)).toBe(true);
             expect(isFunction(Object.keys)).toBe(true);
-        });
-
-        it('returns true for function-like objects', () =>
-        {
-            const mockFunction = {
-                call: vi.fn(),
-                apply: vi.fn(),
-            };
-
-            expect(isFunction(mockFunction)).toBe(true);
         });
 
         it('returns false for null', () =>

@@ -6,6 +6,7 @@ import { ContextProvider } from '../components/Context';
 import { isReadOnlyProperty } from '../helpers/isReadOnlyProperty';
 import { log } from '../helpers/log';
 import { prepareInstance } from '../helpers/prepareInstance';
+import { isHTMLCanvasElement } from '../helpers/typeChecks';
 import { type ApplicationState } from '../typedefs/ApplicationState';
 import { type CreateRootOptions } from '../typedefs/CreateRootOptions';
 import { type HostConfig } from '../typedefs/HostConfig';
@@ -58,7 +59,7 @@ export function createRoot(
     {
         let canvas;
 
-        if (target instanceof HTMLCanvasElement)
+        if (isHTMLCanvasElement(target))
         {
             canvas = target;
         }

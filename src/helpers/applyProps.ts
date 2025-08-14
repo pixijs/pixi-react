@@ -1,8 +1,4 @@
 import {
-    Container,
-    Graphics,
-} from 'pixi.js';
-import {
     type FederatedPointerEvent,
     type FederatedWheelEvent,
 } from 'pixi.js';
@@ -21,6 +17,7 @@ import { diffProps } from './diffProps';
 import { isDiffSet } from './isDiffSet';
 import { isReadOnlyProperty } from './isReadOnlyProperty';
 import { log } from './log';
+import { isContainer, isGraphics } from './typeChecks';
 
 const DEFAULT = '__default';
 const DEFAULTS_CONTAINERS = new Map();
@@ -85,7 +82,7 @@ export function applyProps(
 
         if ((key as string === 'draw') && (typeof value === 'function'))
         {
-            if (instance instanceof Graphics)
+            if (isGraphics(instance))
             {
                 value(instance);
             }
@@ -135,7 +132,7 @@ export function applyProps(
             // For removed props, try to set default values, if possible
             if (value === `${DEFAULT}remove`)
             {
-                if (currentInstance instanceof Container)
+                if (isContainer(currentInstance))
                 {
                     // create a blank slate of the instance and copy the particular parameter.
                     let ctor = DEFAULTS_CONTAINERS.get(currentInstance.constructor);

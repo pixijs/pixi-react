@@ -1,4 +1,4 @@
-import { Application as PixiApplication } from 'pixi.js';
+import { Application as PixiApplication, extensions as PixiExtensions, ExtensionType } from 'pixi.js';
 import {
     createContext,
     createRef,
@@ -194,5 +194,25 @@ describe('Application', () =>
 
             expect(roots.size).toEqual(0);
         });
+    });
+
+    it('loads extensions provided in the extensions prop', async () =>
+    {
+        const customLoader = {
+            extension: {
+                type: ExtensionType.LoadParser,
+                name: 'custom-loader',
+                priority: 100,
+            },
+        };
+
+        const addSpy = vi.spyOn(PixiExtensions, 'add');
+
+        await act(async () => render((
+            <Application extensions={[customLoader]} />
+        )));
+
+        expect(addSpy).toHaveBeenCalledWith(customLoader);
+        addSpy.mockRestore();
     });
 });

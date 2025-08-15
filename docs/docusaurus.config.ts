@@ -93,7 +93,15 @@ const config: Config = {
                     sidebarId: 'docs',
                     position: 'left',
                     label: 'Docs',
+                    items: [
+                        {
+                            type: 'doc',
+                            docId: 'getting-started/intro',
+                            position: 'left',
+                            label: 'Guides',
+                        }]
                 },
+
                 {
                     type: 'docsVersionDropdown',
                     position: 'right',

@@ -1,0 +1,274 @@
+---
+sidebar_position: 2
+title: Ecosystem
+description: Explore the @pixi/react ecosystem, including React-specific tools, PixiJS integration, and community resources.
+---
+
+`@pixi/react` is designed to work seamlessly with both the React and PixiJS ecosystems. This integration allows you to leverage the best tools and libraries from both worlds to create powerful, interactive applications.
+
+## React Integration
+
+### React DevTools
+
+Since `@pixi/react` components are real React components, you can use [React DevTools](https://react.dev/learn/react-developer-tools) to inspect component hierarchies, props, and state just like any other React application.
+
+### State Management
+
+Use any React state management solution with `@pixi/react`:
+
+#### Redux Toolkit
+
+```jsx
+import { useSelector, useDispatch } from 'react-redux'
+import { Application, extend } from '@pixi/react'
+import { Sprite } from 'pixi.js'
+
+extend({ Sprite })
+
+function GameSprite() {
+  const player = useSelector(state => state.player)
+  const dispatch = useDispatch()
+
+  return (
+    <Application>
+      <pixiSprite
+        x={player.x}
+        y={player.y}
+        texture={player.texture}
+        eventMode="static"
+        onclick={() => dispatch(movePlayer())}
+      />
+    </Application>
+  )
+}
+```
+
+#### Zustand
+
+```jsx
+import { usePlayerStore } from './store'
+
+function PlayerSprite() {
+  const { x, y, texture, move } = usePlayerStore()
+
+  return (
+    <pixiSprite
+      x={x}
+      y={y}
+      texture={texture}
+      eventMode="static"
+      onclick={move}
+    />
+  )
+}
+```
+
+### Custom Hooks
+
+Create reusable game logic with React hooks:
+
+```jsx
+import { useTick } from '@pixi/react'
+import { useCallback, useMemo } from 'react'
+
+function useGameLoop(callback, enabled = true) {
+  const memoizedCallback = useCallback(callback, [callback])
+
+  useTick(memoizedCallback, { isEnabled: enabled })
+}
+
+function useCollision(sprite1, sprite2) {
+  return useMemo(() => {
+    // collision detection logic
+    return checkCollision(sprite1, sprite2)
+  }, [sprite1, sprite2])
+}
+```
+
+### Context Providers
+
+Share game state across components:
+
+```jsx
+import { createContext, useState } from 'react'
+import { Application } from '@pixi/react'
+
+const GameContext = createContext()
+
+function GameProvider({ children }) {
+  const [gameState, setGameState] = useState(initialState)
+
+  return (
+    <GameContext.Provider value={{ gameState, setGameState }}>
+      <Application>
+        {children}
+      </Application>
+    </GameContext.Provider>
+  )
+}
+```
+
+---
+
+## PixiJS Integration
+
+Since `@pixi/react` is a thin wrapper around PixiJS, you can use any PixiJS features directly:
+
+### Filters
+
+Apply visual effects using PixiJS filters:
+
+```jsx
+import { BlurFilter } from 'pixi.js'
+import { useMemo } from 'react'
+
+function FilteredSprite() {
+  const filters = useMemo(() => [
+    new BlurFilter(4)
+  ], [])
+
+  return (
+    <pixiSprite
+      texture="hero.png"
+      filters={filters}
+    />
+  )
+}
+```
+
+### Custom Components with Third-Party Libraries
+
+Use the `extend` API to integrate third-party PixiJS libraries:
+
+#### [pixi-viewport](https://github.com/davidfig/pixi-viewport)
+
+Create interactive, zoomable viewports:
+
+```jsx
+import { extend } from '@pixi/react'
+import { Viewport } from 'pixi-viewport'
+
+extend({ Viewport })
+
+function GameViewport() {
+  return (
+    <pixiViewport
+      screenWidth={800}
+      screenHeight={600}
+      worldWidth={1600}
+      worldHeight={1200}
+    >
+      <pixiContainer>
+        {/* Your game objects */}
+      </pixiContainer>
+    </pixiViewport>
+  )
+}
+```
+
+> **Note**: Third-party libraries compatibility may vary. Always test thoroughly and check library documentation for PixiJS v8 compatibility.
+
+---
+
+## Development Tools
+
+### TypeScript Support
+
+`@pixi/react` provides full TypeScript support. For custom components, extend the type definitions:
+
+```typescript
+// global.d.ts
+import { PixiReactElementProps } from '@pixi/react'
+import { Viewport } from 'pixi-viewport'
+
+declare module '@pixi/react' {
+  interface PixiElements {
+    viewport: PixiReactElementProps<typeof Viewport>
+  }
+}
+```
+
+### Testing
+
+Test your `@pixi/react` components with [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/):
+
+```jsx
+import { render } from '@testing-library/react'
+import { Application } from '@pixi/react'
+import MyGameComponent from './MyGameComponent'
+
+test('renders game component', () => {
+  render(
+    <Application>
+      <MyGameComponent />
+    </Application>
+  )
+  // Test your component logic
+})
+```
+
+### Storybook
+
+Document your graphics components with [Storybook](https://storybook.js.org/):
+
+```jsx
+export default {
+  title: 'Game/PlayerSprite',
+  component: PlayerSprite,
+}
+
+export const Default = () => (
+  <Application>
+    <PlayerSprite x={100} y={100} />
+  </Application>
+)
+```
+
+---
+
+## React Framework Integration
+
+### Next.js
+
+`@pixi/react` works seamlessly with Next.js. For server-side rendering, make sure to import PixiJS components dynamically:
+
+```jsx
+import dynamic from 'next/dynamic'
+
+const GameComponent = dynamic(
+  () => import('../components/GameComponent'),
+  { ssr: false }
+)
+
+export default function GamePage() {
+  return <GameComponent />
+}
+```
+
+### Create React App
+
+`@pixi/react` works out of the box with Create React App. Just install the dependencies and start building:
+
+```bash
+npm install pixi.js@^8.2.6 @pixi/react
+```
+
+### Vite
+
+Perfect compatibility with Vite's fast development experience:
+
+```bash
+npm create vite@latest my-pixi-app -- --template react
+npm install pixi.js@^8.2.6 @pixi/react
+```
+
+---
+
+## Community Resources
+
+- **[GitHub Repository](https://github.com/pixijs/pixi-react)** - Source code, issues, and discussions
+- **[GitHub Discussions](https://github.com/pixijs/pixi-react/discussions)** - Ask questions and share ideas
+- **[PixiJS Discord](https://discord.gg/QrnxmQUPGV)** - Get help from the community
+- **[Examples](https://github.com/pixijs/pixi-react/tree/main/docs/src/examples)** - Browse code examples
+
+The combination of React's declarative component model with PixiJS's high-performance rendering provides everything you need to build incredible interactive experiences.

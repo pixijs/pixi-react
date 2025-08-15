@@ -40,6 +40,7 @@ export default function Home(): JSX.Element
                     flexDirection: 'column',
                     alignItems: 'center',
                     marginTop: -60,
+                    marginBottom: 60,
                 }}>
                 <section
                     style={{

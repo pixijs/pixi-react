@@ -19,7 +19,7 @@ import {
 } from './compare';
 import { diffProps } from './diffProps';
 import { isDiffSet } from './isDiffSet';
-import { isReadOnlyProperty } from './isReadOnlyProperty';
+import { safeAssign } from './isReadOnlyProperty';
 import { log } from './log';
 
 const DEFAULT = '__default';
@@ -174,10 +174,9 @@ export function applyProps(
                     delete currentInstance[pixiKey];
                 }
             }
-            else if (!isReadOnlyProperty(currentInstance as Record<string, unknown>, key))
+            else
             {
-                // @ts-expect-error Typescript is grumpy because this could be setting a readonly key, but we're already handling that in the conditional above. 🤷🏻‍♂️
-                currentInstance[key] = value;
+                safeAssign(currentInstance, key, value as typeof currentInstance[keyof typeof currentInstance]);
             }
         }
 

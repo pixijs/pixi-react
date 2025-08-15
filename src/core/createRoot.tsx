@@ -3,7 +3,7 @@ import { type ApplicationOptions } from 'pixi.js';
 import { type ReactNode } from 'react';
 import { ConcurrentRoot } from 'react-reconciler/constants.js';
 import { ContextProvider } from '../components/Context';
-import { isReadOnlyProperty } from '../helpers/isReadOnlyProperty';
+import { safeAssign } from '../helpers/isReadOnlyProperty';
 import { log } from '../helpers/log';
 import { prepareInstance } from '../helpers/prepareInstance';
 import { type ApplicationState } from '../typedefs/ApplicationState';
@@ -92,18 +92,7 @@ export function createRoot(
 
             Object.entries(applicationOptions).forEach(([key, value]) =>
             {
-                const typedKey = key as keyof ApplicationOptions;
-
-                if (isReadOnlyProperty(
-                    applicationOptions as unknown as Record<string, unknown>,
-                    typedKey,
-                ))
-                {
-                    return;
-                }
-
-                // @ts-expect-error Typescript doesn't realise it, but we're already verifying that this isn't a readonly key.
-                applicationState.app[typedKey] = value;
+                safeAssign(applicationState.app, key as keyof typeof applicationState.app, value);
             });
 
             // Update fiber and expose Pixi.js state to children

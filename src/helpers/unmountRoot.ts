@@ -13,7 +13,7 @@ export function unmountRoot(root: Root)
     {
         reconciler.updateContainer(null, fiber, null, () =>
         {
-            if (root.applicationState.app)
+            if (root.applicationState.app.renderer !== null)
             {
                 root.applicationState.app.destroy();
             }

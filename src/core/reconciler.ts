@@ -95,6 +95,8 @@ const reconcilerConfig = {
     trackSchedulerEvent,
     unhideInstance,
     waitForCommitToBeReady,
+    rendererPackageName: '@pixi/react',
+    rendererVersion: packageData.version,
 };
 
 const reconciler = createReconciler<
@@ -114,10 +116,6 @@ const reconciler = createReconciler<
     HostConfig['transitionStatus']
 >(reconcilerConfig);
 
-reconciler.injectIntoDevTools({
-    bundleType: process.env.NODE_ENV === 'production' ? 0 : 1,
-    rendererPackageName: '@pixi/react',
-    version: packageData.version,
-});
+reconciler.injectIntoDevTools();
 
 export { reconciler };

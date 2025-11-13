@@ -42,17 +42,17 @@ export function createRoot(
     }
 
     const fiber = root?.fiber ?? (reconciler as any).createContainer(
-        internalState.rootContainer, // container
-        ConcurrentRoot, // tag
-        null, // hydration callbacks
-        false, // isStrictMode
-        null, // concurrentUpdatesByDefaultOverride
-        '', // identifierPrefix
-        console.error, // onUncaughtError
-        console.error, // onCaughtError
-        console.error, // onRecoverableError
-        null, // transitionCallbacks
-    );
+            internalState.rootContainer, // container
+            ConcurrentRoot, // tag
+            null, // hydration callbacks
+            false, // isStrictMode
+            null, // concurrentUpdatesByDefaultOverride
+            '', // identifierPrefix
+            console.error, // onUncaughtError
+            console.error, // onCaughtError
+            console.error, // onRecoverableError
+            null, // transitionCallbacks
+        );
 
     if (!root)
     {
@@ -95,7 +95,7 @@ export function createRoot(
                 const typedKey = key as keyof ApplicationOptions;
 
                 if (isReadOnlyProperty(
-                    applicationOptions as unknown as Record<string, unknown>,
+                    applicationState.app,
                     typedKey,
                 ))
                 {
@@ -109,8 +109,8 @@ export function createRoot(
             // Update fiber and expose Pixi.js state to children
             reconciler.updateContainer(
                 (
-                    <ContextProvider value={applicationState}>
-                        {children}
+                <ContextProvider value={applicationState}>
+                    {children}
                     </ContextProvider>
                 ),
                 fiber,

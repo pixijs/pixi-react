@@ -1,6 +1,6 @@
 export function isReadOnlyProperty(
-    objectInstance: Record<string, unknown>,
-    propertyKey: string,
+    objectInstance: { [key: string]: any },
+    propertyKey: string | number | symbol
 )
 {
     const prototype = Object.getPrototypeOf(objectInstance);

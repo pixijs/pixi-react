@@ -1,6 +1,7 @@
 export { Application } from './components/Application';
 export { createRoot } from './core/createRoot';
 export * from './global';
+export { applyProps } from './helpers/applyProps';
 export { extend } from './helpers/extend';
 export { useApplication } from './hooks/useApplication';
 export { useExtend } from './hooks/useExtend';

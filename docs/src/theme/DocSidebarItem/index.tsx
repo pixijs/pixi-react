@@ -1,10 +1,11 @@
+import { type JSX } from 'react';
 import DocSidebarItem from '@theme-original/DocSidebarItem';
 
 interface DocSidebarItemProps
 {
     item: {
         type: string;
-        href: string;
+        href?: string;
     };
     level: number;
     activePath: string;
@@ -25,8 +26,6 @@ export default function DocSidebarItemWrapper(props: DocSidebarItemProps): JSX.E
     }
 
     return (
-        <>
-            <DocSidebarItem {...props} style={{ fontSize: '14px', marginTop: '0px', color }} />
-        </>
+        <DocSidebarItem {...props} style={{ fontSize: '14px', marginTop: '0px', color }}></DocSidebarItem>
     );
 }

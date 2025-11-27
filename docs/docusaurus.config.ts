@@ -120,7 +120,7 @@ const config: Config = {
                     'aria-label': 'Twitter account',
                 },
                 {
-                    href: 'https://discord.gg/CPTjeb28nH',
+                    href: 'https://discord.gg/zqbXQAADuM',
                     position: 'right',
                     className: 'header-link header-discord-link',
                     'aria-label': 'Discord server',

@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { type JSX } from 'react';
 import CTA from './CTA';
 import styles from './index.module.css';
 import ExampleApp from '!!raw-loader!../examples/basic/App';
@@ -65,7 +66,7 @@ export default function Home(): JSX.Element
                             viewType={'both'}
                             width={'100%'} />
                     </div>
-                    <CTA label="Get Started" link="getting-started" />
+                    <CTA label="Get Started" link="getting-started/intro" />
                 </section>
             </main>
         </Layout>

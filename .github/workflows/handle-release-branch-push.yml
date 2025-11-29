@@ -43,6 +43,28 @@ jobs:
       - name: ${{ matrix.script.name }}
         run: npm run ${{ matrix.script.command }}
 
+  preview:
+    name: 'Publish: Preview'
+    needs:
+      - verify
+    if: ${{ github.event.pull_request.base.ref == 'main' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup project
+        uses: ./.github/actions/setup
+
+      - name: Build Project
+        run: npm run build
+        shell: bash
+
+      - name: Publish
+        run: npx pkg-pr-new@latest publish --no-template
+    
   publish:
     name: 'Publish: Release'
     needs:

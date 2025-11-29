@@ -116,6 +116,7 @@ const reconciler = createReconciler<
     HostConfig['transitionStatus']
 >(reconcilerConfig);
 
+// @ts-expect-error -- reconciler types are out of date, remove when fixed
 reconciler.injectIntoDevTools();
 
 export { reconciler };

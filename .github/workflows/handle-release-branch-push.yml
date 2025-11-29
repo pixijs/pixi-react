@@ -64,7 +64,6 @@ jobs:
 
       - name: Publish
         run: npx pkg-pr-new@latest publish --no-template
-    
   publish:
     name: 'Publish: Release'
     needs:

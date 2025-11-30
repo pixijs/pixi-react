@@ -4,6 +4,7 @@ import {
     createRef,
     useContext,
     useEffect,
+    useEffectEvent,
 } from 'react';
 import {
     describe,
@@ -214,5 +215,27 @@ describe('Application', () =>
 
         expect(addSpy).toHaveBeenCalledWith(customLoader);
         addSpy.mockRestore();
+    });
+
+    it("can handle future (19.x) hooks without crashing", async () => {
+        let hookWasCalled = false
+
+        function Test() {
+            useEffectEvent(() => {});
+            hookWasCalled = true;
+            return null;
+        }
+
+        expect(
+            async () =>
+                await act(async () =>
+                    render(
+                        <Application>
+                            <Test />
+                        </Application>
+                    )
+                )
+        ).not.toThrow();
+        expect(hookWasCalled).toBe(true)
     });
 });

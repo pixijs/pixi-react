@@ -68,8 +68,7 @@
     ]
   },
   "dependencies": {
-    "its-fine": "^2.0.0",
-    "react-reconciler": "0.31.0"
+    "its-fine": "^2.0.0"
   },
   "devDependencies": {
     "@pixi/extension-scripts": "^4.0.0",
@@ -79,8 +78,9 @@
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^14.5.2",
-    "@types/react": "^19.0.0",
-    "@types/react-reconciler": "^0.28.9",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@types/react-reconciler": "^0.32.3",
     "@vitejs/plugin-react": "^4.3.1",
     "@vitest/browser": "^2.0.4",
     "eslint-plugin-react-hooks": "^5.2.0",
@@ -88,8 +88,9 @@
     "jsdom": "^25.0.0",
     "pixi.js": "8.2.6",
     "playwright": "^1.45.3",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-reconciler": "^0.33.0",
     "rollup": "^4.18.0",
     "rollup-plugin-esbuild": "^6.1.1",
     "rollup-plugin-inject-process-env": "^1.3.1",
@@ -100,7 +101,7 @@
   },
   "peerDependencies": {
     "pixi.js": "^8.2.6",
-    "react": ">=19.0.0"
+    "react": ">=19 <19.3"
   },
   "overrides": {
     "rollup": "^4.18.0"

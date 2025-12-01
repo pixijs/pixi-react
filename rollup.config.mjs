@@ -16,6 +16,7 @@ const paths = {
 };
 
 const {
+    devDependencies = {},
     dependencies = {},
 } = repo;
 
@@ -52,7 +53,13 @@ function convertPackageNameToRegExp(packageName)
     return new RegExp(`^${escapeRegExp(packageName)}(/.+)?$`);
 }
 
-const external = ({ bundleDeps = false } = {}) => (bundleDeps ? [] : Object.keys(dependencies).map(convertPackageNameToRegExp));
+const external = ({ bundleDeps = false } = {}) =>
+    Object
+        .keys({
+            ...devDependencies, // not installed by users from NPM and must be bundled
+            ...(bundleDeps ? dependencies : {}),
+        })
+        .map(convertPackageNameToRegExp);
 
 const targets = {
     lib: {

@@ -1,11 +1,11 @@
-import { Filter } from 'pixi.js';
 import { type HostConfig } from '../typedefs/HostConfig';
+import { isFilter } from './typeChecks';
 
 export function detach(
     childInstance: HostConfig['instance'],
 )
 {
-    if (childInstance instanceof Filter)
+    if (isFilter(childInstance))
     {
         const parentInstance = childInstance.__pixireact.parent as HostConfig['instance'];
 

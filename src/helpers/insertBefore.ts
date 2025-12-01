@@ -1,12 +1,10 @@
-import {
-    Container,
-    Filter,
-} from 'pixi.js';
+import { type Container, type Filter } from 'pixi.js';
 import { type HostConfig } from '../typedefs/HostConfig';
 import { attach } from './attach';
 import { detach } from './detach';
 import { invariant } from './invariant';
 import { log } from './log';
+import { isContainer, isFilter } from './typeChecks';
 
 export function insertBefore(
     parentInstance: HostConfig['containerInstance'],
@@ -18,7 +16,7 @@ export function insertBefore(
 
     invariant(childInstance !== beforeChildInstance, 'Cannot insert node before itself');
 
-    if (childInstance instanceof Container)
+    if (isContainer(childInstance))
     {
         const childContainerInstance = childInstance as HostConfig['containerInstance'];
         const childContainer = childInstance as unknown as Container;
@@ -33,7 +31,7 @@ export function insertBefore(
 
         parentInstance.addChildAt(childContainer, index);
     }
-    else if (childInstance instanceof Filter)
+    else if (isFilter(childInstance))
     {
         const childFilterInstance = childInstance;
         const instanceState = childFilterInstance.__pixireact;

@@ -15,7 +15,7 @@ export function unmountRoot(root: Root)
         {
             if (root.applicationState.app)
             {
-                root.applicationState.app.destroy();
+                root.applicationState.app.destroy(true, true);
             }
 
             roots.delete(root.internalState.canvas!);

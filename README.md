@@ -127,9 +127,17 @@ const MyComponent = () => {
 > [!NOTE]
 > This property **is not retroactive**. It will only apply to text components created after `defaultTextStyle` is set. Any text components created before setting `defaultTextStyle` will retain the base styles they had before `defaultTextStyle` was changed.
 
+###### `destroyOptions`
+
+When an `<Application>` is unmounted, it will call the `destroy()` method on the Pixi.js application instance. Provide this prop to override the default `DestroyOptions` (the second argument to `destroy()`). See Pixi.js's [`destroy documentation`](https://pixijs.download/release/docs/app.Application.html#destroy) for more info.
+
 ###### `extensions`
 
 `extensions` is an array of extensions to be loaded. Adding and removing items from this array will automatically load/unload the extensions. The first time this is handled happens before the application is initialised. See Pixi.js's [`extensions`](https://pixijs.download/release/docs/extensions.html) documentation for more info on extensions.
+
+###### `rendererDestroyOptions`
+
+When an `<Application>` is unmounted, it will call the `destroy()` method on the Pixi.js application instance. Provide this prop to override the default `RendererDestroyOptions` (the first argument to `destroy()`). See Pixi.js's [`destroy documentation`](https://pixijs.download/release/docs/app.Application.html#destroy) for more info.
 
 ###### `resizeTo`
 

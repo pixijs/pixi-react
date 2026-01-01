@@ -25,8 +25,10 @@ export function createRoot(
     // Check against mistaken use of createRoot
     let root = roots.get(target);
     let applicationState = (root?.applicationState ?? {
+        destroyOptions: options.destroyOptions,
         isInitialised: false,
         isInitialising: false,
+        rendererDestroyOptions: options.rendererDestroyOptions,
     }) as ApplicationState;
 
     const internalState = root?.internalState ?? {} as InternalState;

@@ -36,8 +36,10 @@ const ApplicationImplementation = forwardRef<ApplicationRef, ApplicationProps>(f
         children,
         className,
         defaultTextStyle,
+        destroyOptions,
         extensions,
         onInit,
+        rendererDestroyOptions,
         resizeTo,
         ...applicationProps
     } = props;
@@ -138,7 +140,11 @@ const ApplicationImplementation = forwardRef<ApplicationRef, ApplicationProps>(f
 
             if (!root)
             {
-                root = createRoot(canvasElement, { onInit: handleInit });
+                root = createRoot(canvasElement, {
+                    destroyOptions,
+                    onInit: handleInit,
+                    rendererDestroyOptions,
+                });
             }
 
             // @ts-expect-error The value of `children` is fine, but `PixiReactChildNode` doesn't strictly adhere to the `ReactNode` structure.
@@ -147,7 +153,9 @@ const ApplicationImplementation = forwardRef<ApplicationRef, ApplicationProps>(f
     }, [
         applicationProps,
         children,
+        destroyOptions,
         handleInit,
+        rendererDestroyOptions,
         resizeTo,
     ]);
 

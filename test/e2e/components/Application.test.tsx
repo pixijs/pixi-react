@@ -1,4 +1,4 @@
-import { Application as PixiApplication, extensions as PixiExtensions, ExtensionType } from 'pixi.js';
+import { Application as PixiApplication, type DestroyOptions, extensions as PixiExtensions, ExtensionType, type RendererDestroyOptions } from 'pixi.js';
 import {
     createContext,
     createRef,
@@ -98,6 +98,9 @@ describe('Application', () =>
             let testApp = null as any as PixiApplication;
             let testAppIsInitialised = false;
 
+            const destroyOptions: DestroyOptions = { children: true };
+            const rendererDestroyOptions: RendererDestroyOptions = { removeView: true };
+
             const TestChildComponent = () =>
             {
                 const {
@@ -124,7 +127,10 @@ describe('Application', () =>
             };
 
             const TestComponent = () => (
-                <Application>
+                <Application
+                    destroyOptions={destroyOptions}
+                    rendererDestroyOptions={rendererDestroyOptions}
+                >
                     <TestChildComponent />
                 </Application>
             );
@@ -137,11 +143,16 @@ describe('Application', () =>
 
             await expect.poll(() => testAppIsInitialised).toEqual(true);
 
+            const destroySpy = vi.spyOn(testApp, 'destroy');
+
             unmount();
 
             expect(roots.size).toEqual(0);
 
             await expect.poll(() => isAppMounted(testApp)).toBeFalsy();
+
+            expect(destroySpy).toHaveBeenCalledTimes(1);
+            expect(destroySpy).toHaveBeenCalledWith(rendererDestroyOptions, destroyOptions);
         });
 
         it('unmounts during init', async () =>

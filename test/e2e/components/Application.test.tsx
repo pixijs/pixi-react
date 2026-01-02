@@ -98,7 +98,115 @@ describe('Application', () =>
             let testApp = null as any as PixiApplication;
             let testAppIsInitialised = false;
 
+            const TestChildComponent = () =>
+            {
+                const {
+                    app,
+                    isInitialised,
+                } = useApplication();
+
+                useEffect(() =>
+                {
+                    testApp = app;
+                    testAppIsInitialised = isInitialised;
+
+                    return () =>
+                    {
+                        testApp = app;
+                        testAppIsInitialised = isInitialised;
+                    };
+                }, [
+                    app,
+                    isInitialised,
+                ]);
+
+                return null;
+            };
+
+            const TestComponent = () => (
+                <Application>
+                    <TestChildComponent />
+                </Application>
+            );
+
+            expect(roots.size).toEqual(0);
+
+            const { unmount } = await act(() => render(<TestComponent />));
+
+            expect(roots.size).toEqual(1);
+
+            await expect.poll(() => testAppIsInitialised).toEqual(true);
+
+            unmount();
+
+            expect(roots.size).toEqual(0);
+
+            await expect.poll(() => isAppMounted(testApp)).toBeFalsy();
+        });
+
+        it('unmounts with destroyOptions', async () =>
+        {
+            let testApp = null as any as PixiApplication;
+            let testAppIsInitialised = false;
+
             const destroyOptions: DestroyOptions = { children: true };
+
+            const TestChildComponent = () =>
+            {
+                const {
+                    app,
+                    isInitialised,
+                } = useApplication();
+
+                useEffect(() =>
+                {
+                    testApp = app;
+                    testAppIsInitialised = isInitialised;
+
+                    return () =>
+                    {
+                        testApp = app;
+                        testAppIsInitialised = isInitialised;
+                    };
+                }, [
+                    app,
+                    isInitialised,
+                ]);
+
+                return null;
+            };
+
+            const TestComponent = () => (
+                <Application destroyOptions={destroyOptions}>
+                    <TestChildComponent />
+                </Application>
+            );
+
+            expect(roots.size).toEqual(0);
+
+            const { unmount } = await act(() => render(<TestComponent />));
+
+            expect(roots.size).toEqual(1);
+
+            await expect.poll(() => testAppIsInitialised).toEqual(true);
+
+            const destroySpy = vi.spyOn(testApp, 'destroy');
+
+            unmount();
+
+            expect(roots.size).toEqual(0);
+
+            await expect.poll(() => isAppMounted(testApp)).toBeFalsy();
+
+            expect(destroySpy).toHaveBeenCalledTimes(1);
+            expect(destroySpy).toHaveBeenCalledWith(undefined, destroyOptions);
+        });
+
+        it('unmounts with rendererDestroyOptions', async () =>
+        {
+            let testApp = null as any as PixiApplication;
+            let testAppIsInitialised = false;
+
             const rendererDestroyOptions: RendererDestroyOptions = { removeView: true };
 
             const TestChildComponent = () =>
@@ -127,10 +235,7 @@ describe('Application', () =>
             };
 
             const TestComponent = () => (
-                <Application
-                    destroyOptions={destroyOptions}
-                    rendererDestroyOptions={rendererDestroyOptions}
-                >
+                <Application rendererDestroyOptions={rendererDestroyOptions}>
                     <TestChildComponent />
                 </Application>
             );
@@ -152,7 +257,7 @@ describe('Application', () =>
             await expect.poll(() => isAppMounted(testApp)).toBeFalsy();
 
             expect(destroySpy).toHaveBeenCalledTimes(1);
-            expect(destroySpy).toHaveBeenCalledWith(rendererDestroyOptions, destroyOptions);
+            expect(destroySpy).toHaveBeenCalledWith(rendererDestroyOptions, undefined);
         });
 
         it('unmounts during init', async () =>

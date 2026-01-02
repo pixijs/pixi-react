@@ -8,7 +8,7 @@ import { createRoot } from '../../../src/core/createRoot';
 
 describe('createRoot', () =>
 {
-    it('creates a new root with default options', () =>
+    it('creates a new root', () =>
     {
         const target = document.createElement('canvas');
         const root = createRoot(target);

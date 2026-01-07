@@ -1,7 +1,9 @@
 import {
     type Application,
     type ApplicationOptions,
+    type DestroyOptions,
     type ExtensionFormatLoose,
+    type RendererDestroyOptions,
     type TextStyle,
     type TextStyleOptions,
 } from 'pixi.js';
@@ -22,6 +24,9 @@ export interface BaseApplicationProps
     /** @description The default style to be applied to text nodes. */
     defaultTextStyle?: TextStyle | TextStyleOptions,
 
+    /** @description Options to be passed to the application's `destroy` method. */
+    destroyOptions?: DestroyOptions
+
     /** @description An array of Pixi extensions to be loaded before initialisation. */
     extensions?: (ExtensionFormatLoose | any)[],
 
@@ -30,6 +35,9 @@ export interface BaseApplicationProps
 
     /** @description Callback to be fired when the application finishes initializing. */
     onInit?: (app: Application) => void
+
+    /** @description Options to be passed to the application's `renderer.destroy` method. */
+    rendererDestroyOptions?: RendererDestroyOptions
 
     /** @description An element (or React ref) to which the application's canvas will be resized. */
     resizeTo?: HTMLElement | Window | RefObject<HTMLElement | null>

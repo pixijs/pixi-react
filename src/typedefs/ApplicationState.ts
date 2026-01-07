@@ -1,8 +1,10 @@
-import { type Application } from 'pixi.js';
+import { type Application, type DestroyOptions, type RendererDestroyOptions } from 'pixi.js';
 
 export interface ApplicationState
 {
     app: Application;
+    destroyOptions: DestroyOptions;
     isInitialised: boolean;
     isInitialising: boolean;
+    rendererDestroyOptions: RendererDestroyOptions;
 }

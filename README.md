@@ -35,12 +35,35 @@
 
 ### Quick Start
 
-If you want to start a new React project from scratch then we recommend [Create React App](https://github.com/facebook/create-react-app), but `@pixi/react` should work with any React application (Remix, Next.js, etc).
-To add `@pixi/react` to an existing React application, just install the dependencies:
+**If you want to start a new React project from scratch, we recommend one of the following options:**
 
-#### Install Dependencies
+1. **Use the official [CLI tool to create PixiJS](https://pixijs.io/create-pixi/) projects, and choose the React
+   template:**
+
+Select the React template from Framework Templates:
+
 ```bash
-npm install pixi.js@^8.2.6 @pixi/react
+? Select a type of template: › - Use arrow-keys. Return to submit.
+    Bundler Templates
+❯   Framework Templates
+    Creation Templates
+    Extension
+
+✔ Select a type of template: › Framework Templates
+? Select a variant: › - Use arrow-keys. Return to submit.
+❯   React
+```
+
+**This will create a new React + Vite project, with Pixi.js and `@pixi/react` already preconfigured!**
+
+2. **Manual React + Vite setup:**
+
+You can also install [React + Vite](https://vite.dev/guide/), or use any other React-based framework (e.g. Remix,
+Next.js, etc).
+To add `@pixi/react` to an existing React project, simply install the required dependencies:
+
+```bash
+npm install pixi.js @pixi/react
 ```
 
 #### Pixie React Usage

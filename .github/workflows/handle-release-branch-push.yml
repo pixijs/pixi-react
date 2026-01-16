@@ -5,6 +5,10 @@ on:
   pull_request:
   push:
 
+permissions:
+  id-token: write # Required for OIDC
+  contents: write # Required for npm beta version updates
+
 jobs:
   verify:
     name: Verify

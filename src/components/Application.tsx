@@ -38,6 +38,7 @@ const ApplicationImplementation = forwardRef<ApplicationRef, ApplicationProps>(f
         defaultTextStyle,
         destroyOptions,
         extensions,
+        onDestroy,
         onInit,
         rendererDestroyOptions,
         resizeTo,
@@ -142,6 +143,7 @@ const ApplicationImplementation = forwardRef<ApplicationRef, ApplicationProps>(f
             {
                 root = createRoot(canvasElement, {
                     destroyOptions,
+                    onDestroy,
                     onInit: handleInit,
                     rendererDestroyOptions,
                 });
@@ -155,6 +157,7 @@ const ApplicationImplementation = forwardRef<ApplicationRef, ApplicationProps>(f
         children,
         destroyOptions,
         handleInit,
+        onDestroy,
         rendererDestroyOptions,
         resizeTo,
     ]);

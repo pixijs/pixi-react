@@ -3,6 +3,7 @@ import {
     describe,
     expect,
     it,
+    vi,
 } from 'vitest';
 import { createRoot } from '../../../src/core/createRoot';
 
@@ -60,5 +61,17 @@ describe('createRoot', () =>
             expect(root.applicationState.destroyOptions).toBeUndefined();
             expect(root.applicationState.rendererDestroyOptions).toEqual({ removeView: true });
         });
+    });
+
+    it('creates a new root with onDestroy callback', () =>
+    {
+        const onDestroySpy = vi.fn();
+
+        const target = document.createElement('canvas');
+        const root = createRoot(target, {
+            onDestroy: onDestroySpy,
+        });
+
+        expect(root.applicationState.onDestroy).toBe(onDestroySpy);
     });
 });

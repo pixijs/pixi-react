@@ -5,6 +5,9 @@ export interface CreateRootOptions
     /** @description Options to be passed to the application's `destroy` method. */
     destroyOptions?: DestroyOptions
 
+    /** @description Callback to be fired when the application is destroyed. */
+    onDestroy?: () => void
+
     /** @description Callback to be fired when the application finishes initializing. */
     onInit?: (app: Application) => void
 

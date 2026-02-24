@@ -38,6 +38,7 @@ const ApplicationImplementation = forwardRef<ApplicationRef, ApplicationProps>(f
         defaultTextStyle,
         destroyOptions,
         extensions,
+        onDestroy,
         onInit,
         rendererDestroyOptions,
         resizeTo,
@@ -98,6 +99,11 @@ const ApplicationImplementation = forwardRef<ApplicationRef, ApplicationProps>(f
         onInit?.(application);
     }, [onInit]);
 
+    const handleDestroy = useCallback(() =>
+    {
+        onDestroy?.();
+    }, [onDestroy]);
+
     useIsomorphicLayoutEffect(() =>
     {
         if (extensions)
@@ -142,6 +148,7 @@ const ApplicationImplementation = forwardRef<ApplicationRef, ApplicationProps>(f
             {
                 root = createRoot(canvasElement, {
                     destroyOptions,
+                    onDestroy: handleDestroy,
                     onInit: handleInit,
                     rendererDestroyOptions,
                 });
@@ -155,6 +162,7 @@ const ApplicationImplementation = forwardRef<ApplicationRef, ApplicationProps>(f
         children,
         destroyOptions,
         handleInit,
+        handleDestroy,
         rendererDestroyOptions,
         resizeTo,
     ]);

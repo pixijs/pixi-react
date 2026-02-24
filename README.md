@@ -135,6 +135,10 @@ When an `<Application>` is unmounted, it will call the `destroy()` method on the
 
 `extensions` is an array of extensions to be loaded. Adding and removing items from this array will automatically load/unload the extensions. The first time this is handled happens before the application is initialised. See Pixi.js's [`extensions`](https://pixijs.download/release/docs/extensions.html) documentation for more info on extensions.
 
+###### `onDestroy`
+
+If provided, the `onDestroy` callback will be called after the `<Application>` component is unmounted and the associated Pixi.js application is destroyed, allowing you to do any additional clean-up or lifecycle handling you may need.
+
 ###### `rendererDestroyOptions`
 
 When an `<Application>` is unmounted, it will call the `destroy()` method on the Pixi.js application instance. Provide this prop to override the default `RendererDestroyOptions` (the first argument to `destroy()`). See Pixi.js's [`destroy documentation`](https://pixijs.download/release/docs/app.Application.html#destroy) for more info.

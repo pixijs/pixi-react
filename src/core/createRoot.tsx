@@ -28,6 +28,7 @@ export function createRoot(
         destroyOptions: options.destroyOptions,
         isInitialised: false,
         isInitialising: false,
+        onDestroy: options.onDestroy,
         rendererDestroyOptions: options.rendererDestroyOptions,
     }) as ApplicationState;
 

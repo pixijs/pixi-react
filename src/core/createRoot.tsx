@@ -22,6 +22,9 @@ export function createRoot(
     options: CreateRootOptions = {},
 )
 {
+    const ownerDocument = target.ownerDocument ?? document;
+    const ownerWindow = ownerDocument.defaultView ?? window;
+
     // Check against mistaken use of createRoot
     let root = roots.get(target);
     let applicationState = (root?.applicationState ?? {
@@ -58,21 +61,28 @@ export function createRoot(
 
     if (!root)
     {
-        let canvas;
+        let canvas: HTMLCanvasElement | undefined;
+        const ownerCanvasConstructor = ownerWindow.HTMLCanvasElement;
 
-        if (target instanceof HTMLCanvasElement)
+        if (ownerCanvasConstructor && target instanceof ownerCanvasConstructor)
         {
             canvas = target;
+        }
+        else if (target.nodeName === 'CANVAS')
+        {
+            canvas = target as HTMLCanvasElement;
         }
 
         if (!canvas)
         {
-            canvas = document.createElement('canvas');
+            canvas = ownerDocument.createElement('canvas');
             target.innerHTML = '';
             target.appendChild(canvas);
         }
 
         internalState.canvas = canvas;
+        internalState.ownerDocument = ownerDocument;
+        internalState.ownerWindow = ownerWindow;
 
         const render = async (
             children: ReactNode,

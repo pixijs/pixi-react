@@ -2,6 +2,7 @@ import { Application as PixiApplication, type DestroyOptions, extensions as Pixi
 import {
     createContext,
     createRef,
+    type RefObject,
     useContext,
     useEffect,
 } from 'react';
@@ -45,6 +46,32 @@ describe('Application', () =>
 
         expect(ref.current?.getApplication()).toBeInstanceOf(PixiApplication);
         expect(ref.current?.getCanvas()).toBeInstanceOf(HTMLCanvasElement);
+    });
+
+    it('supports resizeTo refs from another window', async () =>
+    {
+        const onInitSpy = vi.fn();
+        const appRef = createRef<ApplicationRef>();
+        const iframe = document.createElement('iframe');
+        document.body.appendChild(iframe);
+
+        const iframeDocument = iframe.contentDocument!;
+        const resizeTarget = iframeDocument.createElement('div');
+        iframeDocument.body.appendChild(resizeTarget);
+
+        const resizeToRef = { current: resizeTarget } as RefObject<HTMLElement | null>;
+
+        await act(async () => render((
+            <Application
+                ref={appRef}
+                resizeTo={resizeToRef}
+                onInit={onInitSpy} />
+        )));
+
+        await expect.poll(() => onInitSpy.mock.calls.length).toEqual(1);
+        await expect.poll(() => appRef.current?.getApplication()?.resizeTo).toBe(resizeTarget);
+
+        iframe.remove();
     });
 
     it('forwards context', async () =>

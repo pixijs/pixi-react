@@ -2,7 +2,7 @@ import {
     ContinuousEventPriority,
     DefaultEventPriority,
     DiscreteEventPriority,
-} from 'react-reconciler/constants';
+} from 'react-reconciler/constants.js';
 import { store } from '../store';
 import { log } from './log';
 

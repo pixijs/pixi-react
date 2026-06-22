@@ -74,11 +74,23 @@ export function createRoot(
 
         internalState.canvas = canvas;
 
+        // Track the most recent arguments passed to `render`. Because `render` is async
+        // (it awaits `app.init()` on the first call), a later `render` call can arrive
+        // and update the fiber/app with newer state while the first call is still
+        // awaiting. Without this, the first call would resume after init and overwrite
+        // both the committed children and the applied application options with its now
+        // stale closure values.
+        let latestRenderChildren: ReactNode = null;
+        let latestRenderOptions: ApplicationOptions | null = null;
+
         const render = async (
             children: ReactNode,
             applicationOptions: ApplicationOptions,
         ) =>
         {
+            latestRenderChildren = children;
+            latestRenderOptions = applicationOptions;
+
             if (!applicationState.app.renderer && !applicationState.isInitialised && !applicationState.isInitialising)
             {
                 applicationState.isInitialising = true;
@@ -90,6 +102,14 @@ export function createRoot(
                 applicationState.isInitialised = true;
                 applicationState = { ...applicationState };
                 options.onInit?.(applicationState.app);
+
+                // After the async init, use the latest arguments rather than the stale
+                // closure values — a concurrent `render` call may already have pushed
+                // newer children into the fiber and applied newer options to the app,
+                // and we must not revert those updates. Committing the same children a
+                // second time is a no-op: React bails out on referential equality.
+                children = latestRenderChildren;
+                applicationOptions = latestRenderOptions;
             }
 
             Object.entries(applicationOptions).forEach(([key, value]) =>

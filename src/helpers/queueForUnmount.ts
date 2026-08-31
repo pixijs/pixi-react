@@ -8,13 +8,19 @@ export function queueForUnmount(canvas: HTMLCanvasElement)
 
     if (root)
     {
-        if (root.applicationState.isInitialised)
+        /*
+         * Always defer destroy. Immediate unmount of an initialized app races with
+         * React Strict Mode, which re-runs this effect in the same tick (cleanup
+         * then setup). Setup calls unqueueForUnmount; if we already destroyed, the
+         * Pixi ticker/renderer are gone while the scene is still mounted.
+         */
+        store.unmountQueue.add(root);
+        queueMicrotask(() =>
         {
-            unmountRoot(root);
-        }
-        else
-        {
-            store.unmountQueue.add(root);
-        }
+            if (store.unmountQueue.has(root))
+            {
+                unmountRoot(root);
+            }
+        });
     }
 }

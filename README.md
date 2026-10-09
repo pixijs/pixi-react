@@ -35,7 +35,7 @@
 
 ### Quick Start
 
-If you want to start a new React project from scratch then we recommend [Create React App](https://github.com/facebook/create-react-app), but `@pixi/react` should work with any React application (Remix, Next.js, etc).
+If you want to start a new React project from scratch then we recommend [Vite](https://vite.dev/guide/), but `@pixi/react` should work with any React application (Remix, Next.js, etc).
 To add `@pixi/react` to an existing React application, just install the dependencies:
 
 #### Install Dependencies

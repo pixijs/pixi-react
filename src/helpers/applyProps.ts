@@ -87,6 +87,9 @@ export function applyProps(
         {
             if (instance instanceof Graphics)
             {
+                // A new draw callback replaces the previous drawing commands.
+                // Keep the existing GraphicsContext so GPU resources can be reused.
+                instance.clear();
                 value(instance);
             }
             else
@@ -94,6 +97,12 @@ export function applyProps(
                 hasError = true;
                 log('warn', `The \`draw\` prop was used on a \`${instanceState.type}\` component, but it's only valid on \`graphics\` components.`);
             }
+        }
+
+        // Clearing the draw prop should also clear its old geometry.
+        if ((key as string === 'draw') && (value === `${DEFAULT}remove`) && instance instanceof Graphics)
+        {
+            instance.clear();
         }
 
         if (key in PixiToReactEventPropNames)

@@ -1,0 +1,88 @@
+import { Graphics } from 'pixi.js';
+import {
+    describe,
+    expect,
+    it,
+} from 'vitest';
+import { applyProps } from '../../../src/helpers/applyProps';
+import { prepareInstance } from '../../../src/helpers/prepareInstance';
+
+describe('applyProps Graphics draw updates', () =>
+{
+    it('reuses one context and preserves append semantics across changing callbacks', () =>
+    {
+        const graphics = new Graphics();
+        const instance = prepareInstance(graphics);
+        const context = graphics.context;
+
+        for (let frame = 0; frame < 20; frame++)
+        {
+            const draw = (target: Graphics) =>
+            {
+                target.rect(0, 0, frame + 1, 10).fill(0xFF0000);
+            };
+
+            applyProps(instance, { draw });
+
+            expect(graphics.context).toBe(context);
+            expect(context.instructions).toHaveLength(frame + 1);
+        }
+
+        graphics.destroy();
+    });
+
+    it('preserves drawn geometry when unrelated props change', () =>
+    {
+        const graphics = new Graphics();
+        const instance = prepareInstance(graphics);
+        let drawCount = 0;
+        const draw = (target: Graphics) =>
+        {
+            drawCount += 1;
+            target.rect(0, 0, 10, 10).fill(0xFF0000);
+        };
+
+        applyProps(instance, { draw });
+
+        const context = graphics.context;
+
+        applyProps(instance, { draw, x: 20 });
+
+        expect(drawCount).toBe(1);
+        expect(graphics.x).toBe(20);
+        expect(graphics.context).toBe(context);
+        expect(context.instructions).toHaveLength(1);
+
+        graphics.destroy();
+    });
+
+    it('preserves drawing commands when the draw prop is removed', () =>
+    {
+        const graphics = new Graphics();
+        const instance = prepareInstance(graphics);
+
+        applyProps(instance, {
+            draw: (target: Graphics) =>
+            {
+                target.rect(0, 0, 10, 10).fill(0xFF0000);
+            },
+        });
+
+        expect(graphics.context.instructions).toHaveLength(1);
+
+        applyProps(instance, {
+            changes: [
+                [
+                    'draw',
+                    '__defaultremove',
+                    false,
+                    [],
+                ],
+            ],
+        });
+
+        expect(graphics.context.instructions).toHaveLength(1);
+
+        graphics.destroy();
+    });
+});

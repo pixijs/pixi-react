@@ -11,7 +11,8 @@ describe('applyProps Graphics draw updates', () =>
 {
     it('reuses one context and keeps drawing instructions bounded across changing callbacks', () =>
     {
-        const graphics = prepareInstance(new Graphics());
+        const graphics = new Graphics();
+        prepareInstance(graphics);
         const context = graphics.context;
 
         for (let frame = 0; frame < 20; frame++)
@@ -32,7 +33,8 @@ describe('applyProps Graphics draw updates', () =>
 
     it('preserves drawn geometry when unrelated props change', () =>
     {
-        const graphics = prepareInstance(new Graphics());
+        const graphics = new Graphics();
+        prepareInstance(graphics);
         let drawCount = 0;
         const draw = (target: Graphics) =>
         {
@@ -56,7 +58,8 @@ describe('applyProps Graphics draw updates', () =>
 
     it('clears stale drawing commands when the draw prop is removed', () =>
     {
-        const graphics = prepareInstance(new Graphics());
+        const graphics = new Graphics();
+        prepareInstance(graphics);
 
         applyProps(graphics, {
             draw: (target: Graphics) =>

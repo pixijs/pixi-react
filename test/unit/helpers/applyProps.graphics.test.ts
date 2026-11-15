@@ -12,7 +12,7 @@ describe('applyProps Graphics draw updates', () =>
     it('reuses one context and keeps drawing instructions bounded across changing callbacks', () =>
     {
         const graphics = new Graphics();
-        prepareInstance(graphics);
+        const instance = prepareInstance(graphics);
         const context = graphics.context;
 
         for (let frame = 0; frame < 20; frame++)
@@ -22,7 +22,7 @@ describe('applyProps Graphics draw updates', () =>
                 target.rect(0, 0, frame + 1, 10).fill(0xFF0000);
             };
 
-            applyProps(graphics, { draw });
+            applyProps(instance, { draw });
 
             expect(graphics.context).toBe(context);
             expect(context.instructions).toHaveLength(1);
@@ -34,7 +34,7 @@ describe('applyProps Graphics draw updates', () =>
     it('preserves drawn geometry when unrelated props change', () =>
     {
         const graphics = new Graphics();
-        prepareInstance(graphics);
+        const instance = prepareInstance(graphics);
         let drawCount = 0;
         const draw = (target: Graphics) =>
         {
@@ -42,11 +42,11 @@ describe('applyProps Graphics draw updates', () =>
             target.rect(0, 0, 10, 10).fill(0xFF0000);
         };
 
-        applyProps(graphics, { draw });
+        applyProps(instance, { draw });
 
         const context = graphics.context;
 
-        applyProps(graphics, { draw, x: 20 });
+        applyProps(instance, { draw, x: 20 });
 
         expect(drawCount).toBe(1);
         expect(graphics.x).toBe(20);
@@ -59,9 +59,9 @@ describe('applyProps Graphics draw updates', () =>
     it('clears stale drawing commands when the draw prop is removed', () =>
     {
         const graphics = new Graphics();
-        prepareInstance(graphics);
+        const instance = prepareInstance(graphics);
 
-        applyProps(graphics, {
+        applyProps(instance, {
             draw: (target: Graphics) =>
             {
                 target.rect(0, 0, 10, 10).fill(0xFF0000);
@@ -70,7 +70,7 @@ describe('applyProps Graphics draw updates', () =>
 
         expect(graphics.context.instructions).toHaveLength(1);
 
-        applyProps(graphics, {
+        applyProps(instance, {
             changes: [
                 [
                     'draw',

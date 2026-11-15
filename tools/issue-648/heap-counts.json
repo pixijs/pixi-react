@@ -1,0 +1,846 @@
+[
+  {
+    "snapshot": "baseline-cycles-0.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 49612
+      },
+      "_GraphicsContext2": {
+        "count": 200,
+        "shallowBytes": 16800
+      },
+      "GpuGraphicsContext": {
+        "count": 200,
+        "shallowBytes": 5600
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "baseline-cycles-4.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 49612
+      },
+      "_GraphicsContext2": {
+        "count": 200,
+        "shallowBytes": 16800
+      },
+      "GpuGraphicsContext": {
+        "count": 200,
+        "shallowBytes": 5600
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "baseline-cycles-unmounted.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 1,
+        "shallowBytes": 12
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "baseline-mounted-0.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 49612
+      },
+      "_GraphicsContext2": {
+        "count": 200,
+        "shallowBytes": 16800
+      },
+      "GpuGraphicsContext": {
+        "count": 200,
+        "shallowBytes": 5600
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "baseline-mounted-4.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 49612
+      },
+      "_GraphicsContext2": {
+        "count": 200,
+        "shallowBytes": 16800
+      },
+      "GpuGraphicsContext": {
+        "count": 200,
+        "shallowBytes": 5600
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "baseline-mounted-unmounted.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 49612
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "baseline-nested-0.heapsnapshot.gz",
+    "objects": {
+      "_GraphicsContext2": {
+        "count": 200,
+        "shallowBytes": 16800
+      },
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 49612
+      },
+      "GpuGraphicsContext": {
+        "count": 200,
+        "shallowBytes": 5600
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "baseline-nested-4.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 16201,
+        "shallowBytes": 4017612
+      },
+      "GpuGraphicsContext": {
+        "count": 16200,
+        "shallowBytes": 453600
+      },
+      "_GraphicsContext2": {
+        "count": 16200,
+        "shallowBytes": 1360800
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "baseline-nested-shared-0.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 48812
+      },
+      "_GraphicsContext2": {
+        "count": 1,
+        "shallowBytes": 116
+      },
+      "GpuGraphicsContext": {
+        "count": 1,
+        "shallowBytes": 52
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "baseline-nested-shared-4.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 16201,
+        "shallowBytes": 3952812
+      },
+      "_GraphicsContext2": {
+        "count": 1,
+        "shallowBytes": 116
+      },
+      "GpuGraphicsContext": {
+        "count": 1,
+        "shallowBytes": 52
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "baseline-nested-shared-unmounted.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 16201,
+        "shallowBytes": 3952812
+      },
+      "_GraphicsContext2": {
+        "count": 1,
+        "shallowBytes": 116
+      },
+      "GpuGraphicsContext": {
+        "count": 1,
+        "shallowBytes": 52
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "baseline-nested-unmounted.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 16201,
+        "shallowBytes": 4017612
+      },
+      "GpuGraphicsContext": {
+        "count": 16200,
+        "shallowBytes": 453600
+      },
+      "_GraphicsContext2": {
+        "count": 16200,
+        "shallowBytes": 1360800
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "clear-cycles-0.heapsnapshot.gz",
+    "objects": {
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "_GraphicsContext2": {
+        "count": 200,
+        "shallowBytes": 16800
+      },
+      "GpuGraphicsContext": {
+        "count": 200,
+        "shallowBytes": 5600
+      },
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 49612
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "clear-cycles-4.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 49612
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "_GraphicsContext2": {
+        "count": 200,
+        "shallowBytes": 16800
+      },
+      "GpuGraphicsContext": {
+        "count": 200,
+        "shallowBytes": 5600
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "clear-cycles-unmounted.heapsnapshot.gz",
+    "objects": {
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "_Graphics": {
+        "count": 1,
+        "shallowBytes": 12
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "clear-mounted-0.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 49612
+      },
+      "_GraphicsContext2": {
+        "count": 200,
+        "shallowBytes": 16800
+      },
+      "GpuGraphicsContext": {
+        "count": 200,
+        "shallowBytes": 5600
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "clear-mounted-4.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 49612
+      },
+      "_GraphicsContext2": {
+        "count": 200,
+        "shallowBytes": 16800
+      },
+      "GpuGraphicsContext": {
+        "count": 200,
+        "shallowBytes": 5600
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "clear-mounted-unmounted.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 1,
+        "shallowBytes": 12
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "clear-nested-0.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 49612
+      },
+      "_GraphicsContext2": {
+        "count": 200,
+        "shallowBytes": 16800
+      },
+      "GpuGraphicsContext": {
+        "count": 200,
+        "shallowBytes": 5600
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "clear-nested-4.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 16201,
+        "shallowBytes": 4017612
+      },
+      "GpuGraphicsContext": {
+        "count": 16200,
+        "shallowBytes": 453600
+      },
+      "_GraphicsContext2": {
+        "count": 16200,
+        "shallowBytes": 1360800
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "clear-nested-shared-0.heapsnapshot.gz",
+    "objects": {
+      "_GraphicsContext2": {
+        "count": 1,
+        "shallowBytes": 116
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 48812
+      },
+      "GpuGraphicsContext": {
+        "count": 1,
+        "shallowBytes": 52
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "clear-nested-shared-4.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 16201,
+        "shallowBytes": 3952812
+      },
+      "_GraphicsContext2": {
+        "count": 1,
+        "shallowBytes": 116
+      },
+      "GpuGraphicsContext": {
+        "count": 1,
+        "shallowBytes": 52
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "clear-nested-shared-unmounted.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 16201,
+        "shallowBytes": 3952812
+      },
+      "_GraphicsContext2": {
+        "count": 1,
+        "shallowBytes": 116
+      },
+      "GpuGraphicsContext": {
+        "count": 1,
+        "shallowBytes": 52
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "clear-nested-unmounted.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 16201,
+        "shallowBytes": 4017612
+      },
+      "GpuGraphicsContext": {
+        "count": 16200,
+        "shallowBytes": 453600
+      },
+      "_GraphicsContext2": {
+        "count": 16200,
+        "shallowBytes": 1360800
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "fixed-cycles-0.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 49612
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "_GraphicsContext2": {
+        "count": 200,
+        "shallowBytes": 16800
+      },
+      "GpuGraphicsContext": {
+        "count": 200,
+        "shallowBytes": 5600
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "fixed-cycles-4.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 49612
+      },
+      "GpuGraphicsContext": {
+        "count": 200,
+        "shallowBytes": 5600
+      },
+      "_GraphicsContext2": {
+        "count": 200,
+        "shallowBytes": 16800
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "fixed-cycles-unmounted.heapsnapshot.gz",
+    "objects": {
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "_Graphics": {
+        "count": 1,
+        "shallowBytes": 12
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "fixed-mounted-0.heapsnapshot.gz",
+    "objects": {
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "_GraphicsContext2": {
+        "count": 200,
+        "shallowBytes": 16800
+      },
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 49612
+      },
+      "GpuGraphicsContext": {
+        "count": 200,
+        "shallowBytes": 5600
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "fixed-mounted-4.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 49612
+      },
+      "_GraphicsContext2": {
+        "count": 200,
+        "shallowBytes": 16800
+      },
+      "GpuGraphicsContext": {
+        "count": 200,
+        "shallowBytes": 5600
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "fixed-mounted-unmounted.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 49612
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "fixed-nested-0.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 49612
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "_GraphicsContext2": {
+        "count": 200,
+        "shallowBytes": 16800
+      },
+      "GpuGraphicsContext": {
+        "count": 200,
+        "shallowBytes": 5600
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "fixed-nested-4.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 49612
+      },
+      "_GraphicsContext2": {
+        "count": 200,
+        "shallowBytes": 16800
+      },
+      "GpuGraphicsContext": {
+        "count": 200,
+        "shallowBytes": 5600
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "fixed-nested-shared-0.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 201,
+        "shallowBytes": 48812
+      },
+      "_GraphicsContext2": {
+        "count": 1,
+        "shallowBytes": 116
+      },
+      "GpuGraphicsContext": {
+        "count": 1,
+        "shallowBytes": 52
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "fixed-nested-shared-4.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 16201,
+        "shallowBytes": 3952812
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "_GraphicsContext2": {
+        "count": 1,
+        "shallowBytes": 116
+      },
+      "GpuGraphicsContext": {
+        "count": 1,
+        "shallowBytes": 52
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "fixed-nested-shared-unmounted.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 16201,
+        "shallowBytes": 3952812
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "_GraphicsContext2": {
+        "count": 1,
+        "shallowBytes": 116
+      },
+      "GpuGraphicsContext": {
+        "count": 1,
+        "shallowBytes": 52
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  },
+  {
+    "snapshot": "fixed-nested-unmounted.heapsnapshot.gz",
+    "objects": {
+      "_Graphics": {
+        "count": 1,
+        "shallowBytes": 12
+      },
+      "WebGLRenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      },
+      "WebGL2RenderingContext": {
+        "count": 1,
+        "shallowBytes": 16
+      }
+    }
+  }
+]

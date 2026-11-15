@@ -1,0 +1,2069 @@
+[
+  {
+    "metadata": {
+      "version": "8.17.1",
+      "variant": "baseline",
+      "scenario": "mounted",
+      "count": 200,
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (Intel)",
+      "renderer": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x00009A49) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "browser": "155.0.8059.80",
+      "rounds": 20,
+      "batches": 4
+    },
+    "samples": [
+      {
+        "batch": 0,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 7538460,
+        "totalSize": 8749056,
+        "embedderHeapUsedSize": 483184,
+        "backingStorageSize": 5816173
+      },
+      {
+        "batch": 1,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 4200,
+        "retainedInstructions": 4200,
+        "geometryNumbers": 92400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 12627680,
+        "totalSize": 13467648,
+        "embedderHeapUsedSize": 490784,
+        "backingStorageSize": 6463653
+      },
+      {
+        "batch": 2,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 8200,
+        "retainedInstructions": 8200,
+        "geometryNumbers": 180400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 16444148,
+        "totalSize": 17137664,
+        "embedderHeapUsedSize": 490320,
+        "backingStorageSize": 7146405
+      },
+      {
+        "batch": 3,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 12200,
+        "retainedInstructions": 12200,
+        "geometryNumbers": 268400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 21004936,
+        "totalSize": 21594112,
+        "embedderHeapUsedSize": 615720,
+        "backingStorageSize": 9250723
+      },
+      {
+        "batch": 4,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 16200,
+        "retainedInstructions": 16200,
+        "geometryNumbers": 356400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 24191880,
+        "totalSize": 25264128,
+        "embedderHeapUsedSize": 610720,
+        "backingStorageSize": 9341123
+      },
+      {
+        "batch": "unmounted",
+        "createdContexts": 200,
+        "liveObservedContexts": 0,
+        "graphics": 0,
+        "gpuHashSlots": 200,
+        "gpuContexts": 0,
+        "instructions": 0,
+        "retainedInstructions": 0,
+        "geometryNumbers": 0,
+        "managedContexts": 0,
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 11096028,
+        "totalSize": 12156928,
+        "embedderHeapUsedSize": 585504,
+        "backingStorageSize": 9341123
+      }
+    ]
+  },
+  {
+    "metadata": {
+      "version": "8.17.1",
+      "variant": "baseline",
+      "scenario": "cycles",
+      "count": 200,
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (Intel)",
+      "renderer": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x00009A49) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "browser": "155.0.8059.80",
+      "rounds": 20,
+      "batches": 4
+    },
+    "samples": [
+      {
+        "batch": 0,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 7531176,
+        "totalSize": 8224768,
+        "embedderHeapUsedSize": 456760,
+        "backingStorageSize": 5816172
+      },
+      {
+        "batch": 1,
+        "createdContexts": 4200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 4200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 9219688,
+        "totalSize": 9535488,
+        "embedderHeapUsedSize": 503576,
+        "backingStorageSize": 5816160
+      },
+      {
+        "batch": 2,
+        "createdContexts": 8200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 8200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 9776300,
+        "totalSize": 10395648,
+        "embedderHeapUsedSize": 511896,
+        "backingStorageSize": 5816160
+      },
+      {
+        "batch": 3,
+        "createdContexts": 12200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 12200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 10243884,
+        "totalSize": 10657792,
+        "embedderHeapUsedSize": 512008,
+        "backingStorageSize": 5816160
+      },
+      {
+        "batch": 4,
+        "createdContexts": 16200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 16200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 10712368,
+        "totalSize": 11706368,
+        "embedderHeapUsedSize": 524312,
+        "backingStorageSize": 5816160
+      },
+      {
+        "batch": "unmounted",
+        "createdContexts": 16200,
+        "liveObservedContexts": 0,
+        "graphics": 0,
+        "gpuHashSlots": 16200,
+        "gpuContexts": 0,
+        "instructions": 0,
+        "retainedInstructions": 0,
+        "geometryNumbers": 0,
+        "managedContexts": 0,
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 9760676,
+        "totalSize": 10395648,
+        "embedderHeapUsedSize": 504248,
+        "backingStorageSize": 5816160
+      }
+    ]
+  },
+  {
+    "metadata": {
+      "version": "8.17.1",
+      "variant": "baseline",
+      "scenario": "nested",
+      "count": 200,
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (Intel)",
+      "renderer": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x00009A49) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "browser": "155.0.8059.80",
+      "rounds": 20,
+      "batches": 4
+    },
+    "samples": [
+      {
+        "batch": 0,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 7624448,
+        "totalSize": 8486912,
+        "embedderHeapUsedSize": 456608,
+        "backingStorageSize": 5816172
+      },
+      {
+        "batch": 1,
+        "createdContexts": 4200,
+        "liveObservedContexts": 4200,
+        "graphics": 200,
+        "gpuHashSlots": 4200,
+        "gpuContexts": 4200,
+        "instructions": 200,
+        "retainedInstructions": 4200,
+        "geometryNumbers": 92400,
+        "managedContexts": 4200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 22687248,
+        "totalSize": 23166976,
+        "embedderHeapUsedSize": 471896,
+        "backingStorageSize": 5816160
+      },
+      {
+        "batch": 2,
+        "createdContexts": 8200,
+        "liveObservedContexts": 8200,
+        "graphics": 200,
+        "gpuHashSlots": 8200,
+        "gpuContexts": 8200,
+        "instructions": 200,
+        "retainedInstructions": 8200,
+        "geometryNumbers": 180400,
+        "managedContexts": 8200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 35599060,
+        "totalSize": 37007360,
+        "embedderHeapUsedSize": 476264,
+        "backingStorageSize": 5816160
+      },
+      {
+        "batch": 3,
+        "createdContexts": 12200,
+        "liveObservedContexts": 12200,
+        "graphics": 200,
+        "gpuHashSlots": 12200,
+        "gpuContexts": 12200,
+        "instructions": 200,
+        "retainedInstructions": 12200,
+        "geometryNumbers": 268400,
+        "managedContexts": 12200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 49398880,
+        "totalSize": 51032064,
+        "embedderHeapUsedSize": 472040,
+        "backingStorageSize": 5816160
+      },
+      {
+        "batch": 4,
+        "createdContexts": 16200,
+        "liveObservedContexts": 16200,
+        "graphics": 200,
+        "gpuHashSlots": 16200,
+        "gpuContexts": 16200,
+        "instructions": 200,
+        "retainedInstructions": 16200,
+        "geometryNumbers": 356400,
+        "managedContexts": 16200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 61575976,
+        "totalSize": 65806336,
+        "embedderHeapUsedSize": 424944,
+        "backingStorageSize": 5816160
+      },
+      {
+        "batch": "unmounted",
+        "createdContexts": 16200,
+        "liveObservedContexts": 16200,
+        "graphics": 0,
+        "gpuHashSlots": 16200,
+        "gpuContexts": 16200,
+        "instructions": 0,
+        "retainedInstructions": 16200,
+        "geometryNumbers": 356400,
+        "managedContexts": 16200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 62430168,
+        "totalSize": 64663552,
+        "embedderHeapUsedSize": 423504,
+        "backingStorageSize": 5816160
+      }
+    ]
+  },
+  {
+    "metadata": {
+      "version": "8.17.1",
+      "variant": "baseline",
+      "scenario": "nested-shared",
+      "count": 200,
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (Intel)",
+      "renderer": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x00009A49) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "browser": "155.0.8059.80",
+      "rounds": 20,
+      "batches": 4
+    },
+    "samples": [
+      {
+        "batch": 0,
+        "createdContexts": 1,
+        "liveObservedContexts": 1,
+        "graphics": 200,
+        "gpuHashSlots": 1,
+        "gpuContexts": 1,
+        "instructions": 1,
+        "retainedInstructions": 1,
+        "geometryNumbers": 22,
+        "sharedDestroyed": false,
+        "managedContexts": 1,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 7149160,
+        "totalSize": 7962624,
+        "embedderHeapUsedSize": 457360,
+        "backingStorageSize": 5816178
+      },
+      {
+        "batch": 1,
+        "createdContexts": 1,
+        "liveObservedContexts": 1,
+        "graphics": 200,
+        "gpuHashSlots": 1,
+        "gpuContexts": 1,
+        "instructions": 1,
+        "retainedInstructions": 1,
+        "geometryNumbers": 22,
+        "sharedDestroyed": false,
+        "managedContexts": 1,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 12884096,
+        "totalSize": 13729792,
+        "embedderHeapUsedSize": 475480,
+        "backingStorageSize": 5816166
+      },
+      {
+        "batch": 2,
+        "createdContexts": 1,
+        "liveObservedContexts": 1,
+        "graphics": 200,
+        "gpuHashSlots": 1,
+        "gpuContexts": 1,
+        "instructions": 1,
+        "retainedInstructions": 1,
+        "geometryNumbers": 22,
+        "sharedDestroyed": false,
+        "managedContexts": 1,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 17609348,
+        "totalSize": 18186240,
+        "embedderHeapUsedSize": 478800,
+        "backingStorageSize": 5816166
+      },
+      {
+        "batch": 3,
+        "createdContexts": 1,
+        "liveObservedContexts": 1,
+        "graphics": 200,
+        "gpuHashSlots": 1,
+        "gpuContexts": 1,
+        "instructions": 1,
+        "retainedInstructions": 1,
+        "geometryNumbers": 22,
+        "sharedDestroyed": false,
+        "managedContexts": 1,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 22329480,
+        "totalSize": 22904832,
+        "embedderHeapUsedSize": 604512,
+        "backingStorageSize": 5816166
+      },
+      {
+        "batch": 4,
+        "createdContexts": 1,
+        "liveObservedContexts": 1,
+        "graphics": 200,
+        "gpuHashSlots": 1,
+        "gpuContexts": 1,
+        "instructions": 1,
+        "retainedInstructions": 1,
+        "geometryNumbers": 22,
+        "sharedDestroyed": false,
+        "managedContexts": 1,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 27094360,
+        "totalSize": 28147712,
+        "embedderHeapUsedSize": 633920,
+        "backingStorageSize": 5816166
+      },
+      {
+        "batch": "unmounted",
+        "createdContexts": 1,
+        "liveObservedContexts": 1,
+        "graphics": 0,
+        "gpuHashSlots": 1,
+        "gpuContexts": 1,
+        "instructions": 0,
+        "retainedInstructions": 1,
+        "geometryNumbers": 22,
+        "sharedDestroyed": false,
+        "managedContexts": 1,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 26931244,
+        "totalSize": 27885568,
+        "embedderHeapUsedSize": 601160,
+        "backingStorageSize": 5816191
+      }
+    ]
+  },
+  {
+    "metadata": {
+      "version": "8.17.1",
+      "variant": "clear",
+      "scenario": "mounted",
+      "count": 200,
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (Intel)",
+      "renderer": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x00009A49) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "browser": "155.0.8059.80",
+      "rounds": 20,
+      "batches": 4
+    },
+    "samples": [
+      {
+        "batch": 0,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 7570224,
+        "totalSize": 8749056,
+        "embedderHeapUsedSize": 526208,
+        "backingStorageSize": 5816196
+      },
+      {
+        "batch": 1,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 8751048,
+        "totalSize": 9535488,
+        "embedderHeapUsedSize": 526960,
+        "backingStorageSize": 5816196
+      },
+      {
+        "batch": 2,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 8769988,
+        "totalSize": 9535488,
+        "embedderHeapUsedSize": 514088,
+        "backingStorageSize": 5816196
+      },
+      {
+        "batch": 3,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 8820416,
+        "totalSize": 9535488,
+        "embedderHeapUsedSize": 544624,
+        "backingStorageSize": 5816196
+      },
+      {
+        "batch": 4,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 8842724,
+        "totalSize": 9535488,
+        "embedderHeapUsedSize": 520800,
+        "backingStorageSize": 5816196
+      },
+      {
+        "batch": "unmounted",
+        "createdContexts": 200,
+        "liveObservedContexts": 0,
+        "graphics": 0,
+        "gpuHashSlots": 200,
+        "gpuContexts": 0,
+        "instructions": 0,
+        "retainedInstructions": 0,
+        "geometryNumbers": 0,
+        "managedContexts": 0,
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 7922004,
+        "totalSize": 8749056,
+        "embedderHeapUsedSize": 491688,
+        "backingStorageSize": 5816196
+      }
+    ]
+  },
+  {
+    "metadata": {
+      "version": "8.17.1",
+      "variant": "clear",
+      "scenario": "cycles",
+      "count": 200,
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (Intel)",
+      "renderer": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x00009A49) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "browser": "155.0.8059.80",
+      "rounds": 20,
+      "batches": 4
+    },
+    "samples": [
+      {
+        "batch": 0,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 7540676,
+        "totalSize": 8749056,
+        "embedderHeapUsedSize": 456736,
+        "backingStorageSize": 5816170
+      },
+      {
+        "batch": 1,
+        "createdContexts": 4200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 4200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 9226668,
+        "totalSize": 9797632,
+        "embedderHeapUsedSize": 496264,
+        "backingStorageSize": 5816158
+      },
+      {
+        "batch": 2,
+        "createdContexts": 8200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 8200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 9784076,
+        "totalSize": 10395648,
+        "embedderHeapUsedSize": 514264,
+        "backingStorageSize": 5816158
+      },
+      {
+        "batch": 3,
+        "createdContexts": 12200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 12200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 10247284,
+        "totalSize": 10657792,
+        "embedderHeapUsedSize": 555544,
+        "backingStorageSize": 5816158
+      },
+      {
+        "batch": 4,
+        "createdContexts": 16200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 16200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 10715560,
+        "totalSize": 11706368,
+        "embedderHeapUsedSize": 529712,
+        "backingStorageSize": 5816158
+      },
+      {
+        "batch": "unmounted",
+        "createdContexts": 16200,
+        "liveObservedContexts": 0,
+        "graphics": 0,
+        "gpuHashSlots": 16200,
+        "gpuContexts": 0,
+        "instructions": 0,
+        "retainedInstructions": 0,
+        "geometryNumbers": 0,
+        "managedContexts": 0,
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 9760856,
+        "totalSize": 10395648,
+        "embedderHeapUsedSize": 566528,
+        "backingStorageSize": 5816158
+      }
+    ]
+  },
+  {
+    "metadata": {
+      "version": "8.17.1",
+      "variant": "clear",
+      "scenario": "nested",
+      "count": 200,
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (Intel)",
+      "renderer": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x00009A49) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "browser": "155.0.8059.80",
+      "rounds": 20,
+      "batches": 4
+    },
+    "samples": [
+      {
+        "batch": 0,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 7626408,
+        "totalSize": 9011200,
+        "embedderHeapUsedSize": 456776,
+        "backingStorageSize": 5816169
+      },
+      {
+        "batch": 1,
+        "createdContexts": 4200,
+        "liveObservedContexts": 4200,
+        "graphics": 200,
+        "gpuHashSlots": 4200,
+        "gpuContexts": 4200,
+        "instructions": 200,
+        "retainedInstructions": 4200,
+        "geometryNumbers": 92400,
+        "managedContexts": 4200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 22688320,
+        "totalSize": 23166976,
+        "embedderHeapUsedSize": 463496,
+        "backingStorageSize": 5816157
+      },
+      {
+        "batch": 2,
+        "createdContexts": 8200,
+        "liveObservedContexts": 8200,
+        "graphics": 200,
+        "gpuHashSlots": 8200,
+        "gpuContexts": 8200,
+        "instructions": 200,
+        "retainedInstructions": 8200,
+        "geometryNumbers": 180400,
+        "managedContexts": 8200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 35571192,
+        "totalSize": 37007360,
+        "embedderHeapUsedSize": 470320,
+        "backingStorageSize": 5816157
+      },
+      {
+        "batch": 3,
+        "createdContexts": 12200,
+        "liveObservedContexts": 12200,
+        "graphics": 200,
+        "gpuHashSlots": 12200,
+        "gpuContexts": 12200,
+        "instructions": 200,
+        "retainedInstructions": 12200,
+        "geometryNumbers": 268400,
+        "managedContexts": 12200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 49400468,
+        "totalSize": 51294208,
+        "embedderHeapUsedSize": 422320,
+        "backingStorageSize": 5816157
+      },
+      {
+        "batch": 4,
+        "createdContexts": 16200,
+        "liveObservedContexts": 16200,
+        "graphics": 200,
+        "gpuHashSlots": 16200,
+        "gpuContexts": 16200,
+        "instructions": 200,
+        "retainedInstructions": 16200,
+        "geometryNumbers": 356400,
+        "managedContexts": 16200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 61545164,
+        "totalSize": 66068480,
+        "embedderHeapUsedSize": 422920,
+        "backingStorageSize": 5816157
+      },
+      {
+        "batch": "unmounted",
+        "createdContexts": 16200,
+        "liveObservedContexts": 16200,
+        "graphics": 0,
+        "gpuHashSlots": 16200,
+        "gpuContexts": 16200,
+        "instructions": 0,
+        "retainedInstructions": 16200,
+        "geometryNumbers": 356400,
+        "managedContexts": 16200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 62431360,
+        "totalSize": 64925696,
+        "embedderHeapUsedSize": 415400,
+        "backingStorageSize": 5816157
+      }
+    ]
+  },
+  {
+    "metadata": {
+      "version": "8.17.1",
+      "variant": "clear",
+      "scenario": "nested-shared",
+      "count": 200,
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (Intel)",
+      "renderer": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x00009A49) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "browser": "155.0.8059.80",
+      "rounds": 20,
+      "batches": 4
+    },
+    "samples": [
+      {
+        "batch": 0,
+        "createdContexts": 1,
+        "liveObservedContexts": 1,
+        "graphics": 200,
+        "gpuHashSlots": 1,
+        "gpuContexts": 1,
+        "instructions": 1,
+        "retainedInstructions": 1,
+        "geometryNumbers": 22,
+        "sharedDestroyed": false,
+        "managedContexts": 1,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 7148556,
+        "totalSize": 8224768,
+        "embedderHeapUsedSize": 457144,
+        "backingStorageSize": 5816176
+      },
+      {
+        "batch": 1,
+        "createdContexts": 1,
+        "liveObservedContexts": 1,
+        "graphics": 200,
+        "gpuHashSlots": 1,
+        "gpuContexts": 1,
+        "instructions": 1,
+        "retainedInstructions": 1,
+        "geometryNumbers": 22,
+        "sharedDestroyed": false,
+        "managedContexts": 1,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 12886112,
+        "totalSize": 13729792,
+        "embedderHeapUsedSize": 469112,
+        "backingStorageSize": 5816164
+      },
+      {
+        "batch": 2,
+        "createdContexts": 1,
+        "liveObservedContexts": 1,
+        "graphics": 200,
+        "gpuHashSlots": 1,
+        "gpuContexts": 1,
+        "instructions": 1,
+        "retainedInstructions": 1,
+        "geometryNumbers": 22,
+        "sharedDestroyed": false,
+        "managedContexts": 1,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 17613308,
+        "totalSize": 18448384,
+        "embedderHeapUsedSize": 493576,
+        "backingStorageSize": 5816164
+      },
+      {
+        "batch": 3,
+        "createdContexts": 1,
+        "liveObservedContexts": 1,
+        "graphics": 200,
+        "gpuHashSlots": 1,
+        "gpuContexts": 1,
+        "instructions": 1,
+        "retainedInstructions": 1,
+        "geometryNumbers": 22,
+        "sharedDestroyed": false,
+        "managedContexts": 1,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 22332148,
+        "totalSize": 22904832,
+        "embedderHeapUsedSize": 528880,
+        "backingStorageSize": 5816164
+      },
+      {
+        "batch": 4,
+        "createdContexts": 1,
+        "liveObservedContexts": 1,
+        "graphics": 200,
+        "gpuHashSlots": 1,
+        "gpuContexts": 1,
+        "instructions": 1,
+        "retainedInstructions": 1,
+        "geometryNumbers": 22,
+        "sharedDestroyed": false,
+        "managedContexts": 1,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 27096400,
+        "totalSize": 28147712,
+        "embedderHeapUsedSize": 510904,
+        "backingStorageSize": 5816164
+      },
+      {
+        "batch": "unmounted",
+        "createdContexts": 1,
+        "liveObservedContexts": 1,
+        "graphics": 0,
+        "gpuHashSlots": 1,
+        "gpuContexts": 1,
+        "instructions": 0,
+        "retainedInstructions": 1,
+        "geometryNumbers": 22,
+        "sharedDestroyed": false,
+        "managedContexts": 1,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 26911048,
+        "totalSize": 27885568,
+        "embedderHeapUsedSize": 492128,
+        "backingStorageSize": 5816164
+      }
+    ]
+  },
+  {
+    "metadata": {
+      "version": "8.17.1",
+      "variant": "fixed",
+      "scenario": "mounted",
+      "count": 200,
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (Intel)",
+      "renderer": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x00009A49) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "browser": "155.0.8059.80",
+      "rounds": 20,
+      "batches": 4
+    },
+    "samples": [
+      {
+        "batch": 0,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 7538444,
+        "totalSize": 8486912,
+        "embedderHeapUsedSize": 456536,
+        "backingStorageSize": 5816170
+      },
+      {
+        "batch": 1,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 4200,
+        "retainedInstructions": 4200,
+        "geometryNumbers": 92400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 12623596,
+        "totalSize": 13467648,
+        "embedderHeapUsedSize": 479168,
+        "backingStorageSize": 6463650
+      },
+      {
+        "batch": 2,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 8200,
+        "retainedInstructions": 8200,
+        "geometryNumbers": 180400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 16446012,
+        "totalSize": 17137664,
+        "embedderHeapUsedSize": 485376,
+        "backingStorageSize": 7146402
+      },
+      {
+        "batch": 3,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 12200,
+        "retainedInstructions": 12200,
+        "geometryNumbers": 268400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 21006240,
+        "totalSize": 22118400,
+        "embedderHeapUsedSize": 610744,
+        "backingStorageSize": 9250720
+      },
+      {
+        "batch": 4,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 16200,
+        "retainedInstructions": 16200,
+        "geometryNumbers": 356400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 24195024,
+        "totalSize": 25264128,
+        "embedderHeapUsedSize": 550280,
+        "backingStorageSize": 9341120
+      },
+      {
+        "batch": "unmounted",
+        "createdContexts": 200,
+        "liveObservedContexts": 0,
+        "graphics": 0,
+        "gpuHashSlots": 200,
+        "gpuContexts": 0,
+        "instructions": 0,
+        "retainedInstructions": 0,
+        "geometryNumbers": 0,
+        "managedContexts": 0,
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 11104276,
+        "totalSize": 11894784,
+        "embedderHeapUsedSize": 545992,
+        "backingStorageSize": 9341120
+      }
+    ]
+  },
+  {
+    "metadata": {
+      "version": "8.17.1",
+      "variant": "fixed",
+      "scenario": "cycles",
+      "count": 200,
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (Intel)",
+      "renderer": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x00009A49) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "browser": "155.0.8059.80",
+      "rounds": 20,
+      "batches": 4
+    },
+    "samples": [
+      {
+        "batch": 0,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 7538204,
+        "totalSize": 8749056,
+        "embedderHeapUsedSize": 456688,
+        "backingStorageSize": 5816169
+      },
+      {
+        "batch": 1,
+        "createdContexts": 4200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 4200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 9221260,
+        "totalSize": 9535488,
+        "embedderHeapUsedSize": 515480,
+        "backingStorageSize": 5816157
+      },
+      {
+        "batch": 2,
+        "createdContexts": 8200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 8200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 9773256,
+        "totalSize": 10395648,
+        "embedderHeapUsedSize": 731312,
+        "backingStorageSize": 5816157
+      },
+      {
+        "batch": 3,
+        "createdContexts": 12200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 12200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 10242204,
+        "totalSize": 10657792,
+        "embedderHeapUsedSize": 576608,
+        "backingStorageSize": 5816157
+      },
+      {
+        "batch": 4,
+        "createdContexts": 16200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 16200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 10712616,
+        "totalSize": 11444224,
+        "embedderHeapUsedSize": 586488,
+        "backingStorageSize": 5816157
+      },
+      {
+        "batch": "unmounted",
+        "createdContexts": 16200,
+        "liveObservedContexts": 0,
+        "graphics": 0,
+        "gpuHashSlots": 16200,
+        "gpuContexts": 0,
+        "instructions": 0,
+        "retainedInstructions": 0,
+        "geometryNumbers": 0,
+        "managedContexts": 0,
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 9764616,
+        "totalSize": 10395648,
+        "embedderHeapUsedSize": 532376,
+        "backingStorageSize": 5816157
+      }
+    ]
+  },
+  {
+    "metadata": {
+      "version": "8.17.1",
+      "variant": "fixed",
+      "scenario": "nested",
+      "count": 200,
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (Intel)",
+      "renderer": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x00009A49) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "browser": "155.0.8059.80",
+      "rounds": 20,
+      "batches": 4
+    },
+    "samples": [
+      {
+        "batch": 0,
+        "createdContexts": 200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 7624380,
+        "totalSize": 8486912,
+        "embedderHeapUsedSize": 456696,
+        "backingStorageSize": 5816170
+      },
+      {
+        "batch": 1,
+        "createdContexts": 4200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 4200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 9275612,
+        "totalSize": 9797632,
+        "embedderHeapUsedSize": 625720,
+        "backingStorageSize": 5816158
+      },
+      {
+        "batch": 2,
+        "createdContexts": 8200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 8200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 9826020,
+        "totalSize": 10657792,
+        "embedderHeapUsedSize": 577168,
+        "backingStorageSize": 5816158
+      },
+      {
+        "batch": 3,
+        "createdContexts": 12200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 12200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 10284928,
+        "totalSize": 11444224,
+        "embedderHeapUsedSize": 646744,
+        "backingStorageSize": 5816158
+      },
+      {
+        "batch": 4,
+        "createdContexts": 16200,
+        "liveObservedContexts": 200,
+        "graphics": 200,
+        "gpuHashSlots": 16200,
+        "gpuContexts": 200,
+        "instructions": 200,
+        "retainedInstructions": 200,
+        "geometryNumbers": 4400,
+        "managedContexts": 200,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 10774972,
+        "totalSize": 11706368,
+        "embedderHeapUsedSize": 635256,
+        "backingStorageSize": 5816158
+      },
+      {
+        "batch": "unmounted",
+        "createdContexts": 16200,
+        "liveObservedContexts": 0,
+        "graphics": 0,
+        "gpuHashSlots": 16200,
+        "gpuContexts": 0,
+        "instructions": 0,
+        "retainedInstructions": 0,
+        "geometryNumbers": 0,
+        "managedContexts": 0,
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 9727404,
+        "totalSize": 10395648,
+        "embedderHeapUsedSize": 609920,
+        "backingStorageSize": 5816158
+      }
+    ]
+  },
+  {
+    "metadata": {
+      "version": "8.17.1",
+      "variant": "fixed",
+      "scenario": "nested-shared",
+      "count": 200,
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (Intel)",
+      "renderer": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x00009A49) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "browser": "155.0.8059.80",
+      "rounds": 20,
+      "batches": 4
+    },
+    "samples": [
+      {
+        "batch": 0,
+        "createdContexts": 1,
+        "liveObservedContexts": 1,
+        "graphics": 200,
+        "gpuHashSlots": 1,
+        "gpuContexts": 1,
+        "instructions": 1,
+        "retainedInstructions": 1,
+        "geometryNumbers": 22,
+        "sharedDestroyed": false,
+        "managedContexts": 1,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 7147920,
+        "totalSize": 7962624,
+        "embedderHeapUsedSize": 456720,
+        "backingStorageSize": 5816177
+      },
+      {
+        "batch": 1,
+        "createdContexts": 1,
+        "liveObservedContexts": 1,
+        "graphics": 200,
+        "gpuHashSlots": 1,
+        "gpuContexts": 1,
+        "instructions": 1,
+        "retainedInstructions": 1,
+        "geometryNumbers": 22,
+        "sharedDestroyed": false,
+        "managedContexts": 1,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 11507640,
+        "totalSize": 12419072,
+        "embedderHeapUsedSize": 499984,
+        "backingStorageSize": 5816165
+      },
+      {
+        "batch": 2,
+        "createdContexts": 1,
+        "liveObservedContexts": 1,
+        "graphics": 200,
+        "gpuHashSlots": 1,
+        "gpuContexts": 1,
+        "instructions": 1,
+        "retainedInstructions": 1,
+        "geometryNumbers": 22,
+        "sharedDestroyed": false,
+        "managedContexts": 1,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 14820820,
+        "totalSize": 15564800,
+        "embedderHeapUsedSize": 476448,
+        "backingStorageSize": 5816165
+      },
+      {
+        "batch": 3,
+        "createdContexts": 1,
+        "liveObservedContexts": 1,
+        "graphics": 200,
+        "gpuHashSlots": 1,
+        "gpuContexts": 1,
+        "instructions": 1,
+        "retainedInstructions": 1,
+        "geometryNumbers": 22,
+        "sharedDestroyed": false,
+        "managedContexts": 1,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 18132876,
+        "totalSize": 18710528,
+        "embedderHeapUsedSize": 533960,
+        "backingStorageSize": 5816165
+      },
+      {
+        "batch": 4,
+        "createdContexts": 1,
+        "liveObservedContexts": 1,
+        "graphics": 200,
+        "gpuHashSlots": 1,
+        "gpuContexts": 1,
+        "instructions": 1,
+        "retainedInstructions": 1,
+        "geometryNumbers": 22,
+        "sharedDestroyed": false,
+        "managedContexts": 1,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 21500028,
+        "totalSize": 22380544,
+        "embedderHeapUsedSize": 543696,
+        "backingStorageSize": 5816165
+      },
+      {
+        "batch": "unmounted",
+        "createdContexts": 1,
+        "liveObservedContexts": 1,
+        "graphics": 0,
+        "gpuHashSlots": 1,
+        "gpuContexts": 1,
+        "instructions": 0,
+        "retainedInstructions": 1,
+        "geometryNumbers": 22,
+        "sharedDestroyed": false,
+        "managedContexts": 1,
+        "gpuKeys": [
+          "batches",
+          "geometryData",
+          "context",
+          "isBatchable",
+          "graphicsData"
+        ],
+        "systemKeys": [
+          "_renderer",
+          "_managedContexts"
+        ],
+        "usedSize": 21139360,
+        "totalSize": 21856256,
+        "embedderHeapUsedSize": 521840,
+        "backingStorageSize": 5816165
+      }
+    ]
+  }
+]

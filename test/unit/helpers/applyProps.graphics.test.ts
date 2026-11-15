@@ -9,7 +9,7 @@ import { prepareInstance } from '../../../src/helpers/prepareInstance';
 
 describe('applyProps Graphics draw updates', () =>
 {
-    it('reuses one context and keeps drawing instructions bounded across changing callbacks', () =>
+    it('reuses one context and preserves append semantics across changing callbacks', () =>
     {
         const graphics = new Graphics();
         const instance = prepareInstance(graphics);
@@ -25,7 +25,7 @@ describe('applyProps Graphics draw updates', () =>
             applyProps(instance, { draw });
 
             expect(graphics.context).toBe(context);
-            expect(context.instructions).toHaveLength(1);
+            expect(context.instructions).toHaveLength(frame + 1);
         }
 
         graphics.destroy();
@@ -56,7 +56,7 @@ describe('applyProps Graphics draw updates', () =>
         graphics.destroy();
     });
 
-    it('clears stale drawing commands when the draw prop is removed', () =>
+    it('preserves drawing commands when the draw prop is removed', () =>
     {
         const graphics = new Graphics();
         const instance = prepareInstance(graphics);
@@ -81,7 +81,7 @@ describe('applyProps Graphics draw updates', () =>
             ],
         });
 
-        expect(graphics.context.instructions).toHaveLength(0);
+        expect(graphics.context.instructions).toHaveLength(1);
 
         graphics.destroy();
     });

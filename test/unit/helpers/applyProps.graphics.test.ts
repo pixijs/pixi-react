@@ -30,6 +30,30 @@ describe('applyProps Graphics draw updates', () =>
         graphics.destroy();
     });
 
+    it('preserves drawn geometry when unrelated props change', () =>
+    {
+        const graphics = prepareInstance(new Graphics());
+        let drawCount = 0;
+        const draw = (target: Graphics) =>
+        {
+            drawCount += 1;
+            target.rect(0, 0, 10, 10).fill(0xFF0000);
+        };
+
+        applyProps(graphics, { draw });
+
+        const context = graphics.context;
+
+        applyProps(graphics, { draw, x: 20 });
+
+        expect(drawCount).toBe(1);
+        expect(graphics.x).toBe(20);
+        expect(graphics.context).toBe(context);
+        expect(context.instructions).toHaveLength(1);
+
+        graphics.destroy();
+    });
+
     it('clears stale drawing commands when the draw prop is removed', () =>
     {
         const graphics = prepareInstance(new Graphics());

@@ -13,8 +13,11 @@ export function detach(
         {
             const filterIndex = parentInstance.__pixireact.filters.indexOf(childInstance);
 
-            parentInstance.__pixireact.filters.splice(filterIndex, 1);
-            parentInstance.filters = parentInstance.__pixireact.filters;
+            if (filterIndex !== -1)
+            {
+                parentInstance.__pixireact.filters.splice(filterIndex, 1);
+                parentInstance.filters = parentInstance.__pixireact.filters;
+            }
         }
 
         childInstance.__pixireact.parent = null;

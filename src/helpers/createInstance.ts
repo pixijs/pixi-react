@@ -32,6 +32,15 @@ export function createInstance(
 
     const pixiProps = gentleCloneProps(props, PixiReactIgnoredProps);
 
+    // Leave dashed props to `applyProps`: constructors copy them verbatim, so it would skip them as already set
+    Object.keys(pixiProps).forEach((key) =>
+    {
+        if (key.includes('-'))
+        {
+            delete pixiProps[key];
+        }
+    });
+
     // Clone event props
     Object.entries(props).forEach(([key, value]) =>
     {
@@ -48,8 +57,7 @@ export function createInstance(
         type: parsedType,
     });
 
-    // Set initial props
-    applyProps(instance, props);
+    applyProps(instance, props, { skipUnchanged: true });
 
     return instance;
 }

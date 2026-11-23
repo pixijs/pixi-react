@@ -17,9 +17,14 @@ import {
 import { reconciler } from '../../../src/core/reconciler';
 import { appendChild } from '../../../src/helpers/appendChild';
 import { applyProps } from '../../../src/helpers/applyProps';
+import { commitUpdate } from '../../../src/helpers/commitUpdate';
 import { createInstance } from '../../../src/helpers/createInstance';
 import { extend } from '../../../src/helpers/extend';
 import { hideInstance } from '../../../src/helpers/hideInstance';
+import {
+    type SceneExtension,
+    setSceneExtension,
+} from '../../../src/helpers/hostChildren';
 import { insertBefore } from '../../../src/helpers/insertBefore';
 import { prepareInstance } from '../../../src/helpers/prepareInstance';
 import { removeChild } from '../../../src/helpers/removeChild';
@@ -80,6 +85,13 @@ class RequiredNode extends Node
     }
 }
 
+/** A pixi.js Container whose JSX children go under a scene of Nodes, like a View3D. */
+class NodeView extends Container
+{
+    public scene = new Node();
+    public camera: Node | null = null;
+}
+
 /** Filters that construct quietly in jsdom, tagged with a name for assertions. */
 class FilterA extends Filter
 {
@@ -117,12 +129,15 @@ function createTestRoot()
 const container = (key: string) => createElement('pixiContainer', { key, label: key });
 const filterA = (key: string) => createElement('pixiFilterA', { key, n: key });
 const filterB = (key: string) => createElement('pixiFilterB', { key, n: key });
+const node = (key: string) => createElement('pixiNode', { key, 'position-x': key.charCodeAt(0) });
+const names = (parent: Node) => parent.children.map((child) => String.fromCharCode(child.position.x));
 
 describe('host children', () =>
 {
     afterEach(() =>
     {
         vi.restoreAllMocks();
+        setSceneExtension(null);
     });
 
     it('warns once, instead of dropping silently, when a child can\'t be placed', () =>
@@ -154,6 +169,36 @@ describe('host children', () =>
         expect(b.destroyed).toBe(true);
     });
 
+    it('keeps keyed nodes in React order', () =>
+    {
+        extend({ Node });
+
+        const { stage, render } = createTestRoot();
+        const parent = () => stage.children[0] as unknown as Node;
+
+        setSceneExtension({
+            childHost: (p) => (p instanceof NodeView ? p.scene : undefined),
+            childRemoving: () => undefined,
+            nodeCreated: () => undefined,
+            nodeChanged: () => undefined,
+            ownProps: () => undefined,
+            applyOwnProps: () => undefined,
+        });
+        extend({ NodeView });
+
+        render(createElement('pixiNodeView', null, [node('a'), node('b'), node('c')]));
+        const scene = (stage.children[0] as NodeView).scene;
+
+        expect(names(scene)).toEqual(['a', 'b', 'c']);
+
+        render(createElement('pixiNodeView', null, [node('c'), node('a'), node('b')]));
+        expect(names(scene)).toEqual(['c', 'a', 'b']);
+
+        render(createElement('pixiNodeView', null, [node('b'), node('d'), node('c')]));
+        expect(names(scene)).toEqual(['b', 'd', 'c']);
+        expect(parent()).toBeInstanceOf(NodeView);
+    });
+
     it('won\'t nest a pixi.js Container in another kind of node, or the other way round', () =>
     {
         const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
@@ -167,6 +212,63 @@ describe('host children', () =>
         expect(node3D.children).toHaveLength(0);
         expect(parent.children).toHaveLength(0);
         expect(warn).toHaveBeenCalledTimes(2);
+    });
+
+    it('sends children where the extension says, and tells it before they leave', () =>
+    {
+        const calls: string[] = [];
+        const extension: SceneExtension = {
+            childHost: (p) => (p instanceof NodeView ? p.scene : undefined),
+            childRemoving: (p, c) => calls.push(`removing ${(p as any).__pixireact.type} ${(c as any).__pixireact.type}`),
+            nodeCreated: () => undefined,
+            nodeChanged: () => undefined,
+            ownProps: () => undefined,
+            applyOwnProps: () => undefined,
+        };
+
+        setSceneExtension(extension);
+
+        const view = prepareInstance(new NodeView(), { type: 'view' }) as any;
+        const a = prepareInstance(new Node() as any, { type: 'a' }) as any;
+        const b = prepareInstance(new Node() as any, { type: 'b' }) as any;
+        const filter = prepareInstance(new FilterA() as any, { type: 'filter' }) as any;
+
+        appendChild(view, a);
+        insertBefore(view, b, a);
+        appendChild(view, b);
+        appendChild(view, filter);
+        removeChild(view, a);
+
+        expect(view.children).toHaveLength(0);
+        expect(view.scene.children).toEqual([b]);
+        expect(view.filters).toEqual([filter]);
+        expect(calls).toEqual(['removing view a']);
+    });
+
+    it('hands the extension its own props instead of applying them', () =>
+    {
+        const applied: Record<string, unknown>[] = [];
+
+        setSceneExtension({
+            childHost: () => undefined,
+            childRemoving: () => undefined,
+            nodeCreated: () => undefined,
+            nodeChanged: () => undefined,
+            ownProps: (component) => (component === NodeView ? ['camera'] : undefined),
+            applyOwnProps: (_node, props) => applied.push(props),
+        });
+        extend({ NodeView });
+
+        const camera = new Node();
+        const view = createInstance('pixiNodeView' as any, { camera, 'camera-x': 1, alpha: 0.5 }, null as any) as any;
+
+        expect(view.camera).toBeNull();
+        expect(view.alpha).toEqual(0.5);
+
+        commitUpdate(view, 'pixiNodeView' as any, { camera, 'camera-x': 1, alpha: 0.5 }, { alpha: 0.25 });
+        expect(view.camera).toBeNull();
+        expect(view.alpha).toEqual(0.25);
+        expect(applied).toEqual([{ camera, 'camera-x': 1 }, { camera: undefined, 'camera-x': undefined }]);
     });
 
     it('moves a keyed filter to the end without duplicating it', () =>

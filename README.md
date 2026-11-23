@@ -205,6 +205,34 @@ const MyComponent = () => {
 
 The `extend` API will teach `@pixi/react` about your components, but TypeScript won't know about them nor their props. If you're using Typescript, check out our [docs for Typescript Users](#for-typescript-users).
 
+#### 3D
+
+`@pixi/react` supports [PixiJS 3D](https://github.com/pixijs/3d). Install `@pixi/3d`, import `@pixi/react/3d`, and use `extend`:
+
+```jsx
+import { Application, extend } from '@pixi/react'
+import '@pixi/react/3d'
+import { CubeGeometry, DirectionalLight, Material3D, Mesh3D, View3D } from '@pixi/3d'
+
+extend({ DirectionalLight, Mesh3D, View3D })
+
+const geometry = new CubeGeometry()
+const material = new Material3D({ baseColor: 0xdd4444 })
+
+const MyComponent = () => (
+  <Application resizeTo={window}>
+    <pixiView3D autoResize camera-position-z={4}>
+      <pixiDirectionalLight intensity={3} />
+      <pixiMesh3D geometry={geometry} material={material} rotation-y={0.5} />
+    </pixiView3D>
+  </Application>
+)
+```
+
+> [!NOTE]
+> `@pixi/react/3d` is ESM only, like `@pixi/3d`.
+
+
 ### Hooks
 
 #### `useApplication`

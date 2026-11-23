@@ -5,6 +5,21 @@ import {
 import { attach } from './attach';
 import { detach } from './detach';
 
+/** Internal hooks for scene graphs that aren't pixi.js Containers; only `@pixi/react/3d` sets them. */
+export interface SceneExtension
+{
+    /** Where `parent`'s children go, if not under `parent` itself (e.g. a View3D's root). */
+    childHost(parent: unknown): unknown;
+    nodeCreated(node: unknown): void;
+    childRemoving(parent: unknown, child: unknown): void;
+    /** After React hides, reveals or updates `node`. */
+    nodeChanged(node: unknown, props: readonly string[]): void;
+    /** Props the extension applies itself, with their dashed forms. */
+    ownProps(component: unknown): readonly string[] | undefined;
+    /** `props` holds the changed own props; a removed one is `undefined`. */
+    applyOwnProps(node: unknown, props: Record<string, unknown>): void;
+}
+
 interface SceneNode
 {
     parent: unknown;
@@ -13,6 +28,33 @@ interface SceneNode
     addChildAt(child: unknown, index: number): unknown;
     getChildIndex(child: unknown): number;
     removeChild(child: unknown): unknown;
+}
+
+let extension: SceneExtension | null = null;
+
+export function setSceneExtension(next: SceneExtension | null)
+{
+    extension = next;
+}
+
+export function getOwnProps(component: unknown)
+{
+    return extension?.ownProps(component);
+}
+
+export function applySceneOwnProps(node: unknown, props: Record<string, unknown>)
+{
+    extension?.applyOwnProps(node, props);
+}
+
+export function sceneNodeCreated(node: unknown)
+{
+    extension?.nodeCreated(node);
+}
+
+export function sceneNodeChanged(node: unknown, props: readonly string[])
+{
+    extension?.nodeChanged(node, props);
 }
 
 const FILTERS = 'filters';
@@ -46,10 +88,12 @@ function getPlacement(parent: any, child: any): Placement
         return parent instanceof Container ? FILTERS : null;
     }
 
-    // pixi.js nodes only nest in pixi.js nodes
-    if (isSceneNode(child) && isSceneNode(parent) && (child instanceof Container) === (parent instanceof Container))
+    const host = extension?.childHost(parent) ?? parent;
+
+    // pixi.js nodes nest in pixi.js nodes, 3D nodes in 3D nodes
+    if (isSceneNode(child) && isSceneNode(host) && (child instanceof Container) === (host instanceof Container))
     {
-        return parent;
+        return host;
     }
 
     return null;
@@ -62,7 +106,7 @@ function findPlacement(parent: any, child: any): Placement
     if (!placement)
     {
         const message = `@pixi/react: can't place <${describe(child)}> under <${describe(parent)}>, so it won't be rendered. `
-            + 'pixi.js nodes nest in pixi.js nodes.';
+            + 'pixi.js nodes nest in pixi.js nodes, and 3D nodes in a View3D or another 3D node (import \'@pixi/react/3d\' first).';
 
         if (!warned.has(message))
         {
@@ -136,12 +180,20 @@ function insert(parent: any, child: any, beforeChild: any, placement: Placement)
     else if (placement)
     {
         // Before pixi.js 8.20, moving a child with `addChildAt` registers its `onRender` twice
-        if (child.parent === placement)
+        if (child.parent === placement && child instanceof Container)
         {
             placement.removeChild(child);
         }
 
-        placement.addChildAt(child, placement.getChildIndex(beforeChild));
+        let index = placement.getChildIndex(beforeChild);
+
+        // 3D nodes move in place, so count from after the child is taken out
+        if (child.parent === placement && placement.getChildIndex(child) < index)
+        {
+            index--;
+        }
+
+        placement.addChildAt(child, index);
     }
 }
 
@@ -203,8 +255,14 @@ export function removeHostChild(parent: any, child: any)
     {
         detach(child);
     }
-    else if (placement && child.parent === placement)
+    else if (placement)
     {
-        placement.removeChild(child);
+        // Even if the app moved it: `destroy` takes it out of the scene anyway
+        extension?.childRemoving(parent, child);
+
+        if (child.parent === placement)
+        {
+            placement.removeChild(child);
+        }
     }
 }

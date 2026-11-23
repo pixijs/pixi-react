@@ -81,7 +81,7 @@ const targets = {
     },
 };
 
-export default ['lib', 'dist-dev', 'dist-prod'].map((target) =>
+const builds = ['lib', 'dist-dev', 'dist-prod'].map((target) =>
     ({
         input: 'src/index.ts',
         output: [
@@ -108,3 +108,23 @@ export default ['lib', 'dist-dev', 'dist-prod'].map((target) =>
         external: targets[target].external,
         treeshake: false
     }));
+
+// `@pixi/react/3d`: ESM only, like `@pixi/3d`. Its modules land beside the main entry's in `lib`,
+// so both entries share the same internal state.
+builds.push({
+    input: 'src/3d/index.ts',
+    output: {
+        dir: paths.library,
+        entryFileNames: '[name].mjs',
+        exports: 'named',
+        format: 'esm',
+        preserveModules: true,
+        preserveModulesRoot: paths.source,
+        sourcemap: true,
+    },
+    plugins: plugins(),
+    external: targets.lib.external,
+    treeshake: false,
+});
+
+export default builds;

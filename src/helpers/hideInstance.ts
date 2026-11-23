@@ -1,5 +1,6 @@
 import { Filter } from 'pixi.js';
 import { type HostConfig } from '../typedefs/HostConfig';
+import { sceneNodeChanged } from './hostChildren';
 
 export function hideInstance(
     instance: HostConfig['instance']
@@ -12,5 +13,6 @@ export function hideInstance(
     else if (typeof (instance as { visible?: unknown }).visible === 'boolean')
     {
         instance.visible = false;
+        sceneNodeChanged(instance, ['visible']);
     }
 }

@@ -1,4 +1,4 @@
-import { DefaultEventPriority } from 'react-reconciler/constants';
+import { DefaultEventPriority } from 'react-reconciler/constants.js';
 import { type Root } from './typedefs/Root';
 
 const store: {

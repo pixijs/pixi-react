@@ -1,6 +1,6 @@
 import { AlphaFilter, Container, Graphics, Sprite, Text, Texture } from 'pixi.js';
 import { describe, expect, it } from 'vitest';
-import { extend } from '../../../src';
+import { extend, type PixiReactElementProps } from '../../../src';
 
 extend({ Container, Graphics, Sprite, Text, Texture, AlphaFilter });
 
@@ -31,5 +31,24 @@ describe('PixiElements', () =>
 
         expect(elements.props.children[3].type).toEqual('pixiText');
         expect(elements.props.children[3].props.text).toEqual('Hello, World!');
+    });
+
+    it('types event handlers, including ones a generic wrapper forwards', () =>
+    {
+        function Button<T extends typeof Container>(props: PixiReactElementProps<T>)
+        {
+            return <pixiContainer onClick={props.onClick} onWheel={props.onWheel} />;
+        }
+
+        const element = (
+            <pixiContainer
+                onPointerDown={(event) => event.global.x}
+                onWheel={(event) => event.deltaY}
+            >
+                <Button onClick={() => undefined} />
+            </pixiContainer>
+        );
+
+        expect(element.props.onWheel).toBeTypeOf('function');
     });
 });

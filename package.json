@@ -25,11 +25,24 @@
         "types": "./types/index.d.ts",
         "default": "./lib/index.js"
       }
+    },
+    "./3d": {
+      "import": {
+        "types": "./types/3d/index.d.ts",
+        "default": "./lib/3d/index.mjs"
+      }
     }
   },
   "main": "lib/index.js",
   "module": "lib/index.mjs",
   "types": "types/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "3d": [
+        "types/3d/index.d.ts"
+      ]
+    }
+  },
   "files": [
     "lib",
     "dist",
@@ -72,6 +85,7 @@
     "react-reconciler": "0.31.0"
   },
   "devDependencies": {
+    "@pixi/3d": "0.1.0",
     "@pixi/extension-scripts": "^4.0.0",
     "@rollup/plugin-commonjs": "^25.0.8",
     "@rollup/plugin-json": "^6.1.0",
@@ -86,8 +100,8 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "husky": "^8.0.0",
     "jsdom": "^25.0.0",
-    "pixi.js": "8.2.6",
-    "playwright": "^1.45.3",
+    "pixi.js": "8.23.0",
+    "playwright": "^1.65.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "rollup": "^4.18.0",
@@ -99,8 +113,14 @@
     "vitest": "^2.0.0"
   },
   "peerDependencies": {
+    "@pixi/3d": "^0.1.0",
     "pixi.js": "^8.2.6",
     "react": ">=19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@pixi/3d": {
+      "optional": true
+    }
   },
   "overrides": {
     "rollup": "^4.18.0"

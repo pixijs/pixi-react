@@ -3,8 +3,8 @@ import {
     Container3D,
     View3D,
 } from '@pixi/3d';
-import { ReactToPixiEventPropNames } from '../constants/EventPropNames';
 import { applyProps } from '../helpers/applyProps';
+import { diffProps } from '../helpers/diffProps';
 import { setSceneExtension } from '../helpers/hostChildren';
 import { type PixiReactElementProps } from '../typedefs/PixiReactNode';
 
@@ -13,9 +13,12 @@ import type * as PIXI3D from '@pixi/3d';
 // The camera each view made for itself; `camera` props configure it
 const ownCameras = new WeakMap<View3D, Camera3D>();
 
-// Each view's `camera` props as last applied: only changes apply, and a replacement own camera gets them too
+// Each view's `camera` object and `camera-*` props, as declared
 const cameraObjects = new WeakMap<View3D, Record<string, unknown>>();
 const cameraDashedProps = new WeakMap<View3D, Record<string, unknown>>();
+
+// Both merged, as last applied: only changes apply, and a replacement own camera gets them too
+const cameraProps = new WeakMap<View3D, Record<string, unknown>>();
 
 const warned = new Set<string>();
 
@@ -105,22 +108,6 @@ function same(a: unknown, b: unknown)
         && keys.every((key) => (a as Record<string, unknown>)[key] === (b as Record<string, unknown>)[key]);
 }
 
-function setCameraProp(camera: Camera3D, prop: string, value: unknown)
-{
-    if (value !== undefined)
-    {
-        applyProps(camera as any, { [prop]: value });
-
-        return;
-    }
-
-    const isEvent = prop in ReactToPixiEventPropNames;
-
-    applyProps(camera as any, {
-        changes: [[prop, '__defaultremove', isEvent, !isEvent && prop.includes('-') ? prop.split('-') : []]],
-    });
-}
-
 // A view throws on render once its camera has left its scene or is hidden, so switch first
 function fallBack(view: View3D, leaving?: unknown)
 {
@@ -135,56 +122,66 @@ function fallBack(view: View3D, leaving?: unknown)
     if (!canUse(view, camera, leaving))
     {
         camera = new Camera3D();
-        applyProps(camera as any, { ...cameraObjects.get(view), ...cameraDashedProps.get(view) });
+        applyProps(camera as any, { ...cameraProps.get(view) });
         ownCameras.set(view, camera);
     }
 
     view.camera = camera;
 }
 
-function applyCameraProp(view: View3D, key: string, value: unknown)
+function declareCameraProp(view: View3D, key: string, value: unknown)
 {
-    const own = ownCameras.get(view)!;
-    const dashed = cameraDashedProps.get(view) ?? {};
-
     if (key !== 'camera')
     {
         const prop = key.slice('camera-'.length);
+        const { [prop]: _previous, ...rest } = cameraDashedProps.get(view) ?? {};
 
-        if (!same(dashed[prop], value))
-        {
-            const { [prop]: _previous, ...rest } = dashed;
-
-            cameraDashedProps.set(view, value === undefined ? rest : { ...rest, [prop]: value });
-            setCameraProp(own, prop, value);
-        }
-
-        return;
+        // Last, as changed props apply in the order given (`position-z` and `z` set the same value)
+        cameraDashedProps.set(view, value === undefined ? rest : { ...rest, [prop]: value });
     }
-
-    if (value instanceof Camera3D)
+    else if (value instanceof Camera3D)
     {
         warnOnce('@pixi/react: `camera` takes props for the view\'s own camera; to render with another camera, assign `view.camera`.');
-
-        return;
     }
-
-    const previous = cameraObjects.get(view) ?? {};
-    const next = value && typeof value === 'object' ? value as Record<string, unknown> : {};
-    const changed = [...new Set([...Object.keys(previous), ...Object.keys(next)])]
-        .filter((prop) => !same(previous[prop], next[prop]));
-
-    cameraObjects.set(view, next);
-    changed.forEach((prop) => setCameraProp(own, prop, next[prop]));
-
-    // A dashed prop wins over the object, as it does on any element
-    for (const [prop, dashedValue] of Object.entries(dashed))
+    else
     {
-        if (changed.some((changedProp) => prop === changedProp || prop.startsWith(`${changedProp}-`)))
+        cameraObjects.set(view, value && typeof value === 'object' ? value as Record<string, unknown> : {});
+    }
+}
+
+function mergeCameraProps(view: View3D)
+{
+    const dashed = cameraDashedProps.get(view) ?? {};
+    const object = Object.entries(cameraObjects.get(view) ?? {})
+        .filter(([prop, value]) => value !== undefined && !(prop in dashed));
+
+    return { ...Object.fromEntries(object), ...dashed };
+}
+
+function updateOwnCamera(view: View3D)
+{
+    const previous = { ...cameraProps.get(view) };
+    const next = mergeCameraProps(view);
+
+    cameraProps.set(view, next);
+
+    for (const prop of Object.keys(previous))
+    {
+        if (!(prop in next))
         {
-            setCameraProp(own, prop, dashedValue);
+            // Removing a prop uncovers the broader ones, so apply those again
+            Object.keys(next)
+                .filter((broader) => prop.startsWith(`${broader}-`))
+                .forEach((broader) => delete previous[broader]);
+        }
+        else if (same(previous[prop], next[prop]))
+        {
+            // `diffProps` compares by reference
+            previous[prop] = next[prop];
         }
     }
+
+    applyProps(ownCameras.get(view)! as any, diffProps(next, previous, true));
 }
 
 setSceneExtension({
@@ -234,7 +231,7 @@ setSceneExtension({
         {
             if (key.startsWith('camera'))
             {
-                applyCameraProp(node, key, value);
+                declareCameraProp(node, key, value);
             }
             else
             {
@@ -243,6 +240,8 @@ setSceneExtension({
                 warnOnce(`@pixi/react: <${type}> ignores the \`root\` prop; declare the scene as its children.`);
             }
         }
+
+        updateOwnCamera(node);
     },
 });
 

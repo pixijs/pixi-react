@@ -61,4 +61,30 @@ describe('createRoot', () =>
             expect(root.applicationState.rendererDestroyOptions).toEqual({ removeView: true });
         });
     });
+
+    it('creates roots for iframe-owned elements', () =>
+    {
+        const iframe = document.createElement('iframe');
+        document.body.appendChild(iframe);
+
+        const iframeDocument = iframe.contentDocument!;
+        const iframeCanvas = iframeDocument.createElement('canvas');
+        const iframeContainer = iframeDocument.createElement('div');
+
+        iframeDocument.body.appendChild(iframeCanvas);
+        iframeDocument.body.appendChild(iframeContainer);
+
+        const canvasRoot = createRoot(iframeCanvas as unknown as HTMLCanvasElement);
+        const containerRoot = createRoot(iframeContainer as unknown as HTMLElement);
+
+        const createdCanvas = iframeContainer.querySelector('canvas');
+
+        expect(canvasRoot.applicationState.app).toBeInstanceOf(Application);
+        expect(containerRoot.applicationState.app).toBeInstanceOf(Application);
+        expect(createdCanvas?.nodeName).toBe('CANVAS');
+        expect(createdCanvas?.ownerDocument).toBe(iframeDocument);
+        expect(containerRoot.internalState.canvas).toBe(createdCanvas);
+
+        iframe.remove();
+    });
 });

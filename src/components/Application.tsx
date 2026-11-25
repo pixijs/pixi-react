@@ -26,6 +26,10 @@ import { type ApplicationProps } from '../typedefs/ApplicationProps';
 import { type ApplicationRef } from '../typedefs/ApplicationRef';
 
 const originalDefaultTextStyle = { ...TextStyle.defaultTextStyle };
+const isElementNode = (value: unknown): value is HTMLElement => !!value
+    && typeof value === 'object'
+    && 'nodeType' in value
+    && value.nodeType === 1;
 
 const ApplicationImplementation = forwardRef<ApplicationRef, ApplicationProps>(function Application(
     props,
@@ -71,7 +75,7 @@ const ApplicationImplementation = forwardRef<ApplicationRef, ApplicationProps>(f
             {
                 if ('current' in resizeTo)
                 {
-                    if (resizeTo.current instanceof HTMLElement)
+                    if (isElementNode(resizeTo.current))
                     {
                         application.resizeTo = resizeTo.current;
                     }

@@ -33,6 +33,9 @@ export interface BaseApplicationProps
     /** @description A unique key which allows React to manage this component across changes in parent state. */
     key?: Key,
 
+    /** @description Callback to be fired when the application is destroyed. */
+    onDestroy?: () => void
+
     /** @description Callback to be fired when the application finishes initializing. */
     onInit?: (app: Application) => void
 

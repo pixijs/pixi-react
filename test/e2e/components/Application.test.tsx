@@ -260,6 +260,65 @@ describe('Application', () =>
             expect(destroySpy).toHaveBeenCalledWith(rendererDestroyOptions, undefined);
         });
 
+        it('unmounts with onDestroy callback', async () =>
+        {
+            let testApp = null as any as PixiApplication;
+            let testAppIsInitialised = false;
+
+            const onDestroySpy = vi.fn();
+
+            const TestChildComponent = () =>
+            {
+                const {
+                    app,
+                    isInitialised,
+                } = useApplication();
+
+                useEffect(() =>
+                {
+                    testApp = app;
+                    testAppIsInitialised = isInitialised;
+
+                    return () =>
+                    {
+                        testApp = app;
+                        testAppIsInitialised = isInitialised;
+                    };
+                }, [
+                    app,
+                    isInitialised,
+                ]);
+
+                return null;
+            };
+
+            const TestComponent = () => (
+                <Application onDestroy={onDestroySpy}>
+                    <TestChildComponent />
+                </Application>
+            );
+
+            expect(roots.size).toEqual(0);
+
+            const { unmount } = await act(() => render(<TestComponent />));
+
+            expect(roots.size).toEqual(1);
+
+            await expect.poll(() => testAppIsInitialised).toEqual(true);
+
+            // sanity check that onDestroy has not yet been called
+            expect(onDestroySpy).not.toHaveBeenCalled();
+
+            unmount();
+
+            expect(roots.size).toEqual(0);
+
+            await expect.poll(() => isAppMounted(testApp)).toBeFalsy();
+
+            expect(onDestroySpy).toHaveBeenCalledTimes(1);
+            expect(onDestroySpy).toHaveBeenCalledWith();
+        });
+
         it('unmounts during init', async () =>
         {
             let testApp = null as any as PixiApplication;

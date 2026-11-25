@@ -6,5 +6,6 @@ export interface ApplicationState
     destroyOptions: DestroyOptions;
     isInitialised: boolean;
     isInitialising: boolean;
+    onDestroy?: () => void;
     rendererDestroyOptions: RendererDestroyOptions;
 }

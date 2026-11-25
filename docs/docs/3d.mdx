@@ -1,0 +1,78 @@
+---
+sidebar_position: 5
+title: 3D
+---
+
+`@pixi/react` supports [PixiJS 3D](https://github.com/pixijs/3d). Install `@pixi/3d`, import `@pixi/react/3d`, and use `extend`:
+
+```jsx
+import {
+    Application,
+    extend,
+} from '@pixi/react';
+import '@pixi/react/3d';
+import {
+    CubeGeometry,
+    DirectionalLight,
+    Material3D,
+    Mesh3D,
+    View3D,
+} from '@pixi/3d';
+
+extend({ DirectionalLight, Mesh3D, View3D });
+
+const geometry = new CubeGeometry();
+const material = new Material3D({ baseColor: 0xdd4444 });
+
+const MyComponent = () => (
+    <Application resizeTo={window}>
+        <pixiView3D autoResize camera-position-z={4}>
+            <pixiDirectionalLight intensity={3} />
+            <pixiMesh3D geometry={geometry} material={material} rotation-y={0.5} />
+        </pixiView3D>
+    </Application>
+);
+```
+
+> [!NOTE]
+> `@pixi/react/3d` is ESM only, like `@pixi/3d`.
+
+`<pixiModel3D>` reads `source` once. Change `key` to trigger a new load:
+
+```jsx
+<pixiModel3D key={url} source={source} />
+```
+
+## Cameras
+
+The view renders with its own camera. Configure it with `camera` props:
+
+```jsx
+<pixiView3D camera={{ fov: 40 }} camera-position-z={4} />
+```
+
+To render with another camera, assign `view.camera` in a layout effect:
+
+```jsx
+const viewRef = useRef(null);
+const rigCameraRef = useRef(null);
+
+useLayoutEffect(() =>
+{
+    viewRef.current.camera = rigCameraRef.current;
+}, []);
+
+return (
+    <pixiView3D ref={viewRef}>
+        <pixiContainer3D>
+            <pixiCamera3D ref={rigCameraRef} />
+        </pixiContainer3D>
+    </pixiView3D>
+);
+```
+
+If React removes or hides that camera, the view switches back to its own camera.
+
+## TypeScript
+
+Importing `@pixi/react/3d` adds types for the 3D elements. For [unprefixed elements](./typescript.mdx#unprefixed-elements), add `UnprefixedPixi3DElements` from `@pixi/react/3d` alongside `UnprefixedPixiElements`.

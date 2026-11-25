@@ -1,6 +1,11 @@
 import { applyProps } from '../helpers/applyProps';
 import { log } from '../helpers/log';
 import { type HostConfig } from '../typedefs/HostConfig';
+import {
+    applySceneOwnProps,
+    sceneNodeChanged,
+} from './hostChildren';
+import { splitOwnChanges } from './ownProps';
 import { prepareUpdate } from './prepareUpdate';
 
 export function commitUpdate(
@@ -19,8 +24,21 @@ export function commitUpdate(
         newProps,
     );
 
-    if (diff)
+    if (!diff)
     {
-        applyProps(instance, diff);
+        return;
+    }
+
+    const [changes, ownProps] = splitOwnChanges(instance.constructor, diff.changes);
+
+    if (changes.length)
+    {
+        applyProps(instance, { ...diff, changes });
+        sceneNodeChanged(instance, changes.map(([key]) => key as string));
+    }
+
+    if (ownProps)
+    {
+        applySceneOwnProps(instance, ownProps);
     }
 }

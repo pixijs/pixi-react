@@ -5,7 +5,12 @@ import { applyProps } from './applyProps';
 import { catalogue } from './catalogue';
 import { convertStringToPascalCase } from './convertStringToPascalCase';
 import { gentleCloneProps } from './gentleCloneProps';
+import {
+    applySceneOwnProps,
+    sceneNodeCreated,
+} from './hostChildren';
 import { log } from './log';
+import { splitOwnProps } from './ownProps';
 import { parseComponentType } from './parseComponentType';
 import { prepareInstance } from './prepareInstance';
 
@@ -30,7 +35,17 @@ export function createInstance(
     // Get the class from an imported Pixi.js namespace
     const PixiComponent = catalogue[name];
 
-    const pixiProps = gentleCloneProps(props, PixiReactIgnoredProps);
+    const [initialProps, ownProps] = splitOwnProps(PixiComponent, props);
+    const pixiProps = gentleCloneProps(initialProps, PixiReactIgnoredProps);
+
+    // Leave dashed props to `applyProps`: constructors copy them verbatim, so it would skip them as already set
+    Object.keys(pixiProps).forEach((key) =>
+    {
+        if (key.includes('-'))
+        {
+            delete pixiProps[key];
+        }
+    });
 
     // Clone event props
     Object.entries(props).forEach(([key, value]) =>
@@ -48,8 +63,14 @@ export function createInstance(
         type: parsedType,
     });
 
-    // Set initial props
-    applyProps(instance, props);
+    sceneNodeCreated(instance);
+
+    applyProps(instance, initialProps, { skipUnchanged: true });
+
+    if (ownProps)
+    {
+        applySceneOwnProps(instance, ownProps);
+    }
 
     return instance;
 }

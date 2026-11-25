@@ -9,7 +9,10 @@ import {
 import { type PixiToReactEventPropNames } from '../constants/EventPropNames';
 import { type ConstructorOptions } from './ConstructorOptions';
 import { type DrawCallback } from './DrawCallback';
-import { type EventHandlers } from './EventHandlers';
+import {
+    type EventHandlers,
+    type EventHandlersFor,
+} from './EventHandlers';
 import { type InstanceState } from './InstanceState';
 import { type PixiReactChildNode } from './PixiReactChildNode';
 import {
@@ -19,7 +22,7 @@ import {
 
 export interface BaseNodeProps<T extends new (...args: any) => any = typeof Container>
 {
-    children?: T extends Container
+    children?: T extends { addChild: (...args: any[]) => any }
         ? PixiReactChildNode
         : never;
     key?: Key;
@@ -48,4 +51,4 @@ export type PixiReactElementProps<T extends new (...args: any) => any = typeof C
     BaseNodeProps<InstanceType<T>>
     & GraphicsProps<InstanceType<T>>
     & OmitKeys<ExcludeFunctionProps<ConstructorOptions<T>>, NodeProps<T> & typeof PixiToReactEventPropNames>
-    & EventHandlers;
+    & EventHandlersFor<InstanceType<T>>;

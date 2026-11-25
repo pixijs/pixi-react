@@ -5,6 +5,12 @@ on:
   pull_request:
   push:
 
+permissions:
+  id-token: write # Required for OIDC
+  contents: write # Required for npm beta version updates
+  issues: write # Required for semantic-release comments
+  pull-requests: write # Required for semantic-release comments and labels
+
 jobs:
   verify:
     name: Verify
@@ -93,8 +99,6 @@ jobs:
         shell: bash
 
       - name: Publish to npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         if: ${{ steps.release.outputs.new_tag_version != '' }}
         run: npm publish ./dist/*.tgz --tag ${{ (github.head_ref || github.ref_name) == 'main' && 'latest' || github.head_ref || github.ref_name }}
         shell: bash
